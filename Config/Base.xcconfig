@@ -1,0 +1,42 @@
+// Shared build settings for all configurations.
+// Values here are NOT secret. Secrets (Storefront token, client IDs, team ID) live in
+// Config/Secrets.xcconfig, which is git-ignored. Copy Config/Secrets.example.xcconfig to
+// get started. Note: "//" starts a comment in .xcconfig files, so URLs are stored as
+// host names only and assembled in code.
+
+// MARK: Product
+KX_BUNDLE_ID = de.karinex.app
+MARKETING_VERSION = 0.1.0
+CURRENT_PROJECT_VERSION = 1
+
+// MARK: Shopify (verified 2026-09-26, see docs/API_VERSIONS.md)
+KX_SHOP_DOMAIN = 45dv93-bk.myshopify.com
+KX_STORE_WEB_DOMAIN = www.karinex.de
+KX_STOREFRONT_API_VERSION = 2026-07
+KX_CUSTOMER_ACCOUNT_API_VERSION = 2026-07
+
+// MARK: Secret defaults (overridden by Secrets.xcconfig)
+// An empty Storefront token runs the app in Shopify's tokenless mode: catalog, search and
+// cart work, metafields (specs, FAQ) are unavailable until a token is configured.
+KX_STOREFRONT_ACCESS_TOKEN =
+KX_CUSTOMER_ACCOUNT_CLIENT_ID =
+KX_APPLE_TEAM_ID =
+
+// MARK: Toolchain
+IPHONEOS_DEPLOYMENT_TARGET = 17.0
+TARGETED_DEVICE_FAMILY = 1,2
+SWIFT_VERSION = 6.0
+SWIFT_STRICT_CONCURRENCY = complete
+SWIFT_EMIT_LOC_STRINGS = YES
+LOCALIZATION_PREFERS_STRING_CATALOGS = YES
+DEVELOPMENT_LANGUAGE = de
+ENABLE_USER_SCRIPT_SANDBOXING = YES
+DEAD_CODE_STRIPPING = YES
+CLANG_ENABLE_MODULES = YES
+GCC_TREAT_WARNINGS_AS_ERRORS = NO
+
+// MARK: Signing
+CODE_SIGN_STYLE = Automatic
+DEVELOPMENT_TEAM = $(KX_APPLE_TEAM_ID)
+
+#include? "Secrets.xcconfig"

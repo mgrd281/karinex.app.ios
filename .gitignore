@@ -1,0 +1,46 @@
+# macOS
+.DS_Store
+
+# Xcode
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+DerivedData/
+build/
+*.xcresult
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Packages/*/.swiftpm/
+Tools/*/.swiftpm/
+Package.resolved.orig
+
+# Secrets (never commit)
+Config/Secrets.xcconfig
+*.p8
+*.mobileprovision
+*.cer
+*.p12
+.env
+.env.*
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output/
+fastlane/README.md
+
+# Ruby / Node
+vendor/bundle/
+.bundle/
+node_modules/
+
+# Editors
+.idea/
+.vscode/
+*.swp
