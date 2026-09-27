@@ -1,0 +1,858 @@
+{
+  "sourceLanguage" : "de",
+  "strings" : {
+    "kx.accordion.collapsed" : {
+      "comment" : "VoiceOver value of a collapsed accordion row (for example an FAQ question whose answer is hidden). Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eingeklappt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collapsed"
+          }
+        }
+      }
+    },
+    "kx.accordion.expanded" : {
+      "comment" : "VoiceOver value of an expanded accordion row (for example an FAQ question whose answer is visible). Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausgeklappt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expanded"
+          }
+        }
+      }
+    },
+    "kx.accordion.hint.collapse" : {
+      "comment" : "VoiceOver hint of an expanded accordion row: what double-tapping does. Short sentence describing the result. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blendet den Inhalt aus."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hides the content."
+          }
+        }
+      }
+    },
+    "kx.accordion.hint.expand" : {
+      "comment" : "VoiceOver hint of a collapsed accordion row: what double-tapping does. Short sentence describing the result. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blendet den Inhalt ein."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows the content."
+          }
+        }
+      }
+    },
+    "kx.banner.dismiss" : {
+      "comment" : "VoiceOver label of the close (x) button of a status banner. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hinweis schließen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close notice"
+          }
+        }
+      }
+    },
+    "kx.banner.error.message" : {
+      "comment" : "Default message of a status banner after a request failed, when the screen provides no more specific text. One or two short sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An error occurred. Please try again."
+          }
+        }
+      }
+    },
+    "kx.banner.info.message" : {
+      "comment" : "Fallback message of a neutral information banner when the screen provides no text. One or two words.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hinweis"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notice"
+          }
+        }
+      }
+    },
+    "kx.banner.offline.message" : {
+      "comment" : "Default message of the banner shown at the top of the screen while the device has no internet connection. One or two short sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Internetverbindung. Bitte prüfen Sie Ihre Verbindung."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No internet connection. Please check your connection."
+          }
+        }
+      }
+    },
+    "kx.banner.retry" : {
+      "comment" : "Default label of the text button in a status banner (offline or error) that repeats the failed action. Short: it sits next to the banner message.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erneut versuchen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try again"
+          }
+        }
+      }
+    },
+    "kx.banner.success.message" : {
+      "comment" : "Fallback message of a success banner when the screen provides no text, e.g. after an action completed. Short sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erfolgreich abgeschlossen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed successfully."
+          }
+        }
+      }
+    },
+    "kx.button.loading" : {
+      "comment" : "VoiceOver value of a design-system button while its action is in progress (a spinner replaces the label). Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird geladen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading"
+          }
+        }
+      }
+    },
+    "kx.countdown.accessibility.days %lld" : {
+      "comment" : "VoiceOver fragment for the days of a deal countdown. Inserted into 'kx.countdown.accessibility.remaining %@' and joined with the hours and minutes fragments by commas, e.g. 'Endet in 2 Tagen, 3 Stunden, 4 Minuten'. German uses the dative after 'in'. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Tag"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Tagen"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld days"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "kx.countdown.accessibility.ended" : {
+      "comment" : "VoiceOver label of a deal countdown that has reached zero. One word. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beendet"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ended"
+          }
+        }
+      }
+    },
+    "kx.countdown.accessibility.hours %lld" : {
+      "comment" : "VoiceOver fragment for the hours of a deal countdown. Inserted into 'kx.countdown.accessibility.remaining %@' together with the days and minutes fragments. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Stunde"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Stunden"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld hour"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld hours"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "kx.countdown.accessibility.minutes %lld" : {
+      "comment" : "VoiceOver fragment for the minutes of a deal countdown. Inserted into 'kx.countdown.accessibility.remaining %@' together with the days and hours fragments. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Minute"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Minuten"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld minute"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld minutes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "kx.countdown.accessibility.remaining %@" : {
+      "comment" : "VoiceOver label of a deal countdown. %@ is a comma-separated list of the days, hours and minutes fragments, e.g. '2 Tagen, 3 Stunden, 4 Minuten'. The fragments are grammatically adapted to follow this phrase. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endet in %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ends in %@"
+          }
+        }
+      }
+    },
+    "kx.countdown.accessibility.under_minute" : {
+      "comment" : "VoiceOver label of a deal countdown during its last minute. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endet in weniger als einer Minute"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ends in less than a minute"
+          }
+        }
+      }
+    },
+    "kx.countdown.unit.days %lld" : {
+      "comment" : "Short label below the days tile of a flip-digit deal countdown, shown in small uppercase letters. The number is shown in the tile above, so the text contains no number; the plural form only selects day or days. Maximum about 6 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Tag"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Tage"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Days"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "kx.countdown.unit.hours" : {
+      "comment" : "Abbreviated label below the hours tile of a flip-digit deal countdown, shown in small uppercase letters. Maximum about 4 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Std."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hrs"
+          }
+        }
+      }
+    },
+    "kx.countdown.unit.minutes" : {
+      "comment" : "Abbreviated label below the minutes tile of a flip-digit deal countdown, shown in small uppercase letters. Maximum about 4 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Min."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Min"
+          }
+        }
+      }
+    },
+    "kx.countdown.unit.seconds" : {
+      "comment" : "Abbreviated label below the seconds tile of a flip-digit deal countdown, shown in small uppercase letters. Maximum about 4 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sek."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sec"
+          }
+        }
+      }
+    },
+    "kx.keycard.accessibility.hidden" : {
+      "comment" : "VoiceOver label of the license key on the license card while the key is masked with dots. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lizenzschlüssel verborgen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licence key hidden"
+          }
+        }
+      }
+    },
+    "kx.keycard.copied" : {
+      "comment" : "Label of the copy button on the license card for two seconds after the key was copied. One word, same width as 'Kopieren' if possible.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopiert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copied"
+          }
+        }
+      }
+    },
+    "kx.keycard.copied.announcement" : {
+      "comment" : "VoiceOver announcement after the license key was copied to the clipboard. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lizenzschlüssel kopiert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licence key copied"
+          }
+        }
+      }
+    },
+    "kx.keycard.copy" : {
+      "comment" : "Button on the license card that copies the license key to the clipboard. Imperative or infinitive verb, one word if possible.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy"
+          }
+        }
+      }
+    },
+    "kx.keycard.copy.hint" : {
+      "comment" : "VoiceOver hint of the copy button on the license card. Explains that the copied key is removed from the clipboard automatically after two minutes. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopiert den Schlüssel in die Zwischenablage. Er wird nach zwei Minuten automatisch entfernt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copies the key to the clipboard. It is removed automatically after two minutes."
+          }
+        }
+      }
+    },
+    "kx.keycard.eyebrow" : {
+      "comment" : "Small uppercase label above the license key on the certificate-style license card.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lizenzschlüssel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licence key"
+          }
+        }
+      }
+    },
+    "kx.keycard.guide" : {
+      "comment" : "Text button on the license card that opens the activation instructions for this product. One or two words.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anleitung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instructions"
+          }
+        }
+      }
+    },
+    "kx.keycard.hide" : {
+      "comment" : "Button on the license card that masks the visible license key again. Imperative or infinitive verb, one word.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbergen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide"
+          }
+        }
+      }
+    },
+    "kx.keycard.reveal" : {
+      "comment" : "Button on the license card that shows the masked license key in clear text. Imperative or infinitive verb, one word.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anzeigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show"
+          }
+        }
+      }
+    },
+    "kx.keycard.support" : {
+      "comment" : "Text button on the license card that contacts customer support about this specific license (channels are WhatsApp, e-mail and live chat). Keep it short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support zu dieser Lizenz"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support for this licence"
+          }
+        }
+      }
+    },
+    "kx.price.accessibility.compare %@ %@" : {
+      "comment" : "VoiceOver label of a price tag with a struck-through former price. %1$@ is the current price, %2$@ the former (compare-at) price, e.g. \"Preis 12,90 €, statt 79,99 €\". Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preis %1$@, statt %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price %1$@, was %2$@"
+          }
+        }
+      }
+    },
+    "kx.price.accessibility.current %@" : {
+      "comment" : "VoiceOver label of a price tag without a former price. %@ is the formatted price, e.g. \"12,90 €\". Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preis %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price %@"
+          }
+        }
+      }
+    },
+    "kx.product.accessibility.compare %@ %@" : {
+      "comment" : "VoiceOver part of a product card when the product has a former price. %1$@ is the current price, %2$@ the former (struck-through) price, both formatted by the store, e.g. 'Preis 12,90 €, statt 79,99 €'. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preis %1$@, statt %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price %1$@, was %2$@"
+          }
+        }
+      }
+    },
+    "kx.product.accessibility.price %@" : {
+      "comment" : "VoiceOver part of a product card. %@ is the current price formatted by the store, e.g. 'Preis 12,90 €'. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preis %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price %@"
+          }
+        }
+      }
+    },
+    "kx.section.show_all" : {
+      "comment" : "Default label of the small text button at the trailing end of a section header that opens the full list. Keep it short: it shares one line with the section title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle anzeigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show all"
+          }
+        }
+      }
+    },
+    "kx.skeleton.loading" : {
+      "comment" : "VoiceOver label of a loading placeholder region while content (products, prices) is being loaded. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inhalte werden geladen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading content"
+          }
+        }
+      }
+    },
+    "kx.timeline.state.current" : {
+      "comment" : "VoiceOver value of the step that is in progress in a step timeline (for example the order status). Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktueller Schritt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current step"
+          }
+        }
+      }
+    },
+    "kx.timeline.state.done" : {
+      "comment" : "VoiceOver value of a completed step in a step timeline (for example the order status). Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erledigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed"
+          }
+        }
+      }
+    },
+    "kx.timeline.state.upcoming" : {
+      "comment" : "VoiceOver value of a step that has not started yet in a step timeline (for example the order status). Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausstehend"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pending"
+          }
+        }
+      }
+    },
+    "kx.timeline.step %lld %lld %@" : {
+      "comment" : "VoiceOver label of one step in a numbered step timeline such as 'So läuft es ab'. %1$lld is the step number, %2$lld the number of steps, %3$@ the step title, e.g. 'Schritt 2 von 3: Bezahlen'. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schritt %1$lld von %2$lld: %3$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Step %1$lld of %2$lld: %3$@"
+          }
+        }
+      }
+    },
+    "kx.trust.hint.details" : {
+      "comment" : "VoiceOver hint of a tappable trust fact (for example '100 Tage Geld-zurück' with its footnote marker) that opens the conditions. Short sentence describing the result. Not shown visually.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeigt weitere Informationen an."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows more information."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
