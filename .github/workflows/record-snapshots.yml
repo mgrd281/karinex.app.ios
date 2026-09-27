@@ -1,0 +1,144 @@
+# Records the DesignSystem snapshot references on the CI simulator and commits them.
+#
+# Run it from the Actions tab ("Run workflow") on the branch that needs new or updated
+# references. Recording on the same runner image and Xcode as CI keeps the PNGs pixel
+# compatible with the `ios` job, which then compares against them with
+# TEST_RUNNER_SNAPSHOT_TESTING_RECORD=never. Review the committed images before merging.
+
+name: Record snapshots
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: record-snapshots-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  # Push the recorded references to the dispatched branch.
+  contents: write
+  # Start CI for the new commit: pushes made with GITHUB_TOKEN do not trigger workflows,
+  # a workflow_dispatch does.
+  actions: write
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  PROJECT: KARINEX.xcodeproj
+  SCHEME: KARINEX
+  DERIVED_DATA: build/DerivedData
+  RESULTS: build/results
+  SOURCE_PACKAGES: .spm
+  SNAPSHOTS: Packages/DesignSystem/Tests/DesignSystemTests/__Snapshots__
+
+jobs:
+  record:
+    name: Record DesignSystem snapshots
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - name: Require a branch
+        if: ${{ github.ref_type != 'branch' }}
+        env:
+          REF_TYPE: ${{ github.ref_type }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          echo "::error::Run this workflow on a branch (got $REF_TYPE '$REF_NAME')."
+          exit 1
+
+      - name: Check out
+        uses: actions/checkout@v7
+
+      - name: Select the latest stable Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Xcode version
+        run: xcodebuild -version
+
+      - name: Write Config/Secrets.xcconfig
+        env:
+          KX_STOREFRONT_ACCESS_TOKEN: ${{ secrets.KX_STOREFRONT_ACCESS_TOKEN }}
+          KX_CUSTOMER_ACCOUNT_CLIENT_ID: ${{ secrets.KX_CUSTOMER_ACCOUNT_CLIENT_ID }}
+          KX_APPLE_TEAM_ID: ${{ secrets.KX_APPLE_TEAM_ID }}
+        run: scripts/write-secrets-xcconfig.sh
+
+      - name: Cache SwiftPM checkouts
+        uses: actions/cache@v6
+        with:
+          path: .spm
+          key: spm-${{ runner.os }}-${{ hashFiles('Packages/*/Package.swift', 'Tools/*/Package.swift', '**/Package.resolved') }}
+          restore-keys: |
+            spm-${{ runner.os }}-
+
+      - name: Select simulator
+        id: simulator
+        run: echo "udid=$(scripts/select-simulator.sh)" >> "$GITHUB_OUTPUT"
+
+      - name: Build for testing
+        run: |
+          set -o pipefail
+          mkdir -p "$RESULTS"
+          if command -v xcbeautify >/dev/null 2>&1; then pretty=(xcbeautify --renderer github-actions); else pretty=(cat); fi
+          xcodebuild build-for-testing \
+            -project "$PROJECT" -scheme "$SCHEME" -configuration Debug \
+            -destination "id=${{ steps.simulator.outputs.udid }}" \
+            -derivedDataPath "$DERIVED_DATA" \
+            -clonedSourcePackagesDirPath "$SOURCE_PACKAGES" \
+            2>&1 | tee "$RESULTS/build.log" | "${pretty[@]}"
+
+      - name: Record references
+        # Recording reports every recorded snapshot as a test failure, so this step may fail
+        # by design; build errors already failed the previous step. The commit step below
+        # decides what happened by looking at the working tree.
+        continue-on-error: true
+        env:
+          TEST_RUNNER_SNAPSHOT_TESTING_RECORD: all
+        run: |
+          set -o pipefail
+          if command -v xcbeautify >/dev/null 2>&1; then pretty=(xcbeautify); else pretty=(cat); fi
+          xcodebuild test-without-building \
+            -project "$PROJECT" -scheme "$SCHEME" -configuration Debug \
+            -testLanguage de -testRegion DE \
+            -destination "id=${{ steps.simulator.outputs.udid }}" \
+            -derivedDataPath "$DERIVED_DATA" \
+            -clonedSourcePackagesDirPath "$SOURCE_PACKAGES" \
+            -resultBundlePath "$RESULTS/record.xcresult" \
+            -only-testing:DesignSystemTests \
+            2>&1 | tee "$RESULTS/record.log" | "${pretty[@]}"
+
+      - name: Upload recorded references
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: snapshots-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.SNAPSHOTS }}
+            build/results/record.log
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Commit and push
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all -- "$SNAPSHOTS"
+          if git diff --cached --quiet; then
+            echo "No snapshot changes to commit."
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git --no-pager diff --cached --stat
+          git commit -m "test: record DesignSystem snapshot references"
+          git push origin "HEAD:refs/heads/${GITHUB_REF_NAME}"
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Run CI on the new references
+        if: ${{ steps.commit.outputs.pushed == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run ci.yml --ref "$GITHUB_REF_NAME"

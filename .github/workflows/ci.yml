@@ -1,0 +1,274 @@
+# Continuous integration for KARINEX.
+#
+#   packages-linux  Core, ShopifyKit, DesignTokens and the FixtureRecorder on Linux (Swift 6.4),
+#                   zero warnings.
+#   checks          String Catalogs, copy rules, SwiftFormat and SwiftLint (pinned versions).
+#   ios             XcodeGen consistency, then build and test the KARINEX scheme (app, packages,
+#                   snapshots, UI tests) on the newest iPhone simulator with coverage.
+#
+# Tool versions: SwiftFormat 0.63.0, SwiftLint 0.65.1, XcodeGen 2.46.0 (checksums in
+# scripts/install-tools.sh). Runner facts verified 2026-09-26: macos-26 (arm64) ships
+# Xcode 26.0.1 to 26.6 with iOS 26.x simulators; ubuntu-24.04 ships Swift 6.4 and Docker.
+
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+# `bash` (instead of the default `sh`/`bash -e`) runs every step with `-eo pipefail`, so a
+# failing command in front of `tee` or `tail` fails the step.
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  packages-linux:
+    name: Packages (Linux, Swift 6.4)
+    runs-on: ubuntu-24.04
+    container: swift:6.4.0-noble
+    timeout-minutes: 30
+    steps:
+      - name: Check out
+        uses: actions/checkout@v7
+
+      - name: Swift version
+        run: |
+          swift --version
+          mkdir -p build/logs
+
+      - name: Core
+        run: |
+          swift build --package-path Packages/Core -Xswiftc -warnings-as-errors 2>&1 | tee build/logs/core-build.log
+          swift test --package-path Packages/Core 2>&1 | tee build/logs/core-test.log
+          scripts/check-warnings.sh build/logs/core-test.log
+
+      - name: ShopifyKit
+        if: ${{ !cancelled() }}
+        run: |
+          swift build --package-path Packages/ShopifyKit -Xswiftc -warnings-as-errors 2>&1 | tee build/logs/shopifykit-build.log
+          swift test --package-path Packages/ShopifyKit 2>&1 | tee build/logs/shopifykit-test.log
+          scripts/check-warnings.sh build/logs/shopifykit-test.log
+
+      - name: DesignSystem (DesignTokens)
+        if: ${{ !cancelled() }}
+        run: |
+          swift build --package-path Packages/DesignSystem -Xswiftc -warnings-as-errors 2>&1 | tee build/logs/designsystem-build.log
+          swift test --package-path Packages/DesignSystem 2>&1 | tee build/logs/designsystem-test.log
+          scripts/check-warnings.sh build/logs/designsystem-test.log
+
+      - name: FixtureRecorder
+        if: ${{ !cancelled() }}
+        run: |
+          swift build --package-path Tools/FixtureRecorder -Xswiftc -warnings-as-errors 2>&1 | tee build/logs/fixturerecorder-build.log
+          swift test --package-path Tools/FixtureRecorder 2>&1 | tee build/logs/fixturerecorder-test.log
+          scripts/check-warnings.sh build/logs/fixturerecorder-test.log
+
+  checks:
+    name: Strings, copy rules and lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out
+        id: checkout
+        uses: actions/checkout@v7
+
+      - name: String Catalogs (11 languages, keys used by code)
+        run: python3 scripts/check_strings.py
+
+      - name: Copy rules (no dashes, no PayPal, no phone, no license claims)
+        if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
+        run: python3 scripts/check_copy_rules.py
+
+      - name: Install SwiftFormat 0.63.0
+        id: tools
+        if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
+        run: scripts/install-tools.sh --dir "$RUNNER_TEMP/tools" swiftformat | tail -n 1 >> "$GITHUB_PATH"
+
+      - name: SwiftFormat
+        if: ${{ !cancelled() && steps.tools.outcome == 'success' }}
+        run: |
+          swiftformat --version
+          swiftformat --lint --reporter github-actions-log .
+
+      - name: SwiftLint 0.65.1 (official image, includes SourceKit for custom rules)
+        if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
+        run: |
+          docker run --rm \
+            --volume "$GITHUB_WORKSPACE:$GITHUB_WORKSPACE" \
+            --workdir "$GITHUB_WORKSPACE" \
+            ghcr.io/realm/swiftlint:0.65.1 \
+            lint --strict --no-cache --reporter github-actions-logging
+
+  ios:
+    name: iOS build and tests
+    runs-on: macos-26
+    timeout-minutes: 75
+    env:
+      PROJECT: KARINEX.xcodeproj
+      SCHEME: KARINEX
+      DERIVED_DATA: build/DerivedData
+      RESULTS: build/results
+      SOURCE_PACKAGES: .spm
+    steps:
+      - name: Check out
+        uses: actions/checkout@v7
+
+      - name: Select the latest stable Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Xcode version
+        run: |
+          xcodebuild -version
+          xcrun simctl list runtimes available
+
+      - name: Install XcodeGen 2.46.0
+        run: scripts/install-tools.sh --dir "$RUNNER_TEMP/tools" xcodegen | tail -n 1 >> "$GITHUB_PATH"
+
+      - name: Check that KARINEX.xcodeproj matches project.yml
+        run: |
+          xcodegen --version
+          xcodegen generate --spec project.yml
+          changes="$(git status --porcelain -- KARINEX.xcodeproj)"
+          if [[ -n "$changes" ]]; then
+            echo "::error title=Stale Xcode project::KARINEX.xcodeproj differs from what project.yml generates. Run 'make project' and commit the result."
+            echo "$changes"
+            git --no-pager diff -- KARINEX.xcodeproj
+            exit 1
+          fi
+          echo "KARINEX.xcodeproj is up to date."
+
+      - name: Write Config/Secrets.xcconfig
+        env:
+          KX_STOREFRONT_ACCESS_TOKEN: ${{ secrets.KX_STOREFRONT_ACCESS_TOKEN }}
+          KX_CUSTOMER_ACCOUNT_CLIENT_ID: ${{ secrets.KX_CUSTOMER_ACCOUNT_CLIENT_ID }}
+          KX_APPLE_TEAM_ID: ${{ secrets.KX_APPLE_TEAM_ID }}
+        run: scripts/write-secrets-xcconfig.sh
+
+      - name: Cache SwiftPM checkouts
+        uses: actions/cache@v6
+        with:
+          path: .spm
+          key: spm-${{ runner.os }}-${{ hashFiles('Packages/*/Package.swift', 'Tools/*/Package.swift', '**/Package.resolved') }}
+          restore-keys: |
+            spm-${{ runner.os }}-
+
+      - name: Select simulator
+        id: simulator
+        run: echo "udid=$(scripts/select-simulator.sh)" >> "$GITHUB_OUTPUT"
+
+      - name: Resolve package dependencies
+        run: |
+          set -o pipefail
+          xcodebuild -resolvePackageDependencies \
+            -project "$PROJECT" -scheme "$SCHEME" \
+            -clonedSourcePackagesDirPath "$SOURCE_PACKAGES"
+          resolved="$PROJECT/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
+          if [[ -f "$resolved" ]]; then
+            echo "Resolved package versions ($resolved). Commit this file to pin them:"
+            cat "$resolved"
+            {
+              echo "### Package.resolved"
+              echo
+              echo "Commit \`$resolved\` to pin these versions."
+              echo
+              echo '```json'
+              cat "$resolved"
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No Package.resolved was produced (no remote package dependencies)."
+          fi
+
+      - name: Build for testing
+        run: |
+          set -o pipefail
+          mkdir -p "$RESULTS"
+          if command -v xcbeautify >/dev/null 2>&1; then pretty=(xcbeautify --renderer github-actions); else pretty=(cat); fi
+          xcodebuild build-for-testing \
+            -project "$PROJECT" -scheme "$SCHEME" -configuration Debug \
+            -destination "id=${{ steps.simulator.outputs.udid }}" \
+            -derivedDataPath "$DERIVED_DATA" \
+            -clonedSourcePackagesDirPath "$SOURCE_PACKAGES" \
+            -disableAutomaticPackageResolution \
+            -enableCodeCoverage YES \
+            -resultBundlePath "$RESULTS/build.xcresult" \
+            2>&1 | tee "$RESULTS/build.log" | "${pretty[@]}"
+
+      - name: Test
+        env:
+          # Missing snapshot references must fail, never be recorded silently in CI.
+          TEST_RUNNER_SNAPSHOT_TESTING_RECORD: never
+        run: |
+          set -o pipefail
+          if command -v xcbeautify >/dev/null 2>&1; then pretty=(xcbeautify --renderer github-actions); else pretty=(cat); fi
+          xcodebuild test-without-building \
+            -project "$PROJECT" -scheme "$SCHEME" -configuration Debug \
+            -testLanguage de -testRegion DE \
+            -destination "id=${{ steps.simulator.outputs.udid }}" \
+            -derivedDataPath "$DERIVED_DATA" \
+            -clonedSourcePackagesDirPath "$SOURCE_PACKAGES" \
+            -disableAutomaticPackageResolution \
+            -enableCodeCoverage YES \
+            -resultBundlePath "$RESULTS/test.xcresult" \
+            2>&1 | tee "$RESULTS/test.log" | "${pretty[@]}"
+
+      - name: Zero compiler warnings
+        if: ${{ !cancelled() && hashFiles('build/results/build.log') != '' }}
+        run: scripts/check-warnings.sh "$RESULTS/build.log"
+
+      - name: Coverage summary
+        if: ${{ !cancelled() && hashFiles('build/results/test.xcresult/Info.plist') != '' }}
+        run: |
+          xcrun xccov view --report --only-targets --json "$RESULTS/test.xcresult" > "$RESULTS/coverage.json"
+          python3 - "$RESULTS/coverage.json" >> "$GITHUB_STEP_SUMMARY" <<'PYTHON'
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              report = json.load(handle)
+          targets = report if isinstance(report, list) else report.get("targets", [])
+          rows = []
+          covered_total = executable_total = 0
+          for target in targets:
+              name = target.get("name", "?")
+              if name.endswith((".xctest", "Tests")):
+                  continue
+              covered = int(target.get("coveredLines", 0))
+              executable = int(target.get("executableLines", 0))
+              covered_total += covered
+              executable_total += executable
+              rows.append((name, covered, executable))
+          print("### Code coverage")
+          print()
+          print("| Target | Covered lines | Coverage |")
+          print("| --- | ---: | ---: |")
+          for name, covered, executable in sorted(rows):
+              percent = 100.0 * covered / executable if executable else 0.0
+              print(f"| {name} | {covered} / {executable} | {percent:.1f} % |")
+          if executable_total:
+              print(f"| **Total** | {covered_total} / {executable_total} | **{100.0 * covered_total / executable_total:.1f} %** |")
+          PYTHON
+          xcrun xccov view --report --only-targets "$RESULTS/test.xcresult"
+
+      - name: Upload test results
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: xcresult-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            build/results/*.xcresult
+            build/results/*.log
+          if-no-files-found: ignore
+          retention-days: 14

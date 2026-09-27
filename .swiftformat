@@ -1,0 +1,90 @@
+# SwiftFormat configuration for KARINEX (SwiftFormat 0.63.0, pinned in CI and the Makefile).
+#
+#   make format   rewrites files in place
+#   make lint     runs `swiftformat --lint` (CI fails on any difference)
+#
+# The rules mirror the house style of Packages/DesignSystem/Sources/DesignTokens and
+# DesignSystem/Foundation and agree with .swiftlint.yml: 4 spaces, 140 columns, trailing
+# commas in multi-line collection literals (and only there), access control on the
+# declarations of an extension, `#if` blocks not indented.
+
+# MARK: Files
+--exclude **/.build,**/.swiftpm,**/DerivedData,**/SourcePackages,.spm,build,vendor
+
+# MARK: Language
+# Swift 6.0 is the oldest compiler the manifests allow (swift-tools-version 6.0), so no
+# rule may introduce newer syntax such as trailing commas in argument lists.
+--swift-version 6.0
+--language-mode 6
+
+# MARK: Layout
+--indent 4
+--indent-case false
+--indent-strings true
+--ifdef no-indent
+--max-width 140
+--linebreaks lf
+--trim-whitespace always
+--empty-braces no-space
+--ranges no-space
+--operator-func spaced
+
+# MARK: Wrapping
+--wrap-arguments before-first
+--wrap-parameters before-first
+--wrap-collections before-first
+--wrap-conditions preserve
+--wrap-return-type preserve
+--wrap-effects preserve
+--wrap-ternary before-operators
+--closing-paren balanced
+--call-site-paren balanced
+--guard-else auto
+--else-position same-line
+--func-attributes preserve
+--type-attributes preserve
+--stored-var-attributes preserve
+--computed-var-attributes preserve
+
+# MARK: Punctuation
+--trailing-commas collections-only
+--semicolons never
+--decimal-grouping ignore
+--fraction-grouping disabled
+--hex-grouping ignore
+--hex-literal-case uppercase
+
+# MARK: Declarations
+--extension-acl on-declarations
+--self remove
+--pattern-let hoist
+--strip-unused-args closure-only
+--header ignore
+
+# MARK: Rules
+# Disabled because they fight the house style or rewrite code in ways that need a human:
+# - docComments: grouping comments such as "// Overlays" above a single enum case stay
+#   plain comments; every public API already carries a `///` doc comment by convention.
+# - wrap*Bodies: short single-line bodies (`if value.hasPrefix("#") { value.removeFirst() }`)
+#   are allowed and read better than three-line blocks.
+# - redundantMemberwiseInit, redundantEquatable: public types spell out `public init` and
+#   `==` on purpose; the synthesized versions are internal or change semantics.
+# - enumNamespaces: whether a namespace is an enum or a struct is an API decision.
+# - sortDeclarations, sortTypealiases: declaration order conveys meaning (token scales).
+# - noForceUnwrapInTests, noForceTryInTests, redundantSwiftTestingSuite,
+#   swiftTestingTestCaseNames: tests follow Swift Testing idioms (`#require`, explicit
+#   `@Suite` names, descriptive `@Test("...")` titles); these rules rewrite them.
+# - environmentEntry: moving to `@Entry` is done deliberately, not by the formatter.
+# - todos: TODO and FIXME markers are rejected outright by SwiftLint's `todo` rule, so the
+#   formatter must not normalize them into an accepted shape.
+# - trailingClosures: in 0.63.0, converting `run({ ... }, decide: { e in f(e) })` into multiple
+#   trailing closures moves `e in` onto its own line, which SwiftLint's
+#   closure_parameter_position rejects. Trailing closures are written by hand instead.
+--disable docComments
+--disable wrapIfStatementBodies,wrapIfExpressionBodies,wrapFunctionBodies,wrapPropertyBodies,wrapLoopBodies
+--disable redundantMemberwiseInit,redundantEquatable,enumNamespaces,sortDeclarations,sortTypealiases
+--disable noForceUnwrapInTests,noForceTryInTests,redundantSwiftTestingSuite,swiftTestingTestCaseNames
+--disable environmentEntry,todos,trailingClosures
+
+# Enabled on top of the defaults (SwiftLint enforces the same with private_swiftui_state).
+--enable privateStateVariables

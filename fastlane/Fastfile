@@ -1,0 +1,174 @@
+# frozen_string_literal: true
+
+# fastlane lanes for KARINEX.
+#
+#   bundle exec fastlane tests   full test suite on an automatically chosen iPhone simulator
+#   bundle exec fastlane beta    signed App Store build uploaded to TestFlight
+#
+# `beta` needs these environment variables (GitHub secrets in .github/workflows/testflight.yml):
+#   ASC_KEY_ID, ASC_ISSUER_ID     App Store Connect API key (Users and Access > Integrations)
+#   ASC_KEY_CONTENT               the .p8 key file, base64 encoded (`base64 -i AuthKey_XXXX.p8`)
+#   KX_APPLE_TEAM_ID              Apple Developer team ID
+# and optionally KX_STOREFRONT_ACCESS_TOKEN and KX_CUSTOMER_ACCOUNT_CLIENT_ID, which are
+# written into Config/Secrets.xcconfig (empty values keep the app's tokenless fallback).
+#
+# Paths: actions resolve paths from the repository root, while Ruby code and `sh` run inside
+# ./fastlane, so everything below uses absolute paths built from REPO_ROOT.
+
+require "base64"
+require "fileutils"
+require "open3"
+require "shellwords"
+require "tmpdir"
+
+default_platform(:ios)
+
+REPO_ROOT = File.expand_path("..", __dir__)
+PROJECT = File.join(REPO_ROOT, "KARINEX.xcodeproj")
+SCHEME = "KARINEX"
+BUNDLE_IDENTIFIER = "de.karinex.app"
+DERIVED_DATA = File.join(REPO_ROOT, "build", "DerivedData")
+RESULTS_DIR = File.join(REPO_ROOT, "build", "results")
+SOURCE_PACKAGES = File.join(REPO_ROOT, ".spm")
+BETA_REQUIRED_ENV = %w[ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_CONTENT KX_APPLE_TEAM_ID].freeze
+
+# Fails the lane with one message naming every missing variable (never their values).
+def require_environment!(names)
+  missing = names.select { |name| ENV.fetch(name, "").strip.empty? }
+  return if missing.empty?
+
+  UI.user_error!(
+    "Missing environment variable(s): #{missing.join(', ')}. " \
+    "Set them as repository secrets (see .github/workflows/testflight.yml) or export them locally. " \
+    "ASC_KEY_CONTENT is the base64-encoded App Store Connect API key (.p8)."
+  )
+end
+
+# The UDID printed by scripts/select-simulator.sh (its diagnostics go to the console).
+def simulator_udid
+  stdout, status = Open3.capture2(File.join(REPO_ROOT, "scripts", "select-simulator.sh"))
+  UI.user_error!("No iPhone simulator available. Install an iOS runtime in Xcode.") unless status.success?
+  stdout.strip.lines.last.to_s.strip
+end
+
+# Regenerates the project with XcodeGen when it is installed and fails if the committed
+# KARINEX.xcodeproj is stale. Skipped (with a notice) when XcodeGen is not on PATH.
+def verify_generated_project
+  unless system("command -v xcodegen >/dev/null 2>&1")
+    UI.important("XcodeGen not installed: skipping the project.yml consistency check.")
+    return
+  end
+
+  sh("cd #{REPO_ROOT.shellescape} && xcodegen generate --spec project.yml --quiet")
+  changes, = Open3.capture2("git", "-C", REPO_ROOT, "status", "--porcelain", "--", "KARINEX.xcodeproj")
+  return if changes.strip.empty?
+
+  UI.user_error!("KARINEX.xcodeproj is out of date with project.yml. Run `make project` and commit.\n#{changes}")
+end
+
+# Decodes ASC_KEY_CONTENT (base64 of the .p8 file) into a private temporary file for
+# xcodebuild's -authenticationKeyPath and returns its path. The caller deletes it.
+def write_authentication_key(key_id, base64_content)
+  pem = Base64.decode64(base64_content)
+  unless pem.include?("BEGIN PRIVATE KEY")
+    UI.user_error!("ASC_KEY_CONTENT is not a base64-encoded .p8 key. Encode it with `base64 -i AuthKey_#{key_id}.p8`.")
+  end
+
+  directory = Dir.mktmpdir("kx-asc-key")
+  path = File.join(directory, "AuthKey_#{key_id}.p8")
+  File.write(path, pem, perm: 0o600)
+  path
+end
+
+platform :ios do
+  desc "Runs every test target of the KARINEX scheme on an iPhone simulator"
+  lane :tests do
+    ENV["TEST_RUNNER_SNAPSHOT_TESTING_RECORD"] = "never"
+    run_tests(
+      project: PROJECT,
+      scheme: SCHEME,
+      destination: "id=#{simulator_udid}",
+      derived_data_path: DERIVED_DATA,
+      cloned_source_packages_path: SOURCE_PACKAGES,
+      code_coverage: true,
+      result_bundle: true,
+      output_directory: File.join(RESULTS_DIR, "fastlane"),
+      output_types: "junit",
+      fail_build: true
+    )
+  end
+
+  desc "Builds a signed App Store binary and uploads it to TestFlight"
+  lane :beta do
+    require_environment!(BETA_REQUIRED_ENV)
+    key_id = ENV.fetch("ASC_KEY_ID").strip
+    issuer_id = ENV.fetch("ASC_ISSUER_ID").strip
+    team_id = ENV.fetch("KX_APPLE_TEAM_ID").strip
+    key_content = ENV.fetch("ASC_KEY_CONTENT").strip
+    # Validates the key before anything talks to Apple, and gives xcodebuild a key file.
+    key_path = write_authentication_key(key_id, key_content)
+
+    begin
+      setup_ci
+      api_key = app_store_connect_api_key(
+        key_id: key_id,
+        issuer_id: issuer_id,
+        key_content: key_content,
+        is_key_content_base64: true,
+        in_house: false
+      )
+
+      verify_generated_project
+      sh(File.join(REPO_ROOT, "scripts", "write-secrets-xcconfig.sh").shellescape)
+
+      latest = latest_testflight_build_number(
+        api_key: api_key,
+        app_identifier: BUNDLE_IDENTIFIER,
+        initial_build_number: 0
+      )
+      build_number = latest.to_i + 1
+      UI.message("Latest TestFlight build is #{latest}; this upload is build #{build_number}.")
+
+      # The build number normally comes from CURRENT_PROJECT_VERSION in Config/Base.xcconfig
+      # (Info.plist references it). agvtool writes it into this CI checkout of the generated
+      # project, and the same value is passed as a command-line build setting, which has the
+      # highest precedence, so the archive carries it even without Apple Generic Versioning.
+      increment_build_number(xcodeproj: PROJECT, build_number: build_number, skip_info_plist: true)
+
+      authentication = [
+        "-allowProvisioningUpdates",
+        "-authenticationKeyPath #{key_path.shellescape}",
+        "-authenticationKeyID #{key_id.shellescape}",
+        "-authenticationKeyIssuerID #{issuer_id.shellescape}",
+      ].join(" ")
+
+      build_app(
+        project: PROJECT,
+        scheme: SCHEME,
+        configuration: "Release",
+        export_method: "app-store",
+        export_team_id: team_id,
+        export_options: {
+          signingStyle: "automatic",
+          manageAppVersionAndBuildNumber: false,
+          uploadSymbols: true,
+        },
+        xcargs: "#{authentication} CURRENT_PROJECT_VERSION=#{build_number} DEVELOPMENT_TEAM=#{team_id.shellescape}",
+        export_xcargs: authentication,
+        derived_data_path: DERIVED_DATA,
+        cloned_source_packages_path: SOURCE_PACKAGES,
+        output_directory: File.join(RESULTS_DIR, "beta"),
+        output_name: "KARINEX-#{build_number}.ipa",
+        clean: true
+      )
+
+      upload_to_testflight(
+        api_key: api_key,
+        app_identifier: BUNDLE_IDENTIFIER,
+        skip_waiting_for_build_processing: true
+      )
+    ensure
+      FileUtils.rm_rf(File.dirname(key_path))
+    end
+  end
+end

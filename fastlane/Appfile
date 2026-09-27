@@ -1,0 +1,10 @@
+# frozen_string_literal: true
+
+# App identity for fastlane. The bundle identifier matches KX_BUNDLE_ID in
+# Config/Base.xcconfig; the team comes from the KX_APPLE_TEAM_ID environment variable
+# (a CI secret), so no account data lives in the repository.
+
+app_identifier("de.karinex.app")
+
+apple_team_id = ENV.fetch("KX_APPLE_TEAM_ID", "").strip
+team_id(apple_team_id) unless apple_team_id.empty?

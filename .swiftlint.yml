@@ -1,0 +1,167 @@
+# SwiftLint configuration for KARINEX (SwiftLint 0.65.1, pinned in CI and the Makefile).
+#
+#   make lint      runs `swiftlint lint --strict` (every warning fails CI)
+#   make format    runs `swiftlint lint --fix`, then SwiftFormat
+#
+# The configuration agrees with .swiftformat: 4 spaces, 140 columns, mandatory trailing
+# commas in multi-line collection literals, `#if` blocks not indented, `{` of a multi-line
+# condition on its own line, `@State private var`.
+#
+# Only the custom rule (and statement_position) needs SourceKit. The official Docker image
+# used by CI and every macOS build ship it; the Linux release binary loads it from the Swift
+# toolchain on PATH (or LINUX_SOURCEKIT_LIB_PATH) and otherwise skips those rules with a
+# warning, so use the Docker image or a toolchain on Linux.
+
+# No `included` list: SwiftLint 0.65 ignores directory arguments when `included` is set, and
+# the only Swift sources live in App/, Packages/ and Tools/ anyway. Build products and
+# SwiftPM checkouts are excluded below.
+excluded:
+  - "**/.build"
+  - "**/.swiftpm"
+  - "**/DerivedData"
+  - "**/SourcePackages"
+  - "**/__Snapshots__"
+  - .spm
+  - build
+  - vendor
+
+# MARK: - Rule selection
+
+disabled_rules:
+  # `String(decoding: data, as: UTF8.self)` is the intended, non-failing conversion for data
+  # the app produced itself (encoded GraphQL bodies, fixtures in tests).
+  - optional_data_string_conversion
+
+opt_in_rules:
+  - closure_spacing
+  - contains_over_filter_count
+  - contains_over_filter_is_empty
+  - contains_over_first_not_nil
+  - contains_over_range_nil_comparison
+  - discouraged_object_literal
+  - empty_count
+  - empty_string
+  - empty_xctest_method
+  - explicit_init
+  - fatal_error_message
+  - first_where
+  - flatmap_over_map_reduce
+  - identical_operands
+  - implicit_return
+  - joined_default_parameter
+  - last_where
+  - legacy_multiple
+  - prefer_self_type_over_type_of_self
+  - private_swiftui_state
+  - redundant_nil_coalescing
+  - redundant_type_annotation
+  - shorthand_optional_binding
+  - sorted_first_last
+  - toggle_bool
+  - unhandled_throwing_task
+  - unneeded_parentheses_in_closure_argument
+  - unowned_variable_capture
+  - untyped_error_in_catch
+  - xct_specific_matcher
+  - yoda_condition
+
+# MARK: - Rule configuration
+
+line_length:
+  warning: 140
+  error: 140
+  ignores_urls: true
+  ignores_function_declarations: false
+  ignores_comments: false
+
+# Mandatory trailing commas in multi-line array and dictionary literals, matching
+# SwiftFormat's `--trailing-commas collections-only`.
+trailing_comma:
+  mandatory_comma: true
+
+# SwiftFormat's wrapMultilineStatementBraces puts the `{` of a multi-line condition,
+# signature or type header on its own line.
+opening_brace:
+  ignore_multiline_statement_conditions: true
+  ignore_multiline_type_headers: true
+  ignore_multiline_function_signatures: true
+
+# Two-letter identifiers are domain vocabulary here: ISO codes (`CountryCode.de`,
+# `AppLanguage.fi`) and the spacing scale (`KXSpacing.xs`). One-letter names are allowed for
+# the spacing scale (`s`, `m`, `l`) and conventional math/loop variables only.
+identifier_name:
+  min_length:
+    warning: 2
+    error: 2
+  max_length:
+    warning: 60
+    error: 60
+  excluded:
+    - s
+    - m
+    - l
+    - x
+    - y
+    - z
+    - i
+    - j
+    - n
+
+type_name:
+  min_length: 2
+  max_length: 60
+
+nesting:
+  type_level: 2
+  function_level: 3
+
+function_parameter_count:
+  warning: 8
+  error: 8
+
+function_body_length:
+  warning: 100
+  error: 100
+
+type_body_length:
+  warning: 400
+  error: 400
+
+file_length:
+  warning: 700
+  error: 700
+  ignore_comment_only_lines: true
+
+cyclomatic_complexity:
+  warning: 14
+  error: 14
+  ignores_case_statements: true
+
+large_tuple:
+  warning: 3
+  error: 3
+
+implicit_return:
+  included:
+    - closure
+    - function
+    - getter
+
+# TODO and FIXME markers are not allowed in shipped code (contract rule 1). Keep enabled.
+todo:
+  severity: error
+
+# MARK: - Custom rules
+
+custom_rules:
+  no_print_logging:
+    name: "Use KXLogger"
+    message: "Use KXLogger (which redacts PII) instead of print, debugPrint, dump or NSLog."
+    regex: '\b(print|debugPrint|dump|NSLog)\s*\('
+    match_kinds:
+      - identifier
+    excluded:
+      - "Tools/"
+      - ".*/Tests/"
+      - ".*/UITests/"
+    severity: error

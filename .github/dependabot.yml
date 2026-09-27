@@ -1,0 +1,20 @@
+# Keeps the GitHub Actions used by .github/workflows current. Swift packages are pinned in
+# the Package.swift files and updated deliberately; fastlane is updated with `bundle update`.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Berlin
+    commit-message:
+      prefix: ci
+    labels:
+      - dependencies
+      - ci
+    groups:
+      github-actions:
+        patterns:
+          - "*"
