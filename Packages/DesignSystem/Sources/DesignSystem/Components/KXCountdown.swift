@@ -254,7 +254,11 @@ private func kxCountdownUnits(for components: KXCountdownComponents) -> [KXCount
         units.append(KXCountdownUnit(
             id: .days,
             value: components.days,
-            label: String(localized: "kx.countdown.unit.days \(components.days)", bundle: .module)
+            // Xcode requires plural variations to contain the number, and the tile shows the
+            // number separately, so the label uses two plain keys instead of a plural.
+            label: components.days == 1
+                ? String(localized: "kx.countdown.unit.day", bundle: .module)
+                : String(localized: "kx.countdown.unit.days", bundle: .module)
         ))
     }
     units.append(KXCountdownUnit(

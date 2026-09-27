@@ -379,44 +379,38 @@
         }
       }
     },
-    "kx.countdown.unit.days %lld" : {
-      "comment" : "Short label below the days tile of a flip-digit deal countdown, shown in small uppercase letters. The number is shown in the tile above, so the text contains no number; the plural form only selects day or days. Maximum about 6 characters.",
+    "kx.countdown.unit.day" : {
+      "comment" : "Short label under the days tile of a deal countdown when exactly one day remains (the number is shown in the tile above, not in this label). One short word. Shown in small uppercase letters, maximum about 6 characters.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Tag"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Tage"
-                }
-              }
-            }
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag"
           }
         },
         "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Day"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Days"
-                }
-              }
-            }
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day"
+          }
+        }
+      }
+    },
+    "kx.countdown.unit.days" : {
+      "comment" : "Short label under the days tile of a deal countdown when two or more days remain (the number is shown in the tile above, not in this label). One short word. Shown in small uppercase letters, maximum about 6 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tage"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Days"
           }
         }
       }

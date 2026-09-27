@@ -176,6 +176,10 @@ class Catalog:
         return None
 
 
+
+# Any printf-style specifier (optionally positional) or a substitution reference.
+PLURAL_NUMBER_REFERENCE = re.compile(r"%(?:\d+\$)?(?:l{1,2}|q|h{1,2}|z|j|t)?[dDiuUxXoOfFeEgGaAcCsSp@]|%arg|%#@")
+
 def is_excluded(path: Path, root: Path) -> bool:
     """Whether `path` lies inside a build, checkout or snapshot directory."""
     try:
@@ -302,6 +306,7 @@ def collect_units(
                     check_plural_categories(
                         catalog, key, language, variation_path=variation_path, categories=set(cases), report=report
                     )
+                    check_plural_references_number(catalog, key, language, variation_path, cases, report)
                 for case, child in sorted(cases.items()):
                     units += collect_units(
                         catalog, key, language, child, variation_path=f"{variation_path}/{kind}.{case}", report=report
@@ -324,6 +329,30 @@ def collect_units(
                     report=report,
                 )
     return units
+
+
+def check_plural_references_number(
+    catalog: Catalog,
+    key: str,
+    language: str,
+    variation_path: str,
+    cases: dict,
+    report: Report,
+) -> None:
+    """Xcode's String Catalog compiler rejects plural variations whose text does not contain the
+    number ("Plural variation requires referencing the number in the string"), so every case
+    must contain a format specifier. Labels without the number need separate top-level keys."""
+    line = catalog.line_of_key(key)
+    for case, child in sorted(cases.items()):
+        unit = child.get("stringUnit") if isinstance(child, dict) else None
+        value = unit.get("value") if isinstance(unit, dict) else None
+        if isinstance(value, str) and not PLURAL_NUMBER_REFERENCE.search(value):
+            report.error(
+                catalog.path,
+                f"key '{key}' [{language}{variation_path}/plural.{case}]: plural text must reference the number "
+                "(Xcode rejects it otherwise); use separate keys for labels without the number",
+                line,
+            )
 
 
 def check_plural_categories(
