@@ -1,4 +1,3 @@
-import DesignTokens
 import SwiftUI
 
 // MARK: - KXTrustItem
@@ -292,7 +291,7 @@ private struct KXTrustStripPreviewGallery: View {
         KXTrustItem(systemImage: "envelope", text: "Lieferung per E-Mail in Minuten"),
         KXTrustItem(systemImage: "creditcard", text: "Apple Pay, Kreditkarte, Klarna"),
         KXTrustItem(systemImage: "arrow.uturn.backward", text: "100 Tage Geld-zurück", footnoteMarker: "*") {},
-        KXTrustItem(systemImage: "bubble.left.and.bubble.right", text: "Support Mo. bis So., 06:00 bis 23:00 Uhr"),
+        KXTrustItem(systemImage: "bubble.left.and.bubble.right", text: "Support Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit"),
     ]
 
     var body: some View {

@@ -67,7 +67,9 @@ public struct MarketResolution: Sendable, Equatable {
 /// Maps the device region and preferred languages to a market and language the store supports.
 ///
 /// Rules:
-/// - Country: the device region when the store sells there, else `defaultCountry` (`DE`).
+/// - Country: the device region when the store sells there, else `defaultCountry` (`DE`). If
+///   the store does not sell to `defaultCountry` either, the first country it sells to, so the
+///   result is always a market that exists.
 /// - Language: the first preferred language that is one of the 11 app languages and available
 ///   for that country in the store (`pt` and `pt-BR` count as `PT_PT`, `de-AT` as `DE`).
 ///   Otherwise the first of `fallbackLanguages` (`EN`, then `DE`) available in the country,
@@ -107,8 +109,8 @@ public struct MarketResolver: Sendable {
     public func resolve(regionCode: String?, preferredLanguages: [String], localization: Localization) -> MarketResolution {
         let requestedCountry = regionCode.map(CountryCode.init(rawValue:))
         let soldCountry = requestedCountry.flatMap { localization.country(for: $0) }
-        let country = soldCountry ?? localization.country(for: defaultCountry)
-        let countryCode = soldCountry?.isoCode ?? defaultCountry
+        let country = soldCountry ?? localization.country(for: defaultCountry) ?? localization.availableCountries.first
+        let countryCode = country?.isoCode ?? defaultCountry
         let countryAdjusted = soldCountry == nil
 
         let availableLanguages = country?.availableLanguages.map(\.isoCode) ?? []

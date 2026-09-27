@@ -650,7 +650,7 @@
       }
     },
     "kx.price.accessibility.compare %@ %@" : {
-      "comment" : "VoiceOver label of a price tag with a struck-through former price. %1$@ is the current price, %2$@ the former (compare-at) price, e.g. \"Preis 12,90 €, statt 79,99 €\". Not shown visually.",
+      "comment" : "VoiceOver label of a price with a struck-through former price, on price tags and product cards. %1$@ is the current price, %2$@ the former (compare-at) price, both formatted by the store, e.g. \"Preis 12,90 €, statt 79,99 €\". Not shown visually.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -668,43 +668,7 @@
       }
     },
     "kx.price.accessibility.current %@" : {
-      "comment" : "VoiceOver label of a price tag without a former price. %@ is the formatted price, e.g. \"12,90 €\". Not shown visually.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Preis %@"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Price %@"
-          }
-        }
-      }
-    },
-    "kx.product.accessibility.compare %@ %@" : {
-      "comment" : "VoiceOver part of a product card when the product has a former price. %1$@ is the current price, %2$@ the former (struck-through) price, both formatted by the store, e.g. 'Preis 12,90 €, statt 79,99 €'. Not shown visually.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Preis %1$@, statt %2$@"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Price %1$@, was %2$@"
-          }
-        }
-      }
-    },
-    "kx.product.accessibility.price %@" : {
-      "comment" : "VoiceOver part of a product card. %@ is the current price formatted by the store, e.g. 'Preis 12,90 €'. Not shown visually.",
+      "comment" : "VoiceOver label of a price without a former price, on price tags and product cards. %@ is the price formatted by the store, e.g. \"Preis 12,90 €\". Not shown visually.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {

@@ -110,7 +110,8 @@ private struct AccountBenefitRow: View {
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: KXSpacing.s) {
             Image(systemName: benefit.systemImage)
-                .font(.system(.body, weight: .medium))
+                .fontWeight(.medium)
+                .kxFont(.body)
                 .foregroundStyle(KXColor.brand)
                 .frame(width: iconWidth)
                 .accessibilityHidden(true)

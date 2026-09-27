@@ -145,12 +145,12 @@ struct SnapshotCopy: Sendable {
         deliveryValue: "Download",
         licenseKeyLabel: "Lizenzschlüssel",
         supportTitle: "Support",
-        supportChannels: "WhatsApp, E-Mail und Live-Chat, Mo. bis So., 06:00 bis 23:00 Uhr",
+        supportChannels: "WhatsApp, E-Mail und Live-Chat, Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit",
         email: "E-Mail",
         deliveryFact: "Lieferung per E-Mail in Minuten",
         paymentFact: "Apple Pay, Kreditkarte, Klarna",
         refundFact: "100 Tage Geld-zurück",
-        supportFact: "Support Mo. bis So., 06:00 bis 23:00 Uhr",
+        supportFact: "Support Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit",
         emptyCartTitle: "Ihr Warenkorb ist leer",
         emptyCartMessage: "Legen Sie Produkte in den Warenkorb, um sie hier zu sehen.",
         noResultsTitle: "Keine Treffer",
@@ -171,7 +171,7 @@ struct SnapshotCopy: Sendable {
         paymentQuestion: "Welche Zahlungsarten stehen zur Verfügung?",
         paymentAnswer: "Apple Pay, Kreditkarte und Klarna.",
         supportQuestion: "Wann ist der Support erreichbar?",
-        supportAnswer: "Montag bis Sonntag, 06:00 bis 23:00 Uhr, per WhatsApp, E-Mail und Live-Chat."
+        supportAnswer: "Montag bis Sonntag, 06:00 bis 23:00 Uhr deutscher Zeit, per WhatsApp, E-Mail und Live-Chat."
     )
 
     /// Finnish, with long compound words.
@@ -198,12 +198,12 @@ struct SnapshotCopy: Sendable {
         deliveryValue: "Lataus",
         licenseKeyLabel: "Käyttöoikeusavain",
         supportTitle: "Asiakastuki",
-        supportChannels: "WhatsApp, sähköposti ja live-chat, maanantaista sunnuntaihin klo 6.00 ja 23.00 välillä",
+        supportChannels: "WhatsApp, sähköposti ja live-chat, maanantaista sunnuntaihin klo 6.00 ja 23.00 välillä Saksan aikaa",
         email: "Sähköposti",
         deliveryFact: "Toimitus sähköpostitse minuuteissa",
         paymentFact: "Apple Pay, luottokortti, Klarna",
         refundFact: "100 päivän rahat takaisin",
-        supportFact: "Asiakastuki joka päivä klo 6.00 ja 23.00 välillä",
+        supportFact: "Asiakastuki joka päivä klo 6.00 ja 23.00 välillä Saksan aikaa",
         emptyCartTitle: "Ostoskorisi on tyhjä",
         emptyCartMessage: "Lisää tuotteita ostoskoriin, niin näet ne täällä.",
         noResultsTitle: "Ei hakutuloksia",
@@ -224,6 +224,6 @@ struct SnapshotCopy: Sendable {
         paymentQuestion: "Mitä maksutapoja voin käyttää?",
         paymentAnswer: "Apple Pay, luottokortti ja Klarna.",
         supportQuestion: "Milloin asiakastuki on tavoitettavissa?",
-        supportAnswer: "Maanantaista sunnuntaihin klo 6.00 ja 23.00 välillä WhatsAppin, sähköpostin ja live-chatin kautta."
+        supportAnswer: "Maanantaista sunnuntaihin klo 6.00 ja 23.00 välillä Saksan aikaa WhatsAppin, sähköpostin ja live-chatin kautta."
     )
 }

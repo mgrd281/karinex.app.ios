@@ -9,11 +9,14 @@ import Foundation
 ///    `X-Shopify-Customer-Access-Token`, `X-Shopify-Access-Token`, `Cookie`, `Set-Cookie`),
 /// 2. `Bearer <token>` credentials,
 /// 3. values of unambiguous secret fields in JSON or form bodies (`access_token`,
-///    `refresh_token`, `id_token`, `code_verifier`, `client_secret`, `password`, and their
-///    camelCase spellings),
+///    `refresh_token`, `id_token`, `code_verifier`, `client_secret`, `password`,
+///    `customer_access_token`, the token exchange fields `subject_token` and `actor_token`,
+///    and their camelCase spellings),
 /// 4. values of sensitive URL query and fragment items (`access_token`, `refresh_token`,
 ///    `id_token`, `code`, `state`, `nonce`, `code_verifier`, `key`, `cart`, `email`, `token`,
-///    `client_secret`, `password`),
+///    `client_secret`, `password`, `customer_access_token`, `subject_token`, `actor_token`),
+///    also when the whole query is itself percent-encoded inside another URL
+///    (`?return_to=%2Fcb%3Fcode%3D...`),
 /// 5. the identifying part of Shopify GIDs that carry cart tokens or personal data
 ///    (`Cart`, `CartLine`, `Checkout`, `Customer`, `CustomerAddress`, `MailingAddress`),
 ///    keeping the type prefix: `gid://shopify/Cart/<redacted>`. Other GIDs such as
@@ -22,7 +25,8 @@ import Foundation
 /// 7. Shopify access tokens (`shpat_`, `shpca_`, `shcat_`, `shpss_`, `shppa_`, `shpua_`,
 ///    `atkn_` prefixes),
 /// 8. JSON Web Tokens (three base64url segments, the first starting with `eyJ`),
-/// 9. email addresses (also percent-encoded as `%40`),
+/// 9. email addresses (also percent-encoded as `%40`); asset names such as `logo@2x.png`
+///    are not addresses and stay,
 /// 10. Microsoft-style product keys (`XXXXX-XXXXX-XXXXX-XXXXX-XXXXX`),
 /// 11. long opaque secrets: runs of 32 or more hexadecimal characters, and base64 or base64url
 ///     runs of 32 or more characters that mix upper case, lower case and digits and do not
@@ -117,13 +121,19 @@ public enum Redactor {
 
     private static let secretFieldNames = [
         "access_token", "refresh_token", "id_token", "code_verifier", "client_secret", "password",
+        "customer_access_token", "subject_token", "actor_token",
         "accessToken", "refreshToken", "idToken", "codeVerifier", "clientSecret", "customerAccessToken",
+        "subjectToken", "actorToken",
     ]
 
     private static let sensitiveQueryItemNames = [
         "access_token", "refresh_token", "id_token", "code_verifier", "client_secret", "password",
+        "customer_access_token", "subject_token", "actor_token",
         "code", "state", "nonce", "key", "cart", "email", "token",
     ]
+
+    /// File extensions that follow an `@2x`/`@3x` scale suffix in asset names; never a TLD.
+    private static let assetExtensions = ["png", "jpe?g", "gif", "webp", "heic", "svg", "pdf"]
 
     private static let sensitiveGIDTypes = [
         "CartLine", "Cart", "Checkout", "CustomerAddress", "Customer", "MailingAddress",
@@ -153,6 +163,13 @@ public enum Redactor {
             pattern: #"(?i)([?&#;](?:"# + sensitiveQueryItemNames.joined(separator: "|") + #")=)([^&#\s"'<>]+)"#,
             template: "$1" + replacement
         ),
+        // 4b. The same items inside a percent-encoded URL, e.g. a `return_to` parameter:
+        //     `%3Fcode%3D<value>%26state%3D<value>`. The value ends at an encoded `&` or `#`.
+        RedactionRule(
+            pattern: #"(?i)((?:%3F|%26|%23)(?:"# + sensitiveQueryItemNames.joined(separator: "|")
+                + #")%3D)((?:(?!%26|%23)[^&#\s"'<>])+)"#,
+            template: "$1" + replacement
+        ),
         // 5. GIDs carrying cart tokens or personal data, also percent-encoded.
         RedactionRule(
             pattern: #"(?i)(gid(?::|%3A)(?://|%2F%2F)shopify(?:/|%2F)(?:"# + sensitiveGIDTypes.joined(separator: "|")
@@ -174,9 +191,10 @@ public enum Redactor {
             pattern: #"\beyJ[A-Za-z0-9_-]{2,}\.[A-Za-z0-9_-]{2,}\.[A-Za-z0-9_-]*"#,
             template: replacement
         ),
-        // 9. Email addresses, plain or percent-encoded.
+        // 9. Email addresses, plain or percent-encoded (but not `logo@2x.png` style asset names).
         RedactionRule(
-            pattern: #"(?i)[A-Z0-9._%+\-]+(?:@|%40)[A-Z0-9\-]+(?:\.[A-Z0-9\-]+)*\.[A-Z]{2,}"#,
+            pattern: #"(?i)[A-Z0-9._%+\-]+(?:@|%40)[A-Z0-9\-]+(?:\.[A-Z0-9\-]+)*\.(?!(?:"#
+                + assetExtensions.joined(separator: "|") + #")\b)[A-Z]{2,}"#,
             template: replacement
         ),
         // 10. Microsoft-style product keys.

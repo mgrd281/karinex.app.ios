@@ -126,6 +126,28 @@ struct RedactorTests {
         #expect(Redactor.redact("karinex://auth#access_token=abc&state=xyz") == "karinex://auth#access_token=<redacted>&state=<redacted>")
     }
 
+    @Test("Masks sensitive items of a percent-encoded URL nested in a query")
+    func percentEncodedNestedQuery() {
+        #expect(
+            Redactor.redact("login https://shop.example/auth?return_to=%2Fcallback%3Fcode%3Dabc123%26state%3Dxyz%26locale%3Dde")
+                == "login https://shop.example/auth?return_to=%2Fcallback%3Fcode%3D<redacted>%26state%3D<redacted>%26locale%3Dde"
+        )
+        #expect(
+            Redactor.redact("next=%2Fcb%3faccess_token%3dsecret%252F123%23frag")
+                == "next=%2Fcb%3faccess_token%3d<redacted>%23frag"
+        )
+    }
+
+    @Test("Masks customer access tokens and token exchange fields in snake case")
+    func tokenExchangeFields() {
+        #expect(Redactor.redact("customer_access_token=abc123") == "customer_access_token=<redacted>")
+        #expect(Redactor.redact(#"{"subject_token":"abc","actor_token": "def"}"#) == #"{"subject_token":"<redacted>","actor_token": "<redacted>"}"#)
+        #expect(
+            Redactor.redact("POST /oauth/token?grant_type=x&subject_token=abc&client_id=1")
+                == "POST /oauth/token?grant_type=x&subject_token=<redacted>&client_id=1"
+        )
+    }
+
     // MARK: - No false positives
 
     @Test(
@@ -150,6 +172,10 @@ struct RedactorTests {
             "request 123e4567-e89b-12d3-a456-426614174000 finished",
             "@inContext(country: DE, language: PT_PT)",
             "Support Mo. bis So., 06:00 bis 23:00 Uhr",
+            "Image logo@2x.png failed to load",
+            "asset icon@3x.jpeg, badge@2x.webp",
+            "Retry-After: 120",
+            "sku 4260712033710",
             "",
         ]
     )

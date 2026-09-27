@@ -10,8 +10,12 @@ import SwiftUI
 /// section 2: the promise applies only to activated license keys and physical goods, delivered
 /// but not activated keys are not refunded voluntarily, and statutory warranty rights remain
 /// untouched.
+///
+/// The sheet opens at half height; at accessibility text sizes it opens at full height, so the
+/// conditions are not cut off below the fold.
 struct MoneyBackConditionSheet: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         NavigationStack {
@@ -49,7 +53,7 @@ struct MoneyBackConditionSheet: View {
                 }
             }
         }
-        .presentationDetents([.medium, .large])
+        .presentationDetents(dynamicTypeSize.isAccessibilitySize ? [.large] : [.medium, .large])
     }
 }
 
@@ -62,7 +66,8 @@ private struct MoneyBackClauseRow: View {
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: KXSpacing.s) {
             Image(systemName: clause.systemImage)
-                .font(.system(.body, weight: .medium))
+                .fontWeight(.medium)
+                .kxFont(.body)
                 .foregroundStyle(KXColor.brand)
                 .accessibilityHidden(true)
             Text(clause.text)

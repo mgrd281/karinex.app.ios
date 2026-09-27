@@ -1,7 +1,5 @@
-import DesignTokens
 import Foundation
 import SwiftUI
-import UIKit
 
 // MARK: - KXLicenseKeyFormatting
 
@@ -113,8 +111,11 @@ public enum KXLicenseKeyFormatting {
 /// "Lizenzschlüssel verborgen" while it is hidden. The key is marked `privacySensitive`, so it
 /// is redacted wherever the system hides private content.
 ///
-/// The card uses the `keyCard*` color tokens and looks the same in light and dark mode. At
-/// large text sizes the buttons stack vertically and the key wraps group by group.
+/// The card uses the `keyCard*` color tokens and looks the same in light and dark mode. Its
+/// buttons are ``KXButtonStyle`` buttons in their dark-appearance colors, because the ink panel is
+/// a dark surface in both appearances: "Kopieren" is gold with an ink label, "Anzeigen" has a gold
+/// outline and a cream label, "Anleitung" and "Support zu dieser Lizenz" are gold text. At large
+/// text sizes the buttons stack vertically and the key wraps group by group.
 ///
 /// ```swift
 /// @State private var isRevealed = false
@@ -175,10 +176,15 @@ public struct KXKeyCard: View {
         VStack(alignment: .leading, spacing: KXSpacing.l) {
             header
             keySection
-            primaryActions
-            if onShowGuide != nil || onContactSupport != nil {
-                secondaryActions
+            Group {
+                primaryActions
+                if onShowGuide != nil || onContactSupport != nil {
+                    secondaryActions
+                }
             }
+            // The ink panel is dark in both appearances; the dark-appearance button tokens are
+            // the pairings allowed on it (gold on ink, ink on gold, cream on ink).
+            .environment(\.colorScheme, .dark)
         }
         .padding(.horizontal, KXSpacing.l)
         .padding(.top, KXSpacing.l + kxKeyCardAccentLineHeight)
@@ -296,7 +302,7 @@ public struct KXKeyCard: View {
                 }
             }
         }
-        .buttonStyle(KXKeyCardButtonStyle(kind: .filled, isFullWidth: isFullWidth))
+        .buttonStyle(.kx(.primary, size: .compact, isFullWidth: isFullWidth))
         .accessibilityHint(Text("kx.keycard.copy.hint", bundle: .module))
     }
 
@@ -316,7 +322,7 @@ public struct KXKeyCard: View {
                 }
             }
         }
-        .buttonStyle(KXKeyCardButtonStyle(kind: .outlined, isFullWidth: isFullWidth))
+        .buttonStyle(.kx(.secondary, size: .compact, isFullWidth: isFullWidth))
     }
 
     @ViewBuilder private var guideButton: some View {
@@ -330,7 +336,7 @@ public struct KXKeyCard: View {
                     Text("kx.keycard.guide", bundle: .module)
                 }
             }
-            .buttonStyle(KXKeyCardButtonStyle(kind: .plain, isFullWidth: false))
+            .buttonStyle(.kx(.tertiary, size: .compact))
         }
     }
 
@@ -345,7 +351,7 @@ public struct KXKeyCard: View {
                     Text("kx.keycard.support", bundle: .module)
                 }
             }
-            .buttonStyle(KXKeyCardButtonStyle(kind: .plain, isFullWidth: false))
+            .buttonStyle(.kx(.tertiary, size: .compact))
         }
     }
 
@@ -434,62 +440,6 @@ private struct KXLicenseKeyLines: View {
                 Text(verbatim: line)
                     .fixedSize(horizontal: !allowsWrapping, vertical: true)
             }
-        }
-    }
-}
-
-// MARK: - Button style
-
-/// Buttons on the ink card. Colors are limited to the pairings allowed on `keyCardBackground`:
-/// gold (`accent`) text and outlines, and ink text on the gold fill.
-private struct KXKeyCardButtonStyle: ButtonStyle {
-    enum Kind {
-        /// Gold fill, ink label. The primary action (copy).
-        case filled
-        /// Gold outline, gold label.
-        case outlined
-        /// Gold label only.
-        case plain
-    }
-
-    let kind: Kind
-    let isFullWidth: Bool
-
-    func makeBody(configuration: Configuration) -> some View {
-        let shape = RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous)
-        return configuration.label
-            .kxFont(kind == .plain ? .subheadline : .headline)
-            .multilineTextAlignment(.center)
-            .fixedSize(horizontal: false, vertical: true)
-            .foregroundStyle(foregroundColor)
-            .padding(.horizontal, kind == .plain ? KXSpacing.xxs : KXSpacing.m)
-            .padding(.vertical, KXSpacing.xs)
-            .frame(
-                minWidth: KXSpacing.minimumTapTarget,
-                maxWidth: isFullWidth ? .infinity : nil,
-                minHeight: KXSpacing.minimumTapTarget
-            )
-            .background(backgroundColor, in: shape)
-            .overlay {
-                if kind == .outlined {
-                    shape.strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
-                }
-            }
-            .contentShape(shape)
-            .opacity(configuration.isPressed ? 0.72 : 1)
-    }
-
-    private var foregroundColor: Color {
-        switch kind {
-        case .filled: KXColor.textOnAccent
-        case .outlined, .plain: KXColor.accent
-        }
-    }
-
-    private var backgroundColor: Color {
-        switch kind {
-        case .filled: KXColor.accent
-        case .outlined, .plain: Color.clear
         }
     }
 }

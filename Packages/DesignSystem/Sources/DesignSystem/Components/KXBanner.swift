@@ -12,12 +12,14 @@ import SwiftUI
 /// having to find the banner.
 ///
 /// Insert and remove it inside an animation to slide it in from the top; with Reduce Motion
-/// it cross-fades instead. The `kxBanner(isPresented:banner:)` modifier does all of this and
-/// places the banner at the top of the modified view:
+/// it cross-fades instead. The `kxBanner(isPresented:placement:banner:)` modifier does all of
+/// this and places the banner at the top of the modified view. Around navigation containers use
+/// the ``KXBannerPlacement/inset`` placement, which pushes the content down instead of covering
+/// the navigation bar:
 ///
 /// ```swift
-/// RootView()
-///     .kxBanner(isPresented: networkStatus == .offline) {
+/// TabView { ... }
+///     .kxBanner(isPresented: networkStatus == .offline, placement: .inset) {
 ///         KXBanner(.offline)
 ///     }
 /// ```
@@ -75,7 +77,7 @@ public struct KXBanner: View {
         let shape = RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous)
         HStack(alignment: .center, spacing: KXSpacing.s) {
             Image(systemName: systemImage)
-                .font(.system(.body, weight: .semibold))
+                .kxFont(.headline)
                 .foregroundStyle(iconColor)
                 .accessibilityHidden(true)
             contentLayout {
@@ -93,7 +95,8 @@ public struct KXBanner: View {
                     onDismiss()
                 } label: {
                     Image(systemName: "xmark")
-                        .font(.system(.footnote, weight: .semibold))
+                        .fontWeight(.semibold)
+                        .kxFont(.footnote)
                         .foregroundStyle(KXColor.textSecondary)
                         .frame(width: KXSpacing.minimumTapTarget, height: KXSpacing.minimumTapTarget)
                         .contentShape(Rectangle())
@@ -105,20 +108,20 @@ public struct KXBanner: View {
         .padding(.leading, KXSpacing.m)
         .padding(.trailing, onDismiss == nil ? KXSpacing.s : KXSpacing.xxs)
         .padding(.vertical, KXSpacing.xxs)
-        .frame(minHeight: 56)
+        .frame(minHeight: KXBannerMetrics.minimumHeight)
         .background {
             ZStack(alignment: .leading) {
                 shape.fill(KXColor.surfaceElevated)
                 Rectangle()
                     .fill(accentColor)
-                    .frame(width: 3)
+                    .frame(width: KXBannerMetrics.accentEdgeWidth)
             }
             .clipShape(shape)
         }
         .overlay {
             shape.strokeBorder(KXColor.hairline, lineWidth: 1 / max(displayScale, 1))
         }
-        .shadow(color: KXColor.scrim.opacity(0.25), radius: 16, x: 0, y: 6)
+        .shadow(color: KXColor.scrim.opacity(0.25), radius: KXBannerMetrics.shadowRadius, x: 0, y: KXBannerMetrics.shadowOffset)
         .accessibilityElement(children: .contain)
         .onChange(of: resolvedMessage, initial: true) {
             AccessibilityNotification.Announcement(resolvedMessage).post()
@@ -181,41 +184,98 @@ public struct KXBanner: View {
     }
 }
 
+// MARK: - Metrics
+
+/// Fixed metrics of ``KXBanner`` that have no general design token.
+private enum KXBannerMetrics {
+    /// Minimum height: a 44 pt action plus the vertical padding, so one-line banners keep a
+    /// calm, consistent height.
+    static let minimumHeight: CGFloat = KXSpacing.xxl + KXSpacing.xs
+    /// Width of the colored leading edge that carries the style's accent color.
+    static let accentEdgeWidth: CGFloat = 3
+    /// Blur radius of the soft shadow that lifts the banner off the content.
+    static let shadowRadius: CGFloat = KXSpacing.m
+    /// Downward offset of the shadow.
+    static let shadowOffset: CGFloat = 6
+}
+
 // MARK: - Presentation
+
+/// Where the `kxBanner(isPresented:placement:banner:)` modifier shows its banner.
+public enum KXBannerPlacement: String, CaseIterable, Sendable {
+    /// The banner floats over the top of the modified view and covers what is underneath while it
+    /// is visible. Use it for screen content below the navigation bar.
+    case overlay
+    /// The banner is stacked above the modified view and pushes it down, so nothing underneath is
+    /// covered. Use it around navigation containers (`TabView`, `NavigationStack`), whose bars and
+    /// buttons must stay reachable while the banner is shown. The strip behind the banner uses the
+    /// page background.
+    case inset
+}
 
 extension View {
     /// Shows `banner` at the top of this view while `isPresented` is `true`.
     ///
     /// The banner slides in from the top with the standard KARINEX spring (a cross-fade with
     /// Reduce Motion), keeps the standard screen gutter and stays inside the safe area.
-    /// The banner announces itself to VoiceOver when it appears.
+    /// A ``KXBanner`` announces itself to VoiceOver when it appears.
     ///
     /// - Parameters:
     ///   - isPresented: Whether the banner is visible.
-    ///   - banner: Builds the banner. Only called while `isPresented` is `true`.
-    public func kxBanner(isPresented: Bool, banner: () -> KXBanner) -> some View {
-        modifier(KXBannerPresenter(banner: isPresented ? banner() : nil))
+    ///   - placement: Whether the banner covers the top of the view (``KXBannerPlacement/overlay``,
+    ///     the default) or pushes the view down (``KXBannerPlacement/inset``).
+    ///   - banner: Builds the banner, typically a ``KXBanner`` (modifiers such as an
+    ///     accessibility identifier may be applied). Only called while `isPresented` is `true`.
+    public func kxBanner(
+        isPresented: Bool,
+        placement: KXBannerPlacement = .overlay,
+        @ViewBuilder banner: () -> some View
+    ) -> some View {
+        modifier(KXBannerPresenter(banner: isPresented ? banner() : nil, placement: placement))
     }
 }
 
-private struct KXBannerPresenter: ViewModifier {
-    let banner: KXBanner?
+private struct KXBannerPresenter<Banner: View>: ViewModifier {
+    let banner: Banner?
+    let placement: KXBannerPlacement
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     func body(content: Content) -> some View {
-        content
-            .overlay(alignment: .top) {
-                ZStack {
-                    if let banner {
-                        banner
-                            .padding(.horizontal, KXSpacing.gutter)
-                            .padding(.top, KXSpacing.xs)
-                            .transition(kxBannerTransition(reduceMotion: reduceMotion))
+        switch placement {
+        case .overlay:
+            content
+                .overlay(alignment: .top) {
+                    ZStack {
+                        presentedBanner(bottomPadding: 0)
                     }
+                    .animation(animation, value: banner != nil)
                 }
-                .animation(KXMotion.animation(.standard, reduceMotion: reduceMotion), value: banner != nil)
+        case .inset:
+            // The animation covers the whole stack, so the content moves down together with the
+            // banner instead of jumping.
+            VStack(spacing: 0) {
+                presentedBanner(bottomPadding: KXSpacing.xs)
+                content
             }
+            .background(KXColor.background.ignoresSafeArea())
+            .animation(animation, value: banner != nil)
+        }
+    }
+
+    @ViewBuilder
+    private func presentedBanner(bottomPadding: CGFloat) -> some View {
+        if let banner {
+            banner
+                .padding(.horizontal, KXSpacing.gutter)
+                .padding(.top, KXSpacing.xs)
+                .padding(.bottom, bottomPadding)
+                .transition(kxBannerTransition(reduceMotion: reduceMotion))
+        }
+    }
+
+    private var animation: Animation {
+        KXMotion.animation(.standard, reduceMotion: reduceMotion)
     }
 }
 

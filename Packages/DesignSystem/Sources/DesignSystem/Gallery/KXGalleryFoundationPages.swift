@@ -17,7 +17,7 @@ struct KXGalleryColorGroup: Identifiable, Sendable {
         KXGalleryColorGroup(title: "Surfaces", tokens: [.background, .surface, .surfaceElevated, .skeleton]),
         KXGalleryColorGroup(title: "Text", tokens: [.textPrimary, .textSecondary, .textTertiary]),
         KXGalleryColorGroup(title: "Brand and actions", tokens: [.brand, .brandPressed, .brandSoft, .textOnBrand]),
-        KXGalleryColorGroup(title: "Accent", tokens: [.accent, .accentDeep, .accentText]),
+        KXGalleryColorGroup(title: "Accent", tokens: [.accent, .accentDeep, .accentText, .textOnAccent]),
         KXGalleryColorGroup(title: "Urgency", tokens: [.urgency, .urgencyText, .textOnUrgency]),
         KXGalleryColorGroup(title: "Lines and icons", tokens: [.hairline, .divider, .iconSecondary]),
         KXGalleryColorGroup(title: "Status", tokens: [.success, .warning, .error, .info]),

@@ -328,12 +328,46 @@ struct ComponentModelTests {
         #expect(model != KXProductCardModel(id: "windows-11-pro", title: "Windows 11 Pro", price: "12,90 €", badgeTone: .urgency))
     }
 
+    @Test("Product card badge tones render as the badge styles of the same name")
+    func badgeToneStyles() {
+        #expect(KXProductCardModel.BadgeTone.gold.badgeStyle == .gold)
+        #expect(KXProductCardModel.BadgeTone.urgency.badgeStyle == .urgency)
+    }
+
     @Test("A timeline step without a state is informational")
     func timelineStepDefaults() {
         let step = KXStepTimeline.Step(title: "Bestellen")
         #expect(step.detail == nil)
         #expect(step.state == nil)
         #expect(step != KXStepTimeline.Step(title: "Bestellen", state: .done))
+    }
+}
+
+// MARK: - Prices and images
+
+@Suite("Price and image helpers")
+struct PriceAndImageHelperTests {
+    @Test("A price is spoken with the former price only when there is one")
+    func spokenPrice() throws {
+        let current = KXPriceTag.spokenPrice("12,90 €", compareAtPrice: nil)
+        #expect(current.contains("12,90 €"))
+        #expect(!current.contains("kx.price"), "Unresolved key: \(current)")
+        #expect(KXPriceTag.spokenPrice("12,90 €", compareAtPrice: "") == current)
+
+        let compared = KXPriceTag.spokenPrice("12,90 €", compareAtPrice: "79,99 €")
+        let price = try #require(compared.range(of: "12,90 €"))
+        let former = try #require(compared.range(of: "79,99 €"))
+        #expect(price.lowerBound < former.lowerBound)
+        #expect(!compared.contains("kx.price"), "Unresolved key: \(compared)")
+    }
+
+    @Test("Only cancelled image downloads are started again")
+    func imageCancellation() {
+        #expect(KXProductImage.isCancellation(CancellationError()))
+        #expect(KXProductImage.isCancellation(URLError(.cancelled)))
+        #expect(!KXProductImage.isCancellation(URLError(.notConnectedToInternet)))
+        #expect(!KXProductImage.isCancellation(URLError(.badServerResponse)))
+        #expect(!KXProductImage.isCancellation(CocoaError(.fileReadCorruptFile)))
     }
 }
 

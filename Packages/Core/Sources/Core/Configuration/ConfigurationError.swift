@@ -11,8 +11,8 @@ public enum ConfigurationError: Error, Sendable, Equatable {
 
     /// A key is present but its value does not have the expected format.
     ///
-    /// `value` is the offending value. Only non-secret keys (domains, API versions, bundle
-    /// versions) are validated, so the value is safe to log.
+    /// `value` is the offending value, safe to log: for the secret keys
+    /// (`KXStorefrontAccessToken`, `KXCustomerAccountClientID`) it is `<redacted>`.
     case invalidValue(key: String, value: String)
 }
 

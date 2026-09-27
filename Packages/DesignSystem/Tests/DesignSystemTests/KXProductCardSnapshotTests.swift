@@ -3,8 +3,10 @@ import SwiftUI
 import Testing
 
 extension DesignSystemSnapshotTests {
-    /// `KXProductCard` with recorded store data and a local image (never `AsyncImage`), with gold
+    /// `KXProductCard` with recorded store data and a local image (never a download), with gold
     /// and urgency badges. Two columns as in the catalog grid, one column at accessibility sizes.
+    /// A second test renders the convenience initializer without an image URL, which shows the
+    /// local fallback symbol and makes no request.
     @MainActor
     @Suite("KXProductCard")
     struct KXProductCardSnapshotTests {
@@ -43,6 +45,27 @@ extension DesignSystemSnapshotTests {
                         }
                     }
                 }
+            }
+        }
+
+        @Test("Without an image", arguments: SnapshotVariant.matrix)
+        func missingImage(_ variant: SnapshotVariant) {
+            let copy = SnapshotCopy.forLanguage(variant.language)
+            let model = KXProductCardModel(
+                id: "office-2024-standard-mac",
+                title: SnapshotStoreData.officeMacTitle,
+                price: SnapshotStoreData.officeMacPrice,
+                compareAtPrice: SnapshotStoreData.officeMacCompareAtPrice,
+                taxNote: copy.taxNote
+            )
+            // Half the canvas as in the two-column grid; the full width at accessibility sizes.
+            let columnWidth: CGFloat? = variant.textSize.isAccessibilitySize
+                ? nil
+                : (SnapshotLayout.width - 2 * KXSpacing.gutter - KXSpacing.m) / 2
+            assertComponentSnapshot(variant: variant) {
+                KXProductCard(model)
+                    .frame(width: columnWidth)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }

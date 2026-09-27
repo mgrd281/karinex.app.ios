@@ -160,6 +160,38 @@ struct AppConfigurationTests {
         }
     }
 
+    @Test(
+        "Errors for non-string secret values never carry the value",
+        arguments: ["KXStorefrontAccessToken", "KXCustomerAccountClientID"]
+    )
+    func nonStringSecretIsRedacted(key: String) {
+        let secret = ["token": "0123456789abcdef0123456789abcdef"]
+        #expect(throws: ConfigurationError.invalidValue(key: key, value: "<redacted>")) {
+            try AppConfiguration(infoDictionary: Self.info(setting: key, to: secret))
+        }
+        do {
+            _ = try AppConfiguration(infoDictionary: Self.info(setting: key, to: secret))
+        } catch {
+            #expect(!String(describing: error).contains("0123456789abcdef"))
+        }
+    }
+
+    @Test("A blank token or client ID passed to the memberwise initializer counts as not configured")
+    func blankValuesAreNotConfigured() {
+        let configuration = AppConfiguration(
+            shopDomain: "45dv93-bk.myshopify.com",
+            storeWebDomain: "www.karinex.de",
+            storefrontAPIVersion: "2026-07",
+            storefrontAccessToken: "  ",
+            customerAccountAPIVersion: "2026-07",
+            customerAccountClientID: "",
+            appVersion: "0.1.0",
+            buildNumber: "1"
+        )
+        #expect(!configuration.isStorefrontTokenConfigured)
+        #expect(!configuration.isCustomerAccountConfigured)
+    }
+
     @Test("Validates quarterly API versions", arguments: ["2025-01", "2025-04", "2026-07", "2026-10", "unstable"])
     func acceptsQuarterlyVersions(version: String) {
         #expect(AppConfiguration.isValidAPIVersion(version))

@@ -272,13 +272,13 @@
       }
     },
     "home.support.hours.value" : {
-      "comment" : "Service hours in the support card: Monday to Sunday, 06:00 to 23:00 German time (Europe/Berlin). Never use a dash for the range.",
+      "comment" : "Service hours in the support card: Monday to Sunday, 06:00 to 23:00 German time (Europe/Berlin). Always say that the hours are German time, so customers in other time zones are not misled. Never use a dash for the range.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mo. bis So., 06:00 bis 23:00 Uhr"
+            "value" : "Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit"
           }
         },
         "en" : {
@@ -470,13 +470,13 @@
       }
     },
     "home.trust.support" : {
-      "comment" : "Trust fact tile on the Start tab: support hours, Monday to Sunday, 06:00 to 23:00 German time (Europe/Berlin). Never use a dash for the range.",
+      "comment" : "Trust fact tile on the Start tab: support hours, Monday to Sunday, 06:00 to 23:00 German time (Europe/Berlin). Always say that the hours are German time, so customers in other time zones are not misled. Never use a dash for the range.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Support Mo. bis So., 06:00 bis 23:00 Uhr"
+            "value" : "Support Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit"
           }
         },
         "en" : {

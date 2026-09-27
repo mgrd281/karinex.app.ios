@@ -1,4 +1,3 @@
-import DesignTokens
 import SwiftUI
 
 // MARK: - KXAccordionItem
@@ -277,7 +276,7 @@ private struct KXAccordionPreviewGallery: View {
                         ),
                         KXAccordionItem(
                             title: "Wann ist der Support erreichbar?",
-                            text: "Montag bis Sonntag, 06:00 bis 23:00 Uhr, per WhatsApp, E-Mail und Live-Chat."
+                            text: "Montag bis Sonntag, 06:00 bis 23:00 Uhr deutscher Zeit, per WhatsApp, E-Mail und Live-Chat."
                         ),
                     ],
                     expansion: .single,
@@ -286,7 +285,7 @@ private struct KXAccordionPreviewGallery: View {
                 KXAccordion(items: [
                     KXAccordionItem(title: "100 Tage Geld-zurück") {
                         VStack(alignment: .leading, spacing: KXSpacing.xs) {
-                            Text(verbatim: "Gilt für aktivierte Lizenzschlüssel und physische Ware.")
+                            Text(verbatim: "Gilt nur für aktivierte Lizenzschlüssel und physische Ware.")
                             Text(verbatim: "Zugestellte, nicht aktivierte Schlüssel werden nicht freiwillig erstattet.")
                             Text(verbatim: "Ihre gesetzlichen Gewährleistungsrechte bleiben unberührt.")
                                 .kxFont(.footnote)

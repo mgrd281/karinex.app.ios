@@ -104,9 +104,11 @@ struct KXGalleryEmptyStatePage: View {
 
 // MARK: - KXBanner
 
-/// Every banner style inline, and the `kxBanner(isPresented:banner:)` presenter.
+/// Every banner style inline, and the `kxBanner(isPresented:placement:banner:)` presenter in both
+/// placements.
 struct KXGalleryBannerPage: View {
     @State private var isOfflineBannerPresented = false
+    @State private var isInsetBannerPresented = false
     @State private var lastEvent: String?
 
     var body: some View {
@@ -137,8 +139,8 @@ struct KXGalleryBannerPage: View {
                 }
             }
             KXGalleryDemo(
-                "Presenter",
-                note: "kxBanner(isPresented:banner:) slides the banner in at the top of the modified view."
+                "Presenter, placement .overlay",
+                note: "kxBanner(isPresented:banner:) slides the banner in over the top of the modified view."
             ) {
                 VStack(alignment: .leading, spacing: KXSpacing.s) {
                     KXButton(isOfflineBannerPresented ? "Hide offline banner" : "Show offline banner", style: .secondary) {
@@ -155,6 +157,28 @@ struct KXGalleryBannerPage: View {
                             KXBanner(.offline, onDismiss: {
                                 isOfflineBannerPresented = false
                             })
+                        }
+                        .clipShape(RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous))
+                }
+            }
+            KXGalleryDemo(
+                "Presenter, placement .inset",
+                note: "The banner pushes the view down instead of covering it, as around the app's tab bar."
+            ) {
+                VStack(alignment: .leading, spacing: KXSpacing.s) {
+                    KXButton(isInsetBannerPresented ? "Hide offline banner" : "Show offline banner", style: .secondary) {
+                        isInsetBannerPresented.toggle()
+                    }
+                    KXColor.surface
+                        .frame(height: 160)
+                        .overlay(alignment: .top) {
+                            Text(verbatim: "Top of the screen content")
+                                .kxFont(.footnote)
+                                .foregroundStyle(KXColor.textSecondary)
+                                .padding(KXSpacing.s)
+                        }
+                        .kxBanner(isPresented: isInsetBannerPresented, placement: .inset) {
+                            KXBanner(.offline)
                         }
                         .clipShape(RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous))
                 }

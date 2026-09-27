@@ -19,8 +19,9 @@ public struct GraphQLEndpoint: Sendable {
     /// Timeout of a single HTTP attempt in seconds.
     public var timeout: TimeInterval
     /// Returns headers that must be computed per request, e.g. `Authorization: Bearer ...`.
-    /// Called once per execution (not per retry attempt). Errors it throws are rethrown by
-    /// `GraphQLClient.execute(_:directive:)` unchanged.
+    /// Called once per `GraphQLClient.execute(_:directive:)` call, before the request is sent or
+    /// joins an identical one in flight (not per retry attempt). Errors it throws are rethrown
+    /// by `execute` unchanged.
     public var authorization: @Sendable () async throws -> [String: String]
 
     /// Creates an endpoint.
@@ -50,13 +51,14 @@ public struct GraphQLEndpoint: Sendable {
 /// `execute(_:directive:)`:
 /// 1. injects an optional directive (e.g. `@inContext`) into the operation's document,
 /// 2. POSTs `{"query", "operationName", "variables"}` as JSON with `Content-Type` and `Accept`
-///    set to `application/json`,
+///    set to `application/json`, plus the endpoint's static and per-call authorization headers,
 /// 3. retries transient failures (see below), honoring `Retry-After`,
-/// 4. shares one in-flight request among concurrent callers of an identical query (same body
-///    bytes); mutations are never shared,
+/// 4. shares one in-flight request among concurrent callers of an identical query: same URL,
+///    same headers (so the same credentials) and the same body bytes (so the same document,
+///    directive and variables). Mutations are never shared,
 /// 5. decodes the response and maps failures to `ShopifyError`,
 /// 6. logs operation name, HTTP status, duration, attempts and query cost at debug level.
-///    Variables and bodies are never logged.
+///    Variables, headers and bodies are never logged.
 ///
 /// Retry rules:
 /// - Queries retry on `NetworkError.timeout` and `.transport`, on HTTP 429, 500, 502, 503 and
@@ -66,6 +68,14 @@ public struct GraphQLEndpoint: Sendable {
 ///   request before executing it. A mutation that may have executed is never replayed.
 /// - `NetworkError.offline` and `.cancelled` are never retried: offline fails fast so the UI
 ///   can show the offline banner right away.
+/// - A `Retry-After` is a lower bound for the wait. When it is longer than the policy's
+///   `maxRetryAfter` (12 s by default), the request is not retried and fails with
+///   `.throttled` (429) or `.http` (5xx) instead of being sent again too early.
+///
+/// Cancellation: cancelling the task of a query that shares an in-flight request with other
+/// callers does not cancel the request for them (see `RequestDeduplicator`). A mutation whose
+/// task is cancelled while its request is in flight may still have been executed by Shopify;
+/// callers re-read the affected state (for example the cart) rather than repeating it.
 public final class GraphQLClient: Sendable {
     /// The endpoint requests are sent to.
     public let endpoint: GraphQLEndpoint
@@ -73,8 +83,9 @@ public final class GraphQLClient: Sendable {
     private let httpClient: any HTTPClient
     private let retryExecutor: RetryExecutor
     private let logger: KXLogger
-    /// Shares in-flight queries, keyed by the exact request body. Internal for tests.
-    let deduplicator = RequestDeduplicator<Data, Exchange>()
+    /// Shares in-flight queries, keyed by the complete request as sent (URL, headers with the
+    /// credentials, body). Internal for tests.
+    let deduplicator = RequestDeduplicator<HTTPRequest, Exchange>()
 
     /// Creates a client.
     ///
@@ -118,19 +129,27 @@ public final class GraphQLClient: Sendable {
 
         let clock = ContinuousClock()
         let start = clock.now
+        // Credentials are resolved before de-duplication: they are part of the shared request's
+        // identity, so a query never receives a response fetched with someone else's token.
+        let dynamicHeaders: [String: String]
+        do {
+            dynamicHeaders = try await endpoint.authorization()
+        } catch {
+            logger.error("\(O.operationName) authorization failed duration=\(Self.milliseconds(clock.now - start))ms")
+            throw error
+        }
+        let request = makeRequest(body: body, dynamicHeaders: dynamicHeaders)
+
         let exchange: Exchange
         do {
             switch O.kind {
             case .query:
-                exchange = try await deduplicator.value(for: body) { [self] in
-                    try await send(body: body, kind: .query)
+                exchange = try await deduplicator.value(for: request) { [self] in
+                    try await send(request, kind: .query)
                 }
             case .mutation:
-                exchange = try await send(body: body, kind: .mutation)
+                exchange = try await send(request, kind: .mutation)
             }
-        } catch let failure as AuthorizationFailure {
-            logger.error("\(O.operationName) authorization failed duration=\(Self.milliseconds(clock.now - start))ms")
-            throw failure.underlying
         } catch {
             let mapped = Self.shopifyError(forTransportError: error)
             log(mapped, operationName: O.operationName, status: nil, attempts: nil, duration: clock.now - start)
@@ -165,38 +184,30 @@ public final class GraphQLClient: Sendable {
         let attempts: Int
     }
 
-    /// Wraps an error thrown by `endpoint.authorization`, so it is rethrown unchanged.
-    private struct AuthorizationFailure: Error {
-        let underlying: any Error
-    }
-
-    /// Sends `body` with retries and returns the last response.
-    ///
-    /// Responses that are candidates for a retry are thrown as `RetryableResponse` inside the
-    /// retry loop. When the retry decision or the attempt budget ends the loop, the last such
-    /// response is returned for regular error mapping.
-    private func send(body: Data, kind: GraphQLOperationKind) async throws -> Exchange {
-        let dynamicHeaders: [String: String]
-        do {
-            dynamicHeaders = try await endpoint.authorization()
-        } catch {
-            throw AuthorizationFailure(underlying: error)
-        }
-
+    /// The POST request for `body`: the endpoint's static headers, then the per-call
+    /// authorization headers (which win over static ones), then the JSON content headers.
+    private func makeRequest(body: Data, dynamicHeaders: [String: String]) -> HTTPRequest {
         var request = HTTPRequest(method: .post, url: endpoint.url, headers: endpoint.headers, body: body, timeout: endpoint.timeout)
         for (name, value) in dynamicHeaders {
             request.setValue(value, forHeader: name)
         }
         request.setValue("application/json", forHeader: "Content-Type")
         request.setValue("application/json", forHeader: "Accept")
+        return request
+    }
 
+    /// Sends `request` with retries and returns the last response.
+    ///
+    /// Responses that are candidates for a retry are thrown as `RetryableResponse` inside the
+    /// retry loop. When the retry decision or the attempt budget ends the loop, the last such
+    /// response is returned for regular error mapping.
+    private func send(_ request: HTTPRequest, kind: GraphQLOperationKind) async throws -> Exchange {
         let attempts = Locked(0)
         let httpClient = httpClient
-        let finalRequest = request
         do {
             let response = try await retryExecutor.run {
                 attempts.withLock { $0 += 1 }
-                let response = try await httpClient.send(finalRequest)
+                let response = try await httpClient.send(request)
                 if let reason = RetryableResponse.Reason(response: response) {
                     throw RetryableResponse(response: response, reason: reason)
                 }
@@ -278,7 +289,7 @@ public final class GraphQLClient: Sendable {
     static func retryableErrorCode(in body: Data) -> String? {
         let candidates = [GraphQLErrorDetail.Code.throttled, GraphQLErrorDetail.Code.internalServerError]
         guard candidates.contains(where: { body.contains(Data($0.utf8)) }),
-              let head = try? JSONDecoder().decode(GraphQLResponseHead.self, from: body)
+              let head = try? decoder.decode(GraphQLResponseHead.self, from: body)
         else { return nil }
         return candidates.first { code in head.errors.contains { $0.code == code } }
     }
@@ -298,22 +309,34 @@ public final class GraphQLClient: Sendable {
         let variables: Variables
     }
 
+    /// The shared request encoder: sorted keys, so identical requests have identical bytes and
+    /// can be de-duplicated. `JSONEncoder` is `Sendable` and safe to use concurrently as long
+    /// as it is not reconfigured, which this private constant never is.
+    private static let encoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+        return encoder
+    }()
+
+    /// The shared response decoder (default configuration, never reconfigured).
+    static let decoder = JSONDecoder()
+
     /// Encodes the request body deterministically (sorted keys), so identical requests have
     /// identical bytes and can be de-duplicated.
     static func encodeBody(query: String, operationName: String, variables: some Encodable) throws -> Data {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
-        return try encoder.encode(RequestBody(query: query, operationName: operationName, variables: variables))
+        try encoder.encode(RequestBody(query: query, operationName: operationName, variables: variables))
     }
 
     // MARK: - Decoding and error mapping
 
     /// Maps the final HTTP response to decoded data or a `ShopifyError`.
+    ///
+    /// A successful response is parsed once: `errors` and `extensions` first, and `data` only
+    /// when there are no errors (see `GraphQLResponseEnvelope`).
     static func decode<ResponseData: Decodable>(
         _ type: ResponseData.Type,
         from response: HTTPResponse
     ) throws -> (ResponseData, GraphQLResponseExtensions?) {
-        let decoder = JSONDecoder()
         switch response.statusCode {
         case 200..<300:
             break
@@ -326,33 +349,29 @@ public final class GraphQLClient: Sendable {
             throw ShopifyError.http(statusCode: response.statusCode)
         }
 
-        let head: GraphQLResponseHead
+        let envelope: GraphQLResponseEnvelope<ResponseData>
         do {
-            head = try decoder.decode(GraphQLResponseHead.self, from: response.body)
+            envelope = try decoder.decode(GraphQLResponseEnvelope<ResponseData>.self, from: response.body)
+        } catch let failure as GraphQLResponseEnvelope<ResponseData>.DataDecodingError {
+            throw ShopifyError.decoding("\(typeName(ResponseData.self)): \(codingPathDescription(of: failure.underlying))")
         } catch {
             throw ShopifyError.decoding("GraphQLResponse: \(codingPathDescription(of: error))")
         }
 
-        if !head.errors.isEmpty {
-            if let denied = head.errors.first(where: { $0.code == GraphQLErrorDetail.Code.accessDenied }) {
+        let errors = envelope.errors
+        if !errors.isEmpty {
+            if let denied = errors.first(where: { $0.code == GraphQLErrorDetail.Code.accessDenied }) {
                 throw ShopifyError.accessDenied(requiredAccess: denied.requiredAccess)
             }
-            if head.errors.contains(where: { $0.code == GraphQLErrorDetail.Code.throttled }) {
+            if errors.contains(where: { $0.code == GraphQLErrorDetail.Code.throttled }) {
                 throw ShopifyError.throttled
             }
-            throw ShopifyError.graphQL(head.errors)
-        }
-
-        let envelope: GraphQLDataEnvelope<ResponseData>
-        do {
-            envelope = try decoder.decode(GraphQLDataEnvelope<ResponseData>.self, from: response.body)
-        } catch {
-            throw ShopifyError.decoding("\(typeName(ResponseData.self)): \(codingPathDescription(of: error))")
+            throw ShopifyError.graphQL(errors)
         }
         guard let data = envelope.data else {
             throw ShopifyError.decoding("\(typeName(ResponseData.self)): data")
         }
-        return (data, head.extensions)
+        return (data, envelope.extensions)
     }
 
     /// Maps an error thrown by the transport or the retry loop to a `ShopifyError`.

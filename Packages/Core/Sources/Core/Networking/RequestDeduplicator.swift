@@ -8,11 +8,15 @@ import Foundation
 /// de-duplicates, it does not cache.
 ///
 /// ```swift
-/// let deduplicator = RequestDeduplicator<Data, HTTPResponse>()
-/// let response = try await deduplicator.value(for: requestBody) {
+/// let deduplicator = RequestDeduplicator<HTTPRequest, HTTPResponse>()
+/// let response = try await deduplicator.value(for: request) {
 ///     try await httpClient.send(request)
 /// }
 /// ```
+///
+/// The key must capture everything that changes the result. For HTTP that is the whole
+/// request (URL, headers including credentials, body), not just the body: two callers with
+/// different access tokens must never share a response.
 ///
 /// ## Cancellation
 ///

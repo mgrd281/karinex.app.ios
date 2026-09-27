@@ -188,7 +188,7 @@ enum KXGalleryTopic: String, CaseIterable, Identifiable, Sendable {
         case .wordmark: "The interim typographic logo in three sizes and on brand panels."
         case .skeleton: "Loading placeholders, the redacting modifier and the shimmer switch."
         case .emptyState: "Symbol in a gold ring, serif title, message and optional action."
-        case .banner: "Offline, error, info and success banners and the top-edge presenter."
+        case .banner: "Offline, error, info and success banners and the top-edge presenter in both placements."
         case .stepTimeline: "Process explanations and progress timelines, vertical and horizontal."
         case .accordion: "Single and multiple expansion, custom content and external state."
         case .countdown: "Live and fixed-date countdowns, ink and brand tiles, expiry callback."

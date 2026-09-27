@@ -51,7 +51,8 @@ private struct SupportChannelRow: View {
     var body: some View {
         HStack(alignment: .center, spacing: KXSpacing.s) {
             Image(systemName: channel.systemImage)
-                .font(.system(.callout, weight: .medium))
+                .fontWeight(.medium)
+                .kxFont(.callout)
                 .foregroundStyle(KXColor.brand)
                 .frame(width: iconDiameter, height: iconDiameter)
                 .overlay {

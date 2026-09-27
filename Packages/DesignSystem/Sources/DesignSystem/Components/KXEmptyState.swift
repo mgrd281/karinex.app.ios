@@ -79,6 +79,8 @@ public struct KXEmptyState: View {
 
     // MARK: Parts
 
+    /// The ring and its symbol grow with Dynamic Type but stop at 144 pt and 48 pt, so that the
+    /// title and message stay the focus at accessibility text sizes.
     private var symbolRing: some View {
         let diameter = min(ringDiameter, 144)
         return ZStack {

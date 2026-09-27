@@ -156,14 +156,15 @@ public struct AppConfiguration: Sendable, Equatable {
     }
 
     /// Whether a Storefront access token is configured. Without one the app runs in Shopify's
-    /// tokenless mode, in which metafields are not readable.
+    /// tokenless mode, in which metafields are not readable. A blank token counts as none,
+    /// exactly as `StorefrontConfiguration` treats it.
     public var isStorefrontTokenConfigured: Bool {
-        storefrontAccessToken != nil
+        Self.isPresent(storefrontAccessToken)
     }
 
-    /// Whether a Customer Account API client ID is configured.
+    /// Whether a Customer Account API client ID is configured (a blank ID counts as none).
     public var isCustomerAccountConfigured: Bool {
-        customerAccountClientID != nil
+        Self.isPresent(customerAccountClientID)
     }
 
     /// The public store website, e.g. `https://www.karinex.de`.
@@ -217,6 +218,11 @@ public struct AppConfiguration: Sendable, Equatable {
 
     // MARK: - Private
 
+    private static func isPresent(_ value: String?) -> Bool {
+        guard let value else { return false }
+        return !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
     private static func httpsURL(host: String, path: String) -> URL {
         var components = URLComponents()
         components.scheme = "https"
@@ -246,11 +252,22 @@ public struct AppConfiguration: Sendable, Equatable {
 private struct InfoReader {
     let dictionary: [String: Any]
 
+    /// Keys whose values must never appear in errors or logs.
+    static let secretKeys: Set<String> = [
+        AppConfiguration.InfoKey.storefrontAccessToken,
+        AppConfiguration.InfoKey.customerAccountClientID,
+    ]
+
     /// Returns the trimmed value for `key`, or `nil` when it is absent, empty or unresolved.
+    ///
+    /// A value that is not a string throws `ConfigurationError.invalidValue`; for secret keys
+    /// the error carries `<redacted>` instead of the value, because the app logs configuration
+    /// errors.
     func optional(_ key: String) throws -> String? {
         guard let raw = dictionary[key] else { return nil }
         guard let string = raw as? String else {
-            throw ConfigurationError.invalidValue(key: key, value: String(describing: raw))
+            let value = Self.secretKeys.contains(key) ? Redactor.replacement : String(describing: raw)
+            throw ConfigurationError.invalidValue(key: key, value: value)
         }
         let trimmed = string.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmed.isEmpty || trimmed.contains("$(") || trimmed.contains("${") {

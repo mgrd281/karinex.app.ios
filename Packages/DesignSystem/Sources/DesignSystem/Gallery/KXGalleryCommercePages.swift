@@ -70,7 +70,7 @@ struct KXGalleryAccordionPage: View {
         ),
         (
             question: "Wann ist der Support erreichbar?",
-            answer: "Montag bis Sonntag, 06:00 bis 23:00 Uhr, per WhatsApp, E-Mail und Live-Chat."
+            answer: "Montag bis Sonntag, 06:00 bis 23:00 Uhr deutscher Zeit, per WhatsApp, E-Mail und Live-Chat."
         ),
     ]
 

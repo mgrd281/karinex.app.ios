@@ -67,15 +67,15 @@ struct HomeHero: View {
 /// Concentric champagne-gold rings, the certificate-seal motif of the brand, partly cut off by
 /// the hero panel. Decorative: hidden from VoiceOver and not hit-testable.
 ///
-/// The rings move by up to `KXSpacing.l` (24 pt, the brand's hero parallax distance) against the
-/// scroll direction while the hero leaves the screen. Reduce Motion turns the movement off.
+/// The rings move by up to `KXMotion.heroParallax` (the brand's hero parallax distance) against
+/// the scroll direction while the hero leaves the screen. Reduce Motion turns the movement off.
 private struct HomeHeroOrnament: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         // Copied into a local constant so that the `@Sendable` transition closure captures a
         // plain value instead of the view.
-        let parallaxDistance: CGFloat = reduceMotion ? 0 : KXSpacing.l
+        let parallaxDistance: CGFloat = reduceMotion ? 0 : KXMotion.heroParallax
         ZStack {
             ring(diameter: 200, opacity: 0.6, lineWidth: KXBorder.regular)
             ring(diameter: 150, opacity: 0.4, lineWidth: KXBorder.hairline)

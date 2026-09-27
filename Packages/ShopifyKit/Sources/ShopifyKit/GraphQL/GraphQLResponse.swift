@@ -4,14 +4,15 @@ import Foundation
 
 /// A decoded GraphQL response envelope: `{"data": ..., "errors": [...], "extensions": {...}}`.
 ///
-/// `GraphQLClient` decodes the envelope in two steps: first `errors` and `extensions`, and only
-/// when there are no errors the `data` member into the operation's `ResponseData`. This type is
-/// the one-step form for callers that want to inspect a raw body themselves, such as tests or
-/// the fixture recorder.
+/// `GraphQLClient` decodes `data` into the operation's `ResponseData` only when there are no
+/// errors (see `GraphQLResponseEnvelope`). This type is the plain form for callers that want to
+/// inspect a raw body themselves, such as tests or the fixture recorder: it always decodes
+/// `data` as well.
 public struct GraphQLResponse<ResponseData: Decodable & Sendable>: Sendable, Decodable {
     /// The `data` member, `nil` when absent or `null`.
     public let data: ResponseData?
-    /// The top-level `errors`, empty when absent.
+    /// The top-level `errors`, empty when absent. A plain string (`"errors": "Not Found"`, as
+    /// some Shopify endpoints send) becomes one error with that message.
     public let errors: [GraphQLErrorDetail]
     /// The `extensions` member (query cost, resolved context), if present.
     public let extensions: GraphQLResponseExtensions?
@@ -23,17 +24,11 @@ public struct GraphQLResponse<ResponseData: Decodable & Sendable>: Sendable, Dec
         self.extensions = extensions
     }
 
-    private enum CodingKeys: String, CodingKey {
-        case data
-        case errors
-        case extensions
-    }
-
     /// Decodes the envelope. A missing or `null` `errors` member decodes as an empty array.
     public init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let container = try decoder.container(keyedBy: GraphQLResponseKeys.self)
         data = try container.decodeIfPresent(ResponseData.self, forKey: .data)
-        errors = try container.decodeIfPresent([GraphQLErrorDetail].self, forKey: .errors) ?? []
+        errors = try GraphQLResponseKeys.decodeErrors(from: container)
         extensions = try? container.decodeIfPresent(GraphQLResponseExtensions.self, forKey: .extensions)
     }
 }
@@ -133,24 +128,64 @@ public struct GraphQLResponseContext: Sendable, Equatable, Hashable, Codable {
 
 // MARK: - Internal envelopes
 
-/// The part of a response that is decoded before `data`: errors and extensions.
+/// The top-level members of a GraphQL response.
+enum GraphQLResponseKeys: String, CodingKey {
+    case data
+    case errors
+    case extensions
+
+    /// Decodes `errors`: an array of error objects, or a plain message string, which some
+    /// Shopify endpoints send (`"errors": "Not Found"`). Absent or `null` is no error.
+    static func decodeErrors(from container: KeyedDecodingContainer<Self>) throws -> [GraphQLErrorDetail] {
+        do {
+            return try container.decodeIfPresent([GraphQLErrorDetail].self, forKey: .errors) ?? []
+        } catch {
+            guard let message = try? container.decode(String.self, forKey: .errors) else { throw error }
+            return [GraphQLErrorDetail(message: message)]
+        }
+    }
+}
+
+/// The errors and extensions of a response, without `data`. Used where only the error codes
+/// matter (retry decisions, HTTP 401 and 403 bodies).
 struct GraphQLResponseHead: Decodable {
     let errors: [GraphQLErrorDetail]
     let extensions: GraphQLResponseExtensions?
 
-    private enum CodingKeys: String, CodingKey {
-        case errors
-        case extensions
-    }
-
     init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        errors = try container.decodeIfPresent([GraphQLErrorDetail].self, forKey: .errors) ?? []
+        let container = try decoder.container(keyedBy: GraphQLResponseKeys.self)
+        errors = try GraphQLResponseKeys.decodeErrors(from: container)
         extensions = try? container.decodeIfPresent(GraphQLResponseExtensions.self, forKey: .extensions)
     }
 }
 
-/// The `data` member alone, decoded only when the response has no errors.
-struct GraphQLDataEnvelope<ResponseData: Decodable>: Decodable {
+/// A whole response decoded in one pass: `errors` and `extensions` first, then `data` only when
+/// there are no errors, so a `data` member that does not fit `ResponseData` (for example the
+/// partial data next to an error) never hides the error.
+struct GraphQLResponseEnvelope<ResponseData: Decodable>: Decodable {
+    /// Thrown when `data` does not decode, to tell it apart from a malformed envelope. The
+    /// coding path of `underlying` starts at the `data` member.
+    struct DataDecodingError: Error {
+        let underlying: any Error
+    }
+
+    let errors: [GraphQLErrorDetail]
+    let extensions: GraphQLResponseExtensions?
+    /// `nil` when there are errors, or when `data` is absent or `null`.
     let data: ResponseData?
+
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: GraphQLResponseKeys.self)
+        errors = try GraphQLResponseKeys.decodeErrors(from: container)
+        extensions = try? container.decodeIfPresent(GraphQLResponseExtensions.self, forKey: .extensions)
+        guard errors.isEmpty else {
+            data = nil
+            return
+        }
+        do {
+            data = try container.decodeIfPresent(ResponseData.self, forKey: .data)
+        } catch {
+            throw DataDecodingError(underlying: error)
+        }
+    }
 }

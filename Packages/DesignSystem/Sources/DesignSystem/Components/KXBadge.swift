@@ -1,6 +1,4 @@
-import DesignTokens
 import SwiftUI
-import UIKit
 
 // MARK: - KXBadge
 

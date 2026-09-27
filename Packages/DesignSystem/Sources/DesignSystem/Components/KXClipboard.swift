@@ -26,7 +26,7 @@ public enum KXClipboard {
     ///   - string: The sensitive text, e.g. a license key.
     ///   - expiresAfter: Lifetime in seconds. Defaults to 120 (``defaultExpiration``). Values
     ///     below one second are raised to one second; non-finite values use the default.
-    public static func copySensitive(_ string: String, expiresAfter: TimeInterval = 120) {
+    public static func copySensitive(_ string: String, expiresAfter: TimeInterval = defaultExpiration) {
         copySensitive(string, expiresAfter: expiresAfter, to: UIPasteboard.general)
     }
 
@@ -37,7 +37,11 @@ public enum KXClipboard {
     ///   - string: The sensitive text, e.g. a license key.
     ///   - expiresAfter: Lifetime in seconds. Defaults to 120 (``defaultExpiration``).
     ///   - pasteboard: The pasteboard to write to.
-    public static func copySensitive(_ string: String, expiresAfter: TimeInterval = 120, to pasteboard: UIPasteboard) {
+    public static func copySensitive(
+        _ string: String,
+        expiresAfter: TimeInterval = defaultExpiration,
+        to pasteboard: UIPasteboard
+    ) {
         pasteboard.setItems(
             [[UTType.plainText.identifier: string]],
             options: sensitiveOptions(expiresAfter: expiresAfter, now: Date())

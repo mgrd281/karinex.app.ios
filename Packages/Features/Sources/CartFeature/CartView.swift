@@ -53,7 +53,8 @@ public struct CartView: View {
         KXCard {
             HStack(alignment: .firstTextBaseline, spacing: KXSpacing.s) {
                 Image(systemName: "creditcard")
-                    .font(.system(.body, weight: .medium))
+                    .fontWeight(.medium)
+                    .kxFont(.body)
                     .foregroundStyle(KXColor.brand)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: KXSpacing.xxs) {

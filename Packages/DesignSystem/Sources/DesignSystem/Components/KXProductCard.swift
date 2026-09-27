@@ -1,7 +1,5 @@
-import DesignTokens
 import Foundation
 import SwiftUI
-import UIKit
 
 // MARK: - KXProductCardModel
 
@@ -11,12 +9,20 @@ import UIKit
 /// Build it from Shopify data only. Prices are `MoneyV2` amounts formatted for the active
 /// market ("12,90 €", "CHF 29.00"); never compute or hardcode them.
 public struct KXProductCardModel: Identifiable, Hashable, Sendable {
-    /// Color treatment of the optional badge.
+    /// Color treatment of the optional badge, rendered as the ``KXBadge`` style of the same name.
     public enum BadgeTone: String, CaseIterable, Sendable {
         /// Champagne-gold fill with ink text, e.g. a savings badge.
         case gold
         /// Terracotta fill with white text, e.g. a sale or deal badge. Use sparingly.
         case urgency
+
+        /// The badge style that renders this tone.
+        var badgeStyle: KXBadge.Style {
+            switch self {
+            case .gold: .gold
+            case .urgency: .urgency
+            }
+        }
     }
 
     /// Stable identity, typically the product GID.
@@ -82,9 +88,9 @@ public struct KXProductCardModel: Identifiable, Hashable, Sendable {
 // MARK: - KXProductCard
 
 /// A product tile for grids and carousels: a 1:1 image area on the cream surface with a
-/// hairline border and an optional badge, the vendor as an eyebrow, the serif title (up to
-/// three lines, more at accessibility sizes) and a compact price with the struck-through
-/// compare-at price.
+/// hairline border and an optional ``KXBadge``, the vendor as an eyebrow, the serif title (up to
+/// three lines, more at accessibility sizes) and a compact ``KXPriceTag`` with the
+/// struck-through compare-at price and the tax note.
 ///
 /// The card fills the width it is offered; give it a width through the grid or carousel. It
 /// is not a button itself: wrap it in a `NavigationLink` or `Button`, which then supplies the
@@ -150,13 +156,8 @@ public struct KXProductCard<ImageContent: View>: View {
 
     @ViewBuilder private var badge: some View {
         if let badgeText = model.badge, !badgeText.isEmpty {
-            Text(badgeText)
-                .kxFont(.eyebrow)
-                .foregroundStyle(model.badgeTone == .gold ? KXColor.textOnAccent : KXColor.textOnUrgency)
+            KXBadge(badgeText, style: model.badgeTone.badgeStyle)
                 .lineLimit(2)
-                .padding(.horizontal, KXSpacing.xs)
-                .padding(.vertical, KXSpacing.xxs)
-                .background(model.badgeTone == .gold ? KXColor.accent : KXColor.urgency, in: Capsule(style: .continuous))
                 .padding(KXSpacing.xs)
         }
     }
@@ -169,7 +170,8 @@ public struct KXProductCard<ImageContent: View>: View {
                 Text(vendor)
                     .kxFont(.eyebrow)
                     .foregroundStyle(KXColor.textSecondary)
-                    .lineLimit(1)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             Text(model.title)
                 .kxFont(.title3)
@@ -177,14 +179,8 @@ public struct KXProductCard<ImageContent: View>: View {
                 .lineLimit(dynamicTypeSize.isAccessibilitySize ? 6 : 3)
                 .multilineTextAlignment(.leading)
                 .fixedSize(horizontal: false, vertical: true)
-            priceRow
+            KXPriceTag(price: model.price, compareAtPrice: model.compareAtPrice, taxNote: model.taxNote, size: .compact)
                 .padding(.top, KXSpacing.xxs)
-            if let taxNote = model.taxNote, !taxNote.isEmpty {
-                Text(taxNote)
-                    .kxFont(.caption)
-                    .foregroundStyle(KXColor.textSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
             if let availabilityNote = model.availabilityNote, !availabilityNote.isEmpty {
                 Text(availabilityNote)
                     .kxFont(.footnote)
@@ -194,51 +190,11 @@ public struct KXProductCard<ImageContent: View>: View {
         }
     }
 
-    /// Price and compare-at price on one baseline, stacked when they do not fit.
-    private var priceRow: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack(alignment: .firstTextBaseline, spacing: KXSpacing.xs) {
-                priceText
-                compareAtText
-            }
-            VStack(alignment: .leading, spacing: KXSpacing.xxs) {
-                priceText
-                compareAtText
-            }
-        }
-    }
-
-    private var priceText: some View {
-        Text(model.price)
-            .monospacedDigit()
-            .kxFont(.headline)
-            .foregroundStyle(KXColor.textPrimary)
-            .lineLimit(1)
-    }
-
-    @ViewBuilder private var compareAtText: some View {
-        if let compareAtPrice = model.compareAtPrice, !compareAtPrice.isEmpty {
-            Text(compareAtPrice)
-                .strikethrough(true, color: KXColor.textTertiary)
-                .monospacedDigit()
-                .kxFont(.footnote)
-                .foregroundStyle(KXColor.textTertiary)
-                .lineLimit(1)
-        }
-    }
-
     // MARK: Accessibility
 
     /// "Title, vendor, Preis 12,90 €, statt 79,99 €, tax note, badge, availability".
     private var accessibilityText: String {
-        let priceDescription = if let compareAtPrice = model.compareAtPrice, !compareAtPrice.isEmpty {
-            String(
-                localized: "kx.product.accessibility.compare \(model.price) \(compareAtPrice)",
-                bundle: .module
-            )
-        } else {
-            String(localized: "kx.product.accessibility.price \(model.price)", bundle: .module)
-        }
+        let priceDescription = KXPriceTag.spokenPrice(model.price, compareAtPrice: model.compareAtPrice)
         return [model.title, model.vendor, priceDescription, model.taxNote, model.badge, model.availabilityNote]
             .compactMap(\.self)
             .filter { !$0.isEmpty }
@@ -248,8 +204,7 @@ public struct KXProductCard<ImageContent: View>: View {
 
 extension KXProductCard where ImageContent == KXProductImage {
     /// Creates a product card that loads `model.imageURL` with `AsyncImage`, showing a
-    /// skeleton-colored placeholder while loading and a neutral symbol when there is no image
-    /// or loading fails.
+    /// ``KXSkeleton`` while loading and a neutral symbol when there is no image or loading fails.
     ///
     /// - Parameter model: The display data.
     public init(_ model: KXProductCardModel) {
@@ -263,15 +218,24 @@ extension KXProductCard where ImageContent == KXProductImage {
 
 /// A remote product image for cards: loads `url` with `AsyncImage` and scales it to fit.
 ///
-/// While loading it shows a flat skeleton-colored placeholder; without a URL or after a
-/// failure it shows a neutral photo symbol. The image fades in (a cross-fade, also with Reduce
-/// Motion). It is decorative and hidden from VoiceOver; the surrounding card describes the
-/// product.
+/// While loading it shows a ``KXSkeleton``; without a URL or after a failure it shows a neutral
+/// photo symbol. The image fades in (a cross-fade, also with Reduce Motion). It is decorative and
+/// hidden from VoiceOver; the surrounding card describes the product.
+///
+/// Lazy grids and lists cancel the downloads of cells that scroll away, and `AsyncImage` then
+/// keeps reporting the cancellation as a failure. A cancelled load therefore keeps the skeleton
+/// and starts again as soon as the placeholder is back on screen (up to
+/// ``maximumReloadCount`` times), instead of showing the failure symbol for an image that exists.
 ///
 /// Pass a URL already sized with the Shopify CDN `width` parameter to keep downloads small.
 public struct KXProductImage: View {
+    /// How often a cancelled download is started again before the failure symbol is shown.
+    public static let maximumReloadCount = 3
+
     private let url: URL?
 
+    /// Incremented to restart a cancelled download; it is the identity of the `AsyncImage`.
+    @State private var reloadCount = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     /// Creates a remote product image.
@@ -292,18 +256,36 @@ public struct KXProductImage: View {
                         image
                             .resizable()
                             .scaledToFit()
-                    } else if phase.error != nil {
-                        KXProductImageFallback()
+                    } else if let error = phase.error {
+                        if Self.isCancellation(error), reloadCount < Self.maximumReloadCount {
+                            KXSkeleton(cornerRadius: 0)
+                                .onAppear { reloadCount += 1 }
+                        } else {
+                            KXProductImageFallback()
+                        }
                     } else {
-                        KXColor.skeleton
+                        KXSkeleton(cornerRadius: 0)
                     }
                 }
+                .id(reloadCount)
             } else {
                 KXProductImageFallback()
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onChange(of: url) {
+            reloadCount = 0
+        }
         .accessibilityHidden(true)
+    }
+
+    /// Whether `error` only reports that the download was cancelled (the view left the screen),
+    /// not that the image is unavailable.
+    nonisolated static func isCancellation(_ error: any Error) -> Bool {
+        if error is CancellationError {
+            return true
+        }
+        return (error as? URLError)?.code == .cancelled
     }
 }
 

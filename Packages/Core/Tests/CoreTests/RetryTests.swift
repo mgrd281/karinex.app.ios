@@ -72,6 +72,8 @@ struct RetryPolicyTests {
 
     @Test("Retry-After is capped at twice the maximum delay")
     func retryAfterCap() {
+        #expect(policy.maxRetryAfter == .seconds(12))
+        #expect(RetryPolicy.default.maxRetryAfter == .seconds(12))
         #expect(policy.delay(beforeRetry: 1, retryAfter: .seconds(10), randomUnit: 0) == .seconds(10))
         #expect(policy.delay(beforeRetry: 1, retryAfter: .seconds(120), randomUnit: 0) == .seconds(12))
     }
@@ -130,6 +132,36 @@ struct RetryExecutorTests {
             return true
         }, decide: { _ in .retry(after: .seconds(3)) })
         #expect(sleeper.durations == [.seconds(3)])
+    }
+
+    @Test("Waits a Retry-After of exactly maxRetryAfter")
+    func honorsRetryAfterAtCap() async throws {
+        let sleeper = RecordingSleeper()
+        let attempts = Locked(0)
+        _ = try await executor(sleeper: sleeper).run({
+            let attempt = attempts.withLock { count -> Int in
+                count += 1
+                return count
+            }
+            if attempt == 1 { throw TestFailure.retryable(attempt) }
+            return true
+        }, decide: { _ in .retry(after: .seconds(12)) })
+        #expect(attempts.value == 2)
+        #expect(sleeper.durations == [.seconds(12)])
+    }
+
+    @Test("Does not retry earlier than a Retry-After beyond maxRetryAfter; gives up instead")
+    func retryAfterBeyondCapIsNotRetried() async {
+        let sleeper = RecordingSleeper()
+        let attempts = Locked(0)
+        await #expect(throws: TestFailure.retryable(1)) {
+            try await executor(maxAttempts: 5, sleeper: sleeper).run({ () -> Int in
+                attempts.withLock { $0 += 1 }
+                throw TestFailure.retryable(1)
+            }, decide: { _ in .retry(after: .seconds(13)) })
+        }
+        #expect(attempts.value == 1)
+        #expect(sleeper.durations.isEmpty)
     }
 
     @Test("Stops at doNotRetry and rethrows the error")

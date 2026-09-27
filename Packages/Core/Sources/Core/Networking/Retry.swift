@@ -29,12 +29,23 @@ public struct RetryPolicy: Sendable, Equatable {
     /// A single attempt, never retried.
     public static let none = RetryPolicy(maxAttempts: 1, baseDelay: .zero, maxDelay: .zero)
 
+    /// The longest server-requested wait (for example `Retry-After`) the policy honors:
+    /// `maxDelay * 2` (12 s for `.default`).
+    ///
+    /// `RetryExecutor` does not retry at all when the server asks for a longer wait: retrying
+    /// earlier would ignore the server's request, and waiting longer would park the UI.
+    public var maxRetryAfter: Duration {
+        maxDelay * 2
+    }
+
     /// The delay before retry number `retry` (1 for the first retry, that is the second attempt).
     ///
     /// Full jitter: a uniformly random delay in `0 ... min(maxDelay, baseDelay * 2^(retry - 1))`,
     /// where `randomUnit` (clamped to `0...1`) picks the point in that range. A server-provided
-    /// `retryAfter` is a lower bound, and the result never exceeds `maxDelay * 2`, so a
-    /// misconfigured server cannot park the app for minutes.
+    /// `retryAfter` is a lower bound, and the result never exceeds `maxRetryAfter`
+    /// (`maxDelay * 2`), so a misconfigured server cannot park the app for minutes.
+    /// `RetryExecutor` does not retry at all when `retryAfter` exceeds `maxRetryAfter`, so it
+    /// never retries earlier than the server asked.
     ///
     /// - Parameters:
     ///   - retry: The 1-based retry number. Values below 1 are treated as 1.
@@ -51,7 +62,7 @@ public struct RetryPolicy: Sendable, Equatable {
         if let retryAfter {
             delay = max(delay, max(retryAfter, .zero))
         }
-        return min(delay, maxDelay * 2)
+        return min(delay, maxRetryAfter)
     }
 }
 
@@ -119,6 +130,9 @@ public struct RetryExecutor: Sendable {
     /// `policy.maxAttempts` attempts have failed.
     ///
     /// - A `CancellationError` thrown by `operation` is never retried.
+    /// - A `.retry(after:)` decision whose wait exceeds `policy.maxRetryAfter` is treated like
+    ///   `.doNotRetry`: the server asked for a longer pause than the app is willing to wait, and
+    ///   retrying earlier would ignore that request.
     /// - Between attempts the executor checks for task cancellation (before and after the
     ///   backoff delay) and throws `CancellationError` if the task was cancelled.
     /// - When the operation finally fails, the error of the last attempt is rethrown unchanged.
@@ -135,6 +149,9 @@ public struct RetryExecutor: Sendable {
                     throw error
                 }
                 guard case let .retry(retryAfter) = decide(error) else {
+                    throw error
+                }
+                if let retryAfter, retryAfter > policy.maxRetryAfter {
                     throw error
                 }
                 try Task.checkCancellation()

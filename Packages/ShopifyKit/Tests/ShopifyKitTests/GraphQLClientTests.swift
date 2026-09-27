@@ -147,7 +147,9 @@ struct GraphQLClientRetryTests {
 
         #expect(data.localization.country.isoCode == .de)
         #expect(stub.requests.count == 2)
+        // Full jitter: at most one wait, within the first backoff step (0 is not slept at all).
         #expect(sleeper.durations.count <= 1)
+        #expect(sleeper.durations.allSatisfy { $0 <= RetryPolicy.default.baseDelay })
     }
 
     @Test("A mutation is not retried on 503")
@@ -174,6 +176,23 @@ struct GraphQLClientRetryTests {
         let delay = try #require(sleeper.durations.first)
         #expect(delay >= .seconds(2))
         #expect(delay <= RetryPolicy.default.maxDelay * 2)
+    }
+
+    @Test("A Retry-After longer than the policy allows is honored by not retrying at all")
+    func longRetryAfterIsNotRetriedEarly() async throws {
+        let sleeper = RecordingSleeper()
+        let rateLimited = try StubHTTPClient([.status(429, headers: ["Retry-After": "120"]), .fixture(Fixture.localization)])
+        await #expect(throws: ShopifyError.throttled) {
+            _ = try await makeStorefrontClient(rateLimited, sleeper: sleeper).execute(LocalizationQuery(), context: germanyContext)
+        }
+        #expect(rateLimited.requests.count == 1)
+
+        let unavailable = try StubHTTPClient([.status(503, headers: ["Retry-After": "3600"]), .fixture(Fixture.localization)])
+        await #expect(throws: ShopifyError.http(statusCode: 503)) {
+            _ = try await makeStorefrontClient(unavailable, sleeper: sleeper).execute(LocalizationQuery(), context: germanyContext)
+        }
+        #expect(unavailable.requests.count == 1)
+        #expect(sleeper.durations.isEmpty)
     }
 
     @Test("429 on every attempt ends as throttled after the attempt budget")
@@ -303,14 +322,59 @@ struct GraphQLClientDeduplicationTests {
         async let second = client.execute(LocalizationQuery(), directive: directive)
 
         #expect(await eventually { stub.requests.count == 1 })
-        let body = try #require(stub.requests.first?.body)
-        #expect(await eventually { await client.deduplicator.waiterCount(for: body) == 2 })
+        let request = try #require(stub.requests.first)
+        #expect(await eventually { await client.deduplicator.waiterCount(for: request) == 2 })
         await gate.open()
 
         let (firstResult, secondResult) = try await (first, second)
         #expect(firstResult == secondResult)
         #expect(stub.requests.count == 1)
         #expect(await client.deduplicator.inFlightCount == 0)
+    }
+
+    @Test("Concurrent identical queries with different credentials are not shared")
+    func differentCredentialsAreSeparate() async throws {
+        let gate = Gate()
+        let stub = try StubHTTPClient([.fixture(Fixture.localization), .fixture(Fixture.localization)], gate: gate)
+        let calls = Locked(0)
+        let endpoint = GraphQLEndpoint(url: AppConfiguration.preview.storefrontEndpoint) {
+            let call = calls.withLock { count -> Int in
+                count += 1
+                return count
+            }
+            // The customer logged out and another one logged in between the two calls.
+            return ["Authorization": "Bearer shcat_customer\(call)"]
+        }
+        let client = makeGraphQLClient(stub, endpoint: endpoint)
+
+        async let first = client.execute(LocalizationQuery())
+        async let second = client.execute(LocalizationQuery())
+
+        #expect(await eventually { stub.requests.count == 2 })
+        await gate.open()
+        _ = try await (first, second)
+
+        let tokens = Set(stub.requests.compactMap { $0.value(forHeader: "Authorization") })
+        #expect(tokens == ["Bearer shcat_customer1", "Bearer shcat_customer2"])
+        #expect(stub.requests[0].body == stub.requests[1].body)
+    }
+
+    @Test("Concurrent identical queries with the same credentials share one request")
+    func sameCredentialsAreShared() async throws {
+        let gate = Gate()
+        let stub = try StubHTTPClient([.fixture(Fixture.localization)], gate: gate)
+        let endpoint = GraphQLEndpoint(url: AppConfiguration.preview.storefrontEndpoint) { ["Authorization": "Bearer shcat_same"] }
+        let client = makeGraphQLClient(stub, endpoint: endpoint)
+
+        async let first = client.execute(LocalizationQuery())
+        async let second = client.execute(LocalizationQuery())
+
+        #expect(await eventually { stub.requests.count == 1 })
+        let request = try #require(stub.requests.first)
+        #expect(await eventually { await client.deduplicator.waiterCount(for: request) == 2 })
+        await gate.open()
+        _ = try await (first, second)
+        #expect(stub.requests.count == 1)
     }
 
     @Test("Queries in different contexts are not shared")
@@ -406,6 +470,26 @@ struct GraphQLClientErrorMappingTests {
             #expect(errors[1] == GraphQLErrorDetail(message: "Second"))
         }
         #expect(stub.requests.count == 1)
+    }
+
+    @Test("A plain string errors member maps to one graphQL error; an unreadable one to decoding")
+    func stringErrors() async throws {
+        let stub = StubHTTPClient([.json(#"{"errors":"Not Found"}"#)])
+        await #expect(throws: ShopifyError.graphQL([GraphQLErrorDetail(message: "Not Found")])) {
+            _ = try await makeStorefrontClient(stub).execute(LocalizationQuery(), context: germanyContext)
+        }
+
+        let unreadable = StubHTTPClient([.json(#"{"errors":42,"data":{"localization":null}}"#)])
+        await #expect(throws: ShopifyError.decoding("GraphQLResponse: errors")) {
+            _ = try await makeStorefrontClient(unreadable).execute(LocalizationQuery(), context: germanyContext)
+        }
+
+        let response = try JSONDecoder().decode(
+            GraphQLResponse<LocalizationQuery.ResponseData>.self,
+            from: Data(#"{"errors":"Unavailable Shop"}"#.utf8)
+        )
+        #expect(response.errors == [GraphQLErrorDetail(message: "Unavailable Shop")])
+        #expect(response.data == nil)
     }
 
     @Test("Decoding failures name the type and coding path without payload content")

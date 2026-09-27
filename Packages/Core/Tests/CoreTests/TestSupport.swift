@@ -46,11 +46,24 @@ enum TestFailure: Error, Equatable {
     case fatal
 }
 
-/// Polls `condition` until it holds or `limit` yields have passed.
-func eventually(limit: Int = 100_000, _ condition: () async -> Bool) async -> Bool {
-    for _ in 0..<limit {
+/// Polls `condition` until it holds or `timeout` has passed.
+///
+/// The bound is wall-clock time, not a number of polls: on a loaded CI machine the task that
+/// makes the condition true can be descheduled for a long time, and a fixed number of fast
+/// polls would give up too early. Polls yield first and then sleep briefly, so waiting does not
+/// spin a core.
+func eventually(timeout: Duration = .seconds(10), _ condition: () async -> Bool) async -> Bool {
+    let clock = ContinuousClock()
+    let deadline = clock.now.advanced(by: timeout)
+    var polls = 0
+    while clock.now < deadline {
         if await condition() { return true }
-        await Task.yield()
+        polls += 1
+        if polls < 1000 {
+            await Task.yield()
+        } else {
+            try? await Task.sleep(for: .milliseconds(1))
+        }
     }
     return await condition()
 }
