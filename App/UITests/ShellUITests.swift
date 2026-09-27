@@ -5,8 +5,9 @@ import XCTest
 /// Critical-path UI tests of the Phase 0 shell: the five tabs, their root screens, the hero call
 /// to action and the money-back conditions.
 ///
-/// The app runs with `-kx.uitesting` (fixed online network status), `-kx.reset` (no state from
-/// earlier runs) and German language and region, so labels and layout are deterministic.
+/// The app runs with `-kx.uitesting` (fixed online network status, or offline with
+/// `-kx.offline`), `-kx.reset` (no state from earlier runs) and German language and region, so
+/// labels and layout are deterministic.
 final class ShellUITests: XCTestCase {
     /// The tabs as the tests see them.
     private enum Tab: String, CaseIterable {
@@ -46,6 +47,11 @@ final class ShellUITests: XCTestCase {
 
     private let timeout: TimeInterval = 10
 
+    /// Accessibility identifier of the offline banner (`OfflineBannerModifier` in the app).
+    private let offlineBannerIdentifier = "shell.offlineBanner"
+    /// The German default message of the offline banner (DesignSystem String Catalog).
+    private let offlineBannerMessage = "Sie sind offline. Bitte prüfen Sie Ihre Internetverbindung."
+
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
@@ -61,6 +67,7 @@ final class ShellUITests: XCTestCase {
             XCTAssertTrue(tabButton(tab, in: app).waitForExistence(timeout: timeout), "Missing tab bar button \(tab.identifier)")
         }
         XCTAssertEqual(app.tabBars.firstMatch.buttons.count, Tab.allCases.count)
+        XCTAssertFalse(offlineBanner(in: app).exists, "The offline banner is shown although the device is online")
     }
 
     @MainActor
@@ -109,6 +116,27 @@ final class ShellUITests: XCTestCase {
     }
 
     @MainActor
+    func testOfflineBannerKeepsTheNavigationBarReachable() {
+        let app = launchApp(extraArguments: ["-kx.offline"])
+
+        let banner = offlineBanner(in: app)
+        XCTAssertTrue(banner.waitForExistence(timeout: timeout), "The offline banner did not appear")
+
+        let account = tabButton(.account, in: app)
+        XCTAssertTrue(account.waitForExistence(timeout: timeout))
+        account.tap()
+        XCTAssertTrue(screen(.account, in: app).waitForExistence(timeout: timeout), "The tab bar is not usable while offline")
+
+        let navigationBar = app.navigationBars.firstMatch
+        XCTAssertTrue(navigationBar.waitForExistence(timeout: timeout), "The account screen has no navigation bar")
+        XCTAssertLessThanOrEqual(
+            banner.frame.maxY,
+            navigationBar.frame.minY + 1,
+            "The offline banner covers the navigation bar"
+        )
+    }
+
+    @MainActor
     func testLaunchesInForcedDarkAppearance() {
         let app = launchApp(extraArguments: ["-kx.appearance", "dark"])
 
@@ -144,6 +172,14 @@ final class ShellUITests: XCTestCase {
     @MainActor
     private func screen(_ tab: Tab, in app: XCUIApplication) -> XCUIElement {
         app.descendants(matching: .any).matching(identifier: tab.screenIdentifier).firstMatch
+    }
+
+    /// The offline banner, found by its accessibility identifier or, as a fallback, by its German
+    /// message.
+    @MainActor
+    private func offlineBanner(in app: XCUIApplication) -> XCUIElement {
+        let predicate = NSPredicate(format: "identifier == %@ OR label == %@", offlineBannerIdentifier, offlineBannerMessage)
+        return app.descendants(matching: .any).matching(predicate).firstMatch
     }
 
     /// Swipes up until `element` can be tapped, for content below the fold on small devices.

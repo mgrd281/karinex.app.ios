@@ -306,8 +306,17 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
+				da,
 				de,
 				en,
+				es,
+				fi,
+				fr,
+				it,
+				nl,
+				pl,
+				"pt-PT",
+				sv,
 			);
 			mainGroup = D5B559EBE32A5CB9481FA406;
 			minimizedProjectReferenceProxies = 1;

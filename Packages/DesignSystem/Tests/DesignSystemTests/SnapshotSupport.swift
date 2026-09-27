@@ -195,7 +195,7 @@ struct SnapshotCanvas<Content: View>: View {
 func assertComponentSnapshot<Content: View>(
     variant: SnapshotVariant,
     horizontalPadding: CGFloat = KXSpacing.gutter,
-    fileID: StaticString = #fileID,
+    fileID: StaticString = #file,
     filePath: StaticString = #filePath,
     testName: String = #function,
     line: UInt = #line,

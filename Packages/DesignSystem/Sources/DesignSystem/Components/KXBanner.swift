@@ -25,7 +25,7 @@ import SwiftUI
 /// ```
 ///
 /// Without a `message` each style uses its design-system default text, e.g. for
-/// ``Style/offline`` "Keine Internetverbindung. Bitte prüfen Sie Ihre Verbindung.".
+/// ``Style/offline`` "Sie sind offline. Bitte prüfen Sie Ihre Internetverbindung.".
 public struct KXBanner: View {
     /// The kind of message a ``KXBanner`` shows. Determines icon, accent color and default text.
     public enum Style: String, CaseIterable, Sendable {

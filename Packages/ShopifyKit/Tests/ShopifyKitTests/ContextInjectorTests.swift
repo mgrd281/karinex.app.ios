@@ -101,6 +101,24 @@ struct ContextInjectorTests {
         #expect(result == expected)
     }
 
+    @Test(
+        "Lexical edge cases: empty and escaped strings, CRLF, inline fragments, a BOM, fragments after the operation",
+        arguments: [
+            (#"query Q($a: String = "") { x }"#, #"query Q($a: String = "") @inContext(country: DE, language: DE) { x }"#),
+            (#"query Q($a: String = "a\"){b") { x }"#, #"query Q($a: String = "a\"){b") @inContext(country: DE, language: DE) { x }"#),
+            ("query Q\r\n{\r\n  x\r\n}", "query Q\r\n@inContext(country: DE, language: DE) {\r\n  x\r\n}"),
+            ("query Q { ... on Shop { name } }", "query Q @inContext(country: DE, language: DE) { ... on Shop { name } }"),
+            ("\u{FEFF}query Q { x }", "\u{FEFF}query Q @inContext(country: DE, language: DE) { x }"),
+            (
+                #"query Q($f: Float = -1.5e3) @a(b: """x""") { x } fragment F on Shop { name }"#,
+                #"query Q($f: Float = -1.5e3) @a(b: """x""") @inContext(country: DE, language: DE) { x } fragment F on Shop { name }"#
+            ),
+        ]
+    )
+    func lexicalEdgeCases(document: String, expected: String) throws {
+        #expect(try ContextInjector.inject(directive, into: document) == expected)
+    }
+
     @Test("A blank directive leaves the document unchanged")
     func blankDirective() throws {
         let document = "query Q { shop { name } }"

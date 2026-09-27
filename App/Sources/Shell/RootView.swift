@@ -13,6 +13,10 @@ import SwiftUI
 ///
 /// The tint is left to the `AccentColor` asset (forest green in light mode, gold in dark mode).
 /// A color scheme forced with `-kx.appearance light|dark` overrides the system appearance.
+///
+/// Each tab item carries the identifier `tab.<name>`. SwiftUI does not forward an identifier set
+/// on a `tabItem` label to the tab bar button on every iOS release, so the UI tests fall back to
+/// the localized tab title (they run in German).
 struct RootView: View {
     @Environment(AppContainer.self) private var container
 

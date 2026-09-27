@@ -115,6 +115,65 @@ public struct HTTPResponse: Sendable, Equatable {
     }
 }
 
+// MARK: - Logging-safe descriptions
+
+extension HTTPRequest: CustomStringConvertible, CustomDebugStringConvertible, CustomReflectable {
+    /// A log-safe summary: method, URL with every query value masked, headers with credential
+    /// values masked, and the body size (never its content), e.g.
+    /// `POST https://shop.example/api/graphql.json headers: [Authorization: <redacted>] body: 312 bytes`.
+    public var description: String {
+        "\(method.rawValue) \(Redactor.redact(url: url)) headers: \(HTTPHeaderLookup.redactedList(headers)) "
+            + "body: \(body?.count ?? 0) bytes"
+    }
+
+    /// Same as `description`.
+    public var debugDescription: String {
+        description
+    }
+
+    /// A mirror with the same masking, so `dump(_:)` and test failure output never print
+    /// credentials or bodies.
+    public var customMirror: Mirror {
+        Mirror(
+            self,
+            children: [
+                "method": method.rawValue,
+                "url": Redactor.redact(url: url),
+                "headers": HTTPHeaderLookup.redactedList(headers),
+                "body": "\(body?.count ?? 0) bytes",
+                "timeout": timeout,
+            ],
+            displayStyle: .struct
+        )
+    }
+}
+
+extension HTTPResponse: CustomStringConvertible, CustomDebugStringConvertible, CustomReflectable {
+    /// A log-safe summary: status, headers with credential values (`Set-Cookie`) masked, and
+    /// the body size (never its content).
+    public var description: String {
+        "HTTP \(statusCode) headers: \(HTTPHeaderLookup.redactedList(headers)) body: \(body.count) bytes"
+    }
+
+    /// Same as `description`.
+    public var debugDescription: String {
+        description
+    }
+
+    /// A mirror with the same masking.
+    public var customMirror: Mirror {
+        Mirror(
+            self,
+            children: [
+                "statusCode": statusCode,
+                "headers": HTTPHeaderLookup.redactedList(headers),
+                "body": "\(body.count) bytes",
+            ],
+            displayStyle: .struct
+        )
+    }
+}
+
 // MARK: - HTTPClient
 
 /// Sends HTTP requests. Implementations return every response, including non-2xx ones, and
@@ -134,6 +193,15 @@ enum HTTPHeaderLookup {
             return exact
         }
         return headers.first { $0.key.caseInsensitiveCompare(name) == .orderedSame }?.value
+    }
+
+    /// `[Name: value, ...]` sorted by name, every line passed through `Redactor`, which masks
+    /// credential headers (`Authorization`, access token headers, cookies) and secrets in values.
+    static func redactedList(_ headers: [String: String]) -> String {
+        let lines = headers
+            .sorted { $0.key.lowercased() < $1.key.lowercased() }
+            .map { Redactor.redact("\($0.key): \($0.value)") }
+        return "[\(lines.joined(separator: "; "))]"
     }
 }
 

@@ -138,3 +138,36 @@ public struct CommandLineOptions: Sendable, Equatable {
         )
     }
 }
+
+// MARK: - Logging-safe descriptions
+
+extension CommandLineOptions: CustomStringConvertible, CustomDebugStringConvertible, CustomReflectable {
+    /// A summary that reports whether a token is set, never the token itself.
+    public var description: String {
+        "CommandLineOptions(shopDomain: \(shopDomain), apiVersion: \(apiVersion), "
+            + "token: \(maskedToken), outputDirectory: \(outputDirectory.path))"
+    }
+
+    /// Same as `description`.
+    public var debugDescription: String {
+        description
+    }
+
+    /// A mirror that masks the token, so `dump(_:)` and test failure output never print it.
+    public var customMirror: Mirror {
+        Mirror(
+            self,
+            children: [
+                "shopDomain": shopDomain,
+                "apiVersion": apiVersion,
+                "token": maskedToken,
+                "outputDirectory": outputDirectory,
+            ],
+            displayStyle: .struct
+        )
+    }
+
+    private var maskedToken: String {
+        token == nil ? "nil" : Redactor.replacement
+    }
+}

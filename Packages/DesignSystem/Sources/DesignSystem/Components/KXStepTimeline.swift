@@ -21,7 +21,7 @@ import SwiftUI
 /// falls back to the vertical layout so that no text is squeezed.
 ///
 /// VoiceOver reads each step as one element, for example "Schritt 2 von 3: Bezahlen", followed
-/// by the detail text, with the state ("Erledigt", "Aktueller Schritt", "Ausstehend") as the
+/// by the detail text, with the state ("Abgeschlossen", "Aktueller Schritt", "Ausstehend") as the
 /// value.
 ///
 /// ```swift

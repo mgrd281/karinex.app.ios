@@ -115,6 +115,23 @@ struct CommandLineOptionsTests {
         #expect(options.storefrontConfiguration.isTokenless == false)
     }
 
+    @Test("Descriptions and dumps never contain the token")
+    func maskedToken() throws {
+        let options = try CommandLineOptions.parse(
+            ["--token", "0123456789abcdef-public-token", "--output", "out"],
+            currentDirectory: workingDirectory
+        )
+        #expect(options.token == "0123456789abcdef-public-token")
+        #expect(!options.description.contains("public-token"))
+        #expect(!String(reflecting: options).contains("public-token"))
+        #expect(options.description.contains("token: <redacted>"))
+        var dumped = ""
+        dump(options, to: &dumped)
+        #expect(!dumped.contains("public-token"))
+        #expect(dumped.contains("45dv93-bk.myshopify.com"))
+        #expect(try CommandLineOptions.parse(["--output", "out"], currentDirectory: workingDirectory).description.contains("token: nil"))
+    }
+
     @Test("Rejects invalid command lines")
     func errors() {
         #expect(throws: CommandLineOptions.ParseError.missingOutput) {

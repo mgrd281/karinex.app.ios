@@ -141,7 +141,10 @@ struct RedactorTests {
     @Test("Masks customer access tokens and token exchange fields in snake case")
     func tokenExchangeFields() {
         #expect(Redactor.redact("customer_access_token=abc123") == "customer_access_token=<redacted>")
-        #expect(Redactor.redact(#"{"subject_token":"abc","actor_token": "def"}"#) == #"{"subject_token":"<redacted>","actor_token": "<redacted>"}"#)
+        #expect(
+            Redactor.redact(#"{"subject_token":"abc","actor_token": "def"}"#)
+                == #"{"subject_token":"<redacted>","actor_token": "<redacted>"}"#
+        )
         #expect(
             Redactor.redact("POST /oauth/token?grant_type=x&subject_token=abc&client_id=1")
                 == "POST /oauth/token?grant_type=x&subject_token=<redacted>&client_id=1"

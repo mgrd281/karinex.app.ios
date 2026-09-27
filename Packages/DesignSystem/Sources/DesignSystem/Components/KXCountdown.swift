@@ -91,7 +91,7 @@ public struct KXCountdownComponents: Hashable, Sendable {
 /// previews). The static frame never ticks and never calls `onExpire`.
 ///
 /// VoiceOver reads the countdown as one element at minute precision, e.g. "Endet in 2 Tagen,
-/// 3 Stunden, 4 Minuten". The label changes at most once a minute and is never announced on its
+/// 3 Stunden und 4 Minuten". The label changes at most once a minute and is never announced on its
 /// own, so VoiceOver does not read every second.
 ///
 /// At large text sizes the fields wrap into two rows, then into a column, instead of
@@ -401,8 +401,9 @@ extension VerticalAlignment {
 
 // MARK: - Accessibility
 
-/// "Endet in 2 Tagen, 3 Stunden, 4 Minuten" at minute precision, "Endet in weniger als einer
-/// Minute" during the last minute and "Beendet" at zero.
+/// "Endet in 2 Tagen, 3 Stunden und 4 Minuten" at minute precision, "Endet in weniger als einer
+/// Minute" during the last minute and "Beendet" at zero. The parts are joined with the current
+/// locale's list format, so every language gets its own conjunction.
 private func kxCountdownAccessibilityDescription(for components: KXCountdownComponents) -> String {
     if components.isExpired {
         return String(localized: "kx.countdown.accessibility.ended", bundle: .module)
@@ -420,7 +421,7 @@ private func kxCountdownAccessibilityDescription(for components: KXCountdownComp
     if components.minutes > 0 {
         parts.append(String(localized: "kx.countdown.accessibility.minutes \(components.minutes)", bundle: .module))
     }
-    let duration = parts.joined(separator: ", ")
+    let duration = ListFormatter.localizedString(byJoining: parts)
     return String(localized: "kx.countdown.accessibility.remaining \(duration)", bundle: .module)
 }
 

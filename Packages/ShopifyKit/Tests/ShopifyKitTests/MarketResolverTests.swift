@@ -108,6 +108,26 @@ struct MarketResolverTests {
         #expect(resolution.selection == MarketSelection(country: .at, language: .de))
     }
 
+    @Test("A default country the store does not sell to falls back to the first sold country")
+    func defaultCountryNotSold() throws {
+        let full = try localization()
+        let withoutGermany = Localization(
+            country: full.country,
+            language: full.language,
+            availableCountries: full.availableCountries.filter { $0.isoCode != .de },
+            availableLanguages: full.availableLanguages
+        )
+        let resolution = resolver.resolve(regionCode: "US", preferredLanguages: ["de-DE"], localization: withoutGermany)
+        #expect(resolution.selection == MarketSelection(country: .at, language: .de))
+        #expect(resolution.reason == .countryUnavailable)
+        #expect(withoutGermany.sells(to: resolution.selection.country))
+
+        let nothingSold = Localization(country: full.country, language: full.language, availableCountries: [], availableLanguages: [])
+        let fallback = resolver.resolve(regionCode: "DE", preferredLanguages: ["de"], localization: nothingSold)
+        #expect(fallback.selection == MarketSelection(country: .de, language: .en))
+        #expect(fallback.reason == .countryAndLanguageUnavailable)
+    }
+
     @Test("A selection builds the Storefront context")
     func storefrontContext() {
         let selection = MarketSelection(country: .ch, language: .fr)

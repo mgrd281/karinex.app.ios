@@ -70,6 +70,38 @@ struct HTTPTypesTests {
         #expect(request.headers.isEmpty)
     }
 
+    @Test("Descriptions and dumps of requests and responses never contain credentials or bodies")
+    func loggingSafeDescriptions() throws {
+        let request = try HTTPRequest(
+            method: .post,
+            url: #require(URL(string: "https://shop.example/api/graphql.json?code=abc123")),
+            headers: [
+                "Authorization": "Bearer shcat_secret-token",
+                "X-Shopify-Storefront-Access-Token": "0f1e2d3c4b5a69788796a5b4c3d2e1f0",
+                "Accept": "application/json",
+            ],
+            body: Data(#"{"email":"kunde@example.com"}"#.utf8)
+        )
+        #expect(
+            request.description == "POST https://shop.example/api/graphql.json?code=<redacted> headers: "
+                + "[Accept: application/json; Authorization: <redacted>; X-Shopify-Storefront-Access-Token: <redacted>] body: 29 bytes"
+        )
+        var dumpedRequest = ""
+        dump(request, to: &dumpedRequest)
+        for text in [request.description, String(reflecting: request), dumpedRequest] {
+            #expect(!text.contains("shcat_secret-token"))
+            #expect(!text.contains("0f1e2d3c4b5a69788796a5b4c3d2e1f0"))
+            #expect(!text.contains("kunde@example.com"))
+            #expect(!text.contains("abc123"))
+        }
+
+        let response = HTTPResponse(statusCode: 200, headers: ["Set-Cookie": "_session=abc; Secure"], body: Data("{\"id\":1}".utf8))
+        #expect(response.description == "HTTP 200 headers: [Set-Cookie: <redacted>] body: 8 bytes")
+        var dumpedResponse = ""
+        dump(response, to: &dumpedResponse)
+        #expect(!dumpedResponse.contains("_session=abc"))
+    }
+
     @Test("Methods use their HTTP spelling")
     func methods() {
         #expect(HTTPMethod.allCases.map(\.rawValue) == ["GET", "POST", "PUT", "PATCH", "DELETE"])

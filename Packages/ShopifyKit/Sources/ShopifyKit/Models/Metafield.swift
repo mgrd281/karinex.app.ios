@@ -478,9 +478,12 @@ public struct ProductMetafields: Sendable, Hashable {
         return (try? JSONSerialization.jsonObject(with: data)) as? [Any]
     }
 
+    /// The decoder of rich text values: `Sendable`, never reconfigured, so it is shared.
+    private static let richTextDecoder = JSONDecoder()
+
     private static func richText(_ value: String) -> RichTextNode? {
         guard let data = value.data(using: .utf8),
-              let node = try? JSONDecoder().decode(RichTextNode.self, from: data),
+              let node = try? richTextDecoder.decode(RichTextNode.self, from: data),
               node.type == "root"
         else { return nil }
         return node
