@@ -1,0 +1,2233 @@
+{
+  "data": {
+    "localization": {
+      "availableCountries": [
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "AT",
+          "name": "Österreich"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "BE",
+          "name": "Belgien"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "BG",
+          "name": "Bulgarien"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "CHF",
+            "name": "Swiss Franc",
+            "symbol": "CHF"
+          },
+          "isoCode": "CH",
+          "name": "Schweiz"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "CY",
+          "name": "Zypern"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "CZK",
+            "name": "Czech Koruna",
+            "symbol": "Kč"
+          },
+          "isoCode": "CZ",
+          "name": "Tschechien"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "DE",
+          "name": "Deutschland"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "DKK",
+            "name": "Danish Krone",
+            "symbol": "kr."
+          },
+          "isoCode": "DK",
+          "name": "Dänemark"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "EE",
+          "name": "Estland"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "ES",
+          "name": "Spanien"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "FI",
+          "name": "Finnland"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "FR",
+          "name": "Frankreich"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "GR",
+          "name": "Griechenland"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "HR",
+          "name": "Kroatien"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "HUF",
+            "name": "Hungarian Forint",
+            "symbol": "Ft"
+          },
+          "isoCode": "HU",
+          "name": "Ungarn"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "IE",
+          "name": "Irland"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "IT",
+          "name": "Italien"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "LT",
+          "name": "Litauen"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "LU",
+          "name": "Luxemburg"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "LV",
+          "name": "Lettland"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "MT",
+          "name": "Malta"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "NL",
+          "name": "Niederlande"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "PLN",
+            "name": "Polish Złoty",
+            "symbol": "zł"
+          },
+          "isoCode": "PL",
+          "name": "Polen"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "PT",
+          "name": "Portugal"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "RON",
+            "name": "Romanian Leu",
+            "symbol": "Lei"
+          },
+          "isoCode": "RO",
+          "name": "Rumänien"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "SEK",
+            "name": "Swedish Krona",
+            "symbol": "kr"
+          },
+          "isoCode": "SE",
+          "name": "Schweden"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "SI",
+          "name": "Slowenien"
+        },
+        {
+          "availableLanguages": [
+            {
+              "endonymName": "Dansk",
+              "isoCode": "DA",
+              "name": "Dänisch"
+            },
+            {
+              "endonymName": "Deutsch",
+              "isoCode": "DE",
+              "name": "Deutsch"
+            },
+            {
+              "endonymName": "Ελληνικά",
+              "isoCode": "EL",
+              "name": "Griechisch"
+            },
+            {
+              "endonymName": "English",
+              "isoCode": "EN",
+              "name": "Englisch"
+            },
+            {
+              "endonymName": "Español",
+              "isoCode": "ES",
+              "name": "Spanisch"
+            },
+            {
+              "endonymName": "Suomi",
+              "isoCode": "FI",
+              "name": "Finnisch"
+            },
+            {
+              "endonymName": "Français",
+              "isoCode": "FR",
+              "name": "Französisch"
+            },
+            {
+              "endonymName": "Italiano",
+              "isoCode": "IT",
+              "name": "Italienisch"
+            },
+            {
+              "endonymName": "Nederlands",
+              "isoCode": "NL",
+              "name": "Niederländisch"
+            },
+            {
+              "endonymName": "Polski",
+              "isoCode": "PL",
+              "name": "Polnisch"
+            },
+            {
+              "endonymName": "português (Portugal)",
+              "isoCode": "PT_PT",
+              "name": "Portugiesisch (Portugal)"
+            },
+            {
+              "endonymName": "română",
+              "isoCode": "RO",
+              "name": "Rumänisch"
+            },
+            {
+              "endonymName": "Svenska",
+              "isoCode": "SV",
+              "name": "Schwedisch"
+            }
+          ],
+          "currency": {
+            "isoCode": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+          },
+          "isoCode": "SK",
+          "name": "Slowakei"
+        }
+      ],
+      "availableLanguages": [
+        {
+          "endonymName": "Dansk",
+          "isoCode": "DA",
+          "name": "Dänisch"
+        },
+        {
+          "endonymName": "Deutsch",
+          "isoCode": "DE",
+          "name": "Deutsch"
+        },
+        {
+          "endonymName": "Ελληνικά",
+          "isoCode": "EL",
+          "name": "Griechisch"
+        },
+        {
+          "endonymName": "English",
+          "isoCode": "EN",
+          "name": "Englisch"
+        },
+        {
+          "endonymName": "Español",
+          "isoCode": "ES",
+          "name": "Spanisch"
+        },
+        {
+          "endonymName": "Suomi",
+          "isoCode": "FI",
+          "name": "Finnisch"
+        },
+        {
+          "endonymName": "Français",
+          "isoCode": "FR",
+          "name": "Französisch"
+        },
+        {
+          "endonymName": "Italiano",
+          "isoCode": "IT",
+          "name": "Italienisch"
+        },
+        {
+          "endonymName": "Nederlands",
+          "isoCode": "NL",
+          "name": "Niederländisch"
+        },
+        {
+          "endonymName": "Polski",
+          "isoCode": "PL",
+          "name": "Polnisch"
+        },
+        {
+          "endonymName": "português (Portugal)",
+          "isoCode": "PT_PT",
+          "name": "Portugiesisch (Portugal)"
+        },
+        {
+          "endonymName": "română",
+          "isoCode": "RO",
+          "name": "Rumänisch"
+        },
+        {
+          "endonymName": "Svenska",
+          "isoCode": "SV",
+          "name": "Schwedisch"
+        }
+      ],
+      "country": {
+        "availableLanguages": [
+          {
+            "endonymName": "Dansk",
+            "isoCode": "DA",
+            "name": "Dänisch"
+          },
+          {
+            "endonymName": "Deutsch",
+            "isoCode": "DE",
+            "name": "Deutsch"
+          },
+          {
+            "endonymName": "Ελληνικά",
+            "isoCode": "EL",
+            "name": "Griechisch"
+          },
+          {
+            "endonymName": "English",
+            "isoCode": "EN",
+            "name": "Englisch"
+          },
+          {
+            "endonymName": "Español",
+            "isoCode": "ES",
+            "name": "Spanisch"
+          },
+          {
+            "endonymName": "Suomi",
+            "isoCode": "FI",
+            "name": "Finnisch"
+          },
+          {
+            "endonymName": "Français",
+            "isoCode": "FR",
+            "name": "Französisch"
+          },
+          {
+            "endonymName": "Italiano",
+            "isoCode": "IT",
+            "name": "Italienisch"
+          },
+          {
+            "endonymName": "Nederlands",
+            "isoCode": "NL",
+            "name": "Niederländisch"
+          },
+          {
+            "endonymName": "Polski",
+            "isoCode": "PL",
+            "name": "Polnisch"
+          },
+          {
+            "endonymName": "português (Portugal)",
+            "isoCode": "PT_PT",
+            "name": "Portugiesisch (Portugal)"
+          },
+          {
+            "endonymName": "română",
+            "isoCode": "RO",
+            "name": "Rumänisch"
+          },
+          {
+            "endonymName": "Svenska",
+            "isoCode": "SV",
+            "name": "Schwedisch"
+          }
+        ],
+        "currency": {
+          "isoCode": "EUR",
+          "name": "Euro",
+          "symbol": "€"
+        },
+        "isoCode": "DE",
+        "name": "Deutschland"
+      },
+      "language": {
+        "endonymName": "Deutsch",
+        "isoCode": "DE",
+        "name": "Deutsch"
+      }
+    }
+  },
+  "extensions": {
+    "context": {
+      "country": "DE",
+      "language": "DE"
+    },
+    "cost": {
+      "requestedQueryCost": 9
+    }
+  }
+}

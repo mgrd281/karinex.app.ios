@@ -1,0 +1,29 @@
+{
+  "data": {
+    "cartCreate": {
+      "cart": null,
+      "userErrors": [
+        {
+          "code": "INVALID",
+          "field": [
+            "input",
+            "lines",
+            "0",
+            "merchandiseId"
+          ],
+          "message": "Der Merchandise-Artikel mit der ID gid://shopify/ProductVariant/1 existiert nicht."
+        }
+      ],
+      "warnings": []
+    }
+  },
+  "extensions": {
+    "context": {
+      "country": "DE",
+      "language": "DE"
+    },
+    "cost": {
+      "requestedQueryCost": 13
+    }
+  }
+}

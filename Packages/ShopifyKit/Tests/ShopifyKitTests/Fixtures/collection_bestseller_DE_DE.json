@@ -1,0 +1,350 @@
+{
+  "data": {
+    "collection": {
+      "description": "Bestseller Entdecke unsere Bestseller-Kollektion – die Produkte, die aktuell am stärksten nachgefragt werden. Diese Auswahl basiert auf Verkaufszahlen, Kundeninteresse und Trends. Hier findest du die Highlights aus unserem Sortiment schnell und übersichtlich. Schau regelmäßig vorbei – wir aktualisieren die Bestseller laufend.",
+      "handle": "bestseller",
+      "id": "gid://shopify/Collection/641997734155",
+      "image": null,
+      "products": {
+        "nodes": [
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "149.99",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "149.99",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Microsoft Office 2024 Professional Plus Lizenz Key für Windows Download – Word, Excel, PowerPoint",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/Office_2024_Professional_Plus.webp?v=1787443066",
+              "width": 2048
+            },
+            "handle": "office-2024-professional-plus-key",
+            "id": "gid://shopify/Product/10534352027915",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "29.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "29.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Microsoft Office 2024 Professional Plus Download kaufen",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          },
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "79.99",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "79.99",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Windows 11 Pro günstig kaufen – Dauerlizenz für 1 PC mit Sofort-Download per E-Mail von Karinex",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/Windows-11-Pro-Key-Download-kaufen..webp?v=1787442708",
+              "width": 2048
+            },
+            "handle": "windows-11-pro-key-kaufen-download",
+            "id": "gid://shopify/Product/10650102169867",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "12.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "12.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Windows 11 Pro kaufen – Dauerlizenz 1 PC, Download",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          },
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "39.99",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "39.99",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Microsoft Office Standard 2024 für Mac – Produktverpackung mit Microsoft-Logo, Office-Symbol und Programmen Word, Excel, PowerPoint, Outlook und OneNote",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-office-2024-standard-mac-download-vollversion.webp?v=1787695448",
+              "width": 2048
+            },
+            "handle": "office-2024-standard-mac-key-download",
+            "id": "gid://shopify/Product/10788434182411",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "13.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "13.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Microsoft Office 2024 Standard für Mac Key – Sofort Download",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          },
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "79.99",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "79.99",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Microsoft Office 2024 Home and Business für Mac Box mit Word, Excel, PowerPoint, Outlook und OneNote",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-office-2024-home-and-business-mac.avif?v=1787444040",
+              "width": 2048
+            },
+            "handle": "microsoft-office-2024-home-business-mac-lizenz",
+            "id": "gid://shopify/Product/10794551968011",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "13.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "13.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Microsoft Office 2024 Home & Business für Mac | Original Lizenz",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          },
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "79.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "79.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Verpackung von Microsoft Office Standard 2024 für Windows, zeigt Symbole für Word, Excel, OneNote, PowerPoint, Outlook und Publisher",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/Microsoft-Office-2024-Standard-kaufen.avif?v=1787444040",
+              "width": 2048
+            },
+            "handle": "microsoft-office-2024-standard-vollversion-fur-windows",
+            "id": "gid://shopify/Product/10662481953035",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "19.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "19.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Microsoft Office 2024 Standard Vollversion für Windows – Original Lizenz | E-Mail Versand",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          },
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "149.99",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "149.99",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Microsoft Office 2024 Home & Business für Mac – Originalverpackung mit Word, Excel, PowerPoint, OneNote und Outlook",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-office-2024-home-business-mac-box.avif?v=1787444157",
+              "width": 2048
+            },
+            "handle": "office-2024-home-business-fuer-mac",
+            "id": "gid://shopify/Product/10954560471307",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "39.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "39.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Microsoft Office 2024 Home & Business für Mac – Dauerlizenz | Sofort-Download",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          },
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "79.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "79.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Windows 11 Home günstig kaufen – Dauerlizenz für 1 PC mit Sofort-Download per E-Mail von Karinex",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/windows-11-home-download-produktkey-kein-abo.webp?v=1787443067",
+              "width": 2048
+            },
+            "handle": "windows-11-home-key",
+            "id": "gid://shopify/Product/10662950863115",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "13.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "13.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Windows 11 Home Key kaufen – Original Lizenz + Sofort-Download für 1 PC",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          },
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "79.99",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "79.99",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Microsoft Office 2021 Home und Business für Mac Dauerlizenz mit Word Excel PowerPoint Outlook nativ für Apple Silicon M1 M2 M3 M4 und Intel digitaler Aktivierungsschlüssel per E-Mail",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-office-2021-home-business-fuer-mac-dauerlizenz-apple-silicon.webp?v=1787443065",
+              "width": 2048
+            },
+            "handle": "office-2021-home-business-mac",
+            "id": "gid://shopify/Product/10651482784011",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "19.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "19.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Microsoft Office 2021 Home & Business für Mac – Dauerlizenz für 1 Mac | Sofort-Download",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          }
+        ],
+        "pageInfo": {
+          "endCursor": "eyJsYXN0X2lkIjoxMDY1MTQ4Mjc4NDAxMSwibGFzdF92YWx1ZSI6NjUsIm9mZnNldCI6N30=",
+          "hasNextPage": true,
+          "hasPreviousPage": false,
+          "startCursor": "eyJsYXN0X2lkIjoxMDUzNDM1MjAyNzkxNSwibGFzdF92YWx1ZSI6MTQ1OSwib2Zmc2V0IjowfQ=="
+        }
+      },
+      "title": "Bestseller günstig kaufen"
+    }
+  },
+  "extensions": {
+    "context": {
+      "country": "DE",
+      "language": "DE"
+    },
+    "cost": {
+      "requestedQueryCost": 47
+    }
+  }
+}

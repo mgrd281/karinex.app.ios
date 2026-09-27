@@ -1,0 +1,11 @@
+{
+  "errors": [
+    {
+      "extensions": {
+        "code": "THROTTLED",
+        "documentation": "https://shopify.dev/api/usage/rate-limits"
+      },
+      "message": "Throttled"
+    }
+  ]
+}

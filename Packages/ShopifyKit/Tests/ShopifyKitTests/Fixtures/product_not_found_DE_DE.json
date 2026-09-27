@@ -1,0 +1,14 @@
+{
+  "data": {
+    "product": null
+  },
+  "extensions": {
+    "context": {
+      "country": "DE",
+      "language": "DE"
+    },
+    "cost": {
+      "requestedQueryCost": 46
+    }
+  }
+}
