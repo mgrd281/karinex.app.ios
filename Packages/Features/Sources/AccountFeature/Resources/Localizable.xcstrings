@@ -2,9 +2,15 @@
   "sourceLanguage" : "de",
   "strings" : {
     "account.about.title" : {
-      "comment" : "Serif section title above the app version on the account tab.",
+      "comment" : "Serif section title on the Konto (account) tab, above the row with the app version and build number. One line, max ~25 characters.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om appen"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14,15 +20,69 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "About the app"
+            "value" : "About this app"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acerca de la app"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tietoja sovelluksesta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À propos de l’app"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informazioni sull’app"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Over deze app"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O aplikacji"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sobre a app"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om appen"
           }
         }
       }
     },
     "account.about.version" : {
-      "comment" : "Label of the row showing the app version and build number, e.g. 0.1.0 (1).",
+      "comment" : "Label of the row with the app version and build number, for example \"Version ...... 0.1.0 (1)\"; the number follows after a dotted leader on the same line. One word.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -34,13 +94,67 @@
             "state" : "translated",
             "value" : "Version"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versión"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versione"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versie"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wersja"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versão"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
         }
       }
     },
     "account.benefit.checkout" : {
-      "comment" : "Account benefit, one line in a list: checkout is faster with an account.",
+      "comment" : "Third account benefit in the list on the Konto tab (signed-out state), next to a lightning icon: with an account, checkout is faster. Short phrase in the same style as the other two benefits, max ~30 characters. Glossary: Zur Kasse (EN checkout).",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hurtigere til kassen"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -50,33 +164,141 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Faster checkout"
+            "value" : "Check out faster"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tramitar pedidos más rápido"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nopeammin kassalle"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passer commande plus vite"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acquistare più rapidamente"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sneller afrekenen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szybciej do kasy"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finalizar compras mais depressa"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snabbare till kassan"
           }
         }
       }
     },
     "account.benefit.keys" : {
-      "comment" : "Account benefit, one line in a list: license keys are stored securely on this device only.",
+      "comment" : "Second account benefit in the list on the Konto tab (signed-out state), next to a key icon: licence keys are kept securely on this device (stored in the iOS keychain, not synced). Same verb style as \"account.benefit.orders\". One or two lines, max ~55 characters. Glossary: Lizenzschlüssel (EN licence key).",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opbevar dine licensnøgler sikkert på denne enhed"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lizenzschlüssel sicher auf diesem Gerät gespeichert"
+            "value" : "Lizenzschlüssel sicher auf diesem Gerät aufbewahren"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Licence keys stored securely on this device"
+            "value" : "Keep licence keys securely on this device"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar claves de licencia a salvo en este dispositivo"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Säilytä lisenssiavaimesi turvassa tällä laitteella"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Garder vos clés de licence en sécurité sur cet appareil"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conservare al sicuro i codici di licenza sul dispositivo"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licentiesleutels veilig op dit apparaat bewaren"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klucze licencyjne zapisane bezpiecznie na tym urządzeniu"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar chaves de licença em segurança neste dispositivo"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Förvara dina licensnycklar säkert på den här enheten"
           }
         }
       }
     },
     "account.benefit.orders" : {
-      "comment" : "Account benefit, one line in a list: orders and invoices can be viewed at any time.",
+      "comment" : "First account benefit in the list on the Konto tab (signed-out state), next to a document icon: orders and invoices can be viewed at any time. One or two lines, max ~50 characters. Glossary: Bestellung (EN order), Rechnung (EN invoice).",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se dine ordrer og fakturaer når som helst"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -88,13 +310,67 @@
             "state" : "translated",
             "value" : "View orders and invoices at any time"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consultar pedidos y facturas en cualquier momento"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Katso tilauksesi ja laskusi milloin tahansa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consulter vos commandes et factures à tout moment"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consultare ordini e fatture in qualsiasi momento"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestellingen en facturen altijd inzien"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zamówienia i faktury dostępne w każdej chwili"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consultar encomendas e faturas a qualquer momento"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se dina beställningar och fakturor när som helst"
+          }
         }
       }
     },
     "account.intro.eyebrow" : {
-      "comment" : "Small uppercase label above the title of the account benefits card (signed-out state).",
+      "comment" : "Small label above the title of the account benefits card on the Konto tab (signed-out state). Max ~20 characters. The app renders it in uppercase letters; write it in normal sentence case.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din konto"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -106,13 +382,67 @@
             "state" : "translated",
             "value" : "Your account"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu cuenta"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilisi"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre compte"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo account"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jouw account"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twoje konto"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A sua conta"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ditt konto"
+          }
         }
       }
     },
     "account.intro.title" : {
-      "comment" : "Serif title of the account benefits card shown to signed-out users.",
+      "comment" : "Serif title of the account benefits card on the Konto tab (signed-out state): an account keeps all purchases, invoices and licence keys together. Short headline, no exclamation mark, max ~35 characters (may wrap to two lines).",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dine køb samlet ét sted"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -124,13 +454,67 @@
             "state" : "translated",
             "value" : "Your purchases in one place"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tus compras, en un solo lugar"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ostoksesi yhdessä paikassa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vos achats en un seul endroit"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I tuoi acquisti in un solo posto"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al je aankopen op één plek"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wszystkie zakupy w jednym miejscu"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As suas compras num só lugar"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dina köp samlade på ett ställe"
+          }
         }
       }
     },
     "account.signin.note" : {
-      "comment" : "Footnote in the account benefits card: signing in is not available in this app version yet. Neutral, no date.",
+      "comment" : "Footnote at the bottom of the account benefits card: signing in is not yet available in this version of the app. Neutral, no date and no promise. One sentence. Glossary: Anmelden (EN sign in).",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Det er endnu ikke muligt at logge ind i denne version."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -142,13 +526,67 @@
             "state" : "translated",
             "value" : "Signing in is not yet available in this version."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El inicio de sesión aún no está disponible en esta versión."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kirjautuminen ei ole vielä käytettävissä tässä versiossa."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La connexion n’est pas encore disponible dans cette version."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’accesso non è ancora disponibile in questa versione."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inloggen is in deze versie nog niet beschikbaar."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logowanie nie jest jeszcze dostępne w tej wersji aplikacji."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O início de sessão ainda não está disponível nesta versão."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Det går ännu inte att logga in i den här versionen."
+          }
         }
       }
     },
     "account.title" : {
-      "comment" : "Large navigation title of the account tab. Matches the tab name.",
+      "comment" : "Large navigation title of the Konto (account) tab. Use the same word as the tab bar label \"tab.account\".",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -159,6 +597,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Account"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuenta"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tili"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compte"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conta"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto"
           }
         }
       }

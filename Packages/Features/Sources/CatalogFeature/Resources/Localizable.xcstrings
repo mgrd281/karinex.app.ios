@@ -2,27 +2,87 @@
   "sourceLanguage" : "de",
   "strings" : {
     "catalog.empty.message" : {
-      "comment" : "Explanation below the Shop tab placeholder title. Describes what the tab will show; no promises about dates. KARINEX is the brand name.",
+      "comment" : "Text below the placeholder title on the Shop tab while the product catalogue is not yet available in the app: all categories and products of the store will be listed here, with current prices. No dates and no promises. KARINEX is the brand name: always uppercase, never translated. Max ~110 characters.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her finder du fremover alle kategorier og produkter fra KARINEX-shoppen med aktuelle priser."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "An dieser Stelle finden Sie künftig alle Kategorien und Produkte mit den aktuellen Preisen aus dem KARINEX-Shop."
+            "value" : "Hier finden Sie künftig alle Kategorien und Produkte aus dem KARINEX-Shop mit aktuellen Preisen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This is where you will find all categories and products with current prices from the KARINEX shop."
+            "value" : "This is where you will find every category and product from the KARINEX shop, with current prices."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aquí encontrarás todas las categorías y productos de la tienda KARINEX, con sus precios actuales."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Täältä löydät jatkossa kaikki KARINEX-kaupan kategoriat ja tuotteet ajantasaisine hintoineen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous trouverez ici toutes les catégories et tous les produits de la boutique KARINEX, avec leurs prix actuels."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qui troverai tutte le categorie e tutti i prodotti del negozio KARINEX, con i prezzi aggiornati."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hier komen alle categorieën en producten van de KARINEX-shop te staan, met actuele prijzen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W tym miejscu pojawią się wszystkie kategorie i produkty ze sklepu KARINEX wraz z aktualnymi cenami."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aqui encontrará todas as categorias e produtos da loja KARINEX, com preços atualizados."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Här hittar du framöver alla kategorier och produkter i KARINEX-butiken, med aktuella priser."
           }
         }
       }
     },
     "catalog.empty.title" : {
-      "comment" : "Serif title of the placeholder shown on the Shop tab until the catalog is available in the app.",
+      "comment" : "Serif title of the placeholder on the Shop tab until the product catalogue is available in the app. Short, max ~40 characters. Glossary: Sortiment (EN range).",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortimentet vises her"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -34,13 +94,67 @@
             "state" : "translated",
             "value" : "The range will appear here"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aquí aparecerá el catálogo"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valikoima näkyy täällä"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le catalogue apparaîtra ici"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qui comparirà il catalogo"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het assortiment verschijnt hier"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutaj pojawi się oferta sklepu"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O catálogo aparecerá aqui"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortimentet visas här"
+          }
         }
       }
     },
     "catalog.title" : {
-      "comment" : "Large navigation title of the Shop tab. Matches the tab name.",
+      "comment" : "Large navigation title of the Shop tab. Use the same word as the tab bar label \"tab.shop\".",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shop"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -51,6 +165,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Shop"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tienda"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kauppa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boutique"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Negozio"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shop"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sklep"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loja"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Butik"
           }
         }
       }

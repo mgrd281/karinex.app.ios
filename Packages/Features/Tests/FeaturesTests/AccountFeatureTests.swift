@@ -45,7 +45,7 @@ struct AccountBenefitTests {
 
         #expect(AccountBenefit.allCases.map { $0.text(in: german.bundle) } == [
             "Bestellungen und Rechnungen jederzeit abrufen",
-            "Lizenzschlüssel sicher auf diesem Gerät gespeichert",
+            "Lizenzschlüssel sicher auf diesem Gerät aufbewahren",
             "Schneller zur Kasse",
         ])
     }
@@ -63,7 +63,7 @@ struct AccountBenefitTests {
 
 @Suite("Account strings")
 struct AccountStringTests {
-    @Test("Every account text resolves without dashes", arguments: phaseZeroLanguages)
+    @Test("Every account text resolves without dashes", arguments: appLanguages)
     func allTexts(language: String) throws {
         let strings = try LocalizedStrings(language: language, in: AccountResources.bundle)
         let keys = [

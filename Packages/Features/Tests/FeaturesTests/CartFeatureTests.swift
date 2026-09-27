@@ -34,6 +34,19 @@ struct CartStringTests {
         #expect(!notice.contains("BGB"))
     }
 
+    @Test(
+        "Outside German the notice never cites German law (docs/LOCALIZATION.md rule 6)",
+        arguments: appLanguages.filter { $0 != "de" }
+    )
+    func noticeCitesNoGermanLaw(language: String) throws {
+        let strings = try LocalizedStrings(language: language, in: CartResources.bundle)
+
+        let notice = strings("cart.notice.digital")
+        #expect(!notice.isEmpty)
+        #expect(!notice.contains("BGB"), "\(language): \(notice)")
+        #expect(!notice.contains("§"), "\(language): \(notice)")
+    }
+
     @Test("The empty cart state reads as in the brand copy")
     func emptyState() throws {
         let german = try LocalizedStrings(language: "de", in: CartResources.bundle)
@@ -42,7 +55,7 @@ struct CartStringTests {
         #expect(german("cart.empty.action") == "Zum Sortiment")
     }
 
-    @Test("Every cart text resolves without dashes", arguments: phaseZeroLanguages)
+    @Test("Every cart text resolves without dashes", arguments: appLanguages)
     func allTexts(language: String) throws {
         let strings = try LocalizedStrings(language: language, in: CartResources.bundle)
         let keys = [

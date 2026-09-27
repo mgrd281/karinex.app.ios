@@ -112,10 +112,15 @@ struct HomeSupportTests {
         #expect(german("home.support.hours.value") == "Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit")
     }
 
-    @Test("Every mention of the service hours says they are German time", arguments: phaseZeroLanguages)
+    @Test("Every mention of the service hours says they are German time", arguments: appLanguages)
     func hoursNameTheTimeZone(language: String) throws {
         let strings = try LocalizedStrings(language: language, in: HomeResources.bundle)
-        let timeZoneName = language == "de" ? "deutscher Zeit" : "German time"
+        let timeZoneNames = [
+            "de": "deutscher Zeit", "en": "German time", "pl": "czasu niemieckiego", "nl": "Duitse tijd",
+            "pt-PT": "hora da Alemanha", "sv": "tysk tid", "da": "tysk tid", "es": "hora alemana",
+            "fr": "heure allemande", "it": "ora tedesca", "fi": "Saksan aikaa",
+        ]
+        let timeZoneName = try #require(timeZoneNames[language])
 
         for text in [strings("home.support.hours.value"), HomeTrustFact.supportHours.text(in: strings.bundle)] {
             #expect(text.contains("06:00"), "\(text)")
@@ -129,7 +134,7 @@ struct HomeSupportTests {
 
 @Suite("Home strings")
 struct HomeStringTests {
-    @Test("Every content text resolves without dashes", arguments: phaseZeroLanguages)
+    @Test("Every content text resolves without dashes", arguments: appLanguages)
     func contentTexts(language: String) throws {
         let strings = try LocalizedStrings(language: language, in: HomeResources.bundle)
         let texts = HomeTrustFact.allCases.map { $0.text(in: strings.bundle) }
@@ -143,7 +148,7 @@ struct HomeStringTests {
         }
     }
 
-    @Test("Screen texts resolve without dashes", arguments: phaseZeroLanguages)
+    @Test("Screen texts resolve without dashes", arguments: appLanguages)
     func screenTexts(language: String) throws {
         let strings = try LocalizedStrings(language: language, in: HomeResources.bundle)
         let keys = [

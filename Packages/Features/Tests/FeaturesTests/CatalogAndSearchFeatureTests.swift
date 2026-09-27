@@ -21,7 +21,7 @@ struct CatalogAndSearchStringTests {
         #expect(german("search.empty.title") == "Die Suche wird hier angezeigt")
     }
 
-    @Test("Every catalog and search text resolves without dashes", arguments: phaseZeroLanguages)
+    @Test("Every catalog and search text resolves without dashes", arguments: appLanguages)
     func allTexts(language: String) throws {
         let catalog = try LocalizedStrings(language: language, in: CatalogResources.bundle)
         let search = try LocalizedStrings(language: language, in: SearchResources.bundle)

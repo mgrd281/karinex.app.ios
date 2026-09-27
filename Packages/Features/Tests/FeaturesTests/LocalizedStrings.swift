@@ -33,5 +33,5 @@ func containsForbiddenDash(_ text: String) -> Bool {
     text.contains("\u{2013}") || text.contains("\u{2014}")
 }
 
-/// The languages whose values the feature catalogs carry in Phase 0.
-let phaseZeroLanguages = ["de", "en"]
+/// The 11 UI languages every feature catalog carries (PROMPT.md section 8).
+let appLanguages = ["de", "en", "pl", "nl", "pt-PT", "sv", "da", "es", "fr", "it", "fi"]

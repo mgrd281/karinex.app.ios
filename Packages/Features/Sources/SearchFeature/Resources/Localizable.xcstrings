@@ -2,9 +2,15 @@
   "sourceLanguage" : "de",
   "strings" : {
     "search.empty.message" : {
-      "comment" : "Explanation below the search tab placeholder title. Describes what users will be able to search for; no promises about dates.",
+      "comment" : "Text below the placeholder title on the search tab while search is not yet available in the app: customers will be able to search for products, categories and guides (how-to articles). No dates and no promises. Max ~90 characters.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her kan du fremover søge efter produkter, kategorier og vejledninger."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14,15 +20,69 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This is where you will search for products, categories and guides."
+            "value" : "This is where you will be able to search for products, categories and guides."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aquí podrás buscar productos, categorías y guías."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Täällä voit jatkossa hakea tuotteita, kategorioita ja oppaita."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous pourrez ici rechercher des produits, des catégories et des guides pratiques."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qui potrai cercare prodotti, categorie e guide."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hier kun je in de toekomst zoeken naar producten, categorieën en handleidingen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutaj będzie można wyszukiwać produkty, kategorie i poradniki."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aqui poderá pesquisar produtos, categorias e guias."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Här kan du framöver söka efter produkter, kategorier och guider."
           }
         }
       }
     },
     "search.empty.title" : {
-      "comment" : "Serif title of the placeholder shown on the search tab until search is available in the app.",
+      "comment" : "Serif title of the placeholder on the search tab until search is available in the app. Short, max ~40 characters.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Søgefunktionen vises her"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -34,13 +94,67 @@
             "state" : "translated",
             "value" : "Search will appear here"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aquí aparecerá la búsqueda"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haku näkyy täällä"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La recherche apparaîtra ici"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qui comparirà la ricerca"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De zoekfunctie verschijnt hier"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutaj pojawi się wyszukiwarka"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A pesquisa aparecerá aqui"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sökfunktionen visas här"
+          }
         }
       }
     },
     "search.title" : {
-      "comment" : "Large navigation title of the search tab. Matches the tab name.",
+      "comment" : "Large navigation title of the search tab. Use the same word as the tab bar label \"tab.search\".",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Søg"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -51,6 +165,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Search"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Búsqueda"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haku"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recherche"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ricerca"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoeken"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szukaj"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pesquisa"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sök"
           }
         }
       }

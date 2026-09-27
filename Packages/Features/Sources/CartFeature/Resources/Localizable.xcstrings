@@ -2,9 +2,15 @@
   "sourceLanguage" : "de",
   "strings" : {
     "cart.empty.action" : {
-      "comment" : "Primary button in the empty cart state. Opens the Shop tab with the product range. Short verb phrase.",
+      "comment" : "Primary full-width button in the empty basket state; opens the Shop tab with the product range. Short verb phrase, one line, max ~25 characters. Same text as \"home.hero.cta\" on the Start tab; translate both identically. Glossary: Sortiment (EN range).",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se sortimentet"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16,13 +22,67 @@
             "state" : "translated",
             "value" : "Browse the range"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver el catálogo"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selaa valikoimaa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Découvrir le catalogue"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scopri il catalogo"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assortiment bekijken"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zobacz ofertę"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver o catálogo"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se sortimentet"
+          }
         }
       }
     },
     "cart.empty.message" : {
-      "comment" : "Explanation below the empty cart title. One sentence.",
+      "comment" : "Text below the empty basket title: products the customer adds to the basket will be listed here. One sentence, max ~70 characters. Glossary: Warenkorb (EN basket).",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkter, du lægger i kurven, vises her."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -34,13 +94,67 @@
             "state" : "translated",
             "value" : "Products you add to your basket will appear here."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los productos que añadas a la cesta aparecerán aquí."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ostoskoriin lisäämäsi tuotteet näkyvät täällä."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les produits que vous ajoutez au panier apparaîtront ici."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I prodotti che aggiungi al carrello appariranno qui."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Producten die je aan je winkelwagen toevoegt, vind je hier."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutaj pojawią się produkty dodane do koszyka."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os produtos que adicionar ao carrinho aparecem aqui."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkter som du lägger i varukorgen visas här."
+          }
         }
       }
     },
     "cart.empty.title" : {
-      "comment" : "Serif title of the empty cart state.",
+      "comment" : "Serif title of the empty basket state (the shopping cart has no items). Short, no exclamation mark, max ~30 characters. Glossary: Warenkorb (EN basket).",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din kurv er tom"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -52,13 +166,67 @@
             "state" : "translated",
             "value" : "Your basket is empty"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu cesta está vacía"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ostoskorisi on tyhjä"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre panier est vide"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo carrello è vuoto"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je winkelwagen is leeg"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koszyk jest pusty"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O seu carrinho está vazio"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din varukorg är tom"
+          }
         }
       }
     },
     "cart.notice.digital" : {
-      "comment" : "Legal footnote in the cart: for digital content the right of withdrawal expires once delivery begins with the customer's express consent. German cites § 356 Abs. 5 BGB; other languages describe the rule neutrally without citing German law. Keep the legal meaning exactly.",
+      "comment" : "Legal footnote at the bottom of the basket: for digital content (licence keys) the right of withdrawal expires once delivery begins with the customer's express consent. Keep the legal meaning exactly. German cites \"§ 356 Abs. 5 BGB\"; every other language states the rule neutrally and does not cite German law (docs/LOCALIZATION.md, tone rule 6). No length limit; the text wraps. Glossary: Widerrufsrecht (EN right of withdrawal).",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For digitalt indhold bortfalder din fortrydelsesret, så snart leveringen begynder med dit udtrykkelige samtykke."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -70,31 +238,139 @@
             "state" : "translated",
             "value" : "For digital content, the right of withdrawal ends once delivery starts with your express consent."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En el caso de contenidos digitales, tu derecho de desistimiento se extingue en cuanto comienza la entrega con tu consentimiento expreso."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digitaalisen sisällön osalta peruuttamisoikeutesi päättyy heti, kun toimitus alkaa nimenomaisella suostumuksellasi."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour les contenus numériques, votre droit de rétractation prend fin dès que la livraison commence avec votre consentement exprès."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per i contenuti digitali, il tuo diritto di recesso si estingue non appena la consegna inizia con il tuo consenso espresso."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bij digitale inhoud vervalt je herroepingsrecht zodra de levering met je uitdrukkelijke toestemming begint."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W przypadku treści cyfrowych prawo odstąpienia od umowy wygasa z chwilą rozpoczęcia dostawy za Twoją wyraźną zgodą."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No caso de conteúdos digitais, o seu direito de livre resolução extingue-se assim que a entrega tiver início com o seu consentimento expresso."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "För digitalt innehåll upphör din ångerrätt så snart leveransen påbörjas med ditt uttryckliga samtycke."
+          }
         }
       }
     },
     "cart.notice.title" : {
-      "comment" : "Small uppercase label above the right-of-withdrawal notice for digital content in the cart.",
+      "comment" : "Small label above the right-of-withdrawal footnote (\"cart.notice.digital\") in the basket. Max ~30 characters. Glossary: Widerrufsrecht (EN right of withdrawal). The app renders it in uppercase letters; write it in normal sentence case.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortrydelsesret"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Digitale Inhalte"
+            "value" : "Widerrufsrecht"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Digital content"
+            "value" : "Right of withdrawal"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Derecho de desistimiento"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peruuttamisoikeus"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Droit de rétractation"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diritto di recesso"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herroepingsrecht"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prawo odstąpienia od umowy"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Direito de livre resolução"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ångerrätt"
           }
         }
       }
     },
     "cart.payment.methods" : {
-      "comment" : "The only three payment methods of the store, shown as text in the cart. Keep exactly these three; Apple Pay and Klarna are brand names.",
+      "comment" : "The store's only three payment methods, listed as plain text in the basket. Translate only \"Kreditkarte\" (glossary: EN credit card); \"Apple Pay\" and \"Klarna\" are brand names and stay unchanged. Keep exactly these three in this order and never add another method. Same text as \"home.trust.payment\" on the Start tab.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, kreditkort, Klarna"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -106,13 +382,67 @@
             "state" : "translated",
             "value" : "Apple Pay, credit card, Klarna"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, tarjeta de crédito, Klarna"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, luottokortti, Klarna"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, carte bancaire, Klarna"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, carta di credito, Klarna"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, creditcard, Klarna"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, karta kredytowa, Klarna"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, cartão de crédito, Klarna"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, kreditkort, Klarna"
+          }
         }
       }
     },
     "cart.payment.title" : {
-      "comment" : "Small uppercase label of the payment methods row in the cart.",
+      "comment" : "Small label above the payment methods row in the basket. Max ~25 characters. The app renders it in uppercase letters; write it in normal sentence case.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betalingsmetoder"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -124,13 +454,67 @@
             "state" : "translated",
             "value" : "Payment methods"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Métodos de pago"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maksutavat"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moyens de paiement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metodi di pagamento"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betaalmethoden"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metody płatności"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Métodos de pagamento"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betalningssätt"
+          }
         }
       }
     },
     "cart.title" : {
-      "comment" : "Large navigation title of the cart tab. Matches the tab name (British English: basket).",
+      "comment" : "Large navigation title of the Warenkorb tab. Use the same word as the tab bar label \"tab.cart\" (glossary: EN basket).",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurv"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -141,6 +525,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Basket"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cesta"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ostoskori"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Panier"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carrello"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Winkelwagen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koszyk"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carrinho"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varukorg"
           }
         }
       }
