@@ -196,10 +196,10 @@ Verified on 2026-09-26; evidence and upgrade procedure in
   the app cannot read metafields, so specs, FAQs, MPNs and deal end dates are unavailable, and
   requests are limited to a query cost of 1000. The values also need metafield definitions with
   Storefront access ([docs/STORE_AUDIT.md](docs/STORE_AUDIT.md), owner actions 1 to 3).
-- **Snapshot references are recorded by the `record-snapshots` workflow.** The repository ships
-  the snapshot tests without reference images (`__Snapshots__` holds only `.gitkeep`). CI compares
-  with recording disabled, so the `ios` job fails on missing references until the Record snapshots
-  workflow has run on the branch; run it again after every visual change and review the images.
+- **Snapshot references come from CI.** The 84 DesignSystem reference images were recorded on
+  2026-09-27 by the `record-snapshots` workflow on the CI runner (Xcode 26.6, iPhone 17 simulator,
+  iOS 26.5). Local runs on a different Xcode or simulator can differ by a few pixels; after every
+  visual change, run the workflow again and review the committed images.
 - **Store content conflicts listed in [docs/STORE_AUDIT.md](docs/STORE_AUDIT.md).** Some product
   descriptions contain payment method and support channel wording that contradicts the business
   facts, some titles use license-origin wording, several collection and page handles differ from
