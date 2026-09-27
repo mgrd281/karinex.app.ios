@@ -1,0 +1,510 @@
+{
+  "sourceLanguage" : "de",
+  "strings" : {
+    "home.hero.body" : {
+      "comment" : "Introduction below the hero headline on the Start tab. Names the product range and the only three payment methods (Apple Pay, credit card, Klarna). Two sentences at most.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lizenzschlüssel für Windows, Office und weitere Microsoft-Software. Bezahlen Sie mit Apple Pay, Kreditkarte oder Klarna und erhalten Sie Ihren Schlüssel per E-Mail."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licence keys for Windows, Office and other Microsoft software. Pay with Apple Pay, credit card or Klarna and receive your key by e-mail."
+          }
+        }
+      }
+    },
+    "home.hero.cta" : {
+      "comment" : "Primary button in the Start tab hero. Opens the Shop tab with the product range. Short verb phrase.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zum Sortiment"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Browse the range"
+          }
+        }
+      }
+    },
+    "home.hero.eyebrow" : {
+      "comment" : "Small uppercase label above the hero headline on the Start tab. Two or three words.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Software-Lizenzen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Software licences"
+          }
+        }
+      }
+    },
+    "home.hero.title" : {
+      "comment" : "Serif display headline of the editorial hero on the Start tab. Short and calm; no exclamation mark.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Software. Per E-Mail in Minuten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your software. By e-mail in minutes."
+          }
+        }
+      }
+    },
+    "home.moneyback.clause.scope" : {
+      "comment" : "First money-back condition: the promise covers only activated license keys and physical goods. Legal meaning must be kept exactly.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Zusage gilt nur für aktivierte Lizenzschlüssel und für physische Ware."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The promise applies only to activated licence keys and to physical goods."
+          }
+        }
+      }
+    },
+    "home.moneyback.clause.statutory" : {
+      "comment" : "Third money-back condition: statutory warranty rights, for example for a defective key, are not affected. Legal meaning must be kept exactly.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre gesetzlichen Gewährleistungsrechte, etwa bei einem fehlerhaften Schlüssel, bleiben unberührt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your statutory warranty rights, for example for a defective key, remain unaffected."
+          }
+        }
+      }
+    },
+    "home.moneyback.clause.unactivated" : {
+      "comment" : "Second money-back condition: delivered but not activated license keys are not refunded voluntarily, because the key could still be used later. Legal meaning must be kept exactly.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gelieferte, aber nicht aktivierte Lizenzschlüssel werden nicht freiwillig erstattet, da der Schlüssel später noch verwendet werden könnte."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delivered licence keys that have not been activated are not refunded voluntarily, because the key could still be used later."
+          }
+        }
+      }
+    },
+    "home.moneyback.done" : {
+      "comment" : "Button in the top bar of the money-back conditions sheet that closes the sheet. One word.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "home.moneyback.intro" : {
+      "comment" : "Introduction at the top of the money-back conditions sheet, above the list of conditions.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für die Geld-zurück-Zusage gelten die folgenden Bedingungen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The following conditions apply to the money-back promise."
+          }
+        }
+      }
+    },
+    "home.moneyback.title" : {
+      "comment" : "Navigation title of the sheet with the money-back conditions. Same wording as the trust fact.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100 Tage Geld-zurück"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100-day money-back"
+          }
+        }
+      }
+    },
+    "home.support.channel.email" : {
+      "comment" : "Name of the e-mail support channel in the support card; the address is shown below it.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-Mail"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail"
+          }
+        }
+      }
+    },
+    "home.support.channel.livechat" : {
+      "comment" : "Name of the live chat support channel in the support card.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live-Chat"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live chat"
+          }
+        }
+      }
+    },
+    "home.support.channel.whatsapp" : {
+      "comment" : "Name of the WhatsApp support channel in the support card. Brand name, keep as is.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WhatsApp"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WhatsApp"
+          }
+        }
+      }
+    },
+    "home.support.eyebrow" : {
+      "comment" : "Small uppercase label above the support section title on the Start tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support"
+          }
+        }
+      }
+    },
+    "home.support.hours.label" : {
+      "comment" : "Label of the service hours row in the support card; the hours follow after a dotted leader.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servicezeiten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support hours"
+          }
+        }
+      }
+    },
+    "home.support.hours.value" : {
+      "comment" : "Service hours in the support card: Monday to Sunday, 06:00 to 23:00 German time (Europe/Berlin). Never use a dash for the range.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mo. bis So., 06:00 bis 23:00 Uhr"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mon to Sun, 06:00 to 23:00 German time"
+          }
+        }
+      }
+    },
+    "home.support.message" : {
+      "comment" : "Text at the top of the support card on the Start tab, above the list of channels (WhatsApp, e-mail, live chat). There is no phone support; never mention a phone.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bei Fragen zu Ihrer Bestellung, zur Lieferung oder zur Aktivierung erreichen Sie uns über diese Kanäle."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For questions about your order, delivery or activation, you can reach us through these channels."
+          }
+        }
+      }
+    },
+    "home.support.title" : {
+      "comment" : "Serif section title of the support card on the Start tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "So erreichen Sie uns"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How to reach us"
+          }
+        }
+      }
+    },
+    "home.title" : {
+      "comment" : "Navigation title of the Start tab. The bar is hidden behind the hero; VoiceOver and the back button of pushed screens use this text. One word.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        }
+      }
+    },
+    "home.trust.conditions" : {
+      "comment" : "Text button below the money-back footnote on the Start tab. Opens the full money-back conditions.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bedingungen anzeigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show conditions"
+          }
+        }
+      }
+    },
+    "home.trust.delivery" : {
+      "comment" : "Trust fact tile on the Start tab: license keys are delivered by e-mail within minutes. Short, fits a half-width tile.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lieferung per E-Mail in Minuten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delivery by e-mail in minutes"
+          }
+        }
+      }
+    },
+    "home.trust.eyebrow" : {
+      "comment" : "Small uppercase label above the trust facts section title on the Start tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gut zu wissen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Good to know"
+          }
+        }
+      }
+    },
+    "home.trust.footnote" : {
+      "comment" : "Footnote below the trust facts on the Start tab, preceded by the marker *. States the money-back condition: only activated keys and physical goods; delivered but unactivated keys are not refunded voluntarily; statutory warranty rights remain unaffected. Keep all three parts.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gilt nur für aktivierte Lizenzschlüssel und physische Ware. Gelieferte, nicht aktivierte Schlüssel werden nicht freiwillig erstattet. Gesetzliche Gewährleistungsrechte bleiben unberührt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Applies only to activated licence keys and physical goods. Delivered keys that have not been activated are not refunded voluntarily. Statutory warranty rights remain unaffected."
+          }
+        }
+      }
+    },
+    "home.trust.moneyback" : {
+      "comment" : "Trust fact tile on the Start tab: the 100-day money-back promise. The app appends a footnote marker (*) and a tap shows the conditions.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100 Tage Geld-zurück"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100-day money-back"
+          }
+        }
+      }
+    },
+    "home.trust.moneyback.hint" : {
+      "comment" : "VoiceOver hint of the money-back trust tile, read after its text. Describes what a double tap does.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeigt die Bedingungen der Geld-zurück-Zusage."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows the conditions of the money-back promise."
+          }
+        }
+      }
+    },
+    "home.trust.payment" : {
+      "comment" : "Trust fact tile on the Start tab listing the only three payment methods. Keep exactly these three; Apple Pay and Klarna are brand names.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, Kreditkarte, Klarna"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, credit card, Klarna"
+          }
+        }
+      }
+    },
+    "home.trust.support" : {
+      "comment" : "Trust fact tile on the Start tab: support hours, Monday to Sunday, 06:00 to 23:00 German time (Europe/Berlin). Never use a dash for the range.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Mo. bis So., 06:00 bis 23:00 Uhr"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Mon to Sun, 06:00 to 23:00 German time"
+          }
+        }
+      }
+    },
+    "home.trust.title" : {
+      "comment" : "Serif section title above the four trust facts on the Start tab. KARINEX is the brand name, never translated.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einkaufen bei KARINEX"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shopping at KARINEX"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

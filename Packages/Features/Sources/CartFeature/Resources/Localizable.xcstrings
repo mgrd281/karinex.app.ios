@@ -1,0 +1,150 @@
+{
+  "sourceLanguage" : "de",
+  "strings" : {
+    "cart.empty.action" : {
+      "comment" : "Primary button in the empty cart state. Opens the Shop tab with the product range. Short verb phrase.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zum Sortiment"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Browse the range"
+          }
+        }
+      }
+    },
+    "cart.empty.message" : {
+      "comment" : "Explanation below the empty cart title. One sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkte, die Sie in den Warenkorb legen, finden Sie hier."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Products you add to your basket will appear here."
+          }
+        }
+      }
+    },
+    "cart.empty.title" : {
+      "comment" : "Serif title of the empty cart state.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihr Warenkorb ist leer"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your basket is empty"
+          }
+        }
+      }
+    },
+    "cart.notice.digital" : {
+      "comment" : "Legal footnote in the cart: for digital content the right of withdrawal expires once delivery begins with the customer's express consent. German cites § 356 Abs. 5 BGB; other languages describe the rule neutrally without citing German law. Keep the legal meaning exactly.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bei digitalen Inhalten erlischt Ihr Widerrufsrecht, sobald die Lieferung mit Ihrer ausdrücklichen Zustimmung beginnt (§ 356 Abs. 5 BGB)."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For digital content, the right of withdrawal ends once delivery starts with your express consent."
+          }
+        }
+      }
+    },
+    "cart.notice.title" : {
+      "comment" : "Small uppercase label above the right-of-withdrawal notice for digital content in the cart.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digitale Inhalte"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Digital content"
+          }
+        }
+      }
+    },
+    "cart.payment.methods" : {
+      "comment" : "The only three payment methods of the store, shown as text in the cart. Keep exactly these three; Apple Pay and Klarna are brand names.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, Kreditkarte, Klarna"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, credit card, Klarna"
+          }
+        }
+      }
+    },
+    "cart.payment.title" : {
+      "comment" : "Small uppercase label of the payment methods row in the cart.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zahlungsarten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment methods"
+          }
+        }
+      }
+    },
+    "cart.title" : {
+      "comment" : "Large navigation title of the cart tab. Matches the tab name (British English: basket).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warenkorb"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basket"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

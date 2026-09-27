@@ -1,0 +1,60 @@
+{
+  "sourceLanguage" : "de",
+  "strings" : {
+    "catalog.empty.message" : {
+      "comment" : "Explanation below the Shop tab placeholder title. Describes what the tab will show; no promises about dates. KARINEX is the brand name.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An dieser Stelle finden Sie künftig alle Kategorien und Produkte mit den aktuellen Preisen aus dem KARINEX-Shop."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is where you will find all categories and products with current prices from the KARINEX shop."
+          }
+        }
+      }
+    },
+    "catalog.empty.title" : {
+      "comment" : "Serif title of the placeholder shown on the Shop tab until the catalog is available in the app.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Sortiment wird hier angezeigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The range will appear here"
+          }
+        }
+      }
+    },
+    "catalog.title" : {
+      "comment" : "Large navigation title of the Shop tab. Matches the tab name.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shop"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shop"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

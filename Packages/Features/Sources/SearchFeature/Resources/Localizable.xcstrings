@@ -1,0 +1,60 @@
+{
+  "sourceLanguage" : "de",
+  "strings" : {
+    "search.empty.message" : {
+      "comment" : "Explanation below the search tab placeholder title. Describes what users will be able to search for; no promises about dates.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hier suchen Sie künftig nach Produkten, Kategorien und Ratgebern."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is where you will search for products, categories and guides."
+          }
+        }
+      }
+    },
+    "search.empty.title" : {
+      "comment" : "Serif title of the placeholder shown on the search tab until search is available in the app.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Suche wird hier angezeigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search will appear here"
+          }
+        }
+      }
+    },
+    "search.title" : {
+      "comment" : "Large navigation title of the search tab. Matches the tab name.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suche"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

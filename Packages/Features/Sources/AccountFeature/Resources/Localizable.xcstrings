@@ -1,0 +1,168 @@
+{
+  "sourceLanguage" : "de",
+  "strings" : {
+    "account.about.title" : {
+      "comment" : "Serif section title above the app version on the account tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über die App"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About the app"
+          }
+        }
+      }
+    },
+    "account.about.version" : {
+      "comment" : "Label of the row showing the app version and build number, e.g. 0.1.0 (1).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        }
+      }
+    },
+    "account.benefit.checkout" : {
+      "comment" : "Account benefit, one line in a list: checkout is faster with an account.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schneller zur Kasse"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faster checkout"
+          }
+        }
+      }
+    },
+    "account.benefit.keys" : {
+      "comment" : "Account benefit, one line in a list: license keys are stored securely on this device only.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lizenzschlüssel sicher auf diesem Gerät gespeichert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licence keys stored securely on this device"
+          }
+        }
+      }
+    },
+    "account.benefit.orders" : {
+      "comment" : "Account benefit, one line in a list: orders and invoices can be viewed at any time.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestellungen und Rechnungen jederzeit abrufen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View orders and invoices at any time"
+          }
+        }
+      }
+    },
+    "account.intro.eyebrow" : {
+      "comment" : "Small uppercase label above the title of the account benefits card (signed-out state).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihr Konto"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your account"
+          }
+        }
+      }
+    },
+    "account.intro.title" : {
+      "comment" : "Serif title of the account benefits card shown to signed-out users.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Käufe an einem Ort"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your purchases in one place"
+          }
+        }
+      }
+    },
+    "account.signin.note" : {
+      "comment" : "Footnote in the account benefits card: signing in is not available in this app version yet. Neutral, no date.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Anmeldung ist in dieser Version noch nicht verfügbar."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signing in is not yet available in this version."
+          }
+        }
+      }
+    },
+    "account.title" : {
+      "comment" : "Large navigation title of the account tab. Matches the tab name.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
