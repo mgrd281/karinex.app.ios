@@ -64,6 +64,10 @@ final class AppContainer {
     let catalogRepository: any CatalogRepository
     /// The countries, currencies and languages the store sells in.
     let localizationRepository: any LocalizationRepository
+    /// Predictive and full product search.
+    let searchRepository: any SearchRepository
+    /// Blog articles (Ratgeber).
+    let contentRepository: any ContentRepository
 
     // MARK: - Init
 
@@ -116,6 +120,8 @@ final class AppContainer {
         storefrontContextProvider = contextProvider
         catalogRepository = StorefrontCatalogRepository(client: storefrontClient, contextProvider: contextProvider)
         localizationRepository = StorefrontLocalizationRepository(client: storefrontClient, contextProvider: contextProvider)
+        searchRepository = StorefrontSearchRepository(client: storefrontClient, contextProvider: contextProvider)
+        contentRepository = StorefrontContentRepository(client: storefrontClient, contextProvider: contextProvider)
 
         let access = storefrontClient.isTokenless ? "tokenless" : "token"
         logger.info("App container ready: Storefront API \(resolution.configuration.storefrontAPIVersion), \(access)")

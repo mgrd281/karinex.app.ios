@@ -1,146 +1,566 @@
 {
   "sourceLanguage" : "de",
   "strings" : {
-    "search.empty.message" : {
-      "comment" : "Text below the placeholder title on the search tab while search is not yet available in the app: customers will be able to search for products, categories and guides (how-to articles). No dates and no promises. Max ~90 characters.",
+    "search.categories.title" : {
+      "comment" : "Section title above the category shortcuts on the search screen.",
       "extractionState" : "manual",
       "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Her kan du fremover søge efter produkter, kategorier og vejledninger."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hier suchen Sie künftig nach Produkten, Kategorien und Ratgebern."
+            "value" : "Kategorien"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This is where you will be able to search for products, categories and guides."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aquí podrás buscar productos, categorías y guías."
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Täällä voit jatkossa hakea tuotteita, kategorioita ja oppaita."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vous pourrez ici rechercher des produits, des catégories et des guides pratiques."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qui potrai cercare prodotti, categorie e guide."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hier kun je in de toekomst zoeken naar producten, categorieën en handleidingen."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tutaj będzie można wyszukiwać produkty, kategorie i poradniki."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aqui poderá pesquisar produtos, categorias e guias."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Här kan du framöver söka efter produkter, kategorier och guider."
+            "value" : "Categories"
           }
         }
       }
     },
-    "search.empty.title" : {
-      "comment" : "Serif title of the placeholder on the search tab until search is available in the app. Short, max ~40 characters.",
+    "search.category.deals" : {
+      "comment" : "Category shortcut on the search screen that opens the sale collection.",
       "extractionState" : "manual",
       "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Søgefunktionen vises her"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Die Suche wird hier angezeigt"
+            "value" : "Angebote"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Search will appear here"
+            "value" : "Deals"
           }
-        },
-        "es" : {
+        }
+      }
+    },
+    "search.category.development" : {
+      "comment" : "Category shortcut on the search screen that opens the developer tools (Visual Studio) collection.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aquí aparecerá la búsqueda"
+            "value" : "Entwicklung"
           }
         },
-        "fi" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Haku näkyy täällä"
+            "value" : "Development"
+          }
+        }
+      }
+    },
+    "search.category.office" : {
+      "comment" : "Category shortcut on the search screen that opens the Microsoft Office collection.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office"
           }
         },
-        "fr" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La recherche apparaîtra ici"
+            "value" : "Office"
+          }
+        }
+      }
+    },
+    "search.category.server" : {
+      "comment" : "Category shortcut on the search screen that opens the Windows Server collection.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server"
           }
         },
-        "it" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Qui comparirà la ricerca"
+            "value" : "Server"
+          }
+        }
+      }
+    },
+    "search.category.windows" : {
+      "comment" : "Category shortcut on the search screen that opens the Windows collection.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows"
           }
         },
-        "nl" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "De zoekfunctie verschijnt hier"
+            "value" : "Windows"
+          }
+        }
+      }
+    },
+    "search.load_more.error" : {
+      "comment" : "Banner below the search results when the next page could not be loaded. A retry button follows.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weitere Treffer konnten nicht geladen werden."
           }
         },
-        "pl" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tutaj pojawi się wyszukiwarka"
+            "value" : "More results could not be loaded."
+          }
+        }
+      }
+    },
+    "search.loading" : {
+      "comment" : "VoiceOver label of a loading placeholder on the search screens.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird geladen"
           }
         },
-        "pt-PT" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A pesquisa aparecerá aqui"
+            "value" : "Loading"
+          }
+        }
+      }
+    },
+    "search.loading_more" : {
+      "comment" : "VoiceOver label of the spinner below the search results while the next page loads.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weitere Treffer werden geladen"
           }
         },
-        "sv" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sökfunktionen visas här"
+            "value" : "Loading more results"
+          }
+        }
+      }
+    },
+    "search.no_results.message %@" : {
+      "comment" : "Message when a search finds nothing. %@ is the search text, in quotation marks of the language.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für „%@“ wurde nichts gefunden. Versuchen Sie einen anderen Begriff oder wählen Sie eine Kategorie."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing was found for “%@”. Try another term or choose a category."
+          }
+        }
+      }
+    },
+    "search.no_results.title" : {
+      "comment" : "Title when a search finds nothing.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Treffer"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No results"
+          }
+        }
+      }
+    },
+    "search.prompt" : {
+      "comment" : "Placeholder of the search field. Lists what can be found; keep it short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkte, Kategorien, Ratgeber"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Products, categories, guides"
+          }
+        }
+      }
+    },
+    "search.recent.clear" : {
+      "comment" : "Button that deletes all recent searches. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear"
+          }
+        }
+      }
+    },
+    "search.recent.remove" : {
+      "comment" : "Action that removes one entry from the recent searches (context menu and VoiceOver action).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aus dem Verlauf entfernen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove from history"
+          }
+        }
+      }
+    },
+    "search.recent.title" : {
+      "comment" : "Section title above the user's recent searches.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zuletzt gesucht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent searches"
+          }
+        }
+      }
+    },
+    "search.results.count %lld" : {
+      "comment" : "Small uppercase label above the search text on the results screen: number of matching products. %lld is the number.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Treffer"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Treffer"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld result"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld results"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "search.section.articles" : {
+      "comment" : "Section title of the guide article results while typing.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ratgeber"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guides"
+          }
+        }
+      }
+    },
+    "search.section.collections" : {
+      "comment" : "Section title of the collection results while typing.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorien"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories"
+          }
+        }
+      }
+    },
+    "search.section.products" : {
+      "comment" : "Section title of the product results while typing.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkte"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Products"
+          }
+        }
+      }
+    },
+    "search.section.suggestions" : {
+      "comment" : "Section title of the completed search queries suggested while typing.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suchvorschläge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search suggestions"
+          }
+        }
+      }
+    },
+    "search.show_all_results" : {
+      "comment" : "Button next to the product results while typing; opens the full results. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Ergebnisse"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All results"
+          }
+        }
+      }
+    },
+    "search.sort.price_ascending" : {
+      "comment" : "Sort option: lowest price first.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preis aufsteigend"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price: low to high"
+          }
+        }
+      }
+    },
+    "search.sort.price_descending" : {
+      "comment" : "Sort option: highest price first.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preis absteigend"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price: high to low"
+          }
+        }
+      }
+    },
+    "search.sort.relevance" : {
+      "comment" : "Sort option: best match first.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relevanz"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relevance"
+          }
+        }
+      }
+    },
+    "search.sort.title" : {
+      "comment" : "Title of the sort menu on the search results screen. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort"
+          }
+        }
+      }
+    },
+    "search.suggested.title" : {
+      "comment" : "Section title above suggested search queries while the search field is empty.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorschläge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggestions"
+          }
+        }
+      }
+    },
+    "search.suggestion.office_2024" : {
+      "comment" : "Suggested search query; it is sent to the store search. Product name, keep it as customers search for it.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office 2024"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office 2024"
+          }
+        }
+      }
+    },
+    "search.suggestion.visual_studio" : {
+      "comment" : "Suggested search query; it is sent to the store search. Product name, keep it as customers search for it.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visual Studio"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visual Studio"
+          }
+        }
+      }
+    },
+    "search.suggestion.windows_11_pro" : {
+      "comment" : "Suggested search query; it is sent to the store search. Product name, keep it as customers search for it.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows 11 Pro"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows 11 Pro"
+          }
+        }
+      }
+    },
+    "search.suggestion.windows_server" : {
+      "comment" : "Suggested search query; it is sent to the store search. Product name, keep it as customers search for it.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows Server"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows Server"
           }
         }
       }

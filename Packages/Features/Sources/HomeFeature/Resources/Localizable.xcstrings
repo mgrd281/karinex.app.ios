@@ -1,6 +1,24 @@
 {
   "sourceLanguage" : "de",
   "strings" : {
+    "home.article.hint" : {
+      "comment" : "VoiceOver hint of a guide article card on the Start tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öffnet den Artikel."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the article."
+          }
+        }
+      }
+    },
     "home.hero.body" : {
       "comment" : "Introduction below the display headline in the hero panel at the top of the Start tab: the range (Windows, Office, other Microsoft software), the only three payment methods and delivery of the key by e-mail. Two sentences, max ~170 characters. Windows, Office, Microsoft, Apple Pay and Klarna are names and stay unchanged; translate \"Kreditkarte\" with the glossary (EN credit card).",
       "extractionState" : "manual",
@@ -285,6 +303,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Din programvara. Via e-post på minuter."
+          }
+        }
+      }
+    },
+    "home.loading" : {
+      "comment" : "VoiceOver label of a row placeholder on the Start tab while its content loads.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird geladen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading"
           }
         }
       }
@@ -717,6 +753,258 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pengarna tillbaka i 100 dagar"
+          }
+        }
+      }
+    },
+    "home.section.bestseller.eyebrow" : {
+      "comment" : "Small uppercase label above the bestseller row title on the Start tab. Must not claim sales figures.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aus dem Sortiment"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From our range"
+          }
+        }
+      }
+    },
+    "home.section.bestseller.title" : {
+      "comment" : "Title of the row with the store's bestseller collection on the Start tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestseller"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestsellers"
+          }
+        }
+      }
+    },
+    "home.section.deals.eyebrow" : {
+      "comment" : "Small uppercase label above the deals row title on the Start tab. Neutral, no urgency claims.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerade reduziert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currently reduced"
+          }
+        }
+      }
+    },
+    "home.section.deals.title" : {
+      "comment" : "Title of the deals row on the Start tab (products of the store's sale collection). Short, one or two words.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Angebote"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deals"
+          }
+        }
+      }
+    },
+    "home.section.development.eyebrow" : {
+      "comment" : "Small uppercase label above the developer tools row title on the Start tab. Visual Studio is a product name.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visual Studio und Tools"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visual Studio and tools"
+          }
+        }
+      }
+    },
+    "home.section.development.title" : {
+      "comment" : "Title of the developer tools row (Visual Studio) on the Start tab. One short word.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entwicklung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Development"
+          }
+        }
+      }
+    },
+    "home.section.guides.eyebrow" : {
+      "comment" : "Small uppercase label above the guides row title on the Start tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anleitungen und Tipps"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How-tos and tips"
+          }
+        }
+      }
+    },
+    "home.section.guides.title" : {
+      "comment" : "Title of the row with guide articles from the store blog on the Start tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ratgeber"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guides"
+          }
+        }
+      }
+    },
+    "home.section.office.eyebrow" : {
+      "comment" : "Small uppercase label above the Office row title on the Start tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produktivität"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Productivity"
+          }
+        }
+      }
+    },
+    "home.section.office.title" : {
+      "comment" : "Title of the Microsoft Office product row on the Start tab. Product family name, usually not translated.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office"
+          }
+        }
+      }
+    },
+    "home.section.server.eyebrow" : {
+      "comment" : "Small uppercase label above the Server row title on the Start tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für Unternehmen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For businesses"
+          }
+        }
+      }
+    },
+    "home.section.server.title" : {
+      "comment" : "Title of the Windows Server product row on the Start tab. One short word.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server"
+          }
+        }
+      }
+    },
+    "home.section.windows.eyebrow" : {
+      "comment" : "Small uppercase label above the Windows row title on the Start tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betriebssysteme"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Operating systems"
+          }
+        }
+      }
+    },
+    "home.section.windows.title" : {
+      "comment" : "Title of the Windows product row on the Start tab. Product family name, usually not translated.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows"
           }
         }
       }

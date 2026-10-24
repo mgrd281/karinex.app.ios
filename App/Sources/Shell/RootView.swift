@@ -44,11 +44,16 @@ struct RootView: View {
     private func rootScreen(for tab: AppTab) -> some View {
         switch tab {
         case .home:
-            HomeView(onBrowse: { selectedTab = .shop })
+            HomeView(
+                catalog: container.catalogRepository,
+                content: container.contentRepository,
+                onRoute: { _ in },
+                onBrowse: { selectedTab = .shop }
+            )
         case .shop:
-            CatalogView()
+            CatalogView(catalog: container.catalogRepository, onRoute: { _ in })
         case .search:
-            SearchView()
+            SearchView(search: container.searchRepository, preferences: container.preferences, onRoute: { _ in })
         case .cart:
             CartView(onBrowse: { selectedTab = .shop })
         case .account:

@@ -1,146 +1,584 @@
 {
   "sourceLanguage" : "de",
   "strings" : {
-    "catalog.empty.message" : {
-      "comment" : "Text below the placeholder title on the Shop tab while the product catalogue is not yet available in the app: all categories and products of the store will be listed here, with current prices. No dates and no promises. KARINEX is the brand name: always uppercase, never translated. Max ~110 characters.",
+    "catalog.collection.empty.message" : {
+      "comment" : "Message shown when a collection has no products.",
       "extractionState" : "manual",
       "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Her finder du fremover alle kategorier og produkter fra KARINEX-shoppen med aktuelle priser."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hier finden Sie künftig alle Kategorien und Produkte aus dem KARINEX-Shop mit aktuellen Preisen."
+            "value" : "In dieser Kollektion sind im Moment keine Produkte verfügbar."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This is where you will find every category and product from the KARINEX shop, with current prices."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aquí encontrarás todas las categorías y productos de la tienda KARINEX, con sus precios actuales."
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Täältä löydät jatkossa kaikki KARINEX-kaupan kategoriat ja tuotteet ajantasaisine hintoineen."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vous trouverez ici toutes les catégories et tous les produits de la boutique KARINEX, avec leurs prix actuels."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Qui troverai tutte le categorie e tutti i prodotti del negozio KARINEX, con i prezzi aggiornati."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hier komen alle categorieën en producten van de KARINEX-shop te staan, met actuele prijzen."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "W tym miejscu pojawią się wszystkie kategorie i produkty ze sklepu KARINEX wraz z aktualnymi cenami."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aqui encontrará todas as categorias e produtos da loja KARINEX, com preços atualizados."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Här hittar du framöver alla kategorier och produkter i KARINEX-butiken, med aktuella priser."
+            "value" : "There are no products in this collection right now."
           }
         }
       }
     },
-    "catalog.empty.title" : {
-      "comment" : "Serif title of the placeholder on the Shop tab until the product catalogue is available in the app. Short, max ~40 characters. Glossary: Sortiment (EN range).",
+    "catalog.collection.empty.title" : {
+      "comment" : "Title shown when a collection has no products.",
       "extractionState" : "manual",
       "localizations" : {
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sortimentet vises her"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Das Sortiment wird hier angezeigt"
+            "value" : "Keine Produkte"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The range will appear here"
+            "value" : "No products"
           }
-        },
-        "es" : {
+        }
+      }
+    },
+    "catalog.collection.eyebrow.filtered %@ %lld" : {
+      "comment" : "Small uppercase label above a collection title: %1$@ is the chosen sort order (e.g. Empfohlen), %2$lld the number of active filters. Keep it short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aquí aparecerá el catálogo"
+            "value" : "%1$@ · Filter: %2$lld"
           }
         },
-        "fi" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Valikoima näkyy täällä"
+            "value" : "%1$@ · Filters: %2$lld"
+          }
+        }
+      }
+    },
+    "catalog.collection.filtered_empty.message" : {
+      "comment" : "Message shown when no product of a collection matches the chosen filters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für die gewählten Filter wurden keine Produkte gefunden."
           }
         },
-        "fr" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Le catalogue apparaîtra ici"
+            "value" : "No products match the selected filters."
+          }
+        }
+      }
+    },
+    "catalog.collection.filtered_empty.title" : {
+      "comment" : "Title shown when no product of a collection matches the chosen filters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine passenden Produkte"
           }
         },
-        "it" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Qui comparirà il catalogo"
+            "value" : "No matching products"
+          }
+        }
+      }
+    },
+    "catalog.collection.hint" : {
+      "comment" : "VoiceOver hint of a collection tile or row on the Shop tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öffnet die Kollektion."
           }
         },
-        "nl" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Het assortiment verschijnt hier"
+            "value" : "Opens the collection."
+          }
+        }
+      }
+    },
+    "catalog.collections.empty.message" : {
+      "comment" : "Message of the Shop tab when the store returns no collections.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Im Moment sind keine Kategorien verfügbar. Bitte versuchen Sie es später erneut."
           }
         },
-        "pl" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tutaj pojawi się oferta sklepu"
+            "value" : "No categories are available right now. Please try again later."
+          }
+        }
+      }
+    },
+    "catalog.collections.empty.title" : {
+      "comment" : "Title of the Shop tab when the store returns no collections.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Kategorien verfügbar"
           }
         },
-        "pt-PT" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O catálogo aparecerá aqui"
+            "value" : "No categories available"
+          }
+        }
+      }
+    },
+    "catalog.featured.eyebrow" : {
+      "comment" : "Small uppercase label above the curated category tiles on the Shop tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortiment"
           }
         },
-        "sv" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sortimentet visas här"
+            "value" : "Range"
+          }
+        }
+      }
+    },
+    "catalog.featured.title" : {
+      "comment" : "Section title of the curated category tiles on the Shop tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorien"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories"
+          }
+        }
+      }
+    },
+    "catalog.filter.active %lld" : {
+      "comment" : "VoiceOver value of the filter button: number of active filters. %lld is the number.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktive Filter: %lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active filters: %lld"
+          }
+        }
+      }
+    },
+    "catalog.filter.apply" : {
+      "comment" : "Full-width button at the bottom of the filter sheet that applies the filters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ergebnisse anzeigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show results"
+          }
+        }
+      }
+    },
+    "catalog.filter.cancel" : {
+      "comment" : "Button that closes the filter sheet without applying changes.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "catalog.filter.count %lld" : {
+      "comment" : "VoiceOver value of a filter option: how many products match it. %lld is the number.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Produkt"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Produkte"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld product"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld products"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "catalog.filter.price.maximum" : {
+      "comment" : "Label of the upper bound field of the price filter.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preis bis"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price to"
+          }
+        }
+      }
+    },
+    "catalog.filter.price.minimum" : {
+      "comment" : "Label of the lower bound field of the price filter.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preis von"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price from"
+          }
+        }
+      }
+    },
+    "catalog.filter.reset" : {
+      "comment" : "Button in the filter sheet that clears every chosen filter. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurücksetzen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset"
+          }
+        }
+      }
+    },
+    "catalog.filter.reset_all" : {
+      "comment" : "Button of the empty state when no product matches the chosen filters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter zurücksetzen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset filters"
+          }
+        }
+      }
+    },
+    "catalog.filter.title" : {
+      "comment" : "Title of the filter sheet and label of the filter button on a collection screen.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filters"
+          }
+        }
+      }
+    },
+    "catalog.filter.unavailable" : {
+      "comment" : "Text in the filter sheet when the store offers no filters for the collection.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für diese Kollektion sind keine Filter verfügbar."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No filters are available for this collection."
+          }
+        }
+      }
+    },
+    "catalog.load_more.error" : {
+      "comment" : "Banner below a product grid when the next page could not be loaded. A retry button follows.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weitere Produkte konnten nicht geladen werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More products could not be loaded."
+          }
+        }
+      }
+    },
+    "catalog.loading" : {
+      "comment" : "VoiceOver label of a loading placeholder in the Shop tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird geladen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading"
+          }
+        }
+      }
+    },
+    "catalog.loading_more" : {
+      "comment" : "VoiceOver label of the spinner below a product grid while the next page loads.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weitere Produkte werden geladen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading more products"
+          }
+        }
+      }
+    },
+    "catalog.more.eyebrow" : {
+      "comment" : "Small uppercase label above the list of further collections on the Shop tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Kollektionen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All collections"
+          }
+        }
+      }
+    },
+    "catalog.more.title" : {
+      "comment" : "Section title of the list of further collections on the Shop tab.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weitere Kollektionen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More collections"
+          }
+        }
+      }
+    },
+    "catalog.sort.best_selling" : {
+      "comment" : "Sort option: by sales.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestseller"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best selling"
+          }
+        }
+      }
+    },
+    "catalog.sort.newest" : {
+      "comment" : "Sort option: newest products first.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neueste"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Newest"
+          }
+        }
+      }
+    },
+    "catalog.sort.price_ascending" : {
+      "comment" : "Sort option: lowest price first.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preis aufsteigend"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price: low to high"
+          }
+        }
+      }
+    },
+    "catalog.sort.price_descending" : {
+      "comment" : "Sort option: highest price first.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preis absteigend"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price: high to low"
+          }
+        }
+      }
+    },
+    "catalog.sort.recommended" : {
+      "comment" : "Sort option: the order configured by the store for the collection.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empfohlen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommended"
+          }
+        }
+      }
+    },
+    "catalog.sort.title" : {
+      "comment" : "Title of the sort menu on a collection screen. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort"
           }
         }
       }
