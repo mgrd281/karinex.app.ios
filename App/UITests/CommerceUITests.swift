@@ -62,7 +62,10 @@ final class CommerceUITests: XCTestCase {
         cartTab.tap()
         XCTAssertTrue(element("screen.cart", in: app).waitForExistence(timeout: timeout), "The cart did not open")
         let line = app.descendants(matching: .any).matching(NSPredicate(format: "identifier BEGINSWITH 'cart.line.'")).firstMatch
-        XCTAssertTrue(line.waitForExistence(timeout: networkTimeout), "The cart shows no line")
+        XCTAssertTrue(
+            line.waitForExistence(timeout: networkTimeout),
+            "The cart shows no line. Hierarchy:\n\(String(app.debugDescription.prefix(6000)))"
+        )
         XCTAssertTrue(element("cart.total", in: app).exists, "The cart shows no total")
 
         // "Zur Kasse" opens Shopify checkout in a sheet.
