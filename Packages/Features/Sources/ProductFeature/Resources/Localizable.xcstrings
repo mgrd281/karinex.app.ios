@@ -1,7 +1,852 @@
 {
   "sourceLanguage" : "de",
   "strings" : {
-
+    "product.activation.title" : {
+      "comment" : "Section title above the activation instructions from the store. Serif, short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivierung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activation"
+          }
+        }
+      }
+    },
+    "product.availability.available" : {
+      "comment" : "Availability of the selected product variant: it can be bought now. Short, next to an icon.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Available"
+          }
+        }
+      }
+    },
+    "product.availability.unavailable" : {
+      "comment" : "Availability of the selected product variant: it cannot be bought at the moment. Short, next to an icon.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Derzeit nicht verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currently unavailable"
+          }
+        }
+      }
+    },
+    "product.cart.add" : {
+      "comment" : "Primary button in the bottom bar that adds the product to the cart. Imperative, short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In den Warenkorb"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add to basket"
+          }
+        }
+      }
+    },
+    "product.cart.added" : {
+      "comment" : "Confirmation banner after the product was added to the cart. Short sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In den Warenkorb gelegt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Added to your basket."
+          }
+        }
+      }
+    },
+    "product.cart.buy_now" : {
+      "comment" : "Secondary button in the bottom bar that adds the product and opens the checkout. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jetzt kaufen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buy now"
+          }
+        }
+      }
+    },
+    "product.cart.show" : {
+      "comment" : "Button in the confirmation banner that opens the cart. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zum Warenkorb"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View basket"
+          }
+        }
+      }
+    },
+    "product.comparison.eyebrow" : {
+      "comment" : "Small uppercase label above 'Ähnliche Produkte'. One word.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vergleich"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compare"
+          }
+        }
+      }
+    },
+    "product.comparison.title" : {
+      "comment" : "Section title of the row of similar products shown for comparison. Serif, short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ähnliche Produkte"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Similar products"
+          }
+        }
+      }
+    },
+    "product.delivery.digital" : {
+      "comment" : "Delivery form next to the availability for license keys, which are sent by e-mail. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lieferung per E-Mail"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delivery by e-mail"
+          }
+        }
+      }
+    },
+    "product.delivery.physical" : {
+      "comment" : "Delivery form next to the availability for physical goods (USB sticks, discs) that are shipped. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Physische Ware mit Versand"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Physical item, shipped"
+          }
+        }
+      }
+    },
+    "product.description.title" : {
+      "comment" : "Section title above the product description from the store. Serif, short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beschreibung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Description"
+          }
+        }
+      }
+    },
+    "product.empty.message" : {
+      "comment" : "Explanation below 'Produkt nicht gefunden'. One or two lines.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Produkt ist nicht mehr verfügbar oder wird in Ihrem Shop-Land nicht angeboten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This product is no longer available or is not offered in your shop country."
+          }
+        }
+      }
+    },
+    "product.empty.title" : {
+      "comment" : "Title of the empty state when the product does not exist or is not sold in the chosen shop country. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkt nicht gefunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Product not found"
+          }
+        }
+      }
+    },
+    "product.facts.activation_method" : {
+      "comment" : "Row label in the key facts table: how the license is activated. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivierungsart"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activation"
+          }
+        }
+      }
+    },
+    "product.facts.architecture" : {
+      "comment" : "Row label in the key facts table: processor architecture (for example 64-bit). Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Architektur"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Architecture"
+          }
+        }
+      }
+    },
+    "product.facts.delivery_form" : {
+      "comment" : "Row label in the key facts table: how the product is delivered (download or USB). Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lieferform"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delivery"
+          }
+        }
+      }
+    },
+    "product.facts.device_count" : {
+      "comment" : "Row label in the key facts table: number of devices the license covers. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geräteanzahl"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Devices"
+          }
+        }
+      }
+    },
+    "product.facts.languages" : {
+      "comment" : "Row label in the key facts table: languages of the software. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprachen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Languages"
+          }
+        }
+      }
+    },
+    "product.facts.license_type" : {
+      "comment" : "Row label in the key facts table: type of license (for example permanent license). Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lizenztyp"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licence type"
+          }
+        }
+      }
+    },
+    "product.facts.mpn" : {
+      "comment" : "Row label in the key facts table: manufacturer part number. Keep the abbreviation MPN if customary.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herstellernummer (MPN)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manufacturer part number (MPN)"
+          }
+        }
+      }
+    },
+    "product.facts.support_status" : {
+      "comment" : "Row label in the key facts table: whether the manufacturer still supports the software. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support-Status"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support status"
+          }
+        }
+      }
+    },
+    "product.facts.title" : {
+      "comment" : "Section title above the key facts table of a product (license type, architecture and so on). Serif, short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auf einen Blick"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "At a glance"
+          }
+        }
+      }
+    },
+    "product.faq.title" : {
+      "comment" : "Section title above the product's frequently asked questions. Serif, short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Häufige Fragen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Frequently asked questions"
+          }
+        }
+      }
+    },
+    "product.gallery.close" : {
+      "comment" : "VoiceOver label of the close button (an X) of the full-screen image viewer.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schließen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        }
+      }
+    },
+    "product.gallery.image" : {
+      "comment" : "VoiceOver label of a product image when the store provides no description of the image.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produktbild"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Product image"
+          }
+        }
+      }
+    },
+    "product.gallery.open.hint" : {
+      "comment" : "VoiceOver hint on a gallery image: tapping opens the full-screen viewer.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öffnet das Bild in voller Größe."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the image in full size."
+          }
+        }
+      }
+    },
+    "product.gallery.position %lld %lld" : {
+      "comment" : "Position of the image in the product gallery, read by VoiceOver and shown in the full-screen viewer. First number: current image, second: number of images.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bild %1$lld von %2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Image %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "product.gallery.zoom.hint" : {
+      "comment" : "VoiceOver hint in the full-screen image viewer explaining how to zoom.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zum Vergrößern doppelt tippen oder mit zwei Fingern aufziehen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Double-tap or pinch to zoom."
+          }
+        }
+      }
+    },
+    "product.loading" : {
+      "comment" : "VoiceOver label of the placeholder while the product screen loads.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkt wird geladen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading product"
+          }
+        }
+      }
+    },
+    "product.notice.digital" : {
+      "comment" : "Notice for digital products. German cites § 356 Abs. 5 BGB; other languages describe the rule neutrally without citing German law.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bei digitalen Inhalten erlischt Ihr Widerrufsrecht, sobald die Lieferung mit Ihrer ausdrücklichen Zustimmung beginnt (§ 356 Abs. 5 BGB)."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For digital content, the right of withdrawal ends once delivery starts with your express consent."
+          }
+        }
+      }
+    },
+    "product.notice.title" : {
+      "comment" : "Title of the notice about the right of withdrawal for digital content. Use the glossary term.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Widerrufsrecht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Right of withdrawal"
+          }
+        }
+      }
+    },
+    "product.process.email.detail" : {
+      "comment" : "Timeline step 3 detail for license keys: the key and the invoice arrive by e-mail within minutes after payment. One sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenige Minuten nach der Zahlung, zusammen mit Ihrer Rechnung."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A few minutes after payment, together with your invoice."
+          }
+        }
+      }
+    },
+    "product.process.email.title" : {
+      "comment" : "Timeline step 3 title for license keys: the key arrives by e-mail. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlüssel per E-Mail"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Key by e-mail"
+          }
+        }
+      }
+    },
+    "product.process.order.detail" : {
+      "comment" : "Timeline step 1 detail below 'Bestellen'. One short sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Legen Sie das Produkt in den Warenkorb."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add the product to your basket."
+          }
+        }
+      }
+    },
+    "product.process.order.title" : {
+      "comment" : "Timeline step 1 title: ordering. One or two words.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestellen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Order"
+          }
+        }
+      }
+    },
+    "product.process.pay.detail" : {
+      "comment" : "Timeline step 2 detail: the only payment methods of the store. Keep exactly Apple Pay, credit card, Klarna.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit Apple Pay, Kreditkarte oder Klarna."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With Apple Pay, credit card or Klarna."
+          }
+        }
+      }
+    },
+    "product.process.pay.title" : {
+      "comment" : "Timeline step 2 title: paying. One or two words.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bezahlen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pay"
+          }
+        }
+      }
+    },
+    "product.process.shipping.detail" : {
+      "comment" : "Timeline step 3 detail for physical goods. One sentence, no delivery time promise.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir senden die Ware an Ihre Lieferadresse."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We send the item to your delivery address."
+          }
+        }
+      }
+    },
+    "product.process.shipping.title" : {
+      "comment" : "Timeline step 3 title for physical goods: shipping. One or two words.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versand"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shipping"
+          }
+        }
+      }
+    },
+    "product.process.title" : {
+      "comment" : "Section title above the three-step timeline that explains how buying works. Serif, short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "So läuft es ab"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How it works"
+          }
+        }
+      }
+    },
+    "product.refund.scope" : {
+      "comment" : "Condition 1 of the money-back promise, shown right below it. Must state that it applies only to activated licence keys and physical goods.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Zusage gilt nur für aktivierte Lizenzschlüssel und für physische Ware."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The promise applies only to activated licence keys and to physical goods."
+          }
+        }
+      }
+    },
+    "product.refund.statutory" : {
+      "comment" : "Condition 3 of the money-back promise: statutory warranty rights are not affected.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre gesetzlichen Gewährleistungsrechte, etwa bei einem fehlerhaften Schlüssel, bleiben unberührt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your statutory warranty rights, for example for a defective key, are not affected."
+          }
+        }
+      }
+    },
+    "product.refund.title" : {
+      "comment" : "Title of the money-back block on the product screen. Use the glossary term for '100 Tage Geld-zurück'.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100 Tage Geld-zurück"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100-day money-back"
+          }
+        }
+      }
+    },
+    "product.refund.unactivated" : {
+      "comment" : "Condition 2 of the money-back promise: delivered keys that were not activated are not refunded voluntarily. Keep the reason.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gelieferte, aber nicht aktivierte Lizenzschlüssel werden nicht freiwillig erstattet, da der Schlüssel später noch verwendet werden könnte."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licence keys that have been delivered but not activated are not refunded voluntarily, as the key could still be used later."
+          }
+        }
+      }
+    },
+    "product.share" : {
+      "comment" : "Toolbar button that opens the share sheet with the product's web shop link. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teilen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share"
+          }
+        }
+      }
+    },
+    "product.variant.title" : {
+      "comment" : "Small uppercase label above the chips for choosing a product variant (for example an edition or number of devices).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausführung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        }
+      }
+    }
   },
   "version" : "1.0"
 }
