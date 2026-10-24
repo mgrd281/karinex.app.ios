@@ -8,11 +8,11 @@ public struct StorefrontConfiguration: Sendable, Equatable {
     /// The request header that carries the public Storefront access token.
     public static let accessTokenHeader = "X-Shopify-Storefront-Access-Token"
 
-    /// The GraphQL endpoint, e.g. `https://45dv93-bk.myshopify.com/api/2026-07/graphql.json`.
+    /// The GraphQL endpoint, e.g. `https://45dv93-bk.myshopify.com/api/2026-10/graphql.json`.
     public let endpoint: URL
     /// The public Storefront access token, or `nil` for Shopify's tokenless access.
     public let accessToken: String?
-    /// The pinned API version, e.g. `2026-07`.
+    /// The pinned API version, e.g. `2026-10`.
     public let apiVersion: String
 
     /// Creates a configuration. A blank token counts as no token.

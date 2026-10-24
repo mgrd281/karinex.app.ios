@@ -23,11 +23,11 @@ struct FixtureDecodingTests {
             let fixtures: [Entry]
         }
         let manifest = try JSONDecoder().decode(Manifest.self, from: Fixture.data(Fixture.manifest))
-        #expect(manifest.apiVersion == "2026-07")
+        #expect(manifest.apiVersion == "2026-10")
         #expect(manifest.tokenless)
         #expect(Set(manifest.fixtures.map(\.file)) == Set(Fixture.all.filter { $0 != Fixture.manifest }))
         for entry in manifest.fixtures {
-            #expect(entry.apiVersion == "2026-07")
+            #expect(entry.apiVersion == "2026-10")
             #expect(entry.source == (entry.file.hasPrefix("synthetic_") ? "synthetic" : "live"))
             _ = try JSONSerialization.jsonObject(with: Fixture.data(entry.file))
         }
@@ -108,7 +108,7 @@ struct FixtureDecodingTests {
 
         let variant = try #require(product.variants.first)
         #expect(variant.price == MoneyV2(amount: decimal("29"), currencyCode: .chf))
-        #expect(variant.compareAtPrice == MoneyV2(amount: decimal("145"), currencyCode: .chf))
+        #expect(variant.compareAtPrice == MoneyV2(amount: decimal("142"), currencyCode: .chf))
         #expect(variant.requiresShipping == false)
         #expect(variant.price.formatted(locale: Locale(identifier: "fr_CH")).contains("29"))
         #expect(variant.price.formatted(locale: Locale(identifier: "de_CH")).contains("CHF"))
@@ -145,7 +145,7 @@ struct FixtureDecodingTests {
         let pageInfo = try #require(collection.products.pageInfo)
         #expect(pageInfo.hasNextPage)
         #expect(!pageInfo.hasPreviousPage)
-        #expect(pageInfo.endCursor == "eyJsYXN0X2lkIjoxMDY1MTQ4Mjc4NDAxMSwibGFzdF92YWx1ZSI6NjUsIm9mZnNldCI6N30=")
+        #expect(pageInfo.endCursor == "eyJsYXN0X2lkIjoxMDY1MTQ4Mjc4NDAxMSwib2Zmc2V0Ijo3fQ==")
         #expect(pageInfo.nextPageCursor == pageInfo.endCursor)
 
         let first = collection.products.nodes[0]
@@ -156,9 +156,9 @@ struct FixtureDecodingTests {
         let windows = collection.products.nodes[1]
         #expect(windows.handle == "windows-11-pro-key-kaufen-download")
         #expect(windows.title.hasPrefix("Windows 11 Pro kaufen"))
-        #expect(windows.price.amount == decimal("12.9"))
-        #expect(windows.compareAtPrice?.amount == decimal("79.99"))
-        #expect(windows.price.formatted(locale: germany).contains("12,90"))
+        #expect(windows.price.amount == decimal("13.9"))
+        #expect(windows.compareAtPrice?.amount == decimal("39.99"))
+        #expect(windows.price.formatted(locale: germany).contains("13,90"))
         #expect(
             windows.featuredImage?.url.absoluteString
                 == "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/Windows-11-Pro-Key-Download-kaufen..webp?v=1787442708"

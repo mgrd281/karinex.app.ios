@@ -3,8 +3,8 @@ import Foundation
 /// Reusable GraphQL fragments of the Storefront operations.
 ///
 /// Operation documents append exactly the fragments they use (the server rejects unused
-/// fragments). All fragments were validated against the live Storefront API 2026-07 on
-/// 2026-09-26.
+/// fragments). All fragments were validated against the live Storefront API 2026-10 on
+/// 2026-10-24.
 public enum StorefrontFragments {
     /// `ImageFields` on `Image`: the fields of `ShopifyImage`.
     public static let image = """

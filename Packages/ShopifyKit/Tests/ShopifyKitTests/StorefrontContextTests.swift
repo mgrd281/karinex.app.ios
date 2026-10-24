@@ -76,8 +76,8 @@ struct StorefrontConfigurationTests {
     @Test("Built from the app configuration, tokenless without a token")
     func fromAppConfiguration() {
         let configuration = StorefrontConfiguration(appConfiguration: .preview)
-        #expect(configuration.endpoint.absoluteString == "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json")
-        #expect(configuration.apiVersion == "2026-07")
+        #expect(configuration.endpoint.absoluteString == "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json")
+        #expect(configuration.apiVersion == "2026-10")
         #expect(configuration.isTokenless)
         #expect(configuration.headers.isEmpty)
     }
@@ -85,10 +85,10 @@ struct StorefrontConfigurationTests {
     @Test("A token becomes the access token header; a blank token counts as none")
     func token() {
         let endpoint = AppConfiguration.preview.storefrontEndpoint
-        let configuration = StorefrontConfiguration(endpoint: endpoint, accessToken: " public-token ", apiVersion: "2026-07")
+        let configuration = StorefrontConfiguration(endpoint: endpoint, accessToken: " public-token ", apiVersion: "2026-10")
         #expect(!configuration.isTokenless)
         #expect(configuration.headers == ["X-Shopify-Storefront-Access-Token": "public-token"])
-        #expect(StorefrontConfiguration(endpoint: endpoint, accessToken: "  ", apiVersion: "2026-07").isTokenless)
+        #expect(StorefrontConfiguration(endpoint: endpoint, accessToken: "  ", apiVersion: "2026-10").isTokenless)
     }
 
     @Test("Descriptions never contain the token")
@@ -96,7 +96,7 @@ struct StorefrontConfigurationTests {
         let configuration = StorefrontConfiguration(
             endpoint: AppConfiguration.preview.storefrontEndpoint,
             accessToken: "public-token-value",
-            apiVersion: "2026-07"
+            apiVersion: "2026-10"
         )
         #expect(!configuration.description.contains("public-token-value"))
         #expect(!String(reflecting: configuration).contains("public-token-value"))

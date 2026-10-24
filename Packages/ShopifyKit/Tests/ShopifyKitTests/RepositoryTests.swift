@@ -76,7 +76,7 @@ struct RepositoryTests {
         #expect(secondBody.variables["first"] == .number(250))
         #expect(secondBody.variables["sortKey"] == .string("PRICE"))
         #expect(secondBody.variables["reverse"] == .bool(true))
-        #expect(secondBody.variables["after"] == .string("eyJsYXN0X2lkIjoxMDY1MTQ4Mjc4NDAxMSwibGFzdF92YWx1ZSI6NjUsIm9mZnNldCI6N30="))
+        #expect(secondBody.variables["after"] == .string("eyJsYXN0X2lkIjoxMDY1MTQ4Mjc4NDAxMSwib2Zmc2V0Ijo3fQ=="))
         #expect(secondBody.query.contains("@inContext(country: CH, language: FR,"))
     }
 

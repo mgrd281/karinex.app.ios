@@ -1,6 +1,6 @@
 // MARK: - Store data
 
-/// Store data recorded from the live Storefront API on 2026-09-26 (Storefront API 2026-07, DE/DE,
+/// Store data recorded from the live Storefront API on 2026-09-26 (Storefront API 2026-10, DE/DE,
 /// collection "bestseller"). Titles are store content and rendered as-is in every language,
 /// including their dashes (written as `\u{2013}` escapes). Prices are the `MoneyV2` amounts
 /// formatted for the market; Finnish formatting of EUR amounts is identical ("29,90 €").

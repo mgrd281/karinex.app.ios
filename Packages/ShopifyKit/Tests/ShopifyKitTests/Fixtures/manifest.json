@@ -1,10 +1,10 @@
 {
-  "apiVersion": "2026-07",
-  "endpoint": "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json",
+  "apiVersion": "2026-10",
+  "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
   "fixtures": [
     {
       "anonymizedPaths": [],
-      "apiVersion": "2026-07",
+      "apiVersion": "2026-10",
       "attempts": 1,
       "context": {
         "country": "DE",
@@ -17,13 +17,13 @@
           "saleOfData": false
         }
       },
-      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json",
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
       "expectedOutcome": "success",
       "file": "localization_DE_DE.json",
       "httpStatus": 200,
       "kind": "query",
       "operation": "Localization",
-      "recordedAt": "2026-09-26T23:22:14Z",
+      "recordedAt": "2026-10-24T21:16:55Z",
       "source": "live",
       "summary": "Store countries, currencies and languages in the DE/DE context.",
       "tokenless": true,
@@ -31,7 +31,7 @@
     },
     {
       "anonymizedPaths": [],
-      "apiVersion": "2026-07",
+      "apiVersion": "2026-10",
       "attempts": 1,
       "context": {
         "country": "DE",
@@ -44,13 +44,13 @@
           "saleOfData": false
         }
       },
-      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json",
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
       "expectedOutcome": "success",
       "file": "product_office-2024-professional-plus-key_DE_DE.json",
       "httpStatus": 200,
       "kind": "query",
       "operation": "ProductByHandle",
-      "recordedAt": "2026-09-26T23:22:14Z",
+      "recordedAt": "2026-10-24T21:16:55Z",
       "source": "live",
       "summary": "Office 2024 Professional Plus with the ProductDetail fragment in the DE/DE context (EUR).",
       "tokenless": true,
@@ -127,7 +127,7 @@
     },
     {
       "anonymizedPaths": [],
-      "apiVersion": "2026-07",
+      "apiVersion": "2026-10",
       "attempts": 1,
       "context": {
         "country": "CH",
@@ -140,13 +140,13 @@
           "saleOfData": false
         }
       },
-      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json",
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
       "expectedOutcome": "success",
       "file": "product_office-2024-professional-plus-key_CH_FR.json",
       "httpStatus": 200,
       "kind": "query",
       "operation": "ProductByHandle",
-      "recordedAt": "2026-09-26T23:22:14Z",
+      "recordedAt": "2026-10-24T21:16:55Z",
       "source": "live",
       "summary": "The same product in the CH/FR context (French content, CHF prices).",
       "tokenless": true,
@@ -223,7 +223,7 @@
     },
     {
       "anonymizedPaths": [],
-      "apiVersion": "2026-07",
+      "apiVersion": "2026-10",
       "attempts": 1,
       "context": {
         "country": "DE",
@@ -236,13 +236,13 @@
           "saleOfData": false
         }
       },
-      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json",
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
       "expectedOutcome": "notFound",
       "file": "product_not_found_DE_DE.json",
       "httpStatus": 200,
       "kind": "query",
       "operation": "ProductByHandle",
-      "recordedAt": "2026-09-26T23:22:14Z",
+      "recordedAt": "2026-10-24T21:16:55Z",
       "source": "live",
       "summary": "product(handle:) for a handle that does not exist: data.product is null.",
       "tokenless": true,
@@ -319,7 +319,7 @@
     },
     {
       "anonymizedPaths": [],
-      "apiVersion": "2026-07",
+      "apiVersion": "2026-10",
       "attempts": 1,
       "context": {
         "country": "DE",
@@ -332,13 +332,13 @@
           "saleOfData": false
         }
       },
-      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json",
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
       "expectedOutcome": "success",
       "file": "collection_bestseller_DE_DE.json",
       "httpStatus": 200,
       "kind": "query",
       "operation": "CollectionProducts",
-      "recordedAt": "2026-09-26T23:22:14Z",
+      "recordedAt": "2026-10-24T21:16:55Z",
       "source": "live",
       "summary": "The first 8 products of the bestseller collection in its default order, DE/DE.",
       "tokenless": true,
@@ -351,7 +351,7 @@
     },
     {
       "anonymizedPaths": [],
-      "apiVersion": "2026-07",
+      "apiVersion": "2026-10",
       "attempts": 1,
       "context": {
         "country": "DE",
@@ -364,13 +364,13 @@
           "saleOfData": false
         }
       },
-      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json",
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
       "expectedOutcome": "userErrors",
       "file": "cart_create_invalid_merchandise_DE_DE.json",
       "httpStatus": 200,
       "kind": "mutation",
       "operation": "CartCreate",
-      "recordedAt": "2026-09-26T23:22:14Z",
+      "recordedAt": "2026-10-24T21:16:55Z",
       "source": "live",
       "summary": "cartCreate with a merchandise ID that does not exist: a userError (code INVALID), no cart.",
       "tokenless": true,
@@ -396,7 +396,7 @@
     },
     {
       "anonymizedPaths": [],
-      "apiVersion": "2026-07",
+      "apiVersion": "2026-10",
       "attempts": 1,
       "context": {
         "country": "DE",
@@ -409,13 +409,13 @@
           "saleOfData": false
         }
       },
-      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json",
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
       "expectedOutcome": "accessDenied",
       "file": "product_metafields_access_denied_DE_DE.json",
       "httpStatus": 200,
       "kind": "query",
       "operation": "ProductByHandle",
-      "recordedAt": "2026-09-26T23:22:14Z",
+      "recordedAt": "2026-10-24T21:16:55Z",
       "source": "live",
       "summary": "The product query with metafields but without a token: ACCESS_DENIED (requiredAccess unauthenticated_read_metafields), data.product null.",
       "tokenless": true,
@@ -491,16 +491,16 @@
       }
     },
     {
-      "apiVersion": "2026-07",
-      "documentation": "https://shopify.dev/docs/api/storefront/2026-07#status-and-error-codes",
+      "apiVersion": "2026-10",
+      "documentation": "https://shopify.dev/docs/api/storefront/2026-10#status-and-error-codes",
       "file": "synthetic_throttled.json",
-      "recordedAt": "2026-09-26T23:22:14Z",
+      "recordedAt": "2026-10-24T21:16:55Z",
       "source": "synthetic",
       "summary": "Documented GraphQL THROTTLED error envelope (HTTP 200, top-level errors, no data)."
     }
   ],
   "generator": "Tools/FixtureRecorder (swift run fixture-recorder)",
-  "recordedAt": "2026-09-26T23:22:14Z",
+  "recordedAt": "2026-10-24T21:16:55Z",
   "shopDomain": "45dv93-bk.myshopify.com",
   "tokenless": true
 }

@@ -12,7 +12,7 @@ swift run fixture-recorder --output ../../Packages/ShopifyKit/Tests/ShopifyKitTe
 | Option | Default | Meaning |
 | --- | --- | --- |
 | `--shop-domain` | `45dv93-bk.myshopify.com` | myshopify domain of the store |
-| `--api-version` | `2026-07` | Storefront API version |
+| `--api-version` | `2026-10` | Storefront API version |
 | `--token` | none (tokenless) | public Storefront access token; also read from `KX_STOREFRONT_TOKEN` |
 | `--output` | required | fixture directory |
 

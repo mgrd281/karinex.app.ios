@@ -15,9 +15,9 @@ private func validInfoDictionary(
     [
         AppConfiguration.InfoKey.shopDomain: "45dv93-bk.myshopify.com",
         AppConfiguration.InfoKey.storeWebDomain: "www.karinex.de",
-        AppConfiguration.InfoKey.storefrontAPIVersion: "2026-07",
+        AppConfiguration.InfoKey.storefrontAPIVersion: "2026-10",
         AppConfiguration.InfoKey.storefrontAccessToken: storefrontAccessToken,
-        AppConfiguration.InfoKey.customerAccountAPIVersion: "2026-07",
+        AppConfiguration.InfoKey.customerAccountAPIVersion: "2026-10",
         AppConfiguration.InfoKey.customerAccountClientID: "$(KX_CUSTOMER_ACCOUNT_CLIENT_ID)",
         AppConfiguration.InfoKey.appVersion: appVersion,
         AppConfiguration.InfoKey.buildNumber: buildNumber,
@@ -53,13 +53,13 @@ struct AppContainerTests {
         #expect(container.configurationFailure == nil)
         #expect(container.configuration.shopDomain == "45dv93-bk.myshopify.com")
         #expect(container.configuration.storeWebDomain == "www.karinex.de")
-        #expect(container.configuration.storefrontAPIVersion == "2026-07")
+        #expect(container.configuration.storefrontAPIVersion == "2026-10")
         #expect(container.configuration.storefrontAccessToken == nil)
         #expect(container.configuration.customerAccountClientID == nil)
         #expect(container.configuration.appVersion == "0.1.0")
         #expect(container.configuration.buildNumber == "42")
 
-        let endpoint = try #require(URL(string: "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json"))
+        let endpoint = try #require(URL(string: "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json"))
         #expect(container.storefrontClient.configuration.endpoint == endpoint)
         #expect(container.storefrontClient.isTokenless)
         #expect(!sink.entries.contains { $0.level >= .error })

@@ -214,8 +214,8 @@ struct RedactorTests {
 
     @Test("redact(url:) keeps URLs without query untouched")
     func redactURLWithoutQuery() throws {
-        let url = try #require(URL(string: "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json"))
-        #expect(Redactor.redact(url: url) == "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json")
+        let url = try #require(URL(string: "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json"))
+        #expect(Redactor.redact(url: url) == "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json")
     }
 
     // MARK: - Heuristic

@@ -3,7 +3,7 @@ import Foundation
 import Testing
 
 /// Static checks of the operation documents. The documents themselves were validated against
-/// the live Storefront API 2026-07 on 2026-09-26 (the fixtures are their real responses).
+/// the live Storefront API 2026-10 on 2026-09-26 (the fixtures are their real responses).
 @Suite("Operation documents")
 struct OperationDocumentTests {
     struct Document: CustomTestStringConvertible, Sendable {

@@ -123,7 +123,7 @@ struct KXGalleryEventLabel: View {
 /// Sample content for the gallery.
 ///
 /// Product titles, prices and image URLs were recorded from the live Storefront API on
-/// 2026-09-26 (Storefront API 2026-07, DE/DE, collection "bestseller"; the CHF title and price
+/// 2026-09-26 (Storefront API 2026-10, DE/DE, collection "bestseller"; the CHF title and price
 /// from the CH/FR market). Titles are store content and rendered as-is, including their dashes,
 /// which are written as `\u{2013}` escapes. Prices are the `MoneyV2` amounts formatted for the
 /// market. The license key is an obviously fake placeholder; real keys never appear in code.

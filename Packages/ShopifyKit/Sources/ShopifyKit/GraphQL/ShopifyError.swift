@@ -113,7 +113,7 @@ public struct UserError: Sendable, Equatable, Hashable, Codable {
 
 // MARK: - UserErrorCode
 
-/// Error codes of Storefront user errors (`CartErrorCode` in API 2026-07 plus a few cart
+/// Error codes of Storefront user errors (`CartErrorCode` in API 2026-10 plus a few cart
 /// warning codes the app treats like errors). Unknown values decode as `.unknown(rawValue)`,
 /// so a new code from Shopify never breaks decoding.
 public enum UserErrorCode: Sendable, Hashable, Codable, RawRepresentable, CustomStringConvertible {

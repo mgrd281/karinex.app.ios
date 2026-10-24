@@ -150,7 +150,7 @@ private func kxNonEmpty(_ string: String?) -> String? {
 
 // MARK: - Previews
 
-// Recorded from the live Storefront API on 2026-09-26 (Storefront API 2026-07). The German
+// Recorded from the live Storefront API on 2026-09-26 (Storefront API 2026-10). The German
 // strings are the MoneyV2 amounts formatted for de_DE; the CHF string is the CH/FR market price
 // formatted for de_CH. The savings text is derived from the recorded price and compare-at price.
 private struct KXPriceTagPreviewGallery: View {

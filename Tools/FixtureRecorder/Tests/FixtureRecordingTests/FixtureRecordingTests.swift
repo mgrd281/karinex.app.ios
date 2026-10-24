@@ -90,14 +90,14 @@ struct FixtureAnonymizerTests {
 struct CommandLineOptionsTests {
     private let workingDirectory = URL(fileURLWithPath: "/work", isDirectory: true)
 
-    @Test("Defaults to the live store, API 2026-07 and tokenless mode")
+    @Test("Defaults to the live store, API 2026-10 and tokenless mode")
     func defaults() throws {
         let options = try CommandLineOptions.parse(["--output", "Fixtures"], currentDirectory: workingDirectory)
         #expect(options.shopDomain == "45dv93-bk.myshopify.com")
-        #expect(options.apiVersion == "2026-07")
+        #expect(options.apiVersion == "2026-10")
         #expect(options.token == nil)
         #expect(options.outputDirectory.path == "/work/Fixtures")
-        #expect(options.storefrontConfiguration.endpoint.absoluteString == "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json")
+        #expect(options.storefrontConfiguration.endpoint.absoluteString == "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json")
         #expect(options.storefrontConfiguration.isTokenless)
     }
 
@@ -286,7 +286,7 @@ struct FixtureRecorderTests {
         }
 
         let manifest = try JSONValue.parseObject(Data(contentsOf: directory.appendingPathComponent("manifest.json")))
-        #expect(manifest["apiVersion"] == .string("2026-07"))
+        #expect(manifest["apiVersion"] == .string("2026-10"))
         #expect(manifest["recordedAt"] == .string("2026-09-26T00:00:00Z"))
         guard case let .array(entries)? = manifest["fixtures"] else {
             Issue.record("manifest has no fixtures array")

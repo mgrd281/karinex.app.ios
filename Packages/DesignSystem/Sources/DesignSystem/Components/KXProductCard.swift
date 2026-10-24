@@ -303,7 +303,7 @@ private struct KXProductImageFallback: View {
 
 // MARK: - Previews
 
-// Recorded from the live Storefront API on 2026-09-26 (Storefront API 2026-07, DE/DE,
+// Recorded from the live Storefront API on 2026-09-26 (Storefront API 2026-10, DE/DE,
 // collection "bestseller"). Titles are store content and rendered as-is, including their
 // dashes (written as \u{2013} escapes). Prices are the MoneyV2 amounts formatted for de_DE.
 private let kxProductCardPreviewModels: [KXProductCardModel] = [

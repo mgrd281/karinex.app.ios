@@ -54,7 +54,7 @@ struct NetworkErrorTests {
 
 @Suite("HTTP types")
 struct HTTPTypesTests {
-    private let url = URL(string: "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json")!
+    private let url = URL(string: "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json")!
 
     @Test("Request defaults and case-insensitive headers")
     func requestHeaders() {

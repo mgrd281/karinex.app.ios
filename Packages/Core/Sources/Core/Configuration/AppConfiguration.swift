@@ -18,11 +18,11 @@ public struct AppConfiguration: Sendable, Equatable {
         public static let shopDomain = "KXShopDomain"
         /// Public web domain of the store, e.g. `www.karinex.de`. Required.
         public static let storeWebDomain = "KXStoreWebDomain"
-        /// Storefront API version, e.g. `2026-07`. Required.
+        /// Storefront API version, e.g. `2026-10`. Required.
         public static let storefrontAPIVersion = "KXStorefrontAPIVersion"
         /// Public Storefront API token. Optional: empty means tokenless mode.
         public static let storefrontAccessToken = "KXStorefrontAccessToken"
-        /// Customer Account API version, e.g. `2026-07`. Required.
+        /// Customer Account API version, e.g. `2026-10`. Required.
         public static let customerAccountAPIVersion = "KXCustomerAccountAPIVersion"
         /// Customer Account API public client ID. Optional until login ships.
         public static let customerAccountClientID = "KXCustomerAccountClientID"
@@ -39,11 +39,11 @@ public struct AppConfiguration: Sendable, Equatable {
     /// Public web domain of the store, e.g. `www.karinex.de`. Used for web links and for the
     /// Customer Account API discovery documents.
     public let storeWebDomain: String
-    /// Pinned Storefront API version, e.g. `2026-07`.
+    /// Pinned Storefront API version, e.g. `2026-10`.
     public let storefrontAPIVersion: String
     /// Public Storefront API token, or `nil` to use Shopify's tokenless access.
     public let storefrontAccessToken: String?
-    /// Pinned Customer Account API version, e.g. `2026-07`.
+    /// Pinned Customer Account API version, e.g. `2026-10`.
     public let customerAccountAPIVersion: String
     /// Customer Account API public client ID, or `nil` when login is not configured.
     public let customerAccountClientID: String?
@@ -135,14 +135,14 @@ public struct AppConfiguration: Sendable, Equatable {
 
     /// The real, non-secret values of the live store in tokenless mode, for previews and tests.
     ///
-    /// Storefront and Customer Account API versions are pinned to `2026-07`, which was
-    /// verified against the live store on 2026-09-26.
+    /// Storefront and Customer Account API versions are pinned to `2026-10`, which was
+    /// verified against the live store on 2026-10-24.
     public static let preview = AppConfiguration(
         shopDomain: "45dv93-bk.myshopify.com",
         storeWebDomain: "www.karinex.de",
-        storefrontAPIVersion: "2026-07",
+        storefrontAPIVersion: "2026-10",
         storefrontAccessToken: nil,
-        customerAccountAPIVersion: "2026-07",
+        customerAccountAPIVersion: "2026-10",
         customerAccountClientID: nil,
         appVersion: "0.1.0",
         buildNumber: "1"

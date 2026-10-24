@@ -245,7 +245,7 @@ public struct SyntheticFixture: Sendable {
     public static let throttled = SyntheticFixture(
         fileName: "synthetic_throttled.json",
         summary: "Documented GraphQL THROTTLED error envelope (HTTP 200, top-level errors, no data).",
-        documentationURL: "https://shopify.dev/docs/api/storefront/2026-07#status-and-error-codes",
+        documentationURL: "https://shopify.dev/docs/api/storefront/2026-10#status-and-error-codes",
         json: """
             {
               "errors": [

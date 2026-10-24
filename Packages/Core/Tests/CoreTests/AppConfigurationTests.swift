@@ -11,9 +11,9 @@ struct AppConfigurationTests {
         [
             "KXShopDomain": "45dv93-bk.myshopify.com",
             "KXStoreWebDomain": "www.karinex.de",
-            "KXStorefrontAPIVersion": "2026-07",
+            "KXStorefrontAPIVersion": "2026-10",
             "KXStorefrontAccessToken": "0123456789abcdef0123456789abcdef",
-            "KXCustomerAccountAPIVersion": "2026-07",
+            "KXCustomerAccountAPIVersion": "2026-10",
             "KXCustomerAccountClientID": "shp_1234abcd-0000-4000-8000-1234567890ab",
             "CFBundleShortVersionString": "0.1.0",
             "CFBundleVersion": "7",
@@ -33,9 +33,9 @@ struct AppConfigurationTests {
         let configuration = try AppConfiguration(infoDictionary: Self.validInfo())
         #expect(configuration.shopDomain == "45dv93-bk.myshopify.com")
         #expect(configuration.storeWebDomain == "www.karinex.de")
-        #expect(configuration.storefrontAPIVersion == "2026-07")
+        #expect(configuration.storefrontAPIVersion == "2026-10")
         #expect(configuration.storefrontAccessToken == "0123456789abcdef0123456789abcdef")
-        #expect(configuration.customerAccountAPIVersion == "2026-07")
+        #expect(configuration.customerAccountAPIVersion == "2026-10")
         #expect(configuration.customerAccountClientID == "shp_1234abcd-0000-4000-8000-1234567890ab")
         #expect(configuration.appVersion == "0.1.0")
         #expect(configuration.buildNumber == "7")
@@ -46,7 +46,7 @@ struct AppConfigurationTests {
     @Test("Builds the endpoint and discovery URLs")
     func derivedURLs() throws {
         let configuration = try AppConfiguration(infoDictionary: Self.validInfo())
-        #expect(configuration.storefrontEndpoint.absoluteString == "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json")
+        #expect(configuration.storefrontEndpoint.absoluteString == "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json")
         #expect(configuration.storeWebURL.absoluteString == "https://www.karinex.de")
         #expect(
             configuration.customerAccountDiscoveryURL.absoluteString
@@ -62,10 +62,10 @@ struct AppConfigurationTests {
     func normalizesValues() throws {
         var info = Self.validInfo()
         info["KXShopDomain"] = "  45DV93-BK.myshopify.com \n"
-        info["KXStorefrontAPIVersion"] = " 2026-07 "
+        info["KXStorefrontAPIVersion"] = " 2026-10 "
         let configuration = try AppConfiguration(infoDictionary: info)
         #expect(configuration.shopDomain == "45dv93-bk.myshopify.com")
-        #expect(configuration.storefrontAPIVersion == "2026-07")
+        #expect(configuration.storefrontAPIVersion == "2026-10")
     }
 
     @Test("Accepts the unstable API version")
@@ -79,11 +79,11 @@ struct AppConfigurationTests {
         let preview = AppConfiguration.preview
         #expect(preview.shopDomain == "45dv93-bk.myshopify.com")
         #expect(preview.storeWebDomain == "www.karinex.de")
-        #expect(preview.storefrontAPIVersion == "2026-07")
-        #expect(preview.customerAccountAPIVersion == "2026-07")
+        #expect(preview.storefrontAPIVersion == "2026-10")
+        #expect(preview.customerAccountAPIVersion == "2026-10")
         #expect(preview.storefrontAccessToken == nil)
         #expect(!preview.isStorefrontTokenConfigured)
-        #expect(preview.storefrontEndpoint.absoluteString == "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json")
+        #expect(preview.storefrontEndpoint.absoluteString == "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json")
     }
 
     // MARK: - Optional keys
@@ -145,7 +145,7 @@ struct AppConfigurationTests {
 
     @Test(
         "Rejects malformed API versions",
-        arguments: ["2026-7", "2026-06", "26-07", "2026/07", "2026-07-01", "latest", "2026-13"]
+        arguments: ["2026-7", "2026-06", "26-07", "2026/07", "2026-10-01", "latest", "2026-13"]
     )
     func rejectsInvalidVersion(version: String) {
         #expect(throws: ConfigurationError.invalidValue(key: "KXCustomerAccountAPIVersion", value: version)) {
@@ -181,9 +181,9 @@ struct AppConfigurationTests {
         let configuration = AppConfiguration(
             shopDomain: "45dv93-bk.myshopify.com",
             storeWebDomain: "www.karinex.de",
-            storefrontAPIVersion: "2026-07",
+            storefrontAPIVersion: "2026-10",
             storefrontAccessToken: "  ",
-            customerAccountAPIVersion: "2026-07",
+            customerAccountAPIVersion: "2026-10",
             customerAccountClientID: "",
             appVersion: "0.1.0",
             buildNumber: "1"

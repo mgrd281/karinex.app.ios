@@ -17,7 +17,7 @@ struct GraphQLClientRequestTests {
 
         let request = try #require(stub.requests.first)
         #expect(request.method == .post)
-        #expect(request.url.absoluteString == "https://45dv93-bk.myshopify.com/api/2026-07/graphql.json")
+        #expect(request.url.absoluteString == "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json")
         #expect(request.value(forHeader: "content-type") == "application/json")
         #expect(request.value(forHeader: "accept") == "application/json")
 
@@ -65,7 +65,7 @@ struct GraphQLClientRequestTests {
     func genericEndpoint() async throws {
         let stub = StubHTTPClient([.json(#"{"data":{"localization":null}}"#)])
         let endpoint = try GraphQLEndpoint(
-            url: #require(URL(string: "https://shopify.com/91753283851/account/customer/api/2026-07/graphql")),
+            url: #require(URL(string: "https://shopify.com/91753283851/account/customer/api/2026-10/graphql")),
             headers: ["X-Static": "1"],
             authorization: { ["Authorization": "Bearer shcat_example"] }
         )

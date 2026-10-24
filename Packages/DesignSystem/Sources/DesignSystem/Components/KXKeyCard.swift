@@ -446,7 +446,7 @@ private struct KXLicenseKeyLines: View {
 
 // MARK: - Previews
 
-// Product names recorded from the live Storefront API on 2026-09-26 (Storefront API 2026-07,
+// Product names recorded from the live Storefront API on 2026-09-26 (Storefront API 2026-10,
 // DE/DE). The key is an obviously fake placeholder; real keys never appear in code.
 private struct KXKeyCardPreviewGallery: View {
     @State private var isOfficeKeyRevealed = true

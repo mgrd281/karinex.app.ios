@@ -51,11 +51,11 @@
             "availableForSale": true,
             "compareAtPriceRange": {
               "maxVariantPrice": {
-                "amount": "79.99",
+                "amount": "39.99",
                 "currencyCode": "EUR"
               },
               "minVariantPrice": {
-                "amount": "79.99",
+                "amount": "39.99",
                 "currencyCode": "EUR"
               }
             },
@@ -69,11 +69,11 @@
             "id": "gid://shopify/Product/10650102169867",
             "priceRange": {
               "maxVariantPrice": {
-                "amount": "12.9",
+                "amount": "13.9",
                 "currencyCode": "EUR"
               },
               "minVariantPrice": {
-                "amount": "12.9",
+                "amount": "13.9",
                 "currencyCode": "EUR"
               }
             },
@@ -220,7 +220,7 @@
               }
             },
             "featuredImage": {
-              "altText": "Microsoft Office 2024 Home & Business für Mac – Originalverpackung mit Word, Excel, PowerPoint, OneNote und Outlook",
+              "altText": "Microsoft Office 2024 Home & Business für Mac kaufen – Packung mit Word, Excel, PowerPoint, Outlook und OneNote",
               "height": 2048,
               "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-office-2024-home-business-mac-box.avif?v=1787444157",
               "width": 2048
@@ -329,10 +329,10 @@
           }
         ],
         "pageInfo": {
-          "endCursor": "eyJsYXN0X2lkIjoxMDY1MTQ4Mjc4NDAxMSwibGFzdF92YWx1ZSI6NjUsIm9mZnNldCI6N30=",
+          "endCursor": "eyJsYXN0X2lkIjoxMDY1MTQ4Mjc4NDAxMSwib2Zmc2V0Ijo3fQ==",
           "hasNextPage": true,
           "hasPreviousPage": false,
-          "startCursor": "eyJsYXN0X2lkIjoxMDUzNDM1MjAyNzkxNSwibGFzdF92YWx1ZSI6MTQ1OSwib2Zmc2V0IjowfQ=="
+          "startCursor": "eyJsYXN0X2lkIjoxMDUzNDM1MjAyNzkxNSwib2Zmc2V0IjowfQ=="
         }
       },
       "title": "Bestseller günstig kaufen"

@@ -4,7 +4,7 @@ import ShopifyKit
 
 /// The parsed command line of `fixture-recorder`.
 ///
-///     fixture-recorder [--shop-domain 45dv93-bk.myshopify.com] [--api-version 2026-07]
+///     fixture-recorder [--shop-domain 45dv93-bk.myshopify.com] [--api-version 2026-10]
 ///                      [--token <token>] --output <dir>
 public struct CommandLineOptions: Sendable, Equatable {
     /// The myshopify domain of the store.

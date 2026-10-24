@@ -94,7 +94,7 @@ private struct KXDotLeader: Shape {
 // MARK: - Previews
 
 // Values derived from the Windows 11 Pro product recorded from the live Storefront API on
-// 2026-09-26 (API 2026-07): its title names "Dauerlizenz 1 PC" and "Download".
+// 2026-09-26 (API 2026-10): its title names "Dauerlizenz 1 PC" and "Download".
 private struct KXSpecRowPreviewGallery: View {
     var body: some View {
         ScrollView {
