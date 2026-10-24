@@ -6,6 +6,40 @@
       "id": "gid://shopify/Collection/641997734155",
       "image": null,
       "products": {
+        "filters": [
+          {
+            "id": "filter.v.availability",
+            "label": "Verfügbarkeit",
+            "type": "LIST",
+            "values": [
+              {
+                "count": 22,
+                "id": "filter.v.availability.1",
+                "input": "{\"available\":true}",
+                "label": "Auf Lager"
+              },
+              {
+                "count": 0,
+                "id": "filter.v.availability.0",
+                "input": "{\"available\":false}",
+                "label": "Nicht vorrätig"
+              }
+            ]
+          },
+          {
+            "id": "filter.v.price",
+            "label": "Preis",
+            "type": "PRICE_RANGE",
+            "values": [
+              {
+                "count": 0,
+                "id": "filter.v.price",
+                "input": "{\"price\":{\"min\":0,\"max\":239.9}}",
+                "label": "Preis"
+              }
+            ]
+          }
+        ],
         "nodes": [
           {
             "availableForSale": true,
@@ -344,7 +378,7 @@
       "language": "DE"
     },
     "cost": {
-      "requestedQueryCost": 47
+      "requestedQueryCost": 55
     }
   }
 }

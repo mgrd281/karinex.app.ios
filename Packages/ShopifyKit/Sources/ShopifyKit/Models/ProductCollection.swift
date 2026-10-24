@@ -147,6 +147,9 @@ public struct ProductCollection: Sendable, Hashable, Codable, Identifiable {
     public let image: ShopifyImage?
     /// One page of products with its pagination state.
     public let products: Connection<ProductSummary>
+    /// The filters the store offers for the collection's products (`products.filters`), with
+    /// counts for the current filter selection. Empty when not requested.
+    public let filters: [ProductFilter]
 
     /// Creates a collection.
     public init(
@@ -155,7 +158,8 @@ public struct ProductCollection: Sendable, Hashable, Codable, Identifiable {
         title: String,
         description: String,
         image: ShopifyImage?,
-        products: Connection<ProductSummary>
+        products: Connection<ProductSummary>,
+        filters: [ProductFilter] = []
     ) {
         self.id = id
         self.handle = handle
@@ -163,10 +167,48 @@ public struct ProductCollection: Sendable, Hashable, Codable, Identifiable {
         self.description = description
         self.image = image
         self.products = products
+        self.filters = filters
     }
 
     /// The collection without its products.
     public var summary: CollectionSummary {
         CollectionSummary(id: id, handle: handle, title: title, description: description, image: image)
+    }
+
+    // MARK: Codable
+
+    private enum CodingKeys: String, CodingKey {
+        case id, handle, title, description, image, products
+    }
+
+    private enum ProductsKeys: String, CodingKey {
+        case nodes, pageInfo, filters
+    }
+
+    /// Decodes the Storefront shape, reading the filters from `products.filters`.
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(ShopifyID.self, forKey: .id)
+        handle = try container.decode(String.self, forKey: .handle)
+        title = try container.decode(String.self, forKey: .title)
+        description = try container.decode(String.self, forKey: .description)
+        image = try container.decodeIfPresent(ShopifyImage.self, forKey: .image)
+        products = try container.decode(Connection<ProductSummary>.self, forKey: .products)
+        let productsContainer = try container.nestedContainer(keyedBy: ProductsKeys.self, forKey: .products)
+        filters = try productsContainer.decodeIfPresent([ProductFilter].self, forKey: .filters) ?? []
+    }
+
+    /// Encodes the same shape `init(from:)` reads.
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(handle, forKey: .handle)
+        try container.encode(title, forKey: .title)
+        try container.encode(description, forKey: .description)
+        try container.encodeIfPresent(image, forKey: .image)
+        var productsContainer = container.nestedContainer(keyedBy: ProductsKeys.self, forKey: .products)
+        try productsContainer.encode(products.nodes, forKey: .nodes)
+        try productsContainer.encodeIfPresent(products.pageInfo, forKey: .pageInfo)
+        try productsContainer.encode(filters, forKey: .filters)
     }
 }

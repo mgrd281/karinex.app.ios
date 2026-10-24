@@ -13,8 +13,10 @@ import FoundationNetworking
 /// sorted keys. Synthetic fixtures are written from their documented JSON. Finally
 /// `manifest.json` lists every file with operation, variables, context, API version and date.
 ///
-/// The recorder only runs read queries plus one `cartCreate` whose merchandise ID does not
-/// exist, which creates nothing.
+/// The recorder only runs read queries, one `cartCreate` whose merchandise ID does not exist
+/// (which creates nothing) and the cart lifecycle of `FixturePlan` on a cart it creates itself.
+/// Cart tokens in responses and variables are replaced with `REDACTED` before anything is
+/// written (see `FixtureAnonymizer`).
 public struct FixtureRecorder: Sendable {
     /// The manifest file name.
     public static let manifestFileName = "manifest.json"
@@ -74,16 +76,21 @@ public struct FixtureRecorder: Sendable {
         var written: [String] = []
         var entries: [JSONValue] = []
 
+        let session = FixtureSession()
         for spec in try FixturePlan.liveFixtures(isTokenless: configuration.isTokenless) {
-            recording.takeExchanges()
             let usesTokenlessClient = spec.requiresTokenlessClient || configuration.isTokenless
-            try await spec.execute(spec.requiresTokenlessClient ? tokenlessClient : client)
+            let specClient = spec.requiresTokenlessClient ? tokenlessClient : client
+            recording.takeExchanges()
+            try await spec.prepare?(specClient, session)
+            recording.takeExchanges()
+            let variables = try await spec.execute(specClient, session)
             let exchanges = recording.takeExchanges()
             guard let final = exchanges.last else {
                 throw FixtureSpec.UnexpectedOutcome(fileName: spec.fileName, detail: "no HTTP response was recorded")
             }
 
             let (anonymized, changedPaths) = try FixtureAnonymizer.anonymize(JSONValue.parseObject(final.response.body))
+            let (anonymizedVariables, changedVariablePaths) = FixtureAnonymizer.anonymize(["variables": variables])
             try JSONValue.object(anonymized).prettyPrintedData().write(to: fileURL(spec.fileName), options: .atomic)
             written.append(spec.fileName)
             progress("Recorded \(spec.fileName) (HTTP \(final.response.statusCode), \(exchanges.count) attempt(s))")
@@ -94,13 +101,13 @@ public struct FixtureRecorder: Sendable {
                 "summary": .string(spec.summary),
                 "operation": .string(spec.operationName),
                 "kind": .string(spec.kind.rawValue),
-                "variables": spec.variables,
+                "variables": anonymizedVariables["variables"] ?? .null,
                 "context": Self.contextValue(spec.context),
                 "expectedOutcome": .string(spec.expectedOutcome.rawValue),
                 "tokenless": .bool(usesTokenlessClient),
                 "httpStatus": .integer(Int64(final.response.statusCode)),
                 "attempts": .integer(Int64(exchanges.count)),
-                "anonymizedPaths": .array(changedPaths.sorted().map(JSONValue.string)),
+                "anonymizedPaths": .array((changedPaths + changedVariablePaths).sorted().map(JSONValue.string)),
                 "apiVersion": .string(configuration.apiVersion),
                 "endpoint": .string(configuration.endpoint.absoluteString),
                 "recordedAt": .string(recordedAtString),

@@ -3,7 +3,7 @@ import Foundation
 import Testing
 
 /// Static checks of the operation documents. The documents themselves were validated against
-/// the live Storefront API 2026-10 on 2026-09-26 (the fixtures are their real responses).
+/// the live Storefront API 2026-10 on 2026-10-24 (the fixtures are their real responses).
 @Suite("Operation documents")
 struct OperationDocumentTests {
     struct Document: CustomTestStringConvertible, Sendable {
@@ -19,7 +19,30 @@ struct OperationDocumentTests {
         Document(name: ProductByHandleQuery.operationName, keyword: "query", text: ProductByHandleQuery.document),
         Document(name: CollectionProductsQuery.operationName, keyword: "query", text: CollectionProductsQuery.document),
         Document(name: CartCreateMutation.operationName, keyword: "mutation", text: CartCreateMutation.document),
+        Document(name: CartQuery.operationName, keyword: "query", text: CartQuery.document),
+        Document(name: CartLinesAddMutation.operationName, keyword: "mutation", text: CartLinesAddMutation.document),
+        Document(name: CartLinesUpdateMutation.operationName, keyword: "mutation", text: CartLinesUpdateMutation.document),
+        Document(name: CartLinesRemoveMutation.operationName, keyword: "mutation", text: CartLinesRemoveMutation.document),
+        Document(
+            name: CartDiscountCodesUpdateMutation.operationName,
+            keyword: "mutation",
+            text: CartDiscountCodesUpdateMutation.document
+        ),
+        Document(
+            name: CartBuyerIdentityUpdateMutation.operationName,
+            keyword: "mutation",
+            text: CartBuyerIdentityUpdateMutation.document
+        ),
+        Document(name: CartAttributesUpdateMutation.operationName, keyword: "mutation", text: CartAttributesUpdateMutation.document),
+        Document(name: CollectionsQuery.operationName, keyword: "query", text: CollectionsQuery.document),
+        Document(name: ProductRecommendationsQuery.operationName, keyword: "query", text: ProductRecommendationsQuery.document),
+        Document(name: PredictiveSearchQuery.operationName, keyword: "query", text: PredictiveSearchQuery.document),
+        Document(name: SearchProductsQuery.operationName, keyword: "query", text: SearchProductsQuery.document),
+        Document(name: BlogArticlesQuery.operationName, keyword: "query", text: BlogArticlesQuery.document),
+        Document(name: ArticleQuery.operationName, keyword: "query", text: ArticleQuery.document),
     ]
+
+    static let cartMutationDocuments = documents.filter { $0.keyword == "mutation" }
 
     @Test("The operation comes first and carries the operation name", arguments: documents)
     func operationFirst(document: Document) {
@@ -41,6 +64,44 @@ struct OperationDocumentTests {
         #expect(ProductByHandleQuery.kind == .query)
         #expect(CollectionProductsQuery.kind == .query)
         #expect(CartCreateMutation.kind == .mutation)
+        #expect(CartQuery.kind == .query)
+        #expect(CartLinesAddMutation.kind == .mutation)
+        #expect(CartLinesUpdateMutation.kind == .mutation)
+        #expect(CartLinesRemoveMutation.kind == .mutation)
+        #expect(CartDiscountCodesUpdateMutation.kind == .mutation)
+        #expect(CartBuyerIdentityUpdateMutation.kind == .mutation)
+        #expect(CartAttributesUpdateMutation.kind == .mutation)
+        #expect(CollectionsQuery.kind == .query)
+        #expect(ProductRecommendationsQuery.kind == .query)
+        #expect(PredictiveSearchQuery.kind == .query)
+        #expect(SearchProductsQuery.kind == .query)
+        #expect(BlogArticlesQuery.kind == .query)
+        #expect(ArticleQuery.kind == .query)
+    }
+
+    @Test("Every cart operation selects the shared CartFields fragment", arguments: cartMutationDocuments)
+    func cartFields(document: Document) {
+        #expect(document.text.contains("cart {\n      ...CartFields\n    }"))
+        #expect(document.text.contains(StorefrontFragments.cart))
+        #expect(document.text.contains("userErrors {\n      field\n      message\n      code\n    }"))
+        #expect(document.text.contains("warnings {\n      code\n      message\n      target\n    }"))
+    }
+
+    @Test("The cart fragment uses the 2026-10 discount fields and no deprecated cart fields")
+    func cartFragment() {
+        let fragment = StorefrontFragments.cart
+        #expect(fragment.contains("discountApplications {"))
+        #expect(fragment.contains("discountAllocations {"))
+        #expect(!fragment.contains("totalTaxAmount"))
+        #expect(!fragment.contains("estimatedCost"))
+        #expect(fragment.components(separatedBy: "discountAllocations").count == 2)
+        #expect(CartQuery.document.contains("cart(id: $id) {\n    ...CartFields\n  }"))
+    }
+
+    @Test("The article query never selects the author's e-mail address")
+    func articleAuthor() {
+        #expect(ArticleQuery.document.contains("authorV2 {\n        name\n      }"))
+        #expect(!ArticleQuery.document.contains("email"))
     }
 
     @Test("The product query only selects metafields behind @include")

@@ -1,0 +1,185 @@
+{
+  "data": {
+    "cartLinesAdd": {
+      "cart": {
+        "attributes": [
+          {
+            "key": "app_platform",
+            "value": "ios"
+          },
+          {
+            "key": "kx_fixture_recording",
+            "value": "true"
+          }
+        ],
+        "buyerIdentity": {
+          "countryCode": "DE",
+          "email": null
+        },
+        "checkoutUrl": "https://www.karinex.de/cart/c/REDACTED?key=REDACTED&_cs=REDACTED",
+        "cost": {
+          "checkoutChargeAmount": {
+            "amount": "19.8",
+            "currencyCode": "EUR"
+          },
+          "subtotalAmount": {
+            "amount": "19.8",
+            "currencyCode": "EUR"
+          },
+          "totalAmount": {
+            "amount": "17.82",
+            "currencyCode": "EUR"
+          }
+        },
+        "discountApplications": [
+          {
+            "__typename": "CartAutomaticDiscountApplication",
+            "allocationMethod": "ACROSS",
+            "targetType": "LINE_ITEM",
+            "title": "Mengenrabatt: ab 2 Lizenzen -10%",
+            "totalAllocatedAmount": {
+              "amount": "1.98",
+              "currencyCode": "EUR"
+            },
+            "value": {
+              "__typename": "PricingPercentageValue",
+              "percentage": 10
+            }
+          }
+        ],
+        "discountCodes": [],
+        "id": "gid://shopify/Cart/REDACTED?key=REDACTED",
+        "lines": {
+          "nodes": [
+            {
+              "cost": {
+                "amountPerQuantity": {
+                  "amount": "9.9",
+                  "currencyCode": "EUR"
+                },
+                "compareAtAmountPerQuantity": {
+                  "amount": "39.9",
+                  "currencyCode": "EUR"
+                },
+                "subtotalAmount": {
+                  "amount": "9.9",
+                  "currencyCode": "EUR"
+                },
+                "totalAmount": {
+                  "amount": "9.9",
+                  "currencyCode": "EUR"
+                }
+              },
+              "discountAllocations": [],
+              "id": "gid://shopify/CartLine/c23d2112-5d21-4e03-83ab-674d570ebee0?cart=REDACTED",
+              "merchandise": {
+                "availableForSale": true,
+                "compareAtPrice": {
+                  "amount": "39.9",
+                  "currencyCode": "EUR"
+                },
+                "id": "gid://shopify/ProductVariant/52711848345867",
+                "image": {
+                  "altText": "Produktverpackung von Microsoft Windows 10 Home OEM als 32- und 64-Bit Download-Lizenz – offizielles Betriebssystem für PCs mit modernem Windows 10 Desktop",
+                  "height": 2048,
+                  "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-windows-10-home-oem-32-64-bit-download-lizenz-betriebssystem.avif?v=1787444157",
+                  "width": 2048
+                },
+                "price": {
+                  "amount": "9.9",
+                  "currencyCode": "EUR"
+                },
+                "product": {
+                  "handle": "windows-10-home-oem",
+                  "id": "gid://shopify/Product/10822322127115",
+                  "title": "Windows 10 Home OEM",
+                  "vendor": "Microsoft"
+                },
+                "requiresShipping": false,
+                "selectedOptions": [
+                  {
+                    "name": "Title",
+                    "value": "Default Title"
+                  }
+                ],
+                "sku": "00885370938876",
+                "title": "Default Title"
+              },
+              "quantity": 1
+            },
+            {
+              "cost": {
+                "amountPerQuantity": {
+                  "amount": "9.9",
+                  "currencyCode": "EUR"
+                },
+                "compareAtAmountPerQuantity": {
+                  "amount": "29.9",
+                  "currencyCode": "EUR"
+                },
+                "subtotalAmount": {
+                  "amount": "9.9",
+                  "currencyCode": "EUR"
+                },
+                "totalAmount": {
+                  "amount": "9.9",
+                  "currencyCode": "EUR"
+                }
+              },
+              "discountAllocations": [],
+              "id": "gid://shopify/CartLine/d3d7a518-3d46-4fe1-a1a8-42b4bf435053?cart=REDACTED",
+              "merchandise": {
+                "availableForSale": true,
+                "compareAtPrice": {
+                  "amount": "29.9",
+                  "currencyCode": "EUR"
+                },
+                "id": "gid://shopify/ProductVariant/52555874009355",
+                "image": {
+                  "altText": "Microsoft Office 2019 Professional Box für Windows – Software-Lizenz mit Word, Excel, PowerPoint, Outlook, Access und Publisher",
+                  "height": 2048,
+                  "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-office-2019-professional-windows.avif?v=1787444042",
+                  "width": 2048
+                },
+                "price": {
+                  "amount": "9.9",
+                  "currencyCode": "EUR"
+                },
+                "product": {
+                  "handle": "microsoft-office-2019-professional-plus-windows",
+                  "id": "gid://shopify/Product/10794696802571",
+                  "title": "Microsoft Office 2019 Professional Plus für Windows – Original Lizenz | E-Mail Versand",
+                  "vendor": "Microsoft"
+                },
+                "requiresShipping": false,
+                "selectedOptions": [
+                  {
+                    "name": "Title",
+                    "value": "Default Title"
+                  }
+                ],
+                "sku": "0889842335830",
+                "title": "Default Title"
+              },
+              "quantity": 1
+            }
+          ]
+        },
+        "note": "",
+        "totalQuantity": 2
+      },
+      "userErrors": [],
+      "warnings": []
+    }
+  },
+  "extensions": {
+    "cart_changelog": "eyJpdGVtc19hZGRlZCI6W3sicHJvZHVjdF9pZCI6MTA4MjIzMjIxMjcxMTUs\nInZhcmlhbnRfaWQiOjUyNzExODQ4MzQ1ODY3LCJpZCI6ImMyM2QyMTEyLTVk\nMjEtNGUwMy04M2FiLTY3NGQ1NzBlYmVlMCIsImltYWdlIjpudWxsLCJwcmlj\nZSI6IjkuOTAiLCJwcmVzZW50bWVudF9wcmljZSI6OS45LCJxdWFudGl0eSI6\nMSwidGl0bGUiOiJXaW5kb3dzIDEwIEhvbWUgT0VNIiwicHJvZHVjdF90aXRs\nZSI6IldpbmRvd3MgMTAgSG9tZSBPRU0iLCJ2YXJpYW50X3RpdGxlIjpudWxs\nLCJ2ZW5kb3IiOiJNaWNyb3NvZnQiLCJwcm9kdWN0X3R5cGUiOiJXaW5kb3dz\nIEJldHJpZWJzc3lzdGVtZSIsInNrdSI6IjAwODg1MzcwOTM4ODc2IiwidXJs\nIjoiXC9wcm9kdWN0c1wvd2luZG93cy0xMC1ob21lLW9lbT92YXJpYW50PTUy\nNzExODQ4MzQ1ODY3IiwidW50cmFuc2xhdGVkX3Byb2R1Y3RfdGl0bGUiOiJX\naW5kb3dzIDEwIEhvbWUgT0VNIiwidW50cmFuc2xhdGVkX3ZhcmlhbnRfdGl0\nbGUiOm51bGwsInZpZXdfa2V5IjoiNTI3MTE4NDgzNDU4Njc6Y2Q5NWFhYmZh\nYjdjOTYxNjkzNjFiNmY1OWJkOTY0NDIifV19\n",
+    "context": {
+      "country": "DE",
+      "language": "DE"
+    },
+    "cost": {
+      "requestedQueryCost": 152
+    }
+  }
+}

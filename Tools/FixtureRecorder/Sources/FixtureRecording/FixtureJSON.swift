@@ -162,63 +162,175 @@ public enum JSONValue: Sendable, Hashable, Codable {
 
 // MARK: - FixtureAnonymizer
 
-/// Removes customer-related data from a response before it is stored as a fixture.
-///
-/// None of the fixtures of Phase 0 contain customer data (the cart fixture has no cart), but
-/// the recorder never relies on that:
-/// - GIDs of carts, cart lines, checkouts, customers and addresses (which carry cart tokens or
-///   personal identifiers) become `gid://shopify/<Type>/anonymized`, also inside messages,
-/// - `checkoutUrl` values keep only scheme and host: `https://<host>/cart/c/anonymized`,
-/// - string values of personal fields (`email`, `firstName`, `address1`, ...) become `anonymized`.
+/// Removes cart tokens and customer data from a response (or from request variables) before
+/// it is stored as a fixture, keeping the shape of every value:
+/// - GIDs of carts, checkouts, customers and addresses keep their type, but their ID and
+///   every query value become `REDACTED`: `gid://shopify/Cart/REDACTED?key=REDACTED`, also
+///   inside messages and warning targets,
+/// - cart line GIDs keep their line ID (which is not secret on its own) while the cart token
+///   in their query becomes `REDACTED`: `gid://shopify/CartLine/<line>?cart=REDACTED`,
+/// - `checkoutUrl` values keep scheme, host and path shape, with the cart token and every
+///   query value replaced: `https://www.karinex.de/cart/c/REDACTED?key=REDACTED&_cs=REDACTED`,
+/// - every other occurrence of a token found this way (8 characters or longer) is replaced
+///   too, wherever it appears,
+/// - non-empty string values of personal fields (`email`, `firstName`, `address1`, ...)
+///   become `REDACTED`.
 ///
 /// Product, variant, collection and image data, cursors and prices are public catalog data and
 /// stay untouched.
 public enum FixtureAnonymizer {
     /// The replacement text.
-    public static let placeholder = "anonymized"
+    public static let placeholder = "REDACTED"
 
     /// Field names whose string values are personal data.
     public static let personalFieldNames: Set<String> = [
         "email", "emailAddress", "firstName", "lastName", "displayName", "address1", "address2", "zip",
-        "company", "customerAccessToken", "note",
+        "company", "customerAccessToken", "note", "phone",
     ]
 
     /// GID resource types that carry cart tokens or personal identifiers.
     public static let sensitiveGIDTypes = ["CartLine", "Cart", "Checkout", "CustomerAddress", "Customer", "MailingAddress"]
 
+    /// GID types whose own ID is kept; only their query values are secret.
+    public static let typesWithPublicID: Set<String> = ["CartLine"]
+
+    /// Secrets shorter than this are only replaced structurally (inside GIDs and checkout
+    /// URLs), never by a global text search, so short values cannot corrupt unrelated text.
+    public static let minimumGlobalSecretLength = 8
+
     /// Returns the anonymized object and the JSON paths (e.g. `data.cartCreate.cart.id`) of
     /// every value that was changed.
     public static func anonymize(_ object: [String: JSONValue]) -> (object: [String: JSONValue], changedPaths: [String]) {
+        var secrets = Set<String>()
+        collectSecrets(in: .object(object), key: nil, into: &secrets)
+        let orderedSecrets = secrets.filter { $0.count >= minimumGlobalSecretLength }.sorted { $0.count > $1.count }
+
         var changedPaths: [String] = []
-        guard case let .object(result) = anonymize(value: .object(object), key: nil, path: "", changedPaths: &changedPaths) else {
+        guard case let .object(result) = anonymize(
+            value: .object(object),
+            key: nil,
+            path: "",
+            secrets: orderedSecrets,
+            changedPaths: &changedPaths
+        ) else {
             return (object, changedPaths)
         }
         return (result, changedPaths)
     }
 
-    // MARK: Private
+    // MARK: Secrets
 
     /// Matches sensitive GIDs. Built per use: `NSRegularExpression` is not `Sendable` on every
-    /// platform, and the recorder anonymizes only a handful of responses.
+    /// platform, and the recorder anonymizes only a few dozen bodies.
     private static func makeGIDExpression() -> NSRegularExpression? {
-        try? NSRegularExpression(pattern: #"gid://shopify/("# + sensitiveGIDTypes.joined(separator: "|") + #")/[^\s"'<>,;)\]}]+"#)
+        try? NSRegularExpression(pattern: #"gid://shopify/("# + sensitiveGIDTypes
+            .joined(separator: "|") + #")/([^\s"'<>,;)\]}?]+)(\?[^\s"'<>,;)\]}]*)?"#)
     }
 
-    private static func anonymize(value: JSONValue, key: String?, path: String, changedPaths: inout [String]) -> JSONValue {
+    private static func collectSecrets(in value: JSONValue, key: String?, into secrets: inout Set<String>) {
+        switch value {
+        case let .object(members):
+            for (childKey, child) in members {
+                collectSecrets(in: child, key: childKey, into: &secrets)
+            }
+        case let .array(elements):
+            for element in elements {
+                collectSecrets(in: element, key: key, into: &secrets)
+            }
+        case let .string(string):
+            for match in gidMatches(in: string) {
+                if !typesWithPublicID.contains(match.type) {
+                    secrets.insert(match.id)
+                }
+                secrets.formUnion(queryValues(match.query))
+            }
+            if key == "checkoutUrl", let components = URLComponents(string: string) {
+                if let token = checkoutToken(in: components.path) {
+                    secrets.insert(token)
+                }
+                secrets.formUnion((components.percentEncodedQueryItems ?? []).compactMap(\.value))
+            }
+        case .null, .bool, .integer, .double:
+            break
+        }
+    }
+
+    private struct GIDMatch {
+        let range: Range<String.Index>
+        let type: String
+        let id: String
+        let query: String?
+    }
+
+    private static func gidMatches(in string: String) -> [GIDMatch] {
+        guard string.contains("gid://shopify/"), let expression = makeGIDExpression() else { return [] }
+        let range = NSRange(string.startIndex..<string.endIndex, in: string)
+        return expression.matches(in: string, range: range).compactMap { match in
+            guard let whole = Range(match.range, in: string),
+                  let type = Range(match.range(at: 1), in: string),
+                  let id = Range(match.range(at: 2), in: string)
+            else { return nil }
+            let query = Range(match.range(at: 3), in: string).map { String(string[$0].dropFirst()) }
+            return GIDMatch(range: whole, type: String(string[type]), id: String(string[id]), query: query)
+        }
+    }
+
+    /// The values of a query string such as `key=abc&cart=def`.
+    private static func queryValues(_ query: String?) -> [String] {
+        guard let query else { return [] }
+        return query.split(separator: "&").compactMap { pair in
+            guard let equals = pair.firstIndex(of: "=") else { return nil }
+            let value = pair[pair.index(after: equals)...]
+            return value.isEmpty ? nil : String(value)
+        }
+    }
+
+    /// `name=REDACTED` for every `name=value` pair of a query string.
+    private static func redactedQuery(_ query: String) -> String {
+        query.split(separator: "&", omittingEmptySubsequences: false).map { pair in
+            guard let equals = pair.firstIndex(of: "=") else { return String(pair) }
+            return String(pair[..<equals]) + "=" + placeholder
+        }.joined(separator: "&")
+    }
+
+    /// The cart token of a checkout URL path such as `/cart/c/<token>`.
+    private static func checkoutToken(in path: String) -> String? {
+        let components = path.split(separator: "/")
+        guard let index = components.firstIndex(of: "c"), index > 0, components[index - 1] == "cart",
+              index + 1 < components.count
+        else { return nil }
+        return String(components[index + 1])
+    }
+
+    // MARK: Rewriting
+
+    private static func anonymize(
+        value: JSONValue,
+        key: String?,
+        path: String,
+        secrets: [String],
+        changedPaths: inout [String]
+    ) -> JSONValue {
         switch value {
         case let .object(members):
             var result: [String: JSONValue] = [:]
             for (childKey, childValue) in members {
                 let childPath = path.isEmpty ? childKey : "\(path).\(childKey)"
-                result[childKey] = anonymize(value: childValue, key: childKey, path: childPath, changedPaths: &changedPaths)
+                result[childKey] = anonymize(
+                    value: childValue,
+                    key: childKey,
+                    path: childPath,
+                    secrets: secrets,
+                    changedPaths: &changedPaths
+                )
             }
             return .object(result)
         case let .array(elements):
             return .array(elements.enumerated().map { index, element in
-                anonymize(value: element, key: key, path: "\(path)[\(index)]", changedPaths: &changedPaths)
+                anonymize(value: element, key: key, path: "\(path)[\(index)]", secrets: secrets, changedPaths: &changedPaths)
             })
         case let .string(string):
-            let anonymized = anonymize(string: string, key: key)
+            let anonymized = anonymize(string: string, key: key, secrets: secrets)
             if anonymized != string {
                 changedPaths.append(path)
             }
@@ -228,20 +340,30 @@ public enum FixtureAnonymizer {
         }
     }
 
-    private static func anonymize(string: String, key: String?) -> String {
+    private static func anonymize(string: String, key: String?, secrets: [String]) -> String {
         if let key, personalFieldNames.contains(key) {
-            return placeholder
+            return string.isEmpty ? string : placeholder
         }
-        if key == "checkoutUrl", let url = URL(string: string), let scheme = url.scheme, let host = url.host {
-            return "\(scheme)://\(host)/cart/c/\(placeholder)"
+        var result = string
+        if key == "checkoutUrl", var components = URLComponents(string: result) {
+            if let token = checkoutToken(in: components.path) {
+                components.path = components.path.replacingOccurrences(of: "/c/\(token)", with: "/c/\(placeholder)")
+            }
+            if let items = components.percentEncodedQueryItems {
+                components.percentEncodedQueryItems = items.map { URLQueryItem(name: $0.name, value: $0.value == nil ? nil : placeholder) }
+            }
+            result = components.string ?? result
         }
-        guard string.contains("gid://shopify/"), let gidExpression = makeGIDExpression() else { return string }
-        let range = NSRange(string.startIndex..<string.endIndex, in: string)
-        return gidExpression.stringByReplacingMatches(
-            in: string,
-            options: [],
-            range: range,
-            withTemplate: "gid://shopify/$1/\(placeholder)"
-        )
+        for match in gidMatches(in: result).reversed() {
+            var replacement = "gid://shopify/\(match.type)/" + (typesWithPublicID.contains(match.type) ? match.id : placeholder)
+            if let query = match.query {
+                replacement += "?" + redactedQuery(query)
+            }
+            result.replaceSubrange(match.range, with: replacement)
+        }
+        for secret in secrets where result.contains(secret) {
+            result = result.replacingOccurrences(of: secret, with: placeholder)
+        }
+        return result
     }
 }

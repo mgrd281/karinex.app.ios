@@ -198,23 +198,18 @@ struct RepositoryTests {
         }
     }
 
-    @Test("Cart repository returns the created cart")
+    @Test("Cart repository returns the created cart with its warnings and sends no empty attributes")
     func cartCreated() async throws {
-        let body = """
-            {"data": {"cartCreate": {"cart": {"id": "gid://shopify/Cart/test-token?key=test-key",
-            "checkoutUrl": "https://www.karinex.de/cart/c/test-token?key=test-key", "totalQuantity": 2},
-            "userErrors": [],
-            "warnings": [{"code": "MERCHANDISE_NOT_ENOUGH_STOCK", "message": "m", "target": "gid://shopify/CartLine/1"}]}}}
-            """
-        let stub = StubHTTPClient([.json(body)])
+        let stub = try StubHTTPClient([.fixture(Fixture.cartCreate)])
         let repository = StorefrontCartRepository(client: makeStorefrontClient(stub), contextProvider: StaticStorefrontContextProvider())
 
-        let line = CartLineInput(merchandiseId: "gid://shopify/ProductVariant/52710041846027", quantity: 2)
-        let cart = try await repository.createCart(lines: [line], attributes: [])
+        let line = CartLineInput(merchandiseId: "gid://shopify/ProductVariant/52555874009355", quantity: 1)
+        let result = try await repository.createCart(lines: [line], attributes: [])
 
-        #expect(cart.id.resourceType == "Cart")
-        #expect(cart.totalQuantity == 2)
-        #expect(cart.checkoutUrl.host == "www.karinex.de")
+        #expect(result.cart.id.resourceType == "Cart")
+        #expect(result.cart.totalQuantity == 1)
+        #expect(result.cart.checkoutUrl.host == "www.karinex.de")
+        #expect(result.warnings.isEmpty)
         let sent = try SentGraphQLBody(#require(stub.requests.first))
         guard case let .object(input)? = sent.variables["input"] else {
             Issue.record("input missing")

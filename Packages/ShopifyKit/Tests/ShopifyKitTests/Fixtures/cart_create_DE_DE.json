@@ -1,0 +1,114 @@
+{
+  "data": {
+    "cartCreate": {
+      "cart": {
+        "attributes": [
+          {
+            "key": "app_platform",
+            "value": "ios"
+          },
+          {
+            "key": "kx_fixture_recording",
+            "value": "true"
+          }
+        ],
+        "buyerIdentity": {
+          "countryCode": "DE",
+          "email": null
+        },
+        "checkoutUrl": "https://www.karinex.de/cart/c/REDACTED?key=REDACTED&_cs=REDACTED",
+        "cost": {
+          "checkoutChargeAmount": {
+            "amount": "9.9",
+            "currencyCode": "EUR"
+          },
+          "subtotalAmount": {
+            "amount": "9.9",
+            "currencyCode": "EUR"
+          },
+          "totalAmount": {
+            "amount": "9.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "discountApplications": [],
+        "discountCodes": [],
+        "id": "gid://shopify/Cart/REDACTED?key=REDACTED",
+        "lines": {
+          "nodes": [
+            {
+              "cost": {
+                "amountPerQuantity": {
+                  "amount": "9.9",
+                  "currencyCode": "EUR"
+                },
+                "compareAtAmountPerQuantity": {
+                  "amount": "29.9",
+                  "currencyCode": "EUR"
+                },
+                "subtotalAmount": {
+                  "amount": "9.9",
+                  "currencyCode": "EUR"
+                },
+                "totalAmount": {
+                  "amount": "9.9",
+                  "currencyCode": "EUR"
+                }
+              },
+              "discountAllocations": [],
+              "id": "gid://shopify/CartLine/d3d7a518-3d46-4fe1-a1a8-42b4bf435053?cart=REDACTED",
+              "merchandise": {
+                "availableForSale": true,
+                "compareAtPrice": {
+                  "amount": "29.9",
+                  "currencyCode": "EUR"
+                },
+                "id": "gid://shopify/ProductVariant/52555874009355",
+                "image": {
+                  "altText": "Microsoft Office 2019 Professional Box für Windows – Software-Lizenz mit Word, Excel, PowerPoint, Outlook, Access und Publisher",
+                  "height": 2048,
+                  "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-office-2019-professional-windows.avif?v=1787444042",
+                  "width": 2048
+                },
+                "price": {
+                  "amount": "9.9",
+                  "currencyCode": "EUR"
+                },
+                "product": {
+                  "handle": "microsoft-office-2019-professional-plus-windows",
+                  "id": "gid://shopify/Product/10794696802571",
+                  "title": "Microsoft Office 2019 Professional Plus für Windows – Original Lizenz | E-Mail Versand",
+                  "vendor": "Microsoft"
+                },
+                "requiresShipping": false,
+                "selectedOptions": [
+                  {
+                    "name": "Title",
+                    "value": "Default Title"
+                  }
+                ],
+                "sku": "0889842335830",
+                "title": "Default Title"
+              },
+              "quantity": 1
+            }
+          ]
+        },
+        "note": "",
+        "totalQuantity": 1
+      },
+      "userErrors": [],
+      "warnings": []
+    }
+  },
+  "extensions": {
+    "cart_changelog": "eyJpdGVtc19hZGRlZCI6W3sicHJvZHVjdF9pZCI6MTA3OTQ2OTY4MDI1NzEs\nInZhcmlhbnRfaWQiOjUyNTU1ODc0MDA5MzU1LCJpZCI6ImQzZDdhNTE4LTNk\nNDYtNGZlMS1hMWE4LTQyYjRiZjQzNTA1MyIsImltYWdlIjpudWxsLCJwcmlj\nZSI6IjkuOTAiLCJwcmVzZW50bWVudF9wcmljZSI6OS45LCJxdWFudGl0eSI6\nMSwidGl0bGUiOiJNaWNyb3NvZnQgT2ZmaWNlIDIwMTkgUHJvZmVzc2lvbmFs\nIFBsdXMgZsO8ciBXaW5kb3dzIOKAkyBPcmlnaW5hbCBMaXplbnogfCBFLU1h\naWwgVmVyc2FuZCIsInByb2R1Y3RfdGl0bGUiOiJNaWNyb3NvZnQgT2ZmaWNl\nIDIwMTkgUHJvZmVzc2lvbmFsIFBsdXMgZsO8ciBXaW5kb3dzIOKAkyBPcmln\naW5hbCBMaXplbnogfCBFLU1haWwgVmVyc2FuZCIsInZhcmlhbnRfdGl0bGUi\nOm51bGwsInZlbmRvciI6Ik1pY3Jvc29mdCIsInByb2R1Y3RfdHlwZSI6IkLD\nvHJvc29mdHdhcmUgXC8gT2ZmaWNlLVByb2dyYW1tZSBcLyBQcm9kdWt0aXZp\ndMOkdCIsInNrdSI6IjA4ODk4NDIzMzU4MzAiLCJ1cmwiOiJcL3Byb2R1Y3Rz\nXC9taWNyb3NvZnQtb2ZmaWNlLTIwMTktcHJvZmVzc2lvbmFsLXBsdXMtd2lu\nZG93cz92YXJpYW50PTUyNTU1ODc0MDA5MzU1IiwidW50cmFuc2xhdGVkX3By\nb2R1Y3RfdGl0bGUiOiJNaWNyb3NvZnQgT2ZmaWNlIDIwMTkgUHJvZmVzc2lv\nbmFsIFBsdXMgZsO8ciBXaW5kb3dzIOKAkyBPcmlnaW5hbCBMaXplbnogfCBF\nLU1haWwgVmVyc2FuZCIsInVudHJhbnNsYXRlZF92YXJpYW50X3RpdGxlIjpu\ndWxsLCJ2aWV3X2tleSI6IjUyNTU1ODc0MDA5MzU1OmQ5YjE5ODNmZGUyOTQ5\nOTNhZmYyYTRlNGY1NDQ5MjliIn1dfQ==\n",
+    "context": {
+      "country": "DE",
+      "language": "DE"
+    },
+    "cost": {
+      "requestedQueryCost": 152
+    }
+  }
+}

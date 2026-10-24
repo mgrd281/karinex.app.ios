@@ -188,6 +188,19 @@ struct ContextInjectorTests {
             (ProductByHandleQuery.document, ") @inContext"),
             (CollectionProductsQuery.document, ") @inContext"),
             (CartCreateMutation.document, "mutation CartCreate($input: CartInput!) @inContext"),
+            (CartQuery.document, "query Cart($id: ID!) @inContext"),
+            (CartLinesAddMutation.document, "mutation CartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) @inContext"),
+            (CartLinesUpdateMutation.document, ") @inContext"),
+            (CartLinesRemoveMutation.document, ") @inContext"),
+            (CartDiscountCodesUpdateMutation.document, ") @inContext"),
+            (CartBuyerIdentityUpdateMutation.document, ") @inContext"),
+            (CartAttributesUpdateMutation.document, ") @inContext"),
+            (CollectionsQuery.document, "query Collections($first: Int!) @inContext"),
+            (ProductRecommendationsQuery.document, ") @inContext"),
+            (PredictiveSearchQuery.document, "query PredictiveSearch($query: String!, $limit: Int!) @inContext"),
+            (SearchProductsQuery.document, ") @inContext"),
+            (BlogArticlesQuery.document, ") @inContext"),
+            (ArticleQuery.document, ") @inContext"),
         ]
         for (document, expectedFragment) in documents {
             let result = try ContextInjector.inject(germanyContext.directive, into: document)

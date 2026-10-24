@@ -48,36 +48,67 @@ struct JSONValueTests {
 
 @Suite("FixtureAnonymizer")
 struct FixtureAnonymizerTests {
-    @Test("Masks cart tokens, checkout URLs and personal fields, keeps catalog data")
+    @Test("Replaces cart tokens and personal fields with REDACTED, keeps the shape and catalog data")
     func anonymizes() throws {
         let body = Data("""
-            {"data": {"cartCreate": {"cart": {"id": "gid://shopify/Cart/c1-abc?key=def",
-             "checkoutUrl": "https://www.karinex.de/cart/c/c1-abc?key=def", "totalQuantity": 1},
+            {"data": {"cartCreate": {"cart": {"id": "gid://shopify/Cart/c1-abcdefgh?key=keyvalue123",
+             "checkoutUrl": "https://www.karinex.de/cart/c/c1-abcdefgh?key=other-key-456&_cs=3am",
+             "lines": {"nodes": [{"id": "gid://shopify/CartLine/0f3c-line?cart=c1-abcdefgh"}]},
+             "note": "", "totalQuantity": 1},
              "buyer": {"email": "someone@example.com"},
-             "userErrors": [{"message": "Line gid://shopify/CartLine/xyz invalid", "field": null}]},
+             "warnings": [{"target": "gid://shopify/Cart/c1-abcdefgh", "message": "Cart c1-abcdefgh changed"}],
+             "userErrors": [{"message": "Line gid://shopify/CartLine/xyz?cart=c1-abcdefgh invalid", "field": null}]},
              "product": {"id": "gid://shopify/Product/10534352027915", "handle": "office-2024-professional-plus-key"}}}
             """.utf8)
         let (object, paths) = try FixtureAnonymizer.anonymize(JSONValue.parseObject(body))
         let printed = String(decoding: JSONValue.object(object).prettyPrintedData(), as: UTF8.self)
 
-        #expect(printed.contains("\"gid://shopify/Cart/anonymized\""))
-        #expect(printed.contains("\"https://www.karinex.de/cart/c/anonymized\""))
-        #expect(printed.contains("Line gid://shopify/CartLine/anonymized invalid"))
-        #expect(printed.contains("\"email\": \"anonymized\""))
+        #expect(printed.contains("\"gid://shopify/Cart/REDACTED?key=REDACTED\""))
+        #expect(printed.contains("\"https://www.karinex.de/cart/c/REDACTED?key=REDACTED&_cs=REDACTED\""))
+        #expect(printed.contains("\"gid://shopify/CartLine/0f3c-line?cart=REDACTED\""))
+        #expect(printed.contains("Line gid://shopify/CartLine/xyz?cart=REDACTED invalid"))
+        #expect(printed.contains("\"target\": \"gid://shopify/Cart/REDACTED\""))
+        #expect(printed.contains("Cart REDACTED changed"))
+        #expect(printed.contains("\"email\": \"REDACTED\""))
+        #expect(printed.contains("\"note\": \"\""))
         #expect(printed.contains("gid://shopify/Product/10534352027915"))
-        #expect(!printed.contains("c1-abc"))
+        #expect(!printed.contains("abcdefgh"))
+        #expect(!printed.contains("keyvalue123"))
+        #expect(!printed.contains("other-key-456"))
+        #expect(!printed.contains("3am"))
         #expect(!printed.contains("example.com"))
         #expect(paths.sorted() == [
             "data.cartCreate.buyer.email",
             "data.cartCreate.cart.checkoutUrl",
             "data.cartCreate.cart.id",
+            "data.cartCreate.cart.lines.nodes[0].id",
             "data.cartCreate.userErrors[0].message",
+            "data.cartCreate.warnings[0].message",
+            "data.cartCreate.warnings[0].target",
         ])
+    }
+
+    @Test("Anonymizes request variables the same way")
+    func variables() {
+        let variables: [String: JSONValue] = [
+            "variables": .object([
+                "cartId": .string("gid://shopify/Cart/token-123456?key=secret-key-1"),
+                "lineIds": .array([.string("gid://shopify/CartLine/line-1?cart=token-123456")]),
+                "discountCodes": .array([.string("KX-FIXTURE-NOT-A-CODE")]),
+            ]),
+        ]
+        let (object, paths) = FixtureAnonymizer.anonymize(variables)
+        #expect(object["variables"] == .object([
+            "cartId": .string("gid://shopify/Cart/REDACTED?key=REDACTED"),
+            "lineIds": .array([.string("gid://shopify/CartLine/line-1?cart=REDACTED")]),
+            "discountCodes": .array([.string("KX-FIXTURE-NOT-A-CODE")]),
+        ]))
+        #expect(paths.sorted() == ["variables.cartId", "variables.lineIds[0]"])
     }
 
     @Test("Leaves fixtures without customer data unchanged")
     func unchanged() throws {
-        let object = try JSONValue.parseObject(Data(#"{"data":{"cartCreate":{"cart":null,"userErrors":[]}}}"#.utf8))
+        let object = try JSONValue.parseObject(Data(#"{"data":{"cartCreate":{"cart":null,"userErrors":[]}},"x":"short?key=v"}"#.utf8))
         let (result, paths) = FixtureAnonymizer.anonymize(object)
         #expect(result == object)
         #expect(paths.isEmpty)
@@ -159,40 +190,78 @@ struct CommandLineOptionsTests {
 
 @Suite("FixturePlan")
 struct FixturePlanTests {
-    @Test("Covers every required fixture and only one, harmless mutation")
+    @Test("Covers every required fixture and only cart mutations on the recorder's own cart")
     func plan() throws {
         let specs = try FixturePlan.liveFixtures(isTokenless: true)
-        let names = Set(specs.map(\.fileName))
-        #expect(names.isSuperset(of: [
+        let names = specs.map(\.fileName)
+        #expect(Set(names).count == names.count)
+        #expect(Set(names).isSuperset(of: [
             "localization_DE_DE.json",
             "product_office-2024-professional-plus-key_DE_DE.json",
             "product_office-2024-professional-plus-key_CH_FR.json",
             "collection_bestseller_DE_DE.json",
+            "collection_windows_price_filtered_DE_DE.json",
+            "collections_DE_DE.json",
+            "product_recommendations_related_DE_DE.json",
+            "product_recommendations_complementary_DE_DE.json",
+            "predictive_search_win_DE_DE.json",
+            "search_office-2024_DE_DE.json",
+            "blog_guides_articles_DE_DE.json",
+            "article_guides_windows-11-kompatibilitaet-pruefen_DE_DE.json",
             "cart_create_invalid_merchandise_DE_DE.json",
+            "cart_create_DE_DE.json",
+            "cart_lines_add_DE_DE.json",
+            "cart_lines_update_DE_DE.json",
+            "cart_discount_codes_invalid_DE_DE.json",
+            "cart_lines_remove_DE_DE.json",
+            "cart_query_DE_DE.json",
             "product_metafields_access_denied_DE_DE.json",
         ]))
 
         let mutations = specs.filter { $0.kind == .mutation }
-        #expect(mutations.map(\.operationName) == ["CartCreate"])
-        let printedVariables = try String(decoding: #require(mutations.first).variables.prettyPrintedData(), as: UTF8.self)
+        #expect(Set(mutations.map(\.operationName)).isSubset(of: FixturePlan.allowedMutations))
+        #expect(mutations.map(\.fileName) == [
+            "cart_create_invalid_merchandise_DE_DE.json",
+            "cart_create_DE_DE.json",
+            "cart_lines_add_DE_DE.json",
+            "cart_lines_update_DE_DE.json",
+            "cart_discount_codes_invalid_DE_DE.json",
+            "cart_lines_remove_DE_DE.json",
+        ])
+        let invalid = try #require(mutations.first)
+        let printedVariables = try String(decoding: #require(invalid.plannedVariables).prettyPrintedData(), as: UTF8.self)
         #expect(printedVariables.contains("gid://shopify/ProductVariant/1\""))
+        #expect(mutations.dropFirst().allSatisfy { $0.plannedVariables == nil })
+        #expect(specs.first { $0.fileName == "cart_create_DE_DE.json" }?.prepare != nil)
 
         let accessDenied = try #require(specs.first { $0.fileName == "product_metafields_access_denied_DE_DE.json" })
         #expect(accessDenied.requiresTokenlessClient)
         #expect(accessDenied.expectedOutcome == .accessDenied)
         #expect(SyntheticFixture.all.allSatisfy { $0.fileName.hasPrefix("synthetic_") })
     }
+
+    @Test("Cart mutations refuse to run before the recorder created its own cart")
+    func cartMutationsNeedTheRecordersCart() async throws {
+        let specs = try FixturePlan.liveFixtures(isTokenless: true)
+        let addLines = try #require(specs.first { $0.fileName == "cart_lines_add_DE_DE.json" })
+        let transport = CannedHTTPClient { _, _ in "{}" }
+        let client = StorefrontClient(configuration: CommandLineOptions.recorderTestConfiguration, httpClient: transport)
+        await #expect(throws: FixtureSpec.UnexpectedOutcome.self) {
+            _ = try await addLines.execute(client, FixtureSession())
+        }
+        #expect(transport.sentRequests.isEmpty)
+    }
 }
 
 // MARK: - FixtureRecorder
 
-/// Answers every request with a canned body chosen by operation name.
+/// Answers every request with a body chosen from the operation name and variables.
 private final class CannedHTTPClient: HTTPClient {
-    private let bodies: [String: String]
+    private let respond: @Sendable (String, [String: Any]) -> String
     private let requests = Locked<[HTTPRequest]>([])
 
-    init(bodies: [String: String]) {
-        self.bodies = bodies
+    init(respond: @escaping @Sendable (String, [String: Any]) -> String) {
+        self.respond = respond
     }
 
     var sentRequests: [HTTPRequest] {
@@ -202,60 +271,156 @@ private final class CannedHTTPClient: HTTPClient {
     func send(_ request: HTTPRequest) async throws -> HTTPResponse {
         requests.withLock { $0.append(request) }
         let object = try JSONSerialization.jsonObject(with: request.body ?? Data()) as? [String: Any]
-        let operationName = object?["operationName"] as? String ?? ""
-        let variables = object?["variables"] as? [String: Any]
-        let key = operationName == "ProductByHandle" && variables?["includeMetafields"] as? Bool == true
-            ? "ProductByHandleWithMetafields"
-            : operationName == "ProductByHandle" && variables?["handle"] as? String == FixturePlan.missingProductHandle
-                ? "ProductByHandleMissing"
-                : operationName
-        return HTTPResponse(statusCode: 200, headers: ["Content-Type": "application/json"], body: Data((bodies[key] ?? "{}").utf8))
+        let body = respond(object?["operationName"] as? String ?? "", object?["variables"] as? [String: Any] ?? [:])
+        return HTTPResponse(statusCode: 200, headers: ["Content-Type": "application/json"], body: Data(body.utf8))
     }
 }
 
-@Suite("FixtureRecorder")
-struct FixtureRecorderTests {
-    private static let money = #"{"amount":"29.9","currencyCode":"EUR"}"#
-    private static let product = """
-        {"data":{"product":{"id":"gid://shopify/Product/1","handle":"h","title":"T","vendor":"V","productType":"P",
+extension CommandLineOptions {
+    /// A tokenless configuration of the live store for offline tests.
+    static var recorderTestConfiguration: StorefrontConfiguration {
+        CommandLineOptions(
+            shopDomain: defaultShopDomain,
+            apiVersion: defaultAPIVersion,
+            token: nil,
+            outputDirectory: URL(fileURLWithPath: "/tmp")
+        ).storefrontConfiguration
+    }
+}
+
+/// Canned Storefront bodies that satisfy every validation of the plan.
+private enum CannedStore {
+    static let money = #"{"amount":"29.9","currencyCode":"EUR"}"#
+    static let image = #"{"url":"https://cdn.shopify.com/a.webp","altText":null,"width":1,"height":1}"#
+    static let cartToken = "c1-secret-cart-token"
+
+    static func summary(_ handle: String) -> String {
+        """
+        {"id":"gid://shopify/Product/\(handle)","handle":"\(handle)","title":"T","vendor":"V","availableForSale":true,"featuredImage":null,
+        "priceRange":{"minVariantPrice":\(money),"maxVariantPrice":\(money)},
+        "compareAtPriceRange":{"minVariantPrice":\(money),"maxVariantPrice":\(money)},"variants":{"nodes":[{"requiresShipping":false}]}}
+        """
+    }
+
+    static func product(_ handle: String) -> String {
+        """
+        {"data":{"product":{"id":"gid://shopify/Product/\(handle)","handle":"\(handle)","title":"T","vendor":"V","productType":"P",
         "tags":[],"availableForSale":true,"descriptionHtml":"","onlineStoreUrl":null,"featuredImage":null,
-        "images":{"nodes":[]},"options":[],"variants":{"nodes":[{"id":"gid://shopify/ProductVariant/2","title":"Default Title",
+        "images":{"nodes":[]},"options":[],"variants":{"nodes":[{"id":"gid://shopify/ProductVariant/\(handle)","title":"Default Title",
         "sku":null,"availableForSale":true,"requiresShipping":false,"price":\(money),"compareAtPrice":null,
         "selectedOptions":[],"image":null}]},"seo":{"title":null,"description":null},"collections":{"nodes":[]},
         "priceRange":{"minVariantPrice":\(money),"maxVariantPrice":\(money)},
         "compareAtPriceRange":{"minVariantPrice":\(money),"maxVariantPrice":\(money)}}}}
         """
-    private static let summary = """
-        {"id":"gid://shopify/Product/1","handle":"h","title":"T","vendor":"V","availableForSale":true,"featuredImage":null,
-        "priceRange":{"minVariantPrice":\(money),"maxVariantPrice":\(money)},
-        "compareAtPriceRange":{"minVariantPrice":\(money),"maxVariantPrice":\(money)},"variants":{"nodes":[]}}
-        """
-    private static let bodies: [String: String] = [
-        "Localization": """
-            {"data":{"localization":{"country":{"isoCode":"DE","name":"Deutschland",
-            "currency":{"isoCode":"EUR","name":"Euro","symbol":"€"},
-            "availableLanguages":[]},"language":{"isoCode":"DE","name":"Deutsch","endonymName":"Deutsch"},
-            "availableCountries":[{"isoCode":"DE","name":"Deutschland","currency":{"isoCode":"EUR","name":"Euro","symbol":"€"},
-            "availableLanguages":[]}],"availableLanguages":[]}}}
-            """,
-        "ProductByHandle": product,
-        "ProductByHandleMissing": #"{"data":{"product":null}}"#,
-        "ProductByHandleWithMetafields": """
-            {"errors":[{"message":"Access denied","path":["product","metafields"],
-            "extensions":{"code":"ACCESS_DENIED","requiredAccess":"unauthenticated_read_metafields"}}],"data":{"product":null}}
-            """,
-        "CollectionProducts": """
-            {"data":{"collection":{"id":"gid://shopify/Collection/1","handle":"bestseller","title":"B","description":"","image":null,
-            "products":{"nodes":[\(Array(repeating: summary, count: 8).joined(separator: ","))],
-            "pageInfo":{"hasNextPage":true,"hasPreviousPage":false,"startCursor":"a","endCursor":"b"}}}}}
-            """,
-        "CartCreate": """
-            {"data":{"cartCreate":{"cart":null,"userErrors":[{"field":["input","lines","0","merchandiseId"],
-            "message":"invalid","code":"INVALID"}],"warnings":[]}}}
-            """,
-    ]
+    }
 
-    @Test("Writes every fixture, the synthetic envelope and the manifest")
+    static let filters = """
+        [{"id":"filter.v.availability","label":"Verfügbarkeit","type":"LIST",
+        "values":[{"id":"filter.v.availability.1","label":"Auf Lager","count":1,"input":"{\\"available\\":true}"}]}]
+        """
+
+    static func collection(_ handle: String, products: [String]) -> String {
+        """
+        {"data":{"collection":{"id":"gid://shopify/Collection/1","handle":"\(handle)","title":"B","description":"","image":null,
+        "products":{"filters":\(filters),"nodes":[\(products.map(summary).joined(separator: ","))],
+        "pageInfo":{"hasNextPage":true,"hasPreviousPage":false,"startCursor":"a","endCursor":"b"}}}}}
+        """
+    }
+
+    static func cart(field: String?, lines: [(variant: String, quantity: Int)], codes: String = "[]", warnings: String = "[]") -> String {
+        let lineJSON = lines.enumerated().map { index, line in
+            """
+            {"id":"gid://shopify/CartLine/line-\(index)?cart=\(cartToken)","quantity":\(line.quantity),
+            "merchandise":{"id":"gid://shopify/ProductVariant/\(line.variant)","title":"Default Title","sku":null,"requiresShipping":false,
+            "availableForSale":true,"image":\(image),"price":\(money),"compareAtPrice":null,"selectedOptions":[],
+            "product":{"id":"gid://shopify/Product/\(line.variant)","handle":"\(line.variant)","title":"T","vendor":"V"}},
+            "cost":{"amountPerQuantity":\(money),"compareAtAmountPerQuantity":null,"subtotalAmount":\(money),"totalAmount":\(money)},
+            "discountAllocations":[]}
+            """
+        }.joined(separator: ",")
+        let cart = """
+            {"id":"gid://shopify/Cart/\(cartToken)?key=secret-key-value","checkoutUrl":"https://www.karinex.de/cart/c/\(cartToken)?key=k-secret-value",
+            "totalQuantity":\(lines.map(\.quantity).reduce(0, +)),"note":"","buyerIdentity":{"countryCode":"DE","email":null},
+            "attributes":[{"key":"app_platform","value":"ios"}],"discountCodes":\(codes),"discountApplications":[],
+            "cost":{"subtotalAmount":\(money),"totalAmount":\(money),"checkoutChargeAmount":\(money)},"lines":{"nodes":[\(lineJSON)]}}
+            """
+        guard let field else { return #"{"data":{"cart":"# + cart + "}}" }
+        return #"{"data":{""# + field + #"":{"cart":"# + cart + #","userErrors":[],"warnings":"# + warnings + "}}}"
+    }
+
+    static let invalidCode = #"[{"code":"KX-FIXTURE-NOT-A-CODE","applicable":false}]"#
+
+    static func respond(operation: String, variables: [String: Any]) -> String {
+        switch operation {
+        case "Localization":
+            return """
+                {"data":{"localization":{"country":{"isoCode":"DE","name":"Deutschland",
+                "currency":{"isoCode":"EUR","name":"Euro","symbol":"€"},
+                "availableLanguages":[]},"language":{"isoCode":"DE","name":"Deutsch","endonymName":"Deutsch"},
+                "availableCountries":[{"isoCode":"DE","name":"Deutschland","currency":{"isoCode":"EUR","name":"Euro","symbol":"€"},
+                "availableLanguages":[]}],"availableLanguages":[]}}}
+                """
+        case "ProductByHandle":
+            if variables["includeMetafields"] as? Bool == true {
+                return """
+                    {"errors":[{"message":"Access denied","path":["product","metafields"],
+                    "extensions":{"code":"ACCESS_DENIED","requiredAccess":"unauthenticated_read_metafields"}}],"data":{"product":null}}
+                    """
+            }
+            let handle = variables["handle"] as? String ?? ""
+            return handle == FixturePlan.missingProductHandle ? #"{"data":{"product":null}}"# : product(handle)
+        case "CollectionProducts":
+            let handle = variables["handle"] as? String ?? ""
+            return handle == FixturePlan.allProductsHandle
+                ? collection(handle, products: ["cheap-a", "cheap-b"])
+                : collection(handle, products: (1...8).map { "p\($0)" })
+        case "Collections":
+            return #"{"data":{"collections":{"nodes":[{"id":"gid://shopify/Collection/1","handle":"bestseller","title":"B","description":"","image":null}]}}}"#
+        case "ProductRecommendations":
+            return #"{"data":{"productRecommendations":["# + summary("r") + "]}}"
+        case "PredictiveSearch":
+            return #"{"data":{"predictiveSearch":{"products":["# + summary("w") + #"],"collections":[],"articles":[],"queries":[]}}}"#
+        case "SearchProducts":
+            let pageInfo = #""pageInfo":{"hasNextPage":false,"hasPreviousPage":false,"startCursor":null,"endCursor":null}"#
+            return #"{"data":{"search":{"totalCount":1,"productFilters":[],"nodes":[{"__typename":"Product","#
+                + summary("o").dropFirst() + "]," + pageInfo + "}}}"
+        case "BlogArticles":
+            return #"{"data":{"blog":{"articles":{"nodes":[{"id":"gid://shopify/Article/1","handle":"a","title":"A","excerpt":null,"#
+                + #""publishedAt":"2026-08-29T15:33:05Z","onlineStoreUrl":null,"image":null,"blog":{"handle":"guides"}}]}}}}"#
+        case "Article":
+            return #"{"data":{"blog":{"articleByHandle":{"id":"gid://shopify/Article/1","handle":"a","title":"A","#
+                + #""publishedAt":"2026-08-29T15:33:05Z","contentHtml":"<table><tr><td>x</td></tr></table>","onlineStoreUrl":null,"#
+                + #""authorV2":{"name":"KARINEX"},"image":null,"blog":{"handle":"guides"}}}}}"#
+        case "CartCreate":
+            let input = variables["input"] as? [String: Any]
+            let lines = input?["lines"] as? [[String: Any]]
+            if lines?.first?["merchandiseId"] as? String == FixturePlan.invalidMerchandiseID.rawValue {
+                return """
+                    {"data":{"cartCreate":{"cart":null,"userErrors":[{"field":["input","lines","0","merchandiseId"],
+                    "message":"invalid","code":"INVALID"}],"warnings":[]}}}
+                    """
+            }
+            return cart(field: "cartCreate", lines: [("cheap-a", 1)])
+        case "CartLinesAdd":
+            return cart(field: "cartLinesAdd", lines: [("cheap-a", 1), ("cheap-b", 1)])
+        case "CartLinesUpdate":
+            return cart(field: "cartLinesUpdate", lines: [("cheap-a", 2), ("cheap-b", 1)])
+        case "CartDiscountCodesUpdate":
+            let warning = #"[{"code":"DISCOUNT_NOT_FOUND","message":"m","target":"gid://shopify/Cart/"# + cartToken + #""}]"#
+            return cart(field: "cartDiscountCodesUpdate", lines: [("cheap-a", 2), ("cheap-b", 1)], codes: invalidCode, warnings: warning)
+        case "CartLinesRemove":
+            return cart(field: "cartLinesRemove", lines: [("cheap-a", 2)], codes: invalidCode)
+        case "Cart":
+            return cart(field: nil, lines: [("cheap-a", 2)], codes: invalidCode)
+        default:
+            return "{}"
+        }
+    }
+}
+
+@Suite("FixtureRecorder")
+struct FixtureRecorderTests {
+    @Test("Writes every fixture, the synthetic envelope and the manifest, with cart tokens redacted")
     func recordsEverything() async throws {
         let directory = FileManager.default.temporaryDirectory
             .appendingPathComponent("fixture-recorder-tests-\(UUID().uuidString)", isDirectory: true)
@@ -267,7 +432,7 @@ struct FixtureRecorderTests {
             token: nil,
             outputDirectory: directory
         )
-        let transport = CannedHTTPClient(bodies: Self.bodies)
+        let transport = CannedHTTPClient { operation, variables in CannedStore.respond(operation: operation, variables: variables) }
         let recorder = FixtureRecorder(
             options: options,
             httpClient: transport,
@@ -282,8 +447,15 @@ struct FixtureRecorderTests {
             + SyntheticFixture.all.map(\.fileName) + [FixtureRecorder.manifestFileName]
         #expect(written == expected)
         for file in written {
-            #expect(FileManager.default.fileExists(atPath: directory.appendingPathComponent(file).path))
+            let contents = try String(contentsOf: directory.appendingPathComponent(file), encoding: .utf8)
+            #expect(!contents.contains(CannedStore.cartToken))
+            #expect(!contents.contains("secret-key-value"))
+            #expect(!contents.contains("k-secret-value"))
         }
+
+        let cart = try String(contentsOf: directory.appendingPathComponent("cart_lines_update_DE_DE.json"), encoding: .utf8)
+        #expect(cart.contains("\"gid://shopify/Cart/REDACTED?key=REDACTED\""))
+        #expect(cart.contains("\"gid://shopify/CartLine/line-0?cart=REDACTED\""))
 
         let manifest = try JSONValue.parseObject(Data(contentsOf: directory.appendingPathComponent("manifest.json")))
         #expect(manifest["apiVersion"] == .string("2026-10"))
@@ -293,9 +465,33 @@ struct FixtureRecorderTests {
             return
         }
         #expect(entries.count == written.count - 1)
+        let update = entries.first { $0.objectValue?["file"] == .string("cart_lines_update_DE_DE.json") }?.objectValue
+        guard case let .object(variables)? = update?["variables"] else {
+            Issue.record("cart_lines_update has no variables")
+            return
+        }
+        #expect(variables["cartId"] == .string("gid://shopify/Cart/REDACTED?key=REDACTED"))
+        let updatedLine: JSONValue = .object(["id": .string("gid://shopify/CartLine/line-0?cart=REDACTED"), "quantity": .integer(2)])
+        #expect(variables["lines"] == .array([updatedLine]))
 
         let throttled = try String(contentsOf: directory.appendingPathComponent("synthetic_throttled.json"), encoding: .utf8)
         #expect(throttled.contains("\"code\": \"THROTTLED\""))
         #expect(transport.sentRequests.allSatisfy { $0.value(forHeader: StorefrontConfiguration.accessTokenHeader) == nil })
+        let mutationNames = try transport.sentRequests.compactMap { request -> String? in
+            let object = try JSONSerialization.jsonObject(with: request.body ?? Data()) as? [String: Any]
+            let query = object?["query"] as? String ?? ""
+            return query.hasPrefix("mutation") ? object?["operationName"] as? String : nil
+        }
+        #expect(Set(mutationNames).isSubset(of: FixturePlan.allowedMutations))
+        #expect(mutationNames.count == 6)
+    }
+}
+
+extension JSONValue {
+    fileprivate var objectValue: [String: JSONValue]? {
+        if case let .object(object) = self {
+            return object
+        }
+        return nil
     }
 }

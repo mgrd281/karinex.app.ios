@@ -14,13 +14,38 @@ enum Fixture {
     static let cartCreateInvalidMerchandise = "cart_create_invalid_merchandise_DE_DE.json"
     static let metafieldsAccessDenied = "product_metafields_access_denied_DE_DE.json"
     static let syntheticThrottled = "synthetic_throttled.json"
+    static let collectionWindowsPriceFiltered = "collection_windows_price_filtered_DE_DE.json"
+    static let collections = "collections_DE_DE.json"
+    static let recommendationsRelated = "product_recommendations_related_DE_DE.json"
+    static let recommendationsComplementary = "product_recommendations_complementary_DE_DE.json"
+    static let predictiveSearchWin = "predictive_search_win_DE_DE.json"
+    static let searchOffice2024 = "search_office-2024_DE_DE.json"
+    static let blogGuidesArticles = "blog_guides_articles_DE_DE.json"
+    static let articleGuide = "article_guides_windows-11-kompatibilitaet-pruefen_DE_DE.json"
+    static let cartCreate = "cart_create_DE_DE.json"
+    static let cartLinesAdd = "cart_lines_add_DE_DE.json"
+    static let cartLinesUpdate = "cart_lines_update_DE_DE.json"
+    static let cartDiscountCodesInvalid = "cart_discount_codes_invalid_DE_DE.json"
+    static let cartLinesRemove = "cart_lines_remove_DE_DE.json"
+    static let cartQuery = "cart_query_DE_DE.json"
     static let manifest = "manifest.json"
 
     /// Every fixture file, including the manifest.
     static let all = [
         localization, productDE, productCHFR, productNotFound, collectionBestseller,
-        cartCreateInvalidMerchandise, metafieldsAccessDenied, syntheticThrottled, manifest,
+        cartCreateInvalidMerchandise, metafieldsAccessDenied, syntheticThrottled,
+        collectionWindowsPriceFiltered, collections, recommendationsRelated, recommendationsComplementary,
+        predictiveSearchWin, searchOffice2024, blogGuidesArticles, articleGuide,
+        cartCreate, cartLinesAdd, cartLinesUpdate, cartDiscountCodesInvalid, cartLinesRemove, cartQuery,
+        manifest,
     ]
+
+    /// The `data` member of fixture `name` as decoded by the real client's response type.
+    static func decode<ResponseData: Decodable & Sendable>(_ type: ResponseData.Type, from name: String) throws -> ResponseData {
+        let response = try JSONDecoder().decode(GraphQLResponse<ResponseData>.self, from: data(name))
+        guard let decoded = response.data else { throw Missing(name: name + " (data)") }
+        return decoded
+    }
 
     struct Missing: Error, CustomStringConvertible {
         let name: String

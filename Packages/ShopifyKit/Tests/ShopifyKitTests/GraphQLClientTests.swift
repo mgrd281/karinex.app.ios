@@ -127,7 +127,7 @@ struct GraphQLClientRequestTests {
         #expect(sink.entries.first?.level == .debug)
         #expect(line.hasPrefix("CartCreate status=200 duration="))
         #expect(line.contains("attempts=1"))
-        #expect(line.hasSuffix("cost=13"))
+        #expect(line.hasSuffix("cost=152"))
         #expect(!line.contains("ProductVariant"))
         #expect(!line.contains("ios-secret-attribute"))
     }

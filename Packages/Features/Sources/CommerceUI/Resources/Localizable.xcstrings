@@ -1,0 +1,690 @@
+{
+  "sourceLanguage" : "de",
+  "strings" : {
+    "commerce.article.byline %@ %@" : {
+      "comment" : "Line below an article title: the publication date (first %@, e.g. \"24. Oktober 2026\") and the author name (second %@). Keep the order natural for the language; use positional specifiers (%1$@, %2$@) if you reorder.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, von %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, by %2$@"
+          }
+        }
+      }
+    },
+    "commerce.article.empty.message" : {
+      "comment" : "Message when a blog article no longer exists. One sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieser Artikel ist nicht mehr verfügbar."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This article is no longer available."
+          }
+        }
+      }
+    },
+    "commerce.article.empty.title" : {
+      "comment" : "Title when a blog article no longer exists. Short, max ~30 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Artikel nicht gefunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Article not found"
+          }
+        }
+      }
+    },
+    "commerce.article.share" : {
+      "comment" : "Toolbar button that shares the link of a blog article. One word.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teilen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share"
+          }
+        }
+      }
+    },
+    "commerce.empty.message" : {
+      "comment" : "Default message of an empty list or screen. One sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hier ist im Moment nichts verfügbar."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing is available here at the moment."
+          }
+        }
+      }
+    },
+    "commerce.empty.title" : {
+      "comment" : "Default title of an empty list or screen, when nothing more specific applies. Short, max ~30 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nichts gefunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing found"
+          }
+        }
+      }
+    },
+    "commerce.error.not_found.message" : {
+      "comment" : "Message when the requested content no longer exists. One sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieser Inhalt ist nicht mehr verfügbar."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This content is no longer available."
+          }
+        }
+      }
+    },
+    "commerce.error.not_found.title" : {
+      "comment" : "Title of the state when a product, collection or article no longer exists. Short, max ~30 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht gefunden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not found"
+          }
+        }
+      }
+    },
+    "commerce.error.offline.message" : {
+      "comment" : "Message of the offline error state below the title; asks the customer to check the connection and try again. One or two sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte prüfen Sie Ihre Verbindung und versuchen Sie es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please check your connection and try again."
+          }
+        }
+      }
+    },
+    "commerce.error.offline.title" : {
+      "comment" : "Title of the error state when the device has no internet connection. Short, max ~30 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Internetverbindung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No internet connection"
+          }
+        }
+      }
+    },
+    "commerce.error.rejected.title" : {
+      "comment" : "Title shown above Shopify's own explanation when the store refused an action (for example a cart change). Short, max ~30 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht möglich"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not possible"
+          }
+        }
+      }
+    },
+    "commerce.error.retry" : {
+      "comment" : "Button in error states and error banners that repeats the failed request. Short verb phrase, max ~20 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erneut versuchen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try again"
+          }
+        }
+      }
+    },
+    "commerce.error.server.message" : {
+      "comment" : "Message of the store-unavailable error state. One or two sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Shop ist gerade nicht erreichbar. Bitte versuchen Sie es später erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The store cannot be reached at the moment. Please try again later."
+          }
+        }
+      }
+    },
+    "commerce.error.server.title" : {
+      "comment" : "Title of the error state when the store cannot be reached or failed. Short, max ~30 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shop nicht erreichbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Store unavailable"
+          }
+        }
+      }
+    },
+    "commerce.error.throttled.message" : {
+      "comment" : "Message of the busy-store error state; asks the customer to try again in a moment. One or two sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Shop ist im Moment stark ausgelastet. Bitte versuchen Sie es gleich noch einmal."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The store is very busy right now. Please try again in a moment."
+          }
+        }
+      }
+    },
+    "commerce.error.throttled.title" : {
+      "comment" : "Title of the error state when the store is busy and asked the app to slow down. Short, max ~30 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerade viel los"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The store is busy"
+          }
+        }
+      }
+    },
+    "commerce.error.timeout.message" : {
+      "comment" : "Message of the timeout error state. One or two sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Shop hat nicht rechtzeitig geantwortet. Bitte versuchen Sie es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The store did not respond in time. Please try again."
+          }
+        }
+      }
+    },
+    "commerce.error.timeout.title" : {
+      "comment" : "Title of the error state when the store did not answer in time. Short, max ~30 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeitüberschreitung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Request timed out"
+          }
+        }
+      }
+    },
+    "commerce.error.unknown.message" : {
+      "comment" : "Message of the generic error state. One sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte versuchen Sie es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please try again."
+          }
+        }
+      }
+    },
+    "commerce.error.unknown.title" : {
+      "comment" : "Title of the generic error state. Short, max ~30 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etwas ist schiefgelaufen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong"
+          }
+        }
+      }
+    },
+    "commerce.loading" : {
+      "comment" : "VoiceOver label of a loading placeholder (skeleton). Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird geladen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading"
+          }
+        }
+      }
+    },
+    "commerce.market.continue" : {
+      "comment" : "Primary button of the market sheet that confirms the choice and closes the sheet. One word, max ~15 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        }
+      }
+    },
+    "commerce.market.country" : {
+      "comment" : "Label of the country picker in the market sheet. One word.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Land"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Country"
+          }
+        }
+      }
+    },
+    "commerce.market.currency" : {
+      "comment" : "Label of the row that shows the currency of the selected country in the market sheet. One word.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Währung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currency"
+          }
+        }
+      }
+    },
+    "commerce.market.footnote" : {
+      "comment" : "Footnote in the market sheet: the app's own language follows the iPhone settings and can be changed there. One or two sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Sprache der App selbst richtet sich nach den Einstellungen Ihres iPhone."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The language of the app itself follows your iPhone settings."
+          }
+        }
+      }
+    },
+    "commerce.market.language" : {
+      "comment" : "Label of the content language picker in the market sheet: the language of product texts, not of the app. Short, max ~25 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprache der Inhalte"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Content language"
+          }
+        }
+      }
+    },
+    "commerce.market.message" : {
+      "comment" : "Explanation below the title of the market sheet: prices, currency and product texts follow the selected country and language. One or two sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preise, Währung und Produkttexte richten sich nach dem Land und der Sprache, die Sie hier wählen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prices, currency and product texts follow the country and language you choose here."
+          }
+        }
+      }
+    },
+    "commerce.market.reason.country" : {
+      "comment" : "Info banner in the market sheet when the store does not sell to the device's region and another country was preselected. One or two sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wir liefern derzeit nicht in Ihre Region. Wir haben ein anderes Land vorausgewählt, das Sie unten ändern können."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We do not currently deliver to your region. We have preselected another country, which you can change below."
+          }
+        }
+      }
+    },
+    "commerce.market.reason.country_and_language" : {
+      "comment" : "Info banner in the market sheet when neither the device region nor its language is available and both were preselected. One or two sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Region und Ihre Sprache sind nicht verfügbar. Wir haben ein Land und eine Sprache vorausgewählt, die Sie unten ändern können."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your region and language are not available. We have preselected a country and a language, which you can change below."
+          }
+        }
+      }
+    },
+    "commerce.market.reason.language" : {
+      "comment" : "Info banner in the market sheet when the device language is not available for the selected country and another content language was preselected. One or two sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Sprache ist für dieses Land nicht verfügbar. Wir zeigen die Inhalte in einer verfügbaren Sprache."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your language is not available for this country. We show the content in an available language."
+          }
+        }
+      }
+    },
+    "commerce.market.title" : {
+      "comment" : "Title of the one-time sheet after the first launch that confirms the shop country and content language. Short, max ~30 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihr Shop-Land"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your store country"
+          }
+        }
+      }
+    },
+    "commerce.price.savings %lld" : {
+      "comment" : "Savings badge next to a reduced price: the reduction in percent, rounded down, e.g. \"-80 %\". %lld is the whole percentage. Keep it this short; use the language's usual spacing before the percent sign.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-%lld %%"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-%lld%%"
+          }
+        }
+      }
+    },
+    "commerce.price.tax.included" : {
+      "comment" : "Tax note below a price in EU markets, where the price includes VAT. Abbreviated as on price tags, max ~20 characters. German legal wording: inkl. MwSt.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "inkl. MwSt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "incl. VAT"
+          }
+        }
+      }
+    },
+    "commerce.price.tax.included_plus_shipping" : {
+      "comment" : "Tax note below the price of a physical item in EU markets: VAT included, shipping costs extra. Abbreviated, max ~35 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "inkl. MwSt., zzgl. Versand"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "incl. VAT, plus shipping"
+          }
+        }
+      }
+    },
+    "commerce.price.tax.plus_shipping" : {
+      "comment" : "Note below the price of a physical item outside the EU (for example Switzerland): shipping costs extra. Abbreviated, max ~20 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "zzgl. Versand"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "plus shipping"
+          }
+        }
+      }
+    },
+    "commerce.product.badge.bestseller" : {
+      "comment" : "Badge on product cards in the bestseller row of the start page. One word, max ~12 characters; often kept as the English loanword.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestseller"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestseller"
+          }
+        }
+      }
+    },
+    "commerce.product.badge.sale" : {
+      "comment" : "Badge on a product card when the product is reduced (has a higher former price). One word, max ~12 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Angebot"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sale"
+          }
+        }
+      }
+    },
+    "commerce.product.unavailable" : {
+      "comment" : "Note on a product card when the product cannot be bought at the moment. Max ~30 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Derzeit nicht verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currently unavailable"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

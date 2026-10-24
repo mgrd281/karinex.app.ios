@@ -173,4 +173,184 @@ public enum StorefrontFragments {
           }
         }
         """
+
+    /// `FilterFields` on `Filter`: the fields of `ProductFilter`. `input` is Shopify's JSON
+    /// text, sent back unchanged as `ProductFilterInput`.
+    public static let filter = """
+        fragment FilterFields on Filter {
+          id
+          label
+          type
+          values {
+            id
+            label
+            count
+            input
+          }
+        }
+        """
+
+    /// `CollectionSummaryFields` on `Collection`: the fields of `CollectionSummary`. Uses
+    /// `ImageFields`.
+    public static let collectionSummary = """
+        fragment CollectionSummaryFields on Collection {
+          id
+          handle
+          title
+          description
+          image {
+            ...ImageFields
+          }
+        }
+        """
+
+    /// `ArticleSummaryFields` on `Article`: the fields of `ArticleSummary`. Uses `ImageFields`.
+    public static let articleSummary = """
+        fragment ArticleSummaryFields on Article {
+          id
+          handle
+          title
+          excerpt
+          publishedAt
+          onlineStoreUrl
+          image {
+            ...ImageFields
+          }
+          blog {
+            handle
+          }
+        }
+        """
+
+    /// `CartDiscountApplicationFields` on `BaseCartDiscountApplication`: the fields of
+    /// `CartDiscountApplication` (API 2026-10). Uses `MoneyFields`.
+    public static let cartDiscountApplication = """
+        fragment CartDiscountApplicationFields on BaseCartDiscountApplication {
+          __typename
+          targetType
+          allocationMethod
+          totalAllocatedAmount {
+            ...MoneyFields
+          }
+          value {
+            __typename
+            ... on MoneyV2 {
+              ...MoneyFields
+            }
+            ... on PricingPercentageValue {
+              percentage
+            }
+          }
+          ... on CartCodeDiscountApplication {
+            code
+          }
+          ... on CartAutomaticDiscountApplication {
+            title
+          }
+          ... on CartCustomDiscountApplication {
+            title
+          }
+        }
+        """
+
+    /// `CartFields` on `Cart`: the fields of `Cart`, shared by the cart query and every cart
+    /// mutation. Requests up to 100 lines, line-level discount allocations and the 2026-10
+    /// `discountApplications`; the deprecated `cart.discountAllocations` and tax amounts are
+    /// not requested. Uses `CartDiscountApplicationFields`, `ImageFields` and `MoneyFields`.
+    public static let cart = """
+        fragment CartFields on Cart {
+          id
+          checkoutUrl
+          totalQuantity
+          note
+          buyerIdentity {
+            countryCode
+            email
+          }
+          attributes {
+            key
+            value
+          }
+          discountCodes {
+            code
+            applicable
+          }
+          discountApplications {
+            ...CartDiscountApplicationFields
+          }
+          cost {
+            subtotalAmount {
+              ...MoneyFields
+            }
+            totalAmount {
+              ...MoneyFields
+            }
+            checkoutChargeAmount {
+              ...MoneyFields
+            }
+          }
+          lines(first: 100) {
+            nodes {
+              id
+              quantity
+              merchandise {
+                ... on ProductVariant {
+                  id
+                  title
+                  sku
+                  requiresShipping
+                  availableForSale
+                  image {
+                    ...ImageFields
+                  }
+                  price {
+                    ...MoneyFields
+                  }
+                  compareAtPrice {
+                    ...MoneyFields
+                  }
+                  selectedOptions {
+                    name
+                    value
+                  }
+                  product {
+                    id
+                    handle
+                    title
+                    vendor
+                  }
+                }
+              }
+              cost {
+                amountPerQuantity {
+                  ...MoneyFields
+                }
+                compareAtAmountPerQuantity {
+                  ...MoneyFields
+                }
+                subtotalAmount {
+                  ...MoneyFields
+                }
+                totalAmount {
+                  ...MoneyFields
+                }
+              }
+              discountAllocations {
+                discountedAmount {
+                  ...MoneyFields
+                }
+              }
+            }
+          }
+        }
+        """
+
+    /// The fragments a document using `CartFields` must append, in order.
+    public static let cartDependencies = [cart, cartDiscountApplication, image, money]
+
+    /// Assembles a complete document: the operation, a blank line, then every fragment
+    /// separated by blank lines, ending with a newline.
+    static func document(_ operation: String, fragments: [String]) -> String {
+        ([operation] + fragments).joined(separator: "\n\n") + "\n"
+    }
 }

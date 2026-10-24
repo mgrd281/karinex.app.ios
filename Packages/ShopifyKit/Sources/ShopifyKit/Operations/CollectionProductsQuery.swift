@@ -24,7 +24,8 @@ public enum ProductCollectionSortKeys: String, Sendable, Hashable, Codable, Case
 
 // MARK: - CollectionProductsQuery
 
-/// Loads a collection and one page of its products (Storefront `collection(handle:)`).
+/// Loads a collection, one page of its products and the filters the store offers for them
+/// (Storefront `collection(handle:)` with `products(filters:)` and `products.filters`).
 public struct CollectionProductsQuery: GraphQLOperation {
     /// The largest page size the Storefront API accepts.
     public static let maximumPageSize = 250
@@ -41,6 +42,8 @@ public struct CollectionProductsQuery: GraphQLOperation {
         public let sortKey: ProductCollectionSortKeys?
         /// Whether to reverse the sort order.
         public let reverse: Bool?
+        /// The chosen filter values, `nil` when none is chosen.
+        public let filters: [ProductFilterInput]?
     }
 
     /// The `data` of the response.
@@ -53,14 +56,17 @@ public struct CollectionProductsQuery: GraphQLOperation {
     public static let operationName = "CollectionProducts"
     /// A query.
     public static let kind = GraphQLOperationKind.query
-    /// The operation followed by `ProductSummaryFields`, `ImageFields` and `MoneyFields`.
-    public static let document = """
+    /// The operation followed by `FilterFields`, `ProductSummaryFields`, `ImageFields` and
+    /// `MoneyFields`.
+    public static let document = StorefrontFragments.document(
+        """
         query CollectionProducts(
           $handle: String!
           $first: Int!
           $after: String
           $sortKey: ProductCollectionSortKeys
           $reverse: Boolean
+          $filters: [ProductFilter!]
         ) {
           collection(handle: $handle) {
             id
@@ -70,7 +76,10 @@ public struct CollectionProductsQuery: GraphQLOperation {
             image {
               ...ImageFields
             }
-            products(first: $first, after: $after, sortKey: $sortKey, reverse: $reverse) {
+            products(first: $first, after: $after, sortKey: $sortKey, reverse: $reverse, filters: $filters) {
+              filters {
+                ...FilterFields
+              }
               nodes {
                 ...ProductSummaryFields
               }
@@ -83,8 +92,9 @@ public struct CollectionProductsQuery: GraphQLOperation {
             }
           }
         }
-
-        """ + StorefrontFragments.productSummary + "\n\n" + StorefrontFragments.image + "\n\n" + StorefrontFragments.money + "\n"
+        """,
+        fragments: [StorefrontFragments.filter, StorefrontFragments.productSummary, StorefrontFragments.image, StorefrontFragments.money]
+    )
 
     /// The variables of this call.
     public let variables: Variables
@@ -97,19 +107,23 @@ public struct CollectionProductsQuery: GraphQLOperation {
     ///   - after: The `endCursor` of the previous page, `nil` for the first page.
     ///   - sortKey: The sort order, `nil` for the collection default.
     ///   - reverse: Whether to reverse the sort order, `false` by default.
+    ///   - filters: The chosen filter values (from `ProductFilterValue.input`); an empty list
+    ///     is not sent.
     public init(
         handle: String,
         first: Int,
         after: String? = nil,
         sortKey: ProductCollectionSortKeys? = nil,
-        reverse: Bool = false
+        reverse: Bool = false,
+        filters: [ProductFilterInput] = []
     ) {
         variables = Variables(
             handle: handle,
             first: min(max(first, 1), Self.maximumPageSize),
             after: after,
             sortKey: sortKey,
-            reverse: reverse
+            reverse: reverse,
+            filters: filters.isEmpty ? nil : filters
         )
     }
 }

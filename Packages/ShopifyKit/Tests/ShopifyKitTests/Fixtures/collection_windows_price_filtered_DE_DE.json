@@ -1,0 +1,384 @@
+{
+  "data": {
+    "collection": {
+      "description": "Microsoft Windows als Original-Lizenz kaufen Windows 11, Windows 10, Windows Server und ältere Windows-Versionen – bei Karinex erhalten Sie das Betriebssystem von Microsoft als echte Original-Lizenz für Privatanwender, Selbstständige und Unternehmen. Einmal kaufen, dauerhaft nutzen: Eine Windows-Dauerlizenz verursacht keine monatlichen Kosten und bleibt an Sie beziehungsweise Ihr Gerät gebunden. Sie erhalten Ihren Produktschlüssel digital per E-Mail oder – je nach gewähltem Produkt – als physische Installations-DVD per Post, immer inklusive Schritt-für-Schritt-Installationsanleitung und einer ordentlichen Rechnung mit ausgewiesener Mehrwertsteuer. Lieferung – digital in wenigen Minuten per E-Mail oder als DVD per Post Aktivierung – dauerhaft online über die Microsoft-Server Lizenztyp – Dauerlizenz ohne Abo und ohne Folgekosten Rechnung – mit ausgewiesener MwSt., für Selbstständige absetzbar Garantie – gesetzliches Widerrufsrecht (14 Tage) bei Karinex Auf dieser Seite finden Sie alle aktuellen Windows-Betriebssysteme im Überblick – dazu einen ausführlichen Ratgeber, der Ihnen bei der Auswahl der richtigen Version und Edition hilft, die wichtigsten Funktionen erklärt und häufige Fragen rund um Download, Installation, Update und Aktivierung beantwortet. Wählen Sie oben Ihr passendes Produkt aus, oder lesen Sie zunächst weiter, wenn Sie unsicher sind, welche Windows-Version für Sie die richtige ist.",
+      "handle": "windows",
+      "id": "gid://shopify/Collection/645089231115",
+      "image": null,
+      "products": {
+        "filters": [
+          {
+            "id": "filter.v.availability",
+            "label": "Verfügbarkeit",
+            "type": "LIST",
+            "values": [
+              {
+                "count": 12,
+                "id": "filter.v.availability.1",
+                "input": "{\"available\":true}",
+                "label": "Auf Lager"
+              },
+              {
+                "count": 0,
+                "id": "filter.v.availability.0",
+                "input": "{\"available\":false}",
+                "label": "Nicht vorrätig"
+              }
+            ]
+          },
+          {
+            "id": "filter.v.price",
+            "label": "Preis",
+            "type": "PRICE_RANGE",
+            "values": [
+              {
+                "count": 0,
+                "id": "filter.v.price",
+                "input": "{\"price\":{\"min\":10.00,\"max\":30.00}}",
+                "label": "Preis"
+              }
+            ]
+          }
+        ],
+        "nodes": [
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "79.99",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "79.99",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Microsoft Windows 10 Professional Pro Original 32/64-Bit Lizenz Download – Vollversion für PC – Aktivierungsschlüssel per E-Mail",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-windows-10-professional-pro-original-32-64-bit-lizenz-download.avif?v=1787443831",
+              "width": 2048
+            },
+            "handle": "windows-10-professional-lizenz",
+            "id": "gid://shopify/Product/10658849947915",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "11.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "11.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Windows 10 Pro kaufen | Original Lizenz Key 32/64-Bit – Sofort-Download",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          },
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "99.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "99.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Produktverpackung von Microsoft Windows 10 Enterprise als 32- und 64-Bit Lizenz für professionelle Unternehmens-PCs und Laptops.",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-windows-10-enterprise-lizenz-32-64-bit-download-betriebssystem.avif?v=1787444157",
+              "width": 2048
+            },
+            "handle": "windows-10-enterprise",
+            "id": "gid://shopify/Product/10822320226571",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "12.78",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "12.78",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Windows 10 Enterprise",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          },
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "39.99",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "39.99",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Windows 11 Pro günstig kaufen – Dauerlizenz für 1 PC mit Sofort-Download per E-Mail von Karinex",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/Windows-11-Pro-Key-Download-kaufen..webp?v=1787442708",
+              "width": 2048
+            },
+            "handle": "windows-11-pro-key-kaufen-download",
+            "id": "gid://shopify/Product/10650102169867",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "13.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "13.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Windows 11 Pro kaufen – Dauerlizenz 1 PC, Download",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          },
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "79.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "79.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Windows 11 Home günstig kaufen – Dauerlizenz für 1 PC mit Sofort-Download per E-Mail von Karinex",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/windows-11-home-download-produktkey-kein-abo.webp?v=1787443067",
+              "width": 2048
+            },
+            "handle": "windows-11-home-key",
+            "id": "gid://shopify/Product/10662950863115",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "13.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "13.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Windows 11 Home Key kaufen – Original Lizenz + Sofort-Download für 1 PC",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          },
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "29.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "29.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Windows 7 Ultimate Lizenzschlüssel 32/64-Bit als digitale OEM-Version mit Microsoft Logo",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/windows-7-ultimate-32-64-bit.avif?v=1787444157",
+              "width": 2048
+            },
+            "handle": "windows-7-ultimate-32-64-bit-key",
+            "id": "gid://shopify/Product/10881548615947",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "14.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "14.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Microsoft Windows 7 Ultimate OEM-Lizenz 32/64-Bit | Sofort-Download kaufen",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          },
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "29.99",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "29.99",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Windows 10 Education Bildungslizenz günstig kaufen – Original Microsoft Lizenz mit Sofort-Download für Schulen, Studenten und Lehrkräfte",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/windows-10-education-bildungslizenz-karinex.webp?v=1787443373",
+              "width": 2048
+            },
+            "handle": "windows-10-education-lizenz-key",
+            "id": "gid://shopify/Product/10957393756427",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "14.99",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "14.99",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Windows 10 Education günstig kaufen – Original Lizenz mit Sofort-Download",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          },
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "69.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "69.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Microsoft Windows 7 Professional OEM-Lizenz 32/64-Bit – Original Produktschlüssel, Sofort-Lieferung per E-Mail, ideal für Legacy- und Offline-PCs",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/KeinTitel_2048x2048px_64.webp?v=1787443372",
+              "width": 2048
+            },
+            "handle": "windows-7-professional-lizenz",
+            "id": "gid://shopify/Product/10959869116683",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "18.9",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "18.9",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Windows 7 Professional Lizenz – OEM-Key, Sofort per E-Mail",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          },
+          {
+            "availableForSale": true,
+            "compareAtPriceRange": {
+              "maxVariantPrice": {
+                "amount": "39.95",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "39.95",
+                "currencyCode": "EUR"
+              }
+            },
+            "featuredImage": {
+              "altText": "Windows 7 Home Premium OEM-Lizenz 32/64-Bit Produktschlüssel Original kaufen bei Karinex",
+              "height": 2048,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/windows-7-home-premium-oem-key.webp?v=1787443228",
+              "width": 2048
+            },
+            "handle": "microsoft-windows-7-home-premium-oem",
+            "id": "gid://shopify/Product/10822323667211",
+            "priceRange": {
+              "maxVariantPrice": {
+                "amount": "18.95",
+                "currencyCode": "EUR"
+              },
+              "minVariantPrice": {
+                "amount": "18.95",
+                "currencyCode": "EUR"
+              }
+            },
+            "title": "Microsoft Windows 7 Home Premium OEM-Lizenz 32/64-Bit | Sofort-Download kaufen",
+            "variants": {
+              "nodes": [
+                {
+                  "requiresShipping": false
+                }
+              ]
+            },
+            "vendor": "Microsoft"
+          }
+        ],
+        "pageInfo": {
+          "endCursor": "eyJsYXN0X3ZhbHVlIjoiNyIsImxhc3RfaWQiOjEwODIyMzIzNjY3MjExLCJvZmZzZXQiOjd9",
+          "hasNextPage": true,
+          "hasPreviousPage": false,
+          "startCursor": "eyJsYXN0X3ZhbHVlIjoiMCIsImxhc3RfaWQiOjEwNjU4ODQ5OTQ3OTE1LCJvZmZzZXQiOjB9"
+        }
+      },
+      "title": "Windows"
+    }
+  },
+  "extensions": {
+    "context": {
+      "country": "DE",
+      "language": "DE"
+    },
+    "cost": {
+      "requestedQueryCost": 55
+    }
+  }
+}

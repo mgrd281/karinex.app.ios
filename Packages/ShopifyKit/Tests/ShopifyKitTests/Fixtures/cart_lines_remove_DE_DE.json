@@ -1,0 +1,140 @@
+{
+  "data": {
+    "cartLinesRemove": {
+      "cart": {
+        "attributes": [
+          {
+            "key": "app_platform",
+            "value": "ios"
+          },
+          {
+            "key": "kx_fixture_recording",
+            "value": "true"
+          }
+        ],
+        "buyerIdentity": {
+          "countryCode": "DE",
+          "email": null
+        },
+        "checkoutUrl": "https://www.karinex.de/cart/c/REDACTED?key=REDACTED&_cs=REDACTED",
+        "cost": {
+          "checkoutChargeAmount": {
+            "amount": "19.8",
+            "currencyCode": "EUR"
+          },
+          "subtotalAmount": {
+            "amount": "19.8",
+            "currencyCode": "EUR"
+          },
+          "totalAmount": {
+            "amount": "17.82",
+            "currencyCode": "EUR"
+          }
+        },
+        "discountApplications": [
+          {
+            "__typename": "CartAutomaticDiscountApplication",
+            "allocationMethod": "ACROSS",
+            "targetType": "LINE_ITEM",
+            "title": "Mengenrabatt: ab 2 Lizenzen -10%",
+            "totalAllocatedAmount": {
+              "amount": "1.98",
+              "currencyCode": "EUR"
+            },
+            "value": {
+              "__typename": "PricingPercentageValue",
+              "percentage": 10
+            }
+          }
+        ],
+        "discountCodes": [
+          {
+            "applicable": false,
+            "code": "KX-FIXTURE-NOT-A-CODE"
+          }
+        ],
+        "id": "gid://shopify/Cart/REDACTED?key=REDACTED",
+        "lines": {
+          "nodes": [
+            {
+              "cost": {
+                "amountPerQuantity": {
+                  "amount": "9.9",
+                  "currencyCode": "EUR"
+                },
+                "compareAtAmountPerQuantity": {
+                  "amount": "29.9",
+                  "currencyCode": "EUR"
+                },
+                "subtotalAmount": {
+                  "amount": "19.8",
+                  "currencyCode": "EUR"
+                },
+                "totalAmount": {
+                  "amount": "19.8",
+                  "currencyCode": "EUR"
+                }
+              },
+              "discountAllocations": [],
+              "id": "gid://shopify/CartLine/d3d7a518-3d46-4fe1-a1a8-42b4bf435053?cart=REDACTED",
+              "merchandise": {
+                "availableForSale": true,
+                "compareAtPrice": {
+                  "amount": "29.9",
+                  "currencyCode": "EUR"
+                },
+                "id": "gid://shopify/ProductVariant/52555874009355",
+                "image": {
+                  "altText": "Microsoft Office 2019 Professional Box für Windows – Software-Lizenz mit Word, Excel, PowerPoint, Outlook, Access und Publisher",
+                  "height": 2048,
+                  "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-office-2019-professional-windows.avif?v=1787444042",
+                  "width": 2048
+                },
+                "price": {
+                  "amount": "9.9",
+                  "currencyCode": "EUR"
+                },
+                "product": {
+                  "handle": "microsoft-office-2019-professional-plus-windows",
+                  "id": "gid://shopify/Product/10794696802571",
+                  "title": "Microsoft Office 2019 Professional Plus für Windows – Original Lizenz | E-Mail Versand",
+                  "vendor": "Microsoft"
+                },
+                "requiresShipping": false,
+                "selectedOptions": [
+                  {
+                    "name": "Title",
+                    "value": "Default Title"
+                  }
+                ],
+                "sku": "0889842335830",
+                "title": "Default Title"
+              },
+              "quantity": 2
+            }
+          ]
+        },
+        "note": "",
+        "totalQuantity": 2
+      },
+      "userErrors": [],
+      "warnings": [
+        {
+          "code": "DISCOUNT_NOT_FOUND",
+          "message": "Gib einen gültigen Rabattcode ein",
+          "target": "gid://shopify/Cart/REDACTED"
+        }
+      ]
+    }
+  },
+  "extensions": {
+    "cart_changelog": "eyJpdGVtc19hZGRlZCI6W119\n",
+    "context": {
+      "country": "DE",
+      "language": "DE"
+    },
+    "cost": {
+      "requestedQueryCost": 152
+    }
+  }
+}
