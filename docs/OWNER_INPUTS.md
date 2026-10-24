@@ -7,7 +7,7 @@ store were filled in; everything else is still open. Secrets never go into git: 
 | Input | Status | Value / where it goes | Needed for |
 | --- | --- | --- | --- |
 | `{{SHOP}}`, `{{SHOP_ID}}` | Done (verified) | `45dv93-bk.myshopify.com`, `91753283851` in `Config/Base.xcconfig` | Phase 0 |
-| `{{STOREFRONT_VERSION}}`, `{{CUSTOMER_ACCOUNT_VERSION}}` | Done (verified) | `2026-07` / `2026-07`, see [API_VERSIONS.md](API_VERSIONS.md) | Phase 0 |
+| `{{STOREFRONT_VERSION}}`, `{{CUSTOMER_ACCOUNT_VERSION}}` | Done (verified) | `2026-10` / `2026-10`, see [API_VERSIONS.md](API_VERSIONS.md) | Phase 0 |
 | `{{STOREFRONT_PUBLIC_TOKEN}}` | **Open** | `KX_STOREFRONT_ACCESS_TOKEN` in `Config/Secrets.xcconfig` + CI secret. The app runs tokenless until then (no metafields). | Phase 1 (product specs, FAQ) |
 | `{{CUSTOMER_ACCOUNT_CLIENT_ID}}` | **Open** | `KX_CUSTOMER_ACCOUNT_CLIENT_ID` in `Config/Secrets.xcconfig` + CI secret | Phase 2 |
 | `{{CUSTOMER_ACCOUNT_REDIRECT_URI}}` | **Open** | Proposal: `de.karinex.app:/oauth/callback` (custom scheme derived from the bundle ID), or a Universal Link `https://www.karinex.de/app/oauth/callback`. Must be registered in Headless > Customer Account API > Callback URIs. | Phase 2 |

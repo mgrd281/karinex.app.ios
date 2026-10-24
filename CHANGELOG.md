@@ -10,7 +10,103 @@ change.
 
 ## [Unreleased]
 
-No changes yet. Phase 1 (commerce core) lands here.
+Phase 1: commerce core. Browsing, product detail, search, the cart and checkout through Shopify
+Checkout Kit, with market resolution, deep links and the image pipeline. It was written and
+checked by compilation and the Linux package tests; the screens and UI tests have not run on a
+simulator yet (see Known limitations). Design and decisions: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#commerce-layer-phase-1).
+
+### Added
+
+#### ShopifyKit
+
+- Cart model and operations: `cart(id:)`, `cartCreate`, `cartLinesAdd`, `cartLinesUpdate`,
+  `cartLinesRemove`, `cartDiscountCodesUpdate`, `cartBuyerIdentityUpdate` and
+  `cartAttributesUpdate`, with `userErrors` mapped to typed errors, behind `CartRepository` and
+  `StorefrontCartRepository`.
+- Catalog: products by handle with metafields, collection products with API-driven filters
+  (`ProductFilter`) and sorting, cursor pagination, and `RELATED` recommendations.
+- `SearchRepository` (predictive search and product search with pagination) and
+  `ContentRepository` (blog articles and article detail).
+- A dependency-free native HTML parser (`HTMLDocument`, `HTMLTreeBuilder`, `HTMLEntities`) for
+  `descriptionHtml` and article content.
+
+#### CommerceUI (new shared module in `Packages/Features`)
+
+- `CartStore`: the one Shopify cart of the app. The cart ID is cached in `preferences` and
+  re-read at launch and on foreground; mutations run serially, quantity taps are coalesced, an
+  ambiguous mutation failure re-reads the cart instead of replaying the write, an expired or
+  completed cart is forgotten and never rebuilt from its old lines, and the checkout is preloaded
+  after every change (debounced).
+- `MarketStore`: first-launch market resolution from region and preferred languages, persisted
+  `MarketSelection`, `MarketConfirmationSheet`, and the buyer context (market and visitor
+  consent) pushed into every Storefront request; a country change moves the cart.
+- `CommerceRoute` and `DeepLinkParser` for `karinex://` links and `karinex.de` web URLs
+  (`/products/`, `/collections/`, `/blogs/`, `/cart`, `/search`, with locale prefixes).
+- `PriceDisplay` (locale-formatted `MoneyV2`, tax wording per market), `ProductCardView`,
+  `ProductCarouselSection`, `ArticleScreen`, `RichTextView` (native rendering of Shopify rich
+  text; `tel:` links are dropped), `LoadState`, `AsyncContentView` and `UserFacingError`.
+- `KXImagePipeline` and `ProductImage` on Nuke 13.2.0: shared pipeline, 150 MB disk cache, the WebP
+  `Accept` header, CDN width in pixels, and `ProductImagePrefetcher`.
+
+#### Features
+
+- `ProductFeature`: gallery with zoom viewer, variants, price with market tax note, key facts
+  and activation from metafields, "So läuft es ab", native description, related products, FAQ,
+  100-day promise with its condition, withdrawal notice for digital goods, sticky purchase bar
+  (add to cart, buy now), share. Sections without store data are omitted.
+- `CatalogFeature`: collection directory, collection screen with sort, filters and infinite
+  scroll. `SearchFeature`: predictive results, recent and suggested searches, category shortcuts,
+  results with sort and pagination. `HomeFeature`: live rows for deals, Windows, Office, Server,
+  development, bestsellers and guides from one `HomeLayout`.
+- `CartFeature`: lines with quantity controls and undo, discount codes, totals, cross-sell,
+  payment and digital-goods notices, loading and error states.
+- `CheckoutFeature`: `CheckoutCoordinator` (fresh checkout URL at the tap, one automatic retry on
+  an expired checkout, cancel keeps the cart, recoverable failures), `CheckoutKitBridge`
+  (KARINEX branding, preload; the only Checkout Kit import) and `OrderSuccessScreen`.
+
+#### App
+
+- `AppRouter` with one navigation path per tab, deep link and Universal Link handling
+  (`.onOpenURL`), the cart badge, the one-time market confirmation, and `AppContainer` wiring for
+  the catalog, search, content and cart repositories, `CartStore` and `MarketStore`.
+- `App/KARINEX.entitlements` with `applinks:karinex.de` and `applinks:www.karinex.de`, applied
+  once `KX_CODE_SIGN_ENTITLEMENTS` is set together with the team ID; the URL scheme `karinex`.
+- Launch argument `-kx.market.confirm YES` to show the market sheet under UI tests.
+- `Package.resolved` committed: Checkout Kit 3.9.2, Nuke 13.2.0, swift-snapshot-testing 1.19.6.
+
+#### Localization
+
+- About 300 new strings (`product.*`, `catalog.*`, `search.*`, `home.*`, `cart.*`, `checkout.*`,
+  `commerce.*`, `tab.cart.badge`) translated into pl, nl, pt-PT, sv, da, es, fr, it and fi, with
+  CLDR plural variations. `scripts/check_strings.py` passes without `--allow-missing-languages`.
+  Native-speaker review is still outstanding (Phase 2 exit criterion).
+
+#### Tests
+
+- `CommerceUITests` and `FeaturesTests` for the stores, parser, prices, view models and the
+  checkout coordinator; `AppRouterTests`; `CommerceUITests` (XCUITest) for the critical path.
+
+### Changed
+
+- Storefront API and Customer Account API pinned to `2026-10` (latest stable since 2026-10-01);
+  fixtures re-recorded.
+- Checkout Kit pinned to `3.9.2` (`from: "3.9.2"`).
+- The buyer context is no longer fixed to Germany in German: it follows the resolved market.
+
+### Known limitations
+
+- **The Phase 1 screens and XCUITests have never run on a simulator.** Only compilation (iOS 26
+  SDK type-check) and the Linux package tests have run. The macOS CI decides what needs fixing,
+  after which the DesignSystem and new reference images must be recorded with **Record snapshots**.
+- Universal Links stay inactive until the Apple team ID is set and `apple-app-site-association` is
+  served on the store domain; the custom scheme works.
+- Metafield-driven modules (key facts, FAQ, MPN, deal countdown) stay empty until a Storefront
+  token and the metafield definitions exist ([docs/OWNER_INPUTS.md](docs/OWNER_INPUTS.md)).
+- Some store product descriptions still mention PayPal and phone support
+  ([docs/STORE_AUDIT.md](docs/STORE_AUDIT.md)); the app renders store content as returned and the
+  owner must correct it in the store.
+- `Package.resolved` still lists `viewinspector` and `swiftlintplugin`, which no package
+  references; Xcode removes them on the next resolve.
 
 ## [0.1.0] - 2026-09-27
 

@@ -114,7 +114,7 @@ built-in live store configuration in tokenless mode and logs an error.
 | `MARKETING_VERSION`, `CURRENT_PROJECT_VERSION` | `0.1.0`, `1` (TestFlight builds get the next build number automatically) |
 | `KX_SHOP_DOMAIN` | `45dv93-bk.myshopify.com` |
 | `KX_STORE_WEB_DOMAIN` | `www.karinex.de` |
-| `KX_STOREFRONT_API_VERSION`, `KX_CUSTOMER_ACCOUNT_API_VERSION` | `2026-07` (verified, see [docs/API_VERSIONS.md](docs/API_VERSIONS.md)) |
+| `KX_STOREFRONT_API_VERSION`, `KX_CUSTOMER_ACCOUNT_API_VERSION` | `2026-10` (verified, see [docs/API_VERSIONS.md](docs/API_VERSIONS.md)) |
 
 **Secrets, git-ignored** (`Config/Secrets.xcconfig`, created from `Config/Secrets.example.xcconfig`
 by `make bootstrap`; all may stay empty for simulator builds):

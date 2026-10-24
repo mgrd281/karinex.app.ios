@@ -1,7 +1,7 @@
 # Architecture
 
 How the KARINEX iOS app is built, why it is built that way, and where each responsibility
-lives. This file describes the code as it is at the end of Phase 0 (version 0.1.0). Keep it
+lives. This file describes the code as it is at the end of Phase 1 (the commerce core, written for version 0.2.0). Keep it
 current with every change (see [CLAUDE.md](../CLAUDE.md)); the product specification is
 [PROMPT.md](../PROMPT.md).
 
@@ -16,12 +16,14 @@ current with every change (see [CLAUDE.md](../CLAUDE.md)); the product specifica
 7. [Markets and languages](#markets-and-languages)
 8. [Design system](#design-system)
 9. [Images](#images)
-10. [Security and privacy](#security-and-privacy)
-11. [Localization](#localization)
-12. [Testing strategy](#testing-strategy)
-13. [CI/CD](#cicd)
-14. [Decisions](#decisions)
-15. [Roadmap](#roadmap)
+10. [Commerce layer (Phase 1)](#commerce-layer-phase-1)
+11. [Package pins](#package-pins)
+12. [Security and privacy](#security-and-privacy)
+13. [Localization](#localization)
+14. [Testing strategy](#testing-strategy)
+15. [CI/CD](#cicd)
+16. [Decisions](#decisions)
+17. [Roadmap](#roadmap)
 
 ## Purpose
 
@@ -65,9 +67,12 @@ that launches in light and dark mode.
    |                                               |            |
    |   HomeFeature      CatalogFeature             |            |
    |   SearchFeature    CartFeature                |            |
+   |   ProductFeature   CheckoutFeature            |            |
    |   AccountFeature                              |            |
    |                                               |            |
    |   no feature imports another feature          |            |
+   |   all import CommerceUI (shared commerce      |            |
+   |   state and UI, in the same package)          |            |
    +-----------------------------------------------+            |
           |                    |                 |              |
           v                    v                 |              |
@@ -91,18 +96,21 @@ that launches in light and dark mode.
 | `ShopifyKit` | `Packages/ShopifyKit` | `Core` | yes | `GraphQLClient`, `StorefrontClient`, `@inContext` (`StorefrontContext`, `ContextInjector`), `ShopifyError`, models, operations, repositories, `MarketResolver`, recorded fixtures |
 | `DesignTokens` | `Packages/DesignSystem` | Foundation | yes | `BrandPalette`, `ColorToken`, `ContrastRequirement`, `TypographyToken`, spacing, radius, border and motion tokens, `RGBAColor` with WCAG math |
 | `DesignSystem` | `Packages/DesignSystem` | `DesignTokens` | no (SwiftUI) | `KXColor`, `.kxFont(_:)`, layout and motion helpers, the `KX*` components, `KXDesignSystemGallery` |
-| `HomeFeature`, `CatalogFeature`, `SearchFeature`, `CartFeature`, `AccountFeature` | `Packages/Features` | `Core`, `DesignSystem`, `ShopifyKit` | no (SwiftUI) | One tab each, with its own String Catalog |
+| `CommerceUI` | `Packages/Features` | `Core`, `DesignSystem`, `DesignTokens`, `ShopifyKit`, Nuke | no (SwiftUI) | Not a feature: the state and UI that several features share. `CartStore`, `MarketStore`, `CommerceEnvironment` and `PriceDisplay`, `CommerceRoute` and `DeepLinkParser`, `ProductCardView` and `ProductCarouselSection`, `KXImagePipeline` and `ProductImage`, `RichTextView`, `LoadState`, `AsyncContentView` and `UserFacingError`, `ArticleScreen`, `MarketConfirmationSheet`. See [Commerce layer](#commerce-layer-phase-1) |
+| `HomeFeature`, `CatalogFeature`, `SearchFeature`, `CartFeature`, `AccountFeature`, `ProductFeature`, `CheckoutFeature` | `Packages/Features` | `Core`, `DesignSystem`, `ShopifyKit`, `CommerceUI` (`CheckoutFeature` also Checkout Kit) | no (SwiftUI) | One feature each, with its own String Catalog. `CheckoutFeature` is the only module that imports Checkout Kit |
 | `KARINEX` (App target) | `project.yml` | everything above | no | Composition root, tab shell, app resources |
 | `FixtureRecording`, `fixture-recorder` | `Tools/FixtureRecorder` | `Core`, `ShopifyKit` | yes | Records the ShopifyKit fixtures from the live store |
 
 ### Dependency rules
 
 1. **Features never depend on each other.** `Packages/Features/Package.swift` generates every
-   feature target from one list with the same three dependencies (`Core`, `DesignSystem`,
-   `ShopifyKit`), so an import of another feature does not compile. Cross-feature navigation
-   goes through closures that the App passes in: `HomeView(onBrowse:)` and
-   `CartView(onBrowse:)` switch the root `AppTab` to `.shop`. Deep links (Phase 1) are resolved
-   in the App target, which then selects a tab and pushes a route.
+   feature target from one list with the same four dependencies (`Core`, `DesignSystem`,
+   `ShopifyKit`, `CommerceUI`), so an import of another feature does not compile.
+   `CommerceUI` is the one shared target inside the package; it imports no feature.
+   Cross-feature navigation goes through `CommerceRoute` values handed to `onRoute` closures,
+   and the App's `AppRouter` maps them to screens (`navigationDestination(for:)`). Deep links
+   and Universal Links are parsed by `DeepLinkParser` and resolved in the App target, which
+   selects the owning tab and shows the destination on top of its root.
 2. **Core has no Shopify knowledge.** Core knows nothing about GraphQL, Storefront types or
    Shopify API semantics. It only carries store configuration values as plain strings
    (`AppConfiguration.shopDomain`, `storefrontAPIVersion`, `storefrontEndpoint`) and, in
@@ -167,6 +175,12 @@ Every long-lived dependency is exposed as a protocol-typed property:
 | `storefrontContextProvider` | `MutableStorefrontContextProvider` | Germany in German with the stored visitor consent |
 | `catalogRepository` | `any CatalogRepository` | `StorefrontCatalogRepository` |
 | `localizationRepository` | `any LocalizationRepository` | `StorefrontLocalizationRepository` |
+| `contentRepository` | `any ContentRepository` | `StorefrontContentRepository` (articles, blogs) |
+| `searchRepository` | `any SearchRepository` | `StorefrontSearchRepository` |
+| `cartRepository` | `any CartRepository` | `StorefrontCartRepository` |
+| `cartStore` | `CartStore` | the shared cart, its ID in `preferences`, Checkout Kit preloading after every change |
+| `marketStore` | `MarketStore` | market resolution, persistence and the buyer context |
+| `isMarketConfirmationEnabled` | `Bool` | `MarketConfirmationPolicy` (off under UI tests unless `-kx.market.confirm YES`) |
 
 Platform services are grouped in `AppServices` (`App/Sources/Composition/AppServices.swift`):
 `AppServices.live(launchEnvironment:arguments:bundleIdentifier:)` for the app and
@@ -175,8 +189,10 @@ Platform services are grouped in `AppServices` (`App/Sources/Composition/AppServ
 two factories: `AppContainer.live(bundle:processInfo:)` and `AppContainer.preview(networkStatus:)`.
 Tests call the designated initializer directly with a `RecordingLogSink`.
 
-`StorefrontCartRepository` exists in ShopifyKit but is not wired into the container yet; the
-cart arrives in Phase 1.
+`AppContainer.start()` runs `marketStore.start()` and `cartStore.refresh()` concurrently at
+launch. `live()` also configures `KXImagePipeline` and `CheckoutConfiguration` once. A country
+change in the `MarketStore` reaches the cart through `onCountryChange`, which the container
+connects to `CartStore.updateCountry(_:)`.
 
 ### Configuration
 
@@ -240,11 +256,14 @@ The app follows MVVM with repositories and a unidirectional data flow:
 - Navigation between features is a closure or a typed route owned by the App, never a direct
   reference to another feature.
 
-**Phase 0 status.** The five tab roots show fixed, localized business content, so they need no
-view models yet. The logic they do have lives in small value types that `FeaturesTests` cover:
-`HomeTrustFact`, `MoneyBackClause` and `SupportChannel` (HomeFeature), `AccountBenefit` and
-`AccountAppInfo` (AccountFeature). The first view models arrive with the Phase 1 catalog,
-product and cart screens.
+**Phase 1 status.** Home, Catalog, Search, Product and Cart each have `@MainActor @Observable`
+view models (`HomeViewModel`, `CatalogViewModel`, `CollectionViewModel`, `SearchViewModel`,
+`SearchResultsViewModel`, `ProductDetailViewModel`, `CartViewModel`). Their screen state is a
+`LoadState<Value>` (idle, loading, loaded, empty, failed) rendered by `AsyncContentView`; a
+reload that fails keeps the content on screen and reports through an `actionError`. State that
+more than one tab needs lives in the two stores of `CommerceUI`, not in a view model. The Account
+tab stays static until Phase 2; its logic lives in small value types (`AccountBenefit`,
+`AccountAppInfo`).
 
 ## Networking
 
@@ -303,7 +322,7 @@ query ProductByHandle(...) @inContext(country: DE, language: DE, visitorConsent:
 analytics opt-in, `preferences` is always `true` (remembering language and market is needed for
 the store to work), `marketing` and `saleOfData` are always `false`. The consent is supported
 from Storefront API 2025-10 on; Shopify encodes it into the cart's `checkoutUrl`, so checkout
-(Checkout Kit, Phase 1) applies the same tracking rules. The container builds the initial
+(Checkout Kit) applies the same tracking rules. The container builds the initial
 context from `MarketSelection.germany` and the stored consent; `MutableStorefrontContextProvider.update(to:)`
 replaces it when the market or the consent changes.
 
@@ -441,11 +460,15 @@ Examples covered by `MarketResolverTests`: CH with French UI gives CH/FR; AT wit
 AT/DE; a US region (not sold) gives DE; a Greek UI gives EN (EL is a store language but not an
 app language); an English device in the Netherlands gets NL content.
 
-**Phase 0 status.** The container uses `MarketSelection.germany` for every call. Phase 1 runs the
-resolver at first launch (feeding it the UI language first, `Bundle.main.preferredLocalizations`,
-then `Locale.preferredLanguages`), persists the `MarketSelection` in `preferences`, shows the
-confirmation sheet and updates `storefrontContextProvider`. Settings (Phase 2) changes the market
-in-app and links to the iOS language setting for the UI language.
+**Phase 1 status.** The container starts with `MarketSelection.germany`. `MarketStore.start()`
+loads the store's `Localization` and, on first launch, runs the resolver (feeding it the UI
+language first, `Bundle.main.preferredLocalizations`, then `Locale.preferredLanguages`),
+persists the `MarketSelection` in `preferences` and sets `needsConfirmation`. The App then shows
+`MarketConfirmationSheet` once, with the reason when the device country or language had to be
+replaced. Later launches reuse the stored selection after checking it against the store's current
+list. Every change updates `storefrontContextProvider` (with the stored visitor consent) so the
+next request uses it. Settings (Phase 2) changes the market in-app and links to the iOS language
+setting for the UI language.
 
 ## Design system
 
@@ -583,11 +606,103 @@ Product images come from the Shopify CDN, which was measured on 2026-09-26:
   brings the same image to about 15 KB. `ShopifyImage.acceptHeader` is
   `image/webp,image/*;q=0.8`; the image pipeline must send it.
 
-In Phase 0 `KXProductImage` loads with `AsyncImage` (skeleton while loading, restart after a
-cancelled download in lazy stacks, neutral fallback symbol), which cannot set request headers.
-Phase 1 moves image loading to Nuke 13.2.0 with an `ImagePipeline` configured once in the App
-target to send `ShopifyImage.acceptHeader`, plus prefetching of the next row. Budget: less than
-40 KB per product card ([PERFORMANCE.md](PERFORMANCE.md)).
+`KXProductImage` in the design system still loads with `AsyncImage`, which cannot set request
+headers. Feature screens therefore use `CommerceUI.ProductImage`, which loads through Nuke 13.2.0:
+one shared `ImagePipeline` (`KXImagePipeline.configure()`, called by the container) with a
+bounded memory cache and a 150 MB disk cache, `ShopifyImage.acceptHeader` on every request, and
+the CDN `width` in pixels (rendered width times scale, rounded up to a step) so nearly equal sizes
+share one cache entry. `ProductImagePrefetcher` prefetches the next row or page with exactly the
+requests `ProductImage` will make. Budget: less than 40 KB per product card
+([PERFORMANCE.md](PERFORMANCE.md)).
+
+## Commerce layer (Phase 1)
+
+`CommerceUI` (`Packages/Features/Sources/CommerceUI`) holds what several features share, so no
+feature imports another.
+
+**CartStore.** Owns the one Shopify cart (`@MainActor @Observable`).
+- The cart ID is persisted in `preferences`; `refresh()` re-reads it at launch and when the app
+  returns to the foreground. An expired or completed cart is forgotten, and a new one is created
+  lazily by the next add.
+- Mutations run one at a time, in order. Quantity taps on one line are coalesced: the latest
+  target wins and no intermediate value is sent.
+- Mutations are not repeated after an ambiguous failure (see [Retry rules](#retry-rules)); the
+  store re-reads the cart instead. A mutation refused because the cart no longer exists
+  recreates the cart once and repeats the intent, which is safe because the refusal proves the
+  first attempt had no effect.
+- `checkoutURL()` returns a fresh `checkoutUrl` at the moment the customer taps "Zur Kasse". It
+  never rebuilds an expired or completed cart from its last known lines, because they may belong
+  to a placed order.
+- After every change `checkoutPreloader` is called with the new checkout URL, debounced by
+  `preloadDelay`. The App sets it to `CheckoutConfiguration.preloader`, so CommerceUI does not
+  import Checkout Kit.
+- Cart, line and checkout identifiers are never logged.
+
+**MarketStore.** Resolves, persists and applies the market, as described in
+[Markets and languages](#markets-and-languages).
+
+**Routes and links.** `CommerceRoute` (`product`, `collection`, `article`, `search`, `cart`) is
+the only way a feature asks for another screen. `DeepLinkParser` is pure: the custom scheme
+`karinex://product/<handle>`, `collection/<handle>`, `article/<blog>/<article>`, `search?q=` and
+`cart`, and web URLs on `karinex.de` and `www.karinex.de` (`/products/`, `/collections/`,
+`/blogs/`, `/cart`, `/search`) with an optional locale prefix such as `/fr` or `/de-ch`. Handles
+are validated; anything else returns `nil` and the link is ignored. `AppRouter` keeps the
+selected tab and one navigation path per tab. `open(_:from:)` pushes a route onto the current
+tab (`.cart` selects the Warenkorb tab, an empty search selects Suche), and `openDeepLink`
+selects the owning tab (products and collections in Shop, articles in Start) and shows the
+destination on its root. `RootView` calls it from `.onOpenURL`.
+
+**Universal Links.** `App/KARINEX.entitlements` declares `applinks:karinex.de` and
+`applinks:www.karinex.de`. It is applied only when `KX_CODE_SIGN_ENTITLEMENTS` is set (in
+`Config/Secrets.xcconfig`, together with `KX_APPLE_TEAM_ID`), because the associated-domains
+capability needs a signing team; simulator and CI builds run without entitlements. The
+`apple-app-site-association` file on the store domain is an owner action
+([OWNER_INPUTS.md](OWNER_INPUTS.md)). The custom scheme `karinex://` (registered in `Info.plist`)
+works without either.
+
+**Prices and state.** `PriceDisplay` formats `MoneyV2` with the user's locale and chooses the tax
+wording from the market (EU markets "inkl. MwSt.", others neutral, shipping wording for physical
+goods); nothing is computed. `UserFacingError` maps `ShopifyError` and `NetworkError` to the
+localized titles and messages of the error states (offline, throttled, timeout, server, not
+found, rejected, unknown).
+
+**Rich text.** `RichTextView` renders `HTMLDocument` (ShopifyKit's dependency-free HTML parser)
+natively: headings, paragraphs, lists, tables as grids that scroll sideways, quotes, images and
+rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped to plain text
+(PROMPT.md 3.4).
+
+**Features built on it.**
+- `ProductFeature`: gallery with full-screen zoom, variant selector, price, key facts from
+  metafields, "So läuft es ab", description, comparison row (Shopify's `RELATED`
+  recommendations), FAQ, the 100-day promise with its condition, the withdrawal notice for
+  digital goods, and a sticky purchase bar. Sections without data are omitted, never faked.
+- `CatalogFeature`: collection directory, collection screen with sort, filters and cursor
+  pagination. `SearchFeature`: predictive suggestions, results with sort and pagination, recent
+  searches. `HomeFeature`: live rows from collections and the guides blog. `CartFeature`: lines,
+  quantity, undo, discount codes with `userErrors`, totals, cross-sell, notices.
+- `CheckoutFeature`: see below.
+
+**Checkout.** `CheckoutCoordinator` is the state machine, free of Checkout Kit so it is testable:
+fetch a fresh URL (`isPreparing`), present the sheet, then handle completion (record the
+`CompletedOrder`, clear the cart, show `OrderSuccessScreen`), cancel (keep the cart) and failure.
+An expired checkout is retried once automatically with a fresh URL; every other failure shows a
+recoverable alert. Follow-ups of a closing sheet run after the sheet is gone, with a timeout so
+the flow cannot get stuck. `CheckoutKitBridge` is the only code that talks to Checkout Kit:
+KARINEX branding, color scheme following the system, preloading on, confetti off. The visitor
+consent travels inside the `checkoutUrl` (see [@inContext and visitor consent](#incontext-and-visitor-consent)).
+No Apple In-App Purchase is involved anywhere.
+
+## Package pins
+
+`KARINEX.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved` is committed, so
+local builds, CI and TestFlight archives resolve identical versions: Checkout Kit
+(`checkout-sheet-kit-swift`) 3.9.2, Nuke 13.2.0 and `swift-snapshot-testing` 1.19.6 with its
+`swift-custom-dump`, `swift-syntax` and `xctest-dynamic-overlay` dependencies. The file also still
+lists `viewinspector` and `swiftlintplugin`, which no `Package.swift` references any more; Xcode
+drops them the next time it re-resolves, and that commit should be reviewed like any other pin
+change. `Package.swift` files declare lower bounds (`from:`). Upgrades are deliberate, by
+updating the resolved file in a reviewed commit (Dependabot watches only GitHub Actions); the
+`ios` job prints the resolved file in every run so a drift is visible.
 
 ## Security and privacy
 
@@ -621,7 +736,8 @@ The mechanism is summarized here; tone rules, the glossary and QA are in
 - One String Catalog per module: `App/Resources/Localizable.xcstrings` (`tab.*`),
   `Packages/DesignSystem/Sources/DesignSystem/Resources/Localizable.xcstrings` (`kx.*`) and
   `Packages/Features/Sources/<Feature>/Resources/Localizable.xcstrings` (`home.*`, `catalog.*`,
-  `search.*`, `cart.*`, `account.*`). German (`de`) is the source language everywhere
+  `search.*`, `cart.*`, `account.*`, `product.*`, `checkout.*`, plus the shared `commerce.*` of
+  `CommerceUI`). German (`de`) is the source language everywhere
   (`DEVELOPMENT_LANGUAGE = de`, `defaultLocalization: "de"` in the SwiftUI packages).
 - Package code resolves strings in its own bundle: `Text("home.hero.title", bundle: .module)`
   or `String(localized: "...", bundle: .module)`. The App target uses `Text("tab.home")`. Each
@@ -644,9 +760,10 @@ The mechanism is summarized here; tone rules, the glossary and QA are in
 | `ShopifyKitTests` | Swift Testing | Linux and iOS simulator | Every fixture decoded through the real `GraphQLClient` with `StubHTTPClient`; request bodies and headers (operation name, `@inContext`, token header only with a token); retry and de-duplication rules; error mapping; `ContextInjector`; `MarketResolver`; `MoneyV2` parsing and formatting; `ShopifyImage.url(width:)`; `ProductMetafields` |
 | `DesignTokensTests` | Swift Testing | Linux and iOS simulator | Palette values, dark mapping, WCAG contrast of every allowed pair in both appearances, spacing, radius, motion and type rules |
 | `DesignSystemTests` | Swift Testing + SnapshotTesting | iOS simulator | Snapshots of every component in the four-variant matrix, plus logic tests (`KXCountdownComponents`, `KXLicenseKeyFormatting`, `KXClipboard` options, component models) |
-| `FeaturesTests` | Swift Testing | iOS simulator | Content types of the feature modules in all 11 languages, the legal and support wording, and that no app-authored string contains an em or en dash |
-| `KARINEXTests` (`App/Tests`) | Swift Testing | iOS simulator (hosted) | `AppContainer` composition, configuration fallback, reset launches, flags, buyer context, `AppTab` order, symbols, identifiers and titles, the offline banner policy |
-| `KARINEXUITests` (`App/UITests`) | XCTest (XCUITest) | iOS simulator | `ShellUITests`: five tabs, each tab's root screen, hero call to action opens Shop, money-back conditions sheet, offline banner keeps the navigation bar reachable, forced dark appearance |
+| `CommerceUITests` | Swift Testing | iOS simulator | `CartStore` (persistence, coalescing, no replay after ambiguous failures, expired cart handling, preloading), `MarketStore`, `DeepLinkParser`, `PriceDisplay`, `UserFacingError` and the shared helpers, against stub repositories |
+| `FeaturesTests` | Swift Testing | iOS simulator | View models and content types of the feature modules (home, catalog, search, product, cart, checkout coordinator) with stub repositories, strings in all 11 languages, the legal and support wording, and that no app-authored string contains an em or en dash |
+| `KARINEXTests` (`App/Tests`) | Swift Testing | iOS simulator (hosted) | `AppContainer` composition, configuration fallback, reset launches, flags, buyer context, `AppTab` order, symbols, identifiers and titles, the offline banner policy, `AppRouter` (routes, per-tab paths, deep links, checkout finish) |
+| `KARINEXUITests` (`App/UITests`) | XCTest (XCUITest) | iOS simulator | `ShellUITests`: five tabs, each tab's root screen, hero call to action opens Shop, money-back conditions sheet, offline banner keeps the navigation bar reachable, forced dark appearance. `CommerceUITests` (live store, tokenless): products on Start, product detail, add to cart, cart badge, the cart, the Shopify checkout opened and closed again without placing an order, search and deep links. **Written in Phase 1 but not yet run on a simulator**; the first `ios` CI runs on macOS decide which of them need fixing |
 | `FixtureRecordingTests` | Swift Testing | Linux and macOS | Recorder CLI parsing, plan, anonymizer and output with a canned transport |
 
 **Fixtures from the live store.** `Tools/FixtureRecorder` runs the real `StorefrontClient`
@@ -780,13 +897,14 @@ tokenless live store instead of crashing. The cost is that metafield-driven modu
 deal end dates) stay empty until the token and the metafield definitions exist, and requests are
 limited to a query cost of 1000.
 
-### ADR 8: Checkout Kit 3.9.0 for Phase 1
+### ADR 8: Checkout Kit 3.9.x for Phase 1
 
 Checkout must run through Shopify's `ShopifyCheckoutSheetKit` (PROMPT.md 3.2). On 2026-09-26 the
-latest stable release was 3.9.0 (2026-09-18); `4.0.0-rc.2` is a pre-release and is not used. The
-dependency is added in Phase 1 (not in Phase 0, so the foundation stays free of third-party
-runtime code) as `from: "3.9.0"` for the checkout feature only, with the resolved version pinned
-by the committed `Package.resolved`. Upgrades are deliberate: Dependabot watches only GitHub
+latest stable release was 3.9.0 (2026-09-18); the pin moved to 3.9.2 when Phase 1 resolved the
+dependencies. `4.0.0-rc.2` is a pre-release and is not used. The dependency was added in Phase 1
+(not in Phase 0, so the foundation stays free of third-party runtime code) as `from: "3.9.2"`,
+with the resolved version pinned by the committed `Package.resolved` (see
+[Package pins](#package-pins)). Upgrades are deliberate: Dependabot watches only GitHub
 Actions. The APIs relied on (`preload(checkout:)`, `present(checkout:from:delegate:)`,
 `CheckoutDelegate`, `Configuration`) are listed in [API_VERSIONS.md](API_VERSIONS.md).
 
@@ -816,6 +934,13 @@ Delivery phases from PROMPT.md 14. Feature names follow `Packages/Features/Packa
 
 ### Phase 1: Commerce core
 
+**Status.** Written (commit `8d824b2` and the commits before it) and checked by compilation and the
+Linux package tests only. The screens and the XCUITests have not run on a simulator yet; the
+first macOS CI runs decide what needs fixing, after which **Record snapshots** records the new
+references. Open items: TestFlight build 1 (needs the Apple team ID and the App Store Connect
+key), launch and scrolling measurements, and the owner inputs for the Storefront token and the
+metafield definitions ([OWNER_INPUTS.md](OWNER_INPUTS.md)).
+
 - **New feature targets:** `ProductFeature` (product detail: gallery, variant selector, price
   with tax wording per market, key facts from metafields, "So läuft es ab", description rendered
   natively from `descriptionHtml` with `tel:` links dropped, comparison, FAQ, refund conditions,
@@ -832,7 +957,7 @@ Delivery phases from PROMPT.md 14. Feature names follow `Packages/Features/Packa
 - **Markets:** first-launch `MarketResolver` run, confirmation sheet, persisted `MarketSelection`.
 - **App:** deep links and Universal Links (`/products/`, `/collections/`, `/blogs/`), custom
   scheme `karinex://`.
-- **Dependencies to add:** Checkout Kit **3.9.0** (`https://github.com/Shopify/checkout-sheet-kit-swift`,
+- **Dependencies:** Checkout Kit **3.9.2** (`https://github.com/Shopify/checkout-sheet-kit-swift`,
   product `ShopifyCheckoutSheetKit`) and Nuke **13.2.0** (`https://github.com/kean/Nuke`, `Nuke`
   and `NukeUI`) for the image pipeline with `ShopifyImage.acceptHeader` and prefetching; commit
   `Package.resolved`.
