@@ -22,21 +22,34 @@ Runs on macOS 14+ and Linux (URLSession from FoundationNetworking).
 
 - `Sources/FixtureRecording`: the library with all logic.
   - `FixturePlan.swift`: which operations are recorded in which context and what outcome is
-    expected, plus the synthetic `synthetic_*.json` envelopes (documented Shopify formats).
+    expected (`FixtureSpec`, with deferred specs whose variables come from earlier steps
+    through a `FixtureSession`), plus the synthetic `synthetic_*.json` envelopes (documented
+    Shopify formats).
   - `FixtureRecorder.swift`: runs the plan and writes the fixtures and `manifest.json`.
   - `RecordingHTTPClient.swift`: `HTTPClient` decorator that keeps the raw responses.
   - `FixtureJSON.swift`: `JSONValue` with a platform-independent pretty printer and the
-    `FixtureAnonymizer` (cart, checkout, customer and address IDs, checkout URLs, personal
-    fields).
+    `FixtureAnonymizer` (cart tokens in cart, line and checkout IDs and checkout URLs,
+    customer and address IDs, personal fields; replaced with `REDACTED`, shape kept).
   - `CommandLineOptions.swift`: argument parsing.
 - `Sources/fixture-recorder`: the executable entry point.
 - `Tests/FixtureRecordingTests`: offline tests with a canned transport (`swift test`).
 
 ## Safety
 
-The store is production. The plan only contains read queries and a single `cartCreate`
-whose merchandise ID (`gid://shopify/ProductVariant/1`) does not exist, so Shopify answers
-with a user error and creates nothing. Do not add other mutations to the plan. The token is
-never written to any file.
+The store is production. The plan contains read queries, one `cartCreate` whose merchandise
+ID (`gid://shopify/ProductVariant/1`) does not exist (Shopify answers with a user error and
+creates nothing), and one cart lifecycle on a cart the recorder creates itself with the two
+cheapest digital variants: `cartCreate`, `cartLinesAdd`, `cartLinesUpdate`,
+`cartDiscountCodesUpdate` (a code that does not exist), `cartLinesRemove`, then `cart(id:)`.
+`FixturePlan.allowedMutations` lists these operations and a test fails if the plan sends any
+other; cart mutations refuse to run unless the same run created the cart (`FixtureSession`).
+The checkout URL is never opened, so the cart never becomes an order and expires on its own;
+its attribute `kx_fixture_recording=true` marks it among abandoned carts. Do not add other
+mutations to the plan.
+
+Cart IDs, line IDs and checkout URLs carry the secret cart token. `FixtureAnonymizer`
+replaces the token parts with `REDACTED` in every body and in the variables of the manifest,
+keeping the shape (`gid://shopify/Cart/REDACTED?key=REDACTED`). The token is never written
+to any file, and no customer data is requested.
 
 See `Packages/ShopifyKit/Tests/ShopifyKitTests/Fixtures/README.md` for the recorded files.

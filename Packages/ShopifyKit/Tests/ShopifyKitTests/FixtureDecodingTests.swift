@@ -4,7 +4,7 @@ import Foundation
 import Testing
 
 /// Decodes every recorded fixture through the real client and asserts concrete values.
-/// Values were recorded from the live Storefront API on 2026-09-26 (see Fixtures/README.md).
+/// Values were recorded from the live Storefront API on 2026-10-24 (see Fixtures/README.md).
 @Suite("Recorded fixtures")
 struct FixtureDecodingTests {
     private let germany = Locale(identifier: "de_DE")
