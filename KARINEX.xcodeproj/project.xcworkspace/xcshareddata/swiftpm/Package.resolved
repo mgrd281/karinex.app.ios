@@ -1,6 +1,23 @@
 {
-  "originHash" : "302eebacf44f523880924ca7461d296bd0ba612578d536d97acfdc71887f5639",
   "pins" : [
+    {
+      "identity" : "checkout-sheet-kit-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Shopify/checkout-sheet-kit-swift",
+      "state" : {
+        "revision" : "f4c83a8bbd6a87f8d88ff01f7e2c9296883a11f1",
+        "version" : "3.9.2"
+      }
+    },
+    {
+      "identity" : "nuke",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kean/Nuke",
+      "state" : {
+        "revision" : "30f7a7e72e0607d304fbf69c799474bd5fb6d1ce",
+        "version" : "13.2.0"
+      }
+    },
     {
       "identity" : "swift-custom-dump",
       "kind" : "remoteSourceControl",
@@ -26,6 +43,24 @@
       "state" : {
         "revision" : "050f1a346fbbac0ca2cfb15a95274f7bd1cf0ccf",
         "version" : "604.0.0"
+      }
+    },
+    {
+      "identity" : "swiftlintplugin",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lukepistrol/SwiftLintPlugin",
+      "state" : {
+        "revision" : "b384a67cf45d9989aed5aab23e226cbc7bc2cd54",
+        "version" : "0.65.0"
+      }
+    },
+    {
+      "identity" : "viewinspector",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nalexn/ViewInspector",
+      "state" : {
+        "revision" : "e9a06346499a3a889165647e3f23f8a7b2609a1c",
+        "version" : "0.10.3"
       }
     },
     {

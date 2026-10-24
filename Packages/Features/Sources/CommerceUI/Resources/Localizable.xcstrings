@@ -73,6 +73,24 @@
         }
       }
     },
+    "commerce.cart.expired" : {
+      "comment" : "Error message when the customer taps \"Zur Kasse\" but the stored Shopify basket has expired or was already completed. The app emptied the basket; the customer has to add the products again. Shown below the title \"commerce.error.rejected.title\". Two short sentences, formal address. Glossary: Warenkorb (EN basket).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihr Warenkorb ist abgelaufen. Bitte legen Sie die Artikel erneut in den Warenkorb."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your basket has expired. Please add the items to your basket again."
+          }
+        }
+      }
+    },
     "commerce.empty.message" : {
       "comment" : "Default message of an empty list or screen. One sentence.",
       "extractionState" : "manual",

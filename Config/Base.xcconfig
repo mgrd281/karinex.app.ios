@@ -39,4 +39,14 @@ GCC_TREAT_WARNINGS_AS_ERRORS = NO
 CODE_SIGN_STYLE = Automatic
 DEVELOPMENT_TEAM = $(KX_APPLE_TEAM_ID)
 
+// MARK: Entitlements
+// Universal Links (applinks:www.karinex.de, applinks:karinex.de) need the Associated Domains
+// entitlement in App/KARINEX.entitlements, and that entitlement needs a signing team. Without a
+// team (simulator builds, CI) the app is built without entitlements, so the variable is empty
+// here. Set KX_CODE_SIGN_ENTITLEMENTS = App/KARINEX.entitlements in Config/Secrets.xcconfig once
+// KX_APPLE_TEAM_ID is set. The app target sets CODE_SIGN_ENTITLEMENTS to this variable
+// (project.yml), so test bundles never carry the entitlement. The custom URL scheme works
+// either way.
+KX_CODE_SIGN_ENTITLEMENTS =
+
 #include? "Secrets.xcconfig"

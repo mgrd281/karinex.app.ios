@@ -1,7 +1,222 @@
 {
   "sourceLanguage" : "de",
   "strings" : {
-
+    "checkout.error.close" : {
+      "comment" : "Alert button that closes the checkout error without trying again. Max ~15 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schließen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        }
+      }
+    },
+    "checkout.error.expired" : {
+      "comment" : "Message of the alert when the Shopify checkout session expired twice in a row. Asks the customer to try again. Two short sentences, formal address.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Sitzung an der Kasse ist abgelaufen. Bitte versuchen Sie es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The checkout session has expired. Please try again."
+          }
+        }
+      }
+    },
+    "checkout.error.message" : {
+      "comment" : "Message of the alert when the Shopify checkout could not be loaded. Reassures the customer that the basket has been kept. Two short sentences, formal address.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Kasse konnte nicht geladen werden. Ihr Warenkorb bleibt erhalten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The checkout could not be loaded. Your basket has been kept."
+          }
+        }
+      }
+    },
+    "checkout.error.retry" : {
+      "comment" : "Alert button that fetches a fresh checkout and opens it again. Same text as \"commerce.error.retry\". Max ~20 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erneut versuchen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try again"
+          }
+        }
+      }
+    },
+    "checkout.error.title" : {
+      "comment" : "Title of the alert when the Shopify checkout could not be loaded or stopped with an error. Max ~30 characters. Glossary: Kasse (EN checkout).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kasse nicht verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checkout unavailable"
+          }
+        }
+      }
+    },
+    "checkout.preparing" : {
+      "comment" : "Short status next to a spinner while the app prepares the checkout after \"Zur Kasse\" was tapped. Max ~30 characters, no trailing dots.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kasse wird vorbereitet"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparing checkout"
+          }
+        }
+      }
+    },
+    "checkout.success.continue" : {
+      "comment" : "Primary full-width button on the order confirmation screen: closes it and returns to the Start tab. Max ~25 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiter einkaufen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue shopping"
+          }
+        }
+      }
+    },
+    "checkout.success.eyebrow" : {
+      "comment" : "Small label above the title of the order confirmation screen after a completed purchase. The app renders it in uppercase letters; write it in normal sentence case. Max ~20 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vielen Dank"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thank you"
+          }
+        }
+      }
+    },
+    "checkout.success.message" : {
+      "comment" : "Text below the title of the order confirmation: the licence key is sent by email (it never appears in the app at this point). One sentence, formal address. Glossary: Lizenzschlüssel (EN licence key).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihr Lizenzschlüssel wird per E-Mail zugestellt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your licence key will be delivered by email."
+          }
+        }
+      }
+    },
+    "checkout.success.title" : {
+      "comment" : "Serif title of the order confirmation screen after a completed purchase. Short, no exclamation mark, max ~30 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestellung eingegangen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Order received"
+          }
+        }
+      }
+    },
+    "checkout.success.total" : {
+      "comment" : "Label of the order total row on the order confirmation screen; the amount comes from the store. Max ~20 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamtbetrag"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Order total"
+          }
+        }
+      }
+    },
+    "checkout.title" : {
+      "comment" : "Title in the navigation bar of the Shopify checkout sheet. One word, max ~15 characters. Glossary: Kasse (EN checkout).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kasse"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checkout"
+          }
+        }
+      }
+    }
   },
   "version" : "1.0"
 }

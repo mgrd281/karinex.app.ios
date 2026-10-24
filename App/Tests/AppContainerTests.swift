@@ -1,3 +1,4 @@
+import CommerceUI
 import Core
 import Foundation
 @testable import KARINEX
@@ -158,6 +159,53 @@ struct AppContainerTests {
         _ = makeContainer(services: services)
 
         #expect(try services.secureStore.string(for: "customer.token") == "stored-secret")
+    }
+
+    @Test("The commerce state is composed: cart store with checkout preloading, market store on the shared context")
+    func commerceState() {
+        let container = makeContainer()
+
+        #expect(container.cartStore.cart == nil)
+        #expect(container.cartStore.itemCount == 0)
+        #expect(container.cartStore.checkoutPreloader != nil)
+        #expect(container.marketStore.onCountryChange != nil)
+        #expect(container.marketStore.selection == MarketSelection.germany)
+        #expect(container.marketStore.needsConfirmation == false)
+        #expect(container.isMarketConfirmationEnabled)
+    }
+
+    @Test("A stored market is applied to the buyer context before the first request")
+    func storedMarketIsApplied() throws {
+        let services = AppServices.inMemory()
+        let austria = MarketSelection(country: .at, language: .de)
+        try services.preferences.setValue(austria, forKey: MarketStore.selectionKey)
+
+        let container = makeContainer(services: services)
+
+        #expect(container.marketStore.selection == austria)
+        #expect(container.storefrontContextProvider.context.country == .at)
+    }
+
+    @Test("The cart store reads the cart ID from the app preferences; a reset launch forgets it")
+    func cartIDPersistence() {
+        let services = AppServices.inMemory()
+        services.preferences.set("gid://shopify/Cart/stored", forKey: CartStore.cartIDKey)
+
+        let kept = makeContainer(services: services)
+        #expect(kept.cartStore.storedCartID == ShopifyID("gid://shopify/Cart/stored"))
+
+        let reset = makeContainer(launchEnvironment: LaunchEnvironment(resetState: true), services: services)
+        #expect(reset.cartStore.storedCartID == nil)
+    }
+
+    @Test("UI test runs skip the market sheet unless -kx.market.confirm YES is passed")
+    func marketConfirmationUnderUITests() {
+        let uiTesting = LaunchEnvironment(isUITesting: true)
+        #expect(!makeContainer(launchEnvironment: uiTesting, launchArguments: ["KARINEX", "-kx.uitesting"]).isMarketConfirmationEnabled)
+        #expect(makeContainer(
+            launchEnvironment: uiTesting,
+            launchArguments: ["KARINEX", "-kx.uitesting", MarketConfirmationPolicy.argument, "YES"]
+        ).isMarketConfirmationEnabled)
     }
 
     @Test("The container hands out the network monitor it was built with")

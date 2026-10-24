@@ -128,6 +128,17 @@
             parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CommerceUITests"
+               BuildableName = "CommerceUITests"
+               BlueprintName = "CommerceUITests"
+               ReferencedContainer = "container:Packages/Features">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "FeaturesTests"
                BuildableName = "FeaturesTests"
                BlueprintName = "FeaturesTests"
@@ -183,6 +194,27 @@
             BuildableName = "DesignSystem"
             BlueprintName = "DesignSystem"
             ReferencedContainer = "container:Packages/DesignSystem">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "CommerceUI"
+            BuildableName = "CommerceUI"
+            BlueprintName = "CommerceUI"
+            ReferencedContainer = "container:Packages/Features">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "ProductFeature"
+            BuildableName = "ProductFeature"
+            BlueprintName = "ProductFeature"
+            ReferencedContainer = "container:Packages/Features">
+         </BuildableReference>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "CheckoutFeature"
+            BuildableName = "CheckoutFeature"
+            BlueprintName = "CheckoutFeature"
+            ReferencedContainer = "container:Packages/Features">
          </BuildableReference>
       </CodeCoverageTargets>
    </TestAction>

@@ -1,6 +1,186 @@
 {
   "sourceLanguage" : "de",
   "strings" : {
+    "cart.checkout" : {
+      "comment" : "Primary full-width button at the bottom of the basket that opens the Shopify checkout. Max ~25 characters. Glossary: Kasse (EN checkout).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zur Kasse"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go to checkout"
+          }
+        }
+      }
+    },
+    "cart.crosssell.title" : {
+      "comment" : "Serif section title above a horizontal row of products that go well with the first product in the basket (Shopify's complementary recommendations). Max ~25 characters. Makes no claim about the products.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passend dazu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Goes well with"
+          }
+        }
+      }
+    },
+    "cart.discount.active" : {
+      "comment" : "Small badge next to a discount code in the basket that the store applies. One or two words, max ~15 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktiv"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Applied"
+          }
+        }
+      }
+    },
+    "cart.discount.applied %@" : {
+      "comment" : "Confirmation below the discount code field after the store accepted a code. %@ is the code the customer typed, e.g. \"WILLKOMMEN\". One sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Code %@ wurde angewendet."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The code %@ has been applied."
+          }
+        }
+      }
+    },
+    "cart.discount.apply" : {
+      "comment" : "Button next to the discount code field that sends the code to the store. Short verb, max ~12 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anwenden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply"
+          }
+        }
+      }
+    },
+    "cart.discount.inactive" : {
+      "comment" : "Small badge next to a discount code in the basket that the store does not apply to this basket. Max ~18 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht gültig"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not applicable"
+          }
+        }
+      }
+    },
+    "cart.discount.not_applicable" : {
+      "comment" : "Message below the discount code field when the store does not apply the code to this basket and sent no explanation of its own. One sentence, neutral.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieser Code gilt nicht für Ihren Warenkorb."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This code does not apply to your basket."
+          }
+        }
+      }
+    },
+    "cart.discount.placeholder" : {
+      "comment" : "Placeholder inside the empty discount code text field in the basket. Max ~25 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code eingeben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter code"
+          }
+        }
+      }
+    },
+    "cart.discount.remove %@" : {
+      "comment" : "VoiceOver label of the small close button next to a discount code in the basket. %@ is the code, e.g. \"WILLKOMMEN\".",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rabattcode %@ entfernen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove discount code %@"
+          }
+        }
+      }
+    },
+    "cart.discount.title" : {
+      "comment" : "Small label above the discount code field in the basket, also the VoiceOver label of the field. The app renders it in uppercase letters; write it in normal sentence case. Max ~25 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rabattcode"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discount code"
+          }
+        }
+      }
+    },
     "cart.empty.action" : {
       "comment" : "Primary full-width button in the empty basket state; opens the Shop tab with the product range. Short verb phrase, one line, max ~25 characters. Same text as \"home.hero.cta\" on the Start tab; translate both identically. Glossary: Sortiment (EN range).",
       "extractionState" : "manual",
@@ -213,6 +393,150 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Din varukorg är tom"
+          }
+        }
+      }
+    },
+    "cart.line.decrease" : {
+      "comment" : "VoiceOver label of the minus button of the quantity control in the basket.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menge verringern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Decrease quantity"
+          }
+        }
+      }
+    },
+    "cart.line.increase" : {
+      "comment" : "VoiceOver label of the plus button of the quantity control in the basket. At most 10 units per product.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menge erhöhen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Increase quantity"
+          }
+        }
+      }
+    },
+    "cart.line.quantity %lld" : {
+      "comment" : "VoiceOver label of the number between the minus and plus buttons of a basket line. %lld is the quantity (1 to 10).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menge: %lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quantity: %lld"
+          }
+        }
+      }
+    },
+    "cart.line.remove" : {
+      "comment" : "Label of the button that removes a product from the basket (trash icon). Short verb, max ~15 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entfernen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove"
+          }
+        }
+      }
+    },
+    "cart.line.remove.label %@" : {
+      "comment" : "VoiceOver label of the remove button of a basket line. %@ is the product title from the store. Short verb phrase.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ entfernen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove %@"
+          }
+        }
+      }
+    },
+    "cart.line.total %@" : {
+      "comment" : "Small line below the unit price of a basket line with more than one unit: the total of this line as returned by the store. %@ is the formatted amount including currency, e.g. \"25,80 €\". Max ~25 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Summe: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Line total: %@"
+          }
+        }
+      }
+    },
+    "cart.line.unavailable" : {
+      "comment" : "Small note below a basket line whose product can currently not be bought. Max ~35 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Derzeit nicht verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currently unavailable"
+          }
+        }
+      }
+    },
+    "cart.loading" : {
+      "comment" : "VoiceOver label of the loading placeholder while the basket loads from the store. Short, no punctuation. Glossary: Warenkorb (EN basket).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warenkorb wird geladen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading basket"
           }
         }
       }
@@ -505,6 +829,78 @@
         }
       }
     },
+    "cart.summary.discount" : {
+      "comment" : "Row label in the basket summary for the total discount of the basket. Max ~20 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rabatt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discount"
+          }
+        }
+      }
+    },
+    "cart.summary.discount.value %@" : {
+      "comment" : "Discount amount in the basket summary, shown as a negative amount. %@ is the formatted amount including currency, e.g. \"5,57 €\". Use a plain hyphen-minus as the minus sign, never a dash.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-%@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-%@"
+          }
+        }
+      }
+    },
+    "cart.summary.subtotal" : {
+      "comment" : "Row label in the basket summary: the sum of all lines before discounts, as returned by the store. Max ~20 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zwischensumme"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subtotal"
+          }
+        }
+      }
+    },
+    "cart.summary.total" : {
+      "comment" : "Row label of the total of the basket as returned by the store, in the summary and in the bar above \"Zur Kasse\". Max ~20 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesamtsumme"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total"
+          }
+        }
+      }
+    },
     "cart.title" : {
       "comment" : "Large navigation title of the Warenkorb tab. Use the same word as the tab bar label \"tab.cart\" (glossary: EN basket).",
       "extractionState" : "manual",
@@ -573,6 +969,60 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Varukorg"
+          }
+        }
+      }
+    },
+    "cart.undo.action" : {
+      "comment" : "Button in the bar after removing a product: puts the product back into the basket. Short, max ~15 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rückgängig"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undo"
+          }
+        }
+      }
+    },
+    "cart.undo.dismiss" : {
+      "comment" : "VoiceOver label of the close button of the bar that appears after a product was removed from the basket.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hinweis schließen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dismiss"
+          }
+        }
+      }
+    },
+    "cart.undo.message %@" : {
+      "comment" : "Message in the bar that appears after a product was removed from the basket, next to the undo button. %@ is the product title from the store. One sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ wurde aus dem Warenkorb entfernt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ was removed from your basket."
           }
         }
       }

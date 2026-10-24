@@ -145,6 +145,48 @@
         }
       }
     },
+    "tab.cart.badge %lld" : {
+      "comment" : "VoiceOver value of the Warenkorb tab bar button when the basket is not empty: the number of items, read after the tab name. %lld is the number of items (1 or more). Glossary: Artikel (EN item).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Artikel"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Artikel"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld item"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld items"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "tab.home" : {
       "comment" : "Tab bar label of the Start tab, the editorial home screen, below the house icon. Means \"home page\", not \"begin\". Five tabs share the bar: one word, max ~10 characters.",
       "extractionState" : "manual",

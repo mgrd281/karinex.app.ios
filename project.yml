@@ -33,6 +33,7 @@ packages:
 
 fileGroups:
   - Config
+  - App/KARINEX.entitlements
   - project.yml
 
 targets:
@@ -50,6 +51,8 @@ targets:
         GENERATE_INFOPLIST_FILE: NO
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        # Empty unless Config/Secrets.xcconfig sets it (needs a team ID), see Config/Base.xcconfig.
+        CODE_SIGN_ENTITLEMENTS: $(KX_CODE_SIGN_ENTITLEMENTS)
         ENABLE_PREVIEWS: YES
         TARGETED_DEVICE_FAMILY: "1,2"
     dependencies:
@@ -61,11 +64,14 @@ targets:
           - DesignTokens
       - package: Features
         products:
+          - CommerceUI
           - HomeFeature
           - CatalogFeature
           - SearchFeature
           - CartFeature
           - AccountFeature
+          - ProductFeature
+          - CheckoutFeature
 
   KARINEXTests:
     type: bundle.unit-test
@@ -112,6 +118,9 @@ schemes:
         - package: ShopifyKit/ShopifyKit
         - package: DesignSystem/DesignTokens
         - package: DesignSystem/DesignSystem
+        - package: Features/CommerceUI
+        - package: Features/ProductFeature
+        - package: Features/CheckoutFeature
       targets:
         - name: KARINEXTests
           parallelizable: false
@@ -119,6 +128,7 @@ schemes:
         - package: ShopifyKit/ShopifyKitTests
         - package: DesignSystem/DesignTokensTests
         - package: DesignSystem/DesignSystemTests
+        - package: Features/CommerceUITests
         - package: Features/FeaturesTests
         - name: KARINEXUITests
           parallelizable: false

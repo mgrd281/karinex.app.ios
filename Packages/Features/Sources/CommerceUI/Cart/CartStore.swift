@@ -17,6 +17,8 @@ import ShopifyKit
 ///   5xx): the store re-reads the cart instead (see docs/ARCHITECTURE.md, retry rules).
 /// - A mutation refused because the cart no longer exists recreates the cart once and repeats
 ///   the intent there; Shopify's refusal guarantees the first attempt had no effect.
+/// - ``checkoutURL()`` never recreates an expired or completed cart from its last known lines
+///   (they may already belong to a placed order); it forgets the cart and reports it.
 /// - After every change the ``checkoutPreloader`` is called with the fresh checkout URL,
 ///   debounced by ``preloadDelay``, so Checkout Kit can preload (CommerceUI does not import it).
 ///
@@ -254,11 +256,15 @@ public final class CartStore {
 
     // MARK: Checkout
 
-    /// A fresh checkout URL: waits for pending mutations, re-reads the cart and, when it
-    /// expired, recreates it with the last known lines.
+    /// A fresh checkout URL: waits for pending mutations and re-reads the cart.
     ///
-    /// - Throws: ``UserFacingError`` when the cart cannot be read or recreated, or when there
-    ///   is nothing to check out (``UserFacingError/Kind/notFound``).
+    /// An expired or completed cart is never recreated here: its lines may belong to an order
+    /// that was already placed, so recreating it could buy the same items twice. The store
+    /// forgets such a cart instead (``cart`` becomes `nil`) and throws ``expiredCartError``.
+    ///
+    /// - Throws: ``UserFacingError``: ``expiredCartError`` when the cart expired or was
+    ///   completed, ``UserFacingError/Kind/notFound`` when there is nothing to check out, or
+    ///   the mapped failure when the cart cannot be read.
     public func checkoutURL() async throws -> URL {
         let result = await enqueue { [self] in try await freshCheckoutURL() }
         switch result {
@@ -268,6 +274,13 @@ public final class CartStore {
             logger.error("Checkout URL unavailable: \(Self.logDescription(error))")
             throw UserFacingError(error) ?? UserFacingError(kind: .unknown)
         }
+    }
+
+    /// The error of ``checkoutURL()`` for a cart that expired or was completed in the meantime:
+    /// Shopify refuses it, so the customer has to add the items again ("Ihr Warenkorb ist
+    /// abgelaufen. Bitte legen Sie die Artikel erneut in den Warenkorb.").
+    public nonisolated static var expiredCartError: UserFacingError {
+        UserFacingError(kind: .rejected(messages: [String(localized: "commerce.cart.expired", bundle: .module)]))
     }
 
     /// Forgets the cart after a completed checkout: the order exists, the cart must not be
@@ -280,24 +293,20 @@ public final class CartStore {
     // MARK: Private: checkout
 
     private func freshCheckoutURL() async throws -> URL {
-        let knownLines = cart?.lines ?? []
-        if let cartID = storedCartID, let fresh = try await repository.cart(id: cartID) {
-            if fresh.lines.isEmpty {
-                cart = fresh
-                throw UserFacingError(kind: .notFound)
-            }
-            cart = fresh
-            return fresh.checkoutUrl
-        }
-        guard !knownLines.isEmpty else {
+        guard let cartID = storedCartID else {
             forgetCart()
             throw UserFacingError(kind: .notFound)
         }
-        logger.info("Cart expired before checkout; recreating it with the known lines")
-        let inputs = knownLines.map { CartLineInput(merchandiseId: $0.merchandise.id, quantity: $0.quantity) }
-        let result = try await createCart(lines: inputs)
-        apply(result)
-        return result.cart.checkoutUrl
+        guard let fresh = try await repository.cart(id: cartID) else {
+            logger.info("Cart expired or completed before checkout; it is forgotten, not recreated")
+            forgetCart()
+            throw Self.expiredCartError
+        }
+        cart = fresh
+        guard !fresh.lines.isEmpty else {
+            throw UserFacingError(kind: .notFound)
+        }
+        return fresh.checkoutUrl
     }
 
     // MARK: Private: mutations

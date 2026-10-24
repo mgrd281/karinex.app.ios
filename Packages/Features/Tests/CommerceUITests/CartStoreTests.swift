@@ -261,23 +261,55 @@ struct CartStoreTests {
         #expect(await repository.calls.last == .cart)
     }
 
-    @Test("An expired cart is recreated with its lines before checkout")
-    func checkoutRecreatesExpiredCart() async throws {
+    @Test("An expired or completed cart is forgotten before checkout, never recreated from its lines")
+    func checkoutForgetsExpiredCart() async throws {
         let store = makeStore()
         await store.add(variantID: CartFixtures.officeVariant, quantity: 2)
         let expiredID = try #require(store.cart?.id)
         await repository.expire(expiredID)
 
-        let url = try await store.checkoutURL()
+        await #expect(throws: CartStore.expiredCartError) {
+            try await store.checkoutURL()
+        }
+
+        #expect(store.cart == nil)
+        #expect(store.itemCount == 0)
+        #expect(preferences.string(forKey: CartStore.cartIDKey) == nil)
+        #expect(await repository.count(of: .create) == 1, "The cart must not be recreated with the old lines")
+        #expect(await repository.calls.last == .cart)
+    }
+
+    @Test("The expired cart error explains what to do in German and English")
+    func expiredCartErrorText() throws {
+        let error = CartStore.expiredCartError
+        #expect(!error.isRetryable)
+        guard case let .rejected(messages) = error.kind else {
+            Issue.record("Unexpected kind \(error.kind)")
+            return
+        }
+        #expect(messages.count == 1)
+        let bundle = CommerceUIResources.bundle
+        let german = try #require(bundle.path(forResource: "de", ofType: "lproj").flatMap(Bundle.init(path:)))
+        let english = try #require(bundle.path(forResource: "en", ofType: "lproj").flatMap(Bundle.init(path:)))
+        #expect(german.localizedString(forKey: "commerce.cart.expired", value: nil, table: nil)
+            == "Ihr Warenkorb ist abgelaufen. Bitte legen Sie die Artikel erneut in den Warenkorb.")
+        #expect(english.localizedString(forKey: "commerce.cart.expired", value: nil, table: nil)
+            == "Your basket has expired. Please add the items to your basket again.")
+    }
+
+    @Test("After an expired checkout the next add creates a new cart")
+    func addAfterExpiredCheckoutCreatesCart() async throws {
+        let store = makeStore()
+        await store.add(variantID: CartFixtures.officeVariant)
+        let expiredID = try #require(store.cart?.id)
+        await repository.expire(expiredID)
+        _ = try? await store.checkoutURL()
+
+        await store.add(variantID: CartFixtures.windowsVariant)
 
         let newID = try #require(store.cart?.id)
         #expect(newID != expiredID)
-        #expect(url == CartFixtures.checkoutURL(for: newID))
-        let lastCall = await repository.calls.last
-        #expect(lastCall == .create(
-            lines: [CartLineInput(merchandiseId: CartFixtures.officeVariant, quantity: 2)],
-            attributes: [AttributeInput(key: "app_platform", value: "ios"), AttributeInput(key: "app_version", value: "1.2.3")]
-        ))
+        #expect(store.cart?.lines.map(\.merchandise.id) == [CartFixtures.windowsVariant])
     }
 
     @Test("Without a cart there is no checkout")

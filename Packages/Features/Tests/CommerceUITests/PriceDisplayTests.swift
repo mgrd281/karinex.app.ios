@@ -113,6 +113,7 @@ struct PriceDisplayTests {
 
     // MARK: Product cards
 
+    @MainActor
     @Test("Product cards show the sale badge only for reduced products")
     func productCardBadges() {
         let reduced = CommercePreviewData.products[0]

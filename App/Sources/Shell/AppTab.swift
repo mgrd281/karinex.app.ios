@@ -51,6 +51,13 @@ enum AppTab: String, CaseIterable, Hashable, Identifiable, Sendable {
         String(localized: titleKey, bundle: bundle)
     }
 
+    /// The VoiceOver value of the Warenkorb tab: the number of items in the cart, e.g.
+    /// "2 Artikel"; empty for an empty cart.
+    static func cartBadgeAccessibilityValue(count: Int, bundle: Bundle = .main) -> String {
+        guard count > 0 else { return "" }
+        return String(localized: "tab.cart.badge \(count)", bundle: bundle)
+    }
+
     private var titleKey: String.LocalizationValue {
         switch self {
         case .home: "tab.home"
