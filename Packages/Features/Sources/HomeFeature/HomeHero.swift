@@ -6,8 +6,9 @@ import SwiftUI
 // MARK: - HomeHero
 
 /// The hero of the Start tab, laid out like the campaign banner of a fashion retail app: the
-/// photo of the store's top bestseller edge to edge on the light grey photo tile, then an eyebrow,
-/// a bold display headline, a short introduction and the black call to action "Zum Sortiment".
+/// KARINEX wordmark centered on top, the photo of the store's top bestseller edge to edge on the
+/// light grey photo tile, then an eyebrow, a bold display headline, a short introduction and the
+/// black call to action "Zum Sortiment".
 ///
 /// The photo comes from the bestseller row of the store (Shopify is the only source of product
 /// images); tapping it opens that product. While the row loads the plain tile holds the space;
@@ -22,6 +23,10 @@ struct HomeHero: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: KXSpacing.l) {
+            KXWordmark(size: .regular)
+                .frame(maxWidth: .infinity)
+                .padding(.top, KXSpacing.xs)
+                .accessibilityAddTraits(.isHeader)
             photo
             VStack(alignment: .leading, spacing: KXSpacing.l) {
                 VStack(alignment: .leading, spacing: KXSpacing.s) {

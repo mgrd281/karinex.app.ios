@@ -8,29 +8,28 @@ import Testing
 
 @Suite("AppTab")
 struct AppTabTests {
-    @Test("Tabs are ordered Shop, Suche, Start, Warenkorb, Konto, with Start in the middle")
+    @Test("Tabs are ordered Start, Shop, Suche, Warenkorb, Konto")
     func order() {
-        #expect(AppTab.allCases == [.shop, .search, .home, .cart, .account])
-        #expect(AppTab.allCases[AppTab.allCases.count / 2] == .home)
+        #expect(AppTab.allCases == [.home, .shop, .search, .cart, .account])
     }
 
     @Test("Each tab has its SF Symbol")
     func systemImages() {
         #expect(AppTab.allCases.map(\.systemImage) == [
-            "line.3.horizontal",
-            "magnifyingglass",
             "house",
-            "basket",
-            "person",
+            "square.grid.2x2",
+            "magnifyingglass",
+            "cart",
+            "person.crop.circle",
         ])
     }
 
     @Test("Each tab has a unique accessibility identifier for UI tests")
     func accessibilityIdentifiers() {
         #expect(AppTab.allCases.map(\.accessibilityIdentifier) == [
+            "tab.home",
             "tab.shop",
             "tab.search",
-            "tab.home",
             "tab.cart",
             "tab.account",
         ])
@@ -39,13 +38,13 @@ struct AppTabTests {
     @Test("German tab titles come from the app's String Catalog")
     func germanTitles() throws {
         let german = try localizationBundle("de")
-        #expect(AppTab.allCases.map { $0.title(in: german) } == ["Shop", "Suche", "Start", "Warenkorb", "Konto"])
+        #expect(AppTab.allCases.map { $0.title(in: german) } == ["Start", "Shop", "Suche", "Warenkorb", "Konto"])
     }
 
     @Test("English tab titles come from the app's String Catalog")
     func englishTitles() throws {
         let english = try localizationBundle("en")
-        #expect(AppTab.allCases.map { $0.title(in: english) } == ["Shop", "Search", "Home", "Basket", "Account"])
+        #expect(AppTab.allCases.map { $0.title(in: english) } == ["Home", "Shop", "Search", "Basket", "Account"])
     }
 
     @Test("Titles in the current language are resolved, not raw keys")

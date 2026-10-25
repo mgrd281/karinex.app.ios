@@ -24,15 +24,13 @@ change.
   title, availability and delivery as icon rows, ink pills for variants, "Jetzt kaufen" as an
   outlined button below them, "So läuft es ab" and the activation instructions as collapsible
   rows, and a calm bottom bar with the price and one black "In den Warenkorb" button.
-- **Bottom bar like fashion retail apps:** the system tab bar is replaced by `AppTabBar`, an
-  icon-only bar (Shop, Suche, the KARINEX wordmark for Start in the middle, Warenkorb with the
-  item count, Konto) with a short ink line under the selected item. It hides while the keyboard
-  is up; tapping the selected item again shows the tab's root screen. UI tests find it as
-  `tab.bar`.
+- The tab bar keeps the system design with its titles (Start, Shop, Suche, Warenkorb, Konto),
+  now tinted black; the Warenkorb tab shows a shopping cart instead of a bag (owner request).
 - **Start tab like a campaign page:** the hero shows the photo of the store's top bestseller
   edge to edge on the photo tile (tap opens the product), then the bold headline and the black
   "Zum Sortiment" button; the four brand facts are icon rows with hairlines
-  (`KXTrustStrip` arrangement `.list`) instead of tiles. The wordmark moved to the bottom bar.
+  (`KXTrustStrip` arrangement `.list`) instead of tiles. The KARINEX wordmark sits centered
+  above the hero.
 - Product card prices use the regular weight of the card title.
 - Dark-mode greys are exactly neutral (`#1C1C1C`, `#2C2C2C`, `#3A3A3A`).
 - Components: chevron accordion, step timeline with ink discs, section headers without the gold

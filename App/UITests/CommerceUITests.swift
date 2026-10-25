@@ -157,13 +157,12 @@ final class CommerceUITests: XCTestCase {
         app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'product.card.'")).firstMatch
     }
 
-    /// The button of the app's bottom bar (`tab.bar`) with `identifier`, or with its German title
-    /// (the VoiceOver label of the icon-only button).
+    /// The tab bar button with `identifier`, or with its German title, because SwiftUI does not
+    /// forward a `tabItem` identifier to the button on every iOS release.
     @MainActor
     private func tabButton(identifier: String, germanTitle: String, in app: XCUIApplication) -> XCUIElement {
         let predicate = NSPredicate(format: "identifier == %@ OR label == %@", identifier, germanTitle)
-        let tabBar = app.descendants(matching: .any).matching(identifier: "tab.bar").firstMatch
-        return tabBar.buttons.matching(predicate).firstMatch
+        return app.tabBars.firstMatch.buttons.matching(predicate).firstMatch
     }
 
     /// Waits until `element` matches `format`.

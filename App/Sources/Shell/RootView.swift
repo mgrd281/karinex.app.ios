@@ -2,7 +2,6 @@ import AccountFeature
 import CartFeature
 import CatalogFeature
 import CheckoutFeature
-import Combine
 import CommerceUI
 import Core
 import DesignSystem
@@ -14,13 +13,11 @@ import SearchFeature
 import SettingsFeature
 import SupportFeature
 import SwiftUI
-import UIKit
 
 // MARK: - RootView
 
-/// The root of the app: five tabs (Shop, Suche, Start, Warenkorb, Konto), each with its own
-/// `NavigationStack`, the KARINEX bottom bar (``AppTabBar``) in place of the system tab bar, and
-/// the offline banner on top.
+/// The root of the app: a tab bar with Start, Shop, Suche, Warenkorb and Konto, each tab with
+/// its own `NavigationStack`, and the offline banner on top.
 ///
 /// - Navigation: features ask for ``CommerceRoute``s; ``AppRouter`` pushes them onto the stack of
 ///   the tab they came from and this view maps them to screens (product, collection, article,
@@ -32,14 +29,14 @@ import UIKit
 /// - Launch: the market is resolved and the stored cart re-read; the cart is read again
 ///   whenever the app returns from the background. The one-time market confirmation sheet
 ///   appears after the first resolution (not in UI test runs, see `MarketConfirmationPolicy`).
-/// - The Warenkorb item shows the number of items as a badge.
-/// - The bottom bar hides while the keyboard is up, like the system tab bar.
+/// - The Warenkorb tab shows the number of items as a badge.
 ///
 /// The tint is left to the `AccentColor` asset (black in light mode, white in dark mode).
 /// A color scheme forced with `-kx.appearance light|dark` overrides the system appearance.
 ///
-/// The bar carries the identifier `tab.bar`, each item `tab.<name>` and its title as the
-/// VoiceOver label.
+/// Each tab item carries the identifier `tab.<name>`. SwiftUI does not forward an identifier set
+/// on a `tabItem` label to the tab bar button on every iOS release, so the UI tests fall back to
+/// the localized tab title (they run in German).
 struct RootView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.scenePhase) private var scenePhase
@@ -49,36 +46,22 @@ struct RootView: View {
     @State private var isMarketSheetPresented = false
     @State private var hasStarted = false
     @State private var wasInBackground = false
-    @State private var isKeyboardVisible = false
 
     var body: some View {
         TabView(selection: $router.selectedTab) {
             ForEach(AppTab.allCases) { tab in
                 NavigationStack(path: path(for: tab)) {
                     rootScreen(for: tab)
-                        .toolbar(.hidden, for: .tabBar)
                         .navigationDestination(for: CommerceRoute.self) { route in
                             destination(for: route, in: tab)
-                                .toolbar(.hidden, for: .tabBar)
                         }
                 }
-                // One bar per tab: an inset on the navigation stack reaches every pushed screen,
-                // so bars of those screens (the product purchase bar) sit on top of it.
-                .safeAreaInset(edge: .bottom, spacing: 0) {
-                    if !isKeyboardVisible {
-                        AppTabBar(selection: router.selectedTab, cartCount: container.cartStore.itemCount) { selected in
-                            router.select(selected, popToRoot: selected == router.selectedTab)
-                        }
-                    }
+                .tabItem {
+                    tabLabel(for: tab)
                 }
+                .badge(tab == .cart ? container.cartStore.itemCount : 0)
                 .tag(tab)
             }
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
-            isKeyboardVisible = true
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
-            isKeyboardVisible = false
         }
         .offlineBanner(monitor: container.networkMonitor)
         .commerceCountry(container.marketStore.selection.country)
@@ -119,6 +102,12 @@ struct RootView: View {
     }
 
     // MARK: Tabs
+
+    private func tabLabel(for tab: AppTab) -> some View {
+        Label(tab.title, systemImage: tab.systemImage)
+            .accessibilityIdentifier(tab.accessibilityIdentifier)
+            .accessibilityValue(tab == .cart ? AppTab.cartBadgeAccessibilityValue(count: container.cartStore.itemCount) : "")
+    }
 
     private func path(for tab: AppTab) -> Binding<[CommerceRoute]> {
         Binding(
@@ -287,94 +276,6 @@ struct RootView: View {
             }
         default:
             break
-        }
-    }
-}
-
-// MARK: - AppTabBar
-
-/// The bottom bar in the style of fashion retail apps: thin line icons without titles and the
-/// KARINEX wordmark in the middle for Start, on the page background with a hairline on top. A
-/// short ink line marks the selected tab. Tapping the selected tab again shows its root screen
-/// (handled by the caller). The Warenkorb icon carries the number of items.
-///
-/// VoiceOver reads each item with its title, the selected state and, for Warenkorb, the number
-/// of items ("Warenkorb, 2 Artikel").
-private struct AppTabBar: View {
-    let selection: AppTab
-    let cartCount: Int
-    let onSelect: @MainActor (AppTab) -> Void
-
-    @ScaledMetric(relativeTo: .body) private var iconSize: CGFloat = 22
-
-    var body: some View {
-        HStack(alignment: .center, spacing: 0) {
-            ForEach(AppTab.allCases) { tab in
-                item(tab)
-                    .frame(maxWidth: tab == .home ? nil : .infinity)
-            }
-        }
-        .padding(.horizontal, KXSpacing.xs)
-        .padding(.top, KXSpacing.xxs)
-        .frame(maxWidth: .infinity)
-        .background {
-            KXColor.background
-                .ignoresSafeArea(edges: .bottom)
-        }
-        .overlay(alignment: .top) {
-            KXDivider()
-        }
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("tab.bar")
-    }
-
-    private func item(_ tab: AppTab) -> some View {
-        let isSelected = tab == selection
-        return Button {
-            onSelect(tab)
-        } label: {
-            VStack(spacing: KXSpacing.xs) {
-                glyph(tab)
-                    .frame(minHeight: min(iconSize, 30) + KXSpacing.xxs)
-                Capsule(style: .continuous)
-                    .fill(isSelected ? KXColor.textPrimary : Color.clear)
-                    .frame(width: tab == .home ? nil : min(iconSize, 30) + KXSpacing.xs, height: KXBorder.emphasis)
-                    .frame(maxWidth: tab == .home ? .infinity : nil)
-            }
-            .padding(.horizontal, tab == .home ? KXSpacing.s : 0)
-            .padding(.vertical, KXSpacing.xxs)
-            .frame(minWidth: KXSpacing.minimumTapTarget, minHeight: KXSpacing.minimumTapTarget)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(Text(tab.title))
-        .accessibilityValue(Text(tab == .cart ? AppTab.cartBadgeAccessibilityValue(count: cartCount) : ""))
-        .accessibilityAddTraits(isSelected ? .isSelected : [])
-        .accessibilityIdentifier(tab.accessibilityIdentifier)
-    }
-
-    @ViewBuilder
-    private func glyph(_ tab: AppTab) -> some View {
-        if tab == .home {
-            KXWordmark(size: .small)
-                .accessibilityHidden(true)
-        } else {
-            Image(systemName: tab.systemImage)
-                .font(.system(size: min(iconSize, 30), weight: .light))
-                .foregroundStyle(KXColor.textPrimary)
-                .overlay(alignment: .topTrailing) {
-                    if tab == .cart, cartCount > 0 {
-                        Text(cartCount, format: .number)
-                            .monospacedDigit()
-                            .kxFont(.caption)
-                            .foregroundStyle(KXColor.textOnBrand)
-                            .padding(.horizontal, KXSpacing.xxs)
-                            .frame(minWidth: KXSpacing.m, minHeight: KXSpacing.m)
-                            .background(KXColor.brand, in: Capsule(style: .continuous))
-                            .offset(x: KXSpacing.xs, y: -KXSpacing.xxs)
-                    }
-                }
-                .accessibilityHidden(true)
         }
     }
 }

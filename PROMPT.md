@@ -132,7 +132,7 @@ Target outcome: an App Store–approved app that measurably increases repeat pur
 
 ## 6. FEATURE SPEC BY SCREEN
 
-Tab bar (owner decision of 2026-10-25, in the style of fashion retail apps): icon-only bar **Shop · Suche · KARINEX wordmark (Start) · Warenkorb · Konto** with an ink line under the selected item and a badge on the cart; it replaces the system tab bar.
+Tab bar: the system tab bar **Start · Shop · Suche · Warenkorb · Konto** (badge on cart; the cart tab uses a shopping cart symbol, owner request of 2026-10-25).
 
 ### 6.1 Start (Home)
 - Hero like a campaign banner: the photo of the top product of the `bestseller` collection edge to edge on the photo tile, bold headline, black CTA; text from the `app_home` metaobject or fallback content.
