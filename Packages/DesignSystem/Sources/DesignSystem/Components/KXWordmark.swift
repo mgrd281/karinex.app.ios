@@ -2,11 +2,12 @@ import SwiftUI
 
 // MARK: - KXWordmark
 
-/// The interim KARINEX logo: the brand name set in the bold display face with wide tracking.
+/// The KARINEX logo: the store's wordmark (the logo of karinex.de, `KarinexLogo` in the
+/// DesignSystem asset catalog), drawn as a template image so it takes the given color: ink on
+/// light pages, white in dark mode or on dark panels.
 ///
-/// It replaces the logo until the redesigned brand assets arrive. The brand name is never
-/// translated, so it is not part of any String Catalog. The wordmark scales moderately with
-/// Dynamic Type (capped, like a logo) and never wraps; on very narrow widths it shrinks.
+/// The brand name is never translated, so it is not part of any String Catalog. The logo scales
+/// moderately with Dynamic Type (capped, like a logo) and never wraps.
 ///
 /// ```swift
 /// KXWordmark(size: .large)
@@ -15,14 +16,14 @@ import SwiftUI
 public struct KXWordmark: View {
     /// Size of a ``KXWordmark``.
     public enum Size: String, CaseIterable, Sendable {
-        /// 16 pt, for navigation bars and footers.
+        /// 16 pt tall, for navigation bars and footers.
         case small
-        /// 22 pt, for headers and cards.
+        /// 22 pt tall, for headers and cards.
         case regular
-        /// 34 pt, for the hero and launch-like moments.
+        /// 34 pt tall, for the hero and launch-like moments.
         case large
 
-        /// Point size at the default Dynamic Type setting.
+        /// Logo height at the default Dynamic Type setting.
         var pointSize: CGFloat {
             switch self {
             case .small: 16
@@ -32,12 +33,8 @@ public struct KXWordmark: View {
         }
     }
 
-    /// The brand name as it is always written.
-    private static let brandName = "KARINEX"
     /// Spoken form for VoiceOver, so the name is pronounced as a word and not spelled out.
     private static let spokenBrandName = "Karinex"
-    /// Letter spacing as a fraction of the point size.
-    private static let trackingFactor: CGFloat = 0.2
 
     private let size: Size
     private let color: Color
@@ -48,7 +45,7 @@ public struct KXWordmark: View {
     ///
     /// - Parameters:
     ///   - size: Size of the wordmark. Defaults to ``Size/regular``.
-    ///   - color: Text color. Defaults to `KXColor.textPrimary`. Pass `KXColor.textOnBrand`
+    ///   - color: Logo color. Defaults to `KXColor.textPrimary`. Pass `KXColor.textOnBrand`
     ///     on brand-colored panels and `KXColor.keyCardText` on the key card.
     public init(size: Size = .regular, color: Color = KXColor.textPrimary) {
         self.size = size
@@ -57,14 +54,16 @@ public struct KXWordmark: View {
 
     public var body: some View {
         let scale = min(max(dynamicTypeScale, 0.85), 1.35)
-        let pointSize = size.pointSize * scale
-        Text(verbatim: Self.brandName)
-            .font(KXFont.font(.display, size: Double(pointSize)))
-            .tracking(pointSize * Self.trackingFactor)
+        Image("KarinexLogo", bundle: .module)
+            .renderingMode(.template)
+            .resizable()
+            .interpolation(.high)
+            .scaledToFit()
+            .frame(height: size.pointSize * scale)
             .foregroundStyle(color)
-            .lineLimit(1)
-            .minimumScaleFactor(0.5)
+            .accessibilityElement(children: .ignore)
             .accessibilityLabel(Text(verbatim: Self.spokenBrandName))
+            .accessibilityAddTraits(.isImage)
     }
 }
 

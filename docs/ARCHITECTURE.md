@@ -559,7 +559,7 @@ light, dark and an accessibility text size, and snapshot tests:
 | `KXSkeleton`, `.kxSkeleton(isActive:)` | Placeholder with shimmer (none with Reduce Motion) |
 | `KXEmptyState` | SF Symbol on a light grey disc, bold title, message, optional action |
 | `KXBanner`, `.kxBanner(isPresented:placement:banner:)` | Offline, error, info and success banners with VoiceOver announcements; `overlay` or `inset` placement |
-| `KXWordmark` | The interim typographic "KARINEX" logo |
+| `KXWordmark` | The KARINEX store logo (template asset `KarinexLogo`, tinted, scales with Dynamic Type) |
 | `KXDivider` | Hairline divider, standard or ink accent, horizontal or vertical |
 
 Foundation helpers in `Foundation/`: `KXColor`, `KXTypography` (`.kxFont(_:)`, `KXFont`),

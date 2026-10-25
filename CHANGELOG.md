@@ -16,7 +16,7 @@ change.
   cream and gold "Editorial Luxe" design is replaced by a monochrome, photo-first design in the
   style of fashion retail apps. White pages, black type and capsule buttons, flat light grey
   panels, one sale red for savings and deals, every text in SF Pro (no serif). Dark mode is black
-  with white buttons. New app icon: a white "K" on black (interim until the final logo).
+  with white buttons. App icon: the white KARINEX store logo on black.
 - **Product photos edge to edge:** `.kxPhotoTile()` shows a photo on a light grey tile with a
   multiply blend, so white studio backgrounds disappear into the tile. Product cards are square
   photo tiles without card, border or shadow, with a regular two-line title.
@@ -31,6 +31,10 @@ change.
   "Zum Sortiment" button; the four brand facts are icon rows with hairlines
   (`KXTrustStrip` arrangement `.list`) instead of tiles. The KARINEX wordmark sits centered
   above the hero.
+- **Store logo:** `KXWordmark` now draws the KARINEX logo of the web shop (template asset
+  `KarinexLogo` in the DesignSystem resources, tinted like text, scaled with Dynamic Type) instead
+  of typeset letters. The source file is kept in `Tools/Brand/store-logo.png`, and the app icon
+  uses the same logo in white on black.
 - **Suche like a fashion retail app:** recent searches as removable grey chips in a scrolling
   row, suggestions as chips, and the categories as grey tiles with the bold name and a real
   product photo of the collection (the first product, loaded from Shopify), with light grey

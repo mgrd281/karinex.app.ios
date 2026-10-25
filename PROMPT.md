@@ -36,7 +36,7 @@ Target outcome: an App Store–approved app that measurably increases repeat pur
 
 **Activation:** Activation instructions differ per product and come from Shopify product content (metafields / description). Do not hardcode activation steps. Typical example: Office 2024 Pro Plus activates via "File > Account > Enter product key", not via office.com/setup.
 
-**Brand identity ("KARINEX Clean", owner decision of 2026-10-25):** black `#111111`, white `#FFFFFF` and neutral greys, one sale red `#C20E2B`, bold SF Pro headlines, product photos edge to edge on light grey, as in modern fashion retail apps (reference: the OACE app). It replaces the earlier green, cream and gold "Editorial Luxe" identity, which the owner rejected after the first TestFlight build. A logo redesign is pending; use a typographic wordmark "KARINEX" until final assets arrive.
+**Brand identity ("KARINEX Clean", owner decision of 2026-10-25):** black `#111111`, white `#FFFFFF` and neutral greys, one sale red `#C20E2B`, bold SF Pro headlines, product photos edge to edge on light grey, as in modern fashion retail apps (reference: the OACE app). It replaces the earlier green, cream and gold "Editorial Luxe" identity, which the owner rejected after the first TestFlight build. The logo is the KARINEX logo of the web shop (`Tools/Brand/store-logo.png`), drawn as a tinted template image.
 
 **Known content risks (must be respected in app copy):**
 - Never claim that the license chain / license origin was "verified" or "documented".
@@ -310,7 +310,7 @@ DoD: App Store submission package complete; zero P1 bugs; all budgets met.
 - `{{BFF_BASE_URL}}` (Railway service), APNs key handled server-side
 - `{{BUNDLE_ID}}`, `{{APPLE_TEAM_ID}}`, App Store Connect access, Universal Links entitlement for `karinex.de` (`apple-app-site-association` deployed on the domain)
 - Confirmed collection handles (windows, office, server, bestseller, blitzangebote), page handle for Impressum, blog handle, metafield definitions as listed in 5.1
-- Brand assets: logo (interim wordmark is acceptable), app icon (interim: a white "K" on black, replace with the final logo)
+- Brand assets: logo (delivered: the store logo), app icon (the white store logo on black until a dedicated icon arrives)
 - Reviewer account, test product and 100% discount code for App Review
 
 ---
