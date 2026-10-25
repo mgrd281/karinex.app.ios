@@ -53,7 +53,9 @@ final class AppRouter {
             .selectTab(.cart)
         case let .search(query) where query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty:
             .selectTab(.search)
-        case .product, .collection, .article, .search:
+        case .account(.overview):
+            .selectTab(.account)
+        case .product, .collection, .article, .search, .account:
             .push(route)
         }
     }
@@ -90,6 +92,8 @@ final class AppRouter {
             .search
         case .cart:
             .cart
+        case .account:
+            .account
         }
     }
 

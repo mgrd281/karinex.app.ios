@@ -163,3 +163,40 @@ public final class ShopifyCustomerAccountRepository: CustomerAccountRepository {
         try await client.execute(CustomerAddressDeleteMutation(addressID: id)).customerAddressDelete.throwingUserErrors()
     }
 }
+
+// MARK: - UnavailableCustomerAccountRepository
+
+/// The repository of builds without login (no client ID or shop ID): every call throws
+/// `CustomerAccountAuthError.signedOut`, so account screens show the signed-out state.
+public struct UnavailableCustomerAccountRepository: CustomerAccountRepository {
+    /// Creates the repository.
+    public init() {}
+
+    public func customer() async throws -> Customer {
+        throw CustomerAccountAuthError.signedOut
+    }
+
+    public func orders(first _: Int, after _: String?) async throws -> CustomerOrderPage {
+        throw CustomerAccountAuthError.signedOut
+    }
+
+    public func order(id _: ShopifyID) async throws -> CustomerOrder? {
+        throw CustomerAccountAuthError.signedOut
+    }
+
+    public func addresses() async throws -> CustomerAddressBook {
+        throw CustomerAccountAuthError.signedOut
+    }
+
+    public func createAddress(_: CustomerAddressInput, makeDefault _: Bool) async throws -> CustomerAddress {
+        throw CustomerAccountAuthError.signedOut
+    }
+
+    public func updateAddress(id _: ShopifyID, with _: CustomerAddressInput, makeDefault _: Bool) async throws -> CustomerAddress {
+        throw CustomerAccountAuthError.signedOut
+    }
+
+    public func deleteAddress(id _: ShopifyID) async throws {
+        throw CustomerAccountAuthError.signedOut
+    }
+}

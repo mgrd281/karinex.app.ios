@@ -1,3 +1,4 @@
+import BackendKit
 import CheckoutFeature
 import CommerceUI
 import Core
@@ -87,6 +88,21 @@ final class AppContainer {
     /// `-kx.market.confirm YES` is passed (see `MarketConfirmationPolicy`).
     let isMarketConfirmationEnabled: Bool
 
+    // MARK: - Account
+
+    /// The legal texts (shop policies and pages).
+    let legalRepository: any LegalContentRepository
+    /// The Customer Account API data of the signed-in customer.
+    let customerRepository: any CustomerAccountRepository
+    /// The login state.
+    let sessionStore: CustomerSessionStore
+    /// The KARINEX backend (BFF), or the fallback client while it does not exist.
+    let backendClient: any BackendClient
+    /// The Keychain cache of delivered license keys.
+    let licenseCache: LicenseKeyCache
+    /// Appearance and license lock.
+    let settingsStore: AppSettingsStore
+
     // MARK: - Init
 
     /// Composes the container.
@@ -166,6 +182,24 @@ final class AppContainer {
             arguments: launchArguments
         )
 
+        legalRepository = StorefrontLegalContentRepository(client: storefrontClient, contextProvider: contextProvider)
+        let account = AccountServices(configuration: resolution.configuration, services: services)
+        customerRepository = account.repository
+        backendClient = account.backend
+        let licenseCache = LicenseKeyCache(store: services.secureStore)
+        self.licenseCache = licenseCache
+        let sessionStore = CustomerSessionStore(
+            session: account.session,
+            repository: account.repository,
+            callbackScheme: resolution.configuration.customerAccountCallbackScheme,
+            hasStoredTokens: account.hasStoredTokens
+        )
+        sessionStore.onSignedOut = { [licenseCache] in
+            licenseCache.removeAll()
+        }
+        self.sessionStore = sessionStore
+        settingsStore = AppSettingsStore(store: services.preferences)
+
         let access = storefrontClient.isTokenless ? "tokenless" : "token"
         logger.info("App container ready: Storefront API \(resolution.configuration.storefrontAPIVersion), \(access)")
     }
@@ -175,6 +209,7 @@ final class AppContainer {
     /// Starts the shared state at launch: loads the store's markets (resolving the market on
     /// first launch) and re-reads the stored cart. Both run concurrently.
     func start() async {
+        sessionStore.start()
         async let market: Void = marketStore.start()
         async let cart: Void = cartStore.refresh()
         _ = await (market, cart)

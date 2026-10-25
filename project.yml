@@ -26,6 +26,8 @@ packages:
     path: Packages/Core
   ShopifyKit:
     path: Packages/ShopifyKit
+  Backend:
+    path: Packages/Backend
   DesignSystem:
     path: Packages/DesignSystem
   Features:
@@ -58,6 +60,9 @@ targets:
     dependencies:
       - package: Core
       - package: ShopifyKit
+      - package: Backend
+        products:
+          - BackendKit
       - package: DesignSystem
         products:
           - DesignSystem
@@ -72,6 +77,10 @@ targets:
           - AccountFeature
           - ProductFeature
           - CheckoutFeature
+          - LicensesFeature
+          - SupportFeature
+          - LegalFeature
+          - SettingsFeature
 
   KARINEXTests:
     type: bundle.unit-test
@@ -116,16 +125,23 @@ schemes:
         - KARINEX
         - package: Core/Core
         - package: ShopifyKit/ShopifyKit
+        - package: Backend/BackendKit
         - package: DesignSystem/DesignTokens
         - package: DesignSystem/DesignSystem
         - package: Features/CommerceUI
         - package: Features/ProductFeature
         - package: Features/CheckoutFeature
+        - package: Features/AccountFeature
+        - package: Features/LicensesFeature
+        - package: Features/SupportFeature
+        - package: Features/LegalFeature
+        - package: Features/SettingsFeature
       targets:
         - name: KARINEXTests
           parallelizable: false
         - package: Core/CoreTests
         - package: ShopifyKit/ShopifyKitTests
+        - package: Backend/BackendKitTests
         - package: DesignSystem/DesignTokensTests
         - package: DesignSystem/DesignSystemTests
         - package: Features/CommerceUITests

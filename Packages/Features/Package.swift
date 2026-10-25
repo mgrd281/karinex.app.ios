@@ -2,9 +2,8 @@
 import PackageDescription
 
 /// One library per feature. A feature depends only on the shared layers
-/// (`Core`, `DesignSystem`, `ShopifyKit`, `CommerceUI`), never on another feature;
-/// the App target composes them. New features (Licenses, Support, Legal, Settings)
-/// are added here in the phase that implements them.
+/// (`Core`, `DesignSystem`, `ShopifyKit`, `BackendKit`, `CommerceUI`), never on another
+/// feature; the App target composes them.
 let featureNames = [
     "HomeFeature",
     "CatalogFeature",
@@ -13,6 +12,10 @@ let featureNames = [
     "AccountFeature",
     "ProductFeature",
     "CheckoutFeature",
+    "LicensesFeature",
+    "SupportFeature",
+    "LegalFeature",
+    "SettingsFeature",
 ]
 
 /// Extra dependencies of single features. Only `CheckoutFeature` may import
@@ -28,6 +31,7 @@ let sharedFeatureDependencies: [Target.Dependency] = [
     .product(name: "Core", package: "Core"),
     .product(name: "DesignSystem", package: "DesignSystem"),
     .product(name: "ShopifyKit", package: "ShopifyKit"),
+    .product(name: "BackendKit", package: "Backend"),
     .byName(name: "CommerceUI"),
 ]
 
@@ -44,6 +48,7 @@ let package = Package(
         .package(path: "../Core"),
         .package(path: "../DesignSystem"),
         .package(path: "../ShopifyKit"),
+        .package(path: "../Backend"),
         .package(url: "https://github.com/kean/Nuke", from: "13.2.0"),
         .package(url: "https://github.com/Shopify/checkout-sheet-kit-swift", from: "3.9.2"),
     ],
@@ -58,6 +63,7 @@ let package = Package(
                 .product(name: "DesignSystem", package: "DesignSystem"),
                 .product(name: "DesignTokens", package: "DesignSystem"),
                 .product(name: "ShopifyKit", package: "ShopifyKit"),
+                .product(name: "BackendKit", package: "Backend"),
                 .product(name: "Nuke", package: "Nuke"),
                 .product(name: "NukeUI", package: "Nuke"),
             ],
@@ -78,11 +84,17 @@ let package = Package(
                 .product(name: "DesignSystem", package: "DesignSystem"),
                 .product(name: "DesignTokens", package: "DesignSystem"),
                 .product(name: "ShopifyKit", package: "ShopifyKit"),
+                .product(name: "BackendKit", package: "Backend"),
             ]
         ),
         .testTarget(
             name: "FeaturesTests",
-            dependencies: featureNames.map { .byName(name: $0) }
+            dependencies: featureNames.map { .byName(name: $0) } + [
+                .byName(name: "CommerceUI"),
+                .product(name: "Core", package: "Core"),
+                .product(name: "ShopifyKit", package: "ShopifyKit"),
+                .product(name: "BackendKit", package: "Backend"),
+            ]
         ),
     ]
 )

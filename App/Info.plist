@@ -49,6 +49,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Damit Sie Ihre Lizenzschlüssel mit Face ID entsperren können.</string>
 	<key>KXBackendHost</key>
 	<string>$(KX_BACKEND_HOST)</string>
 	<key>KXCustomerAccountAPIVersion</key>

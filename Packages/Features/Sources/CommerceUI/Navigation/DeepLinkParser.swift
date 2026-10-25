@@ -1,4 +1,5 @@
 import Foundation
+import ShopifyKit
 
 // MARK: - DeepLinkParser
 
@@ -13,11 +14,16 @@ import Foundation
 /// | `karinex://article/<blog>/<article>` | `.article(blogHandle:articleHandle:)` |
 /// | `karinex://search?q=<query>` | `.search(query:)` |
 /// | `karinex://cart` | `.cart` |
+/// | `karinex://account` | `.account(.overview)` |
+/// | `karinex://account/orders` | `.account(.orders)` |
+/// | `karinex://account/orders/<number>` | `.account(.order(id:))` |
+/// | `karinex://account/licenses` | `.account(.licenses(orderID: nil))` |
 ///
 /// Web URLs on `karinex.de` and `www.karinex.de` (http or https), with an optional Shopify
 /// locale prefix such as `/fr` or `/de-ch`:
 /// `/products/<handle>`, `/collections/<handle>`, `/collections/<collection>/products/<handle>`,
-/// `/blogs/<blog>/<article>`, `/cart` and `/search?q=<query>`.
+/// `/blogs/<blog>/<article>`, `/cart`, `/search?q=<query>`, `/account` and
+/// `/account/orders/<number>`.
 ///
 /// Everything else returns `nil`, so the caller can open the URL in the browser or ignore it.
 /// Handles are lowercased and must consist of letters, digits, `-` and `_`.
@@ -60,9 +66,36 @@ public enum DeepLinkParser {
             return .search(query: searchQuery(components))
         case ("cart", 0):
             return .cart
+        case ("account", _):
+            return accountRoute(Array(path))
         default:
             return nil
         }
+    }
+
+    /// `account`, `account/orders`, `account/orders/<number>` and `account/licenses` (the path
+    /// after `account`).
+    private static func accountRoute(_ path: [String]) -> CommerceRoute? {
+        switch path.map({ $0.lowercased() }) {
+        case []:
+            .account(.overview)
+        case ["orders"]:
+            .account(.orders)
+        case let segments where segments.count == 2 && segments[0] == "orders":
+            orderID(segments[1]).map { .account(.order(id: $0)) }
+        case ["licenses"]:
+            .account(.licenses(orderID: nil))
+        default:
+            nil
+        }
+    }
+
+    /// The order GID for a numeric order ID, e.g. `5678`.
+    static func orderID(_ segment: String) -> ShopifyID? {
+        guard !segment.isEmpty, segment.count <= 20, segment.unicodeScalars.allSatisfy({ ("0"..."9").contains($0) }) else {
+            return nil
+        }
+        return ShopifyID("gid://shopify/Order/\(segment)")
     }
 
     // MARK: Web
@@ -88,6 +121,8 @@ public enum DeepLinkParser {
             return .cart
         case ("search", 1):
             return .search(query: searchQuery(components))
+        case ("account", _):
+            return accountRoute(Array(path.dropFirst()))
         default:
             return nil
         }

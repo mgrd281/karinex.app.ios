@@ -1,3 +1,4 @@
+import BackendKit
 import Core
 import Foundation
 import ShopifyKit
@@ -36,6 +37,8 @@ public struct UserFacingError: Error, Sendable, Hashable {
         case rejected(messages: [String])
         /// The requested content does not exist (any more).
         case notFound
+        /// The customer is not signed in (anymore).
+        case signedOut
         /// Anything else, e.g. a decoding problem or missing access.
         case unknown
     }
@@ -69,7 +72,7 @@ public struct UserFacingError: Error, Sendable, Hashable {
         switch kind {
         case .offline, .timeout, .throttled, .server, .unknown:
             true
-        case .rejected, .notFound:
+        case .rejected, .notFound, .signedOut:
             false
         }
     }
@@ -87,6 +90,8 @@ public struct UserFacingError: Error, Sendable, Hashable {
             "exclamationmark.circle"
         case .notFound:
             "magnifyingglass"
+        case .signedOut:
+            "person.crop.circle.badge.exclamationmark"
         case .unknown:
             "exclamationmark.triangle"
         }
@@ -107,6 +112,8 @@ public struct UserFacingError: Error, Sendable, Hashable {
             String(localized: "commerce.error.rejected.title", bundle: .module)
         case .notFound:
             String(localized: "commerce.error.not_found.title", bundle: .module)
+        case .signedOut:
+            String(localized: "commerce.error.signed_out.title", bundle: .module)
         case .unknown:
             String(localized: "commerce.error.unknown.title", bundle: .module)
         }
@@ -132,6 +139,8 @@ public struct UserFacingError: Error, Sendable, Hashable {
             return joined.isEmpty ? String(localized: "commerce.error.unknown.message", bundle: .module) : joined
         case .notFound:
             return String(localized: "commerce.error.not_found.message", bundle: .module)
+        case .signedOut:
+            return String(localized: "commerce.error.signed_out.message", bundle: .module)
         case .unknown:
             return String(localized: "commerce.error.unknown.message", bundle: .module)
         }
@@ -151,6 +160,7 @@ public struct UserFacingError: Error, Sendable, Hashable {
         case .server: "server"
         case .rejected: "rejected"
         case .notFound: "notFound"
+        case .signedOut: "signedOut"
         case .unknown: "unknown"
         }
     }
@@ -168,6 +178,10 @@ public struct UserFacingError: Error, Sendable, Hashable {
             kind(for: error)
         case let error as URLError:
             kind(for: NetworkError(urlError: error))
+        case let error as CustomerAccountAuthError:
+            kind(for: error)
+        case let error as BackendError:
+            kind(for: error)
         case is CancellationError:
             nil
         default:
@@ -198,6 +212,38 @@ public struct UserFacingError: Error, Sendable, Hashable {
         case .notFound:
             .notFound
         case .accessDenied, .decoding:
+            .unknown
+        }
+    }
+
+    private static func kind(for error: CustomerAccountAuthError) -> Kind? {
+        switch error {
+        case .cancelled:
+            nil
+        case let .network(networkError):
+            kind(for: networkError)
+        case .signedOut, .invalidGrant:
+            .signedOut
+        case let .tokenEndpoint(statusCode, _):
+            statusCode >= 500 ? .server : .unknown
+        case .notConfigured, .invalidCallback, .stateMismatch, .authorizationFailed, .invalidIDToken, .decoding:
+            .unknown
+        }
+    }
+
+    private static func kind(for error: BackendError) -> Kind? {
+        switch error {
+        case let .network(networkError):
+            kind(for: networkError)
+        case .rateLimited:
+            .throttled
+        case let .server(statusCode, _, _):
+            statusCode >= 500 ? .server : .unknown
+        case .notFound, .forbidden:
+            .notFound
+        case .unauthorized:
+            .signedOut
+        case .notConfigured, .decoding:
             .unknown
         }
     }

@@ -18,4 +18,6 @@ public enum CommerceRoute: Hashable, Sendable {
     case search(query: String)
     /// The cart tab.
     case cart
+    /// A screen of the account area.
+    case account(AccountDestination)
 }

@@ -4,9 +4,14 @@ import CatalogFeature
 import CheckoutFeature
 import CommerceUI
 import Core
+import DesignSystem
 import HomeFeature
+import LegalFeature
+import LicensesFeature
 import ProductFeature
 import SearchFeature
+import SettingsFeature
+import SupportFeature
 import SwiftUI
 
 // MARK: - RootView
@@ -80,7 +85,12 @@ struct RootView: View {
         .onChange(of: scenePhase) { _, phase in
             handle(phase)
         }
-        .preferredColorScheme(container.launchEnvironment.forcedAppearance?.colorScheme)
+        .overlay {
+            if scenePhase != .active {
+                PrivacyCover()
+            }
+        }
+        .preferredColorScheme(container.launchEnvironment.forcedAppearance?.colorScheme ?? container.settingsStore.appearance.colorScheme)
     }
 
     // MARK: Tabs
@@ -120,11 +130,17 @@ struct RootView: View {
         case .cart:
             cartScreen(in: .cart)
         case .account:
-            AccountView(
-                appVersion: container.configuration.appVersion,
-                buildNumber: container.configuration.buildNumber
-            )
+            accountOverview(in: .account)
         }
+    }
+
+    private func accountOverview(in tab: AppTab) -> some View {
+        AccountView(
+            sessionStore: container.sessionStore,
+            appVersion: container.configuration.appVersion,
+            buildNumber: container.configuration.buildNumber,
+            onRoute: { router.open($0, from: tab) }
+        )
     }
 
     /// The screen of a route pushed onto the stack of `tab`.
@@ -154,7 +170,61 @@ struct RootView: View {
             // The router switches to the Warenkorb tab instead of pushing `.cart`; the mapping
             // exists so every route has a screen.
             cartScreen(in: tab)
+        case let .account(destination):
+            accountScreen(for: destination, in: tab)
         }
+    }
+
+    /// The screen of an account destination.
+    @ViewBuilder
+    private func accountScreen(for destination: AccountDestination, in tab: AppTab) -> some View {
+        let onRoute: @MainActor (CommerceRoute) -> Void = { router.open($0, from: tab) }
+        switch destination {
+        case .overview:
+            accountOverview(in: tab)
+        case .orders:
+            OrdersScreen(repository: container.customerRepository, backend: container.backendClient, onRoute: onRoute)
+        case let .order(id):
+            OrderDetailScreen(orderID: id, repository: container.customerRepository, backend: container.backendClient, onRoute: onRoute)
+        case let .licenses(orderID):
+            LicenseVaultScreen(
+                orderID: orderID,
+                backend: container.backendClient,
+                cache: container.licenseCache,
+                locksVault: container.settingsStore.locksLicenses,
+                onRoute: onRoute
+            )
+        case .addresses:
+            AddressesScreen(repository: container.customerRepository, countries: addressCountries)
+        case let .support(orderName):
+            SupportScreen(orderName: orderName, backend: container.backendClient, content: container.contentRepository, onRoute: onRoute)
+        case .legal:
+            LegalListScreen(onRoute: onRoute)
+        case let .legalDocument(kind):
+            LegalDocumentScreen(kind: kind, repository: container.legalRepository)
+        case .settings:
+            SettingsScreen(
+                marketStore: container.marketStore,
+                settings: container.settingsStore,
+                consentStore: container.consentStore,
+                appVersion: AccountVersionText.summary(
+                    version: container.configuration.appVersion,
+                    build: container.configuration.buildNumber
+                ),
+                onRoute: onRoute
+            )
+        case .deleteAccount:
+            DeleteAccountScreen(backend: container.backendClient, sessionStore: container.sessionStore)
+        }
+    }
+
+    /// The countries of the address form: the store's markets, or Germany before they loaded.
+    private var addressCountries: [AddressCountryOption] {
+        let countries = container.marketStore.availableCountries()
+        guard !countries.isEmpty else {
+            return [AddressCountryOption(code: "DE", name: Locale.current.localizedString(forRegionCode: "DE") ?? "DE")]
+        }
+        return countries.map { AddressCountryOption(code: $0.isoCode.rawValue, name: MarketStore.displayName(of: $0)) }
     }
 
     private func cartScreen(in tab: AppTab) -> some View {
