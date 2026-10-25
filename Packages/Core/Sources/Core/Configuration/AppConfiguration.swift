@@ -26,6 +26,10 @@ public struct AppConfiguration: Sendable, Equatable {
         public static let customerAccountAPIVersion = "KXCustomerAccountAPIVersion"
         /// Customer Account API public client ID. Optional until login ships.
         public static let customerAccountClientID = "KXCustomerAccountClientID"
+        /// Numeric Shopify shop ID, e.g. `91753283851`. Optional; needed for the login redirect.
+        public static let shopID = "KXShopID"
+        /// Host of the KARINEX backend (BFF), e.g. `app-api.karinex.de`. Optional.
+        public static let backendHost = "KXBackendHost"
         /// Marketing version (`MARKETING_VERSION`). Required.
         public static let appVersion = "CFBundleShortVersionString"
         /// Build number (`CURRENT_PROJECT_VERSION`). Required.
@@ -51,6 +55,10 @@ public struct AppConfiguration: Sendable, Equatable {
     public let appVersion: String
     /// Build number of the app, e.g. `42`.
     public let buildNumber: String
+    /// Numeric Shopify shop ID, e.g. `91753283851`, or `nil` when not configured.
+    public let shopID: String?
+    /// Host of the KARINEX backend (BFF), or `nil` while the backend does not exist yet.
+    public let backendHost: String?
 
     // MARK: - Init
 
@@ -68,7 +76,9 @@ public struct AppConfiguration: Sendable, Equatable {
         customerAccountAPIVersion: String,
         customerAccountClientID: String?,
         appVersion: String,
-        buildNumber: String
+        buildNumber: String,
+        shopID: String? = nil,
+        backendHost: String? = nil
     ) {
         self.shopDomain = shopDomain
         self.storeWebDomain = storeWebDomain
@@ -78,6 +88,8 @@ public struct AppConfiguration: Sendable, Equatable {
         self.customerAccountClientID = customerAccountClientID
         self.appVersion = appVersion
         self.buildNumber = buildNumber
+        self.shopID = shopID
+        self.backendHost = backendHost
     }
 
     /// Reads and validates the configuration from an `Info.plist` dictionary.
@@ -112,6 +124,15 @@ public struct AppConfiguration: Sendable, Equatable {
             )
         }
 
+        let shopID = try reader.optional(InfoKey.shopID)
+        if let shopID, shopID.isEmpty || !shopID.utf8.allSatisfy(Self.isASCIIDigit) {
+            throw ConfigurationError.invalidValue(key: InfoKey.shopID, value: shopID)
+        }
+        let backendHost = try reader.optional(InfoKey.backendHost)?.lowercased()
+        if let backendHost, !Self.isValidHost(backendHost) {
+            throw ConfigurationError.invalidValue(key: InfoKey.backendHost, value: backendHost)
+        }
+
         try self.init(
             shopDomain: shopDomain,
             storeWebDomain: storeWebDomain,
@@ -120,7 +141,9 @@ public struct AppConfiguration: Sendable, Equatable {
             customerAccountAPIVersion: customerAccountAPIVersion,
             customerAccountClientID: reader.optional(InfoKey.customerAccountClientID),
             appVersion: reader.required(InfoKey.appVersion),
-            buildNumber: reader.required(InfoKey.buildNumber)
+            buildNumber: reader.required(InfoKey.buildNumber),
+            shopID: shopID,
+            backendHost: backendHost
         )
     }
 
@@ -145,7 +168,9 @@ public struct AppConfiguration: Sendable, Equatable {
         customerAccountAPIVersion: "2026-10",
         customerAccountClientID: nil,
         appVersion: "0.1.0",
-        buildNumber: "1"
+        buildNumber: "1",
+        shopID: "91753283851",
+        backendHost: nil
     )
 
     // MARK: - Derived values
@@ -182,6 +207,32 @@ public struct AppConfiguration: Sendable, Equatable {
     /// `https://{storeWebDomain}/.well-known/openid-configuration`.
     public var openIDConfigurationURL: URL {
         Self.httpsURL(host: storeWebDomain, path: "/.well-known/openid-configuration")
+    }
+
+    /// The OAuth redirect URI of the Customer Account API login:
+    /// `shop.{shopID}.app://callback`. Shopify requires mobile public clients to use the custom
+    /// scheme `shop.{shop_id}.*`, and the URI must be registered under Callback URLs in the
+    /// Customer Account API settings. `nil` without a shop ID.
+    public var customerAccountRedirectURI: URL? {
+        guard let scheme = customerAccountCallbackScheme else { return nil }
+        return URL(string: "\(scheme)://callback")
+    }
+
+    /// The custom URL scheme of `customerAccountRedirectURI`, e.g. `shop.91753283851.app`.
+    public var customerAccountCallbackScheme: String? {
+        guard let shopID, !shopID.isEmpty else { return nil }
+        return "shop.\(shopID).app"
+    }
+
+    /// Whether login can run: a client ID and a shop ID (for the redirect URI) are configured.
+    public var isLoginConfigured: Bool {
+        isCustomerAccountConfigured && customerAccountRedirectURI != nil
+    }
+
+    /// The base URL of the KARINEX backend, `https://{backendHost}`, or `nil` without a host.
+    public var backendBaseURL: URL? {
+        guard let backendHost, Self.isValidHost(backendHost) else { return nil }
+        return Self.httpsURL(host: backendHost, path: "")
     }
 
     // MARK: - Validation
@@ -296,7 +347,8 @@ extension AppConfiguration: CustomStringConvertible, CustomDebugStringConvertibl
         storefrontAPIVersion: \(storefrontAPIVersion), storefrontAccessToken: \(Self.mask(storefrontAccessToken)), \
         customerAccountAPIVersion: \(customerAccountAPIVersion), \
         customerAccountClientID: \(Self.mask(customerAccountClientID)), \
-        appVersion: \(appVersion), buildNumber: \(buildNumber))
+        appVersion: \(appVersion), buildNumber: \(buildNumber), \
+        shopID: \(shopID ?? "nil"), backendHost: \(backendHost ?? "nil"))
         """
     }
 
@@ -319,6 +371,8 @@ extension AppConfiguration: CustomStringConvertible, CustomDebugStringConvertibl
                 "customerAccountClientID": Self.mask(customerAccountClientID),
                 "appVersion": appVersion,
                 "buildNumber": buildNumber,
+                "shopID": shopID ?? "nil",
+                "backendHost": backendHost ?? "nil",
             ],
             displayStyle: .struct
         )

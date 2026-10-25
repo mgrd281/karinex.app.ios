@@ -64,7 +64,7 @@ final class CommerceUITests: XCTestCase {
         let line = app.descendants(matching: .any).matching(NSPredicate(format: "identifier BEGINSWITH 'cart.line.'")).firstMatch
         XCTAssertTrue(
             line.waitForExistence(timeout: networkTimeout),
-            "The cart shows no line. Hierarchy:\n\(String(app.debugDescription.prefix(6000)))"
+            "The cart shows no line. Hierarchy: \(Self.singleLine(app.debugDescription))"
         )
         XCTAssertTrue(element("cart.total", in: app).exists, "The cart shows no total")
 
@@ -133,6 +133,13 @@ final class CommerceUITests: XCTestCase {
         ]
         app.launch()
         return app
+    }
+
+    /// `text` on one line (CI log formatters keep only the first line of a failure message),
+    /// limited to `limit` characters.
+    private static func singleLine(_ text: String, limit: Int = 12000) -> String {
+        let lines = text.split(whereSeparator: \.isNewline).map { $0.trimmingCharacters(in: .whitespaces) }
+        return String(lines.joined(separator: " | ").prefix(limit))
     }
 
     /// Any element with `identifier`.

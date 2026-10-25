@@ -49,12 +49,16 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>KXBackendHost</key>
+	<string>$(KX_BACKEND_HOST)</string>
 	<key>KXCustomerAccountAPIVersion</key>
 	<string>$(KX_CUSTOMER_ACCOUNT_API_VERSION)</string>
 	<key>KXCustomerAccountClientID</key>
 	<string>$(KX_CUSTOMER_ACCOUNT_CLIENT_ID)</string>
 	<key>KXShopDomain</key>
 	<string>$(KX_SHOP_DOMAIN)</string>
+	<key>KXShopID</key>
+	<string>$(KX_SHOP_ID)</string>
 	<key>KXStoreWebDomain</key>
 	<string>$(KX_STORE_WEB_DOMAIN)</string>
 	<key>KXStorefrontAPIVersion</key>

@@ -53,7 +53,9 @@ struct ConfigurationResolution: Equatable, Sendable {
             customerAccountAPIVersion: preview.customerAccountAPIVersion,
             customerAccountClientID: nil,
             appVersion: resolvedValue(for: AppConfiguration.InfoKey.appVersion, in: infoDictionary) ?? preview.appVersion,
-            buildNumber: resolvedValue(for: AppConfiguration.InfoKey.buildNumber, in: infoDictionary) ?? preview.buildNumber
+            buildNumber: resolvedValue(for: AppConfiguration.InfoKey.buildNumber, in: infoDictionary) ?? preview.buildNumber,
+            shopID: preview.shopID,
+            backendHost: nil
         )
     }
 

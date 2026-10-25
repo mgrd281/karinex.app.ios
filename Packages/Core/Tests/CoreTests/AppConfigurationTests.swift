@@ -86,6 +86,40 @@ struct AppConfigurationTests {
         #expect(preview.storefrontEndpoint.absoluteString == "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json")
     }
 
+    @Test("The shop ID gives the login redirect URI of Shopify's mobile scheme")
+    func loginRedirect() throws {
+        let configuration = try AppConfiguration(infoDictionary: Self.info(setting: "KXShopID", to: " 91753283851 "))
+        #expect(configuration.shopID == "91753283851")
+        #expect(configuration.customerAccountCallbackScheme == "shop.91753283851.app")
+        #expect(configuration.customerAccountRedirectURI?.absoluteString == "shop.91753283851.app://callback")
+        #expect(configuration.isLoginConfigured)
+
+        let withoutShopID = try AppConfiguration(infoDictionary: Self.validInfo())
+        #expect(withoutShopID.customerAccountRedirectURI == nil)
+        #expect(!withoutShopID.isLoginConfigured)
+        #expect(AppConfiguration.preview.customerAccountRedirectURI?.absoluteString == "shop.91753283851.app://callback")
+        #expect(!AppConfiguration.preview.isLoginConfigured)
+    }
+
+    @Test("A shop ID that is not numeric is rejected", arguments: ["91753a", "-1", "9 1"])
+    func invalidShopID(value: String) {
+        #expect(throws: ConfigurationError.invalidValue(key: "KXShopID", value: value)) {
+            try AppConfiguration(infoDictionary: Self.info(setting: "KXShopID", to: value))
+        }
+    }
+
+    @Test("The backend host gives the BFF base URL; without it there is no backend")
+    func backendHost() throws {
+        let configuration = try AppConfiguration(infoDictionary: Self.info(setting: "KXBackendHost", to: "App-API.karinex.de"))
+        #expect(configuration.backendHost == "app-api.karinex.de")
+        #expect(configuration.backendBaseURL?.absoluteString == "https://app-api.karinex.de")
+        #expect(try AppConfiguration(infoDictionary: Self.validInfo()).backendBaseURL == nil)
+        #expect(try AppConfiguration(infoDictionary: Self.info(setting: "KXBackendHost", to: "$(KX_BACKEND_HOST)")).backendHost == nil)
+        #expect(throws: ConfigurationError.invalidValue(key: "KXBackendHost", value: "https://x.de")) {
+            try AppConfiguration(infoDictionary: Self.info(setting: "KXBackendHost", to: "https://x.de"))
+        }
+    }
+
     // MARK: - Optional keys
 
     @Test(
