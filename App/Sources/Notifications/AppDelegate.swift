@@ -35,15 +35,25 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
 
     nonisolated func userNotificationCenter(
         _: UNUserNotificationCenter,
-        willPresent _: UNNotification
+        willPresent notification: UNNotification
     ) async -> UNNotificationPresentationOptions {
-        [.banner, .list, .sound]
+        if let payload = PushPayload(userInfo: notification.request.content.userInfo) {
+            await receive(payload, opened: false)
+        }
+        return [.banner, .list, .sound]
     }
 
     nonisolated func userNotificationCenter(_: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         guard let payload = PushPayload(userInfo: response.notification.request.content.userInfo) else { return }
-        await MainActor.run {
-            pushCoordinator?.didOpen(payload)
+        await receive(payload, opened: true)
+    }
+
+    @MainActor
+    private func receive(_ payload: PushPayload, opened: Bool) async {
+        if opened {
+            await pushCoordinator?.didOpen(payload)
+        } else {
+            await pushCoordinator?.didReceive(payload)
         }
     }
 }

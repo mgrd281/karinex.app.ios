@@ -5,6 +5,14 @@ import Foundation
 import ShopifyKit
 import Testing
 
+// MARK: - CallCounter
+
+/// Counts calls of a `@MainActor` callback.
+@MainActor
+final class CallCounter {
+    var count = 0
+}
+
 // MARK: - Deep links
 
 @Suite("Account deep links")
@@ -89,8 +97,8 @@ struct CustomerSessionStoreTests {
     @Test("Without a client ID login is unavailable")
     func unavailable() async {
         let store = CustomerSessionStore(session: nil, repository: nil, callbackScheme: nil, hasStoredTokens: true)
-        var signedOutCalls = 0
-        store.onSignedOut = { signedOutCalls += 1 }
+        let signedOutCalls = CallCounter()
+        store.onSignedOut = { signedOutCalls.count += 1 }
 
         #expect(store.status == .unavailable)
         #expect(!store.isAvailable)
@@ -101,7 +109,7 @@ struct CustomerSessionStoreTests {
         }
         #expect(store.status == .unavailable)
         #expect(await store.signOut() == nil)
-        #expect(signedOutCalls == 0)
+        #expect(signedOutCalls.count == 0)
     }
 }
 

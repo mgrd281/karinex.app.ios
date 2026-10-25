@@ -179,13 +179,17 @@ struct PushRegistrationTests {
         #expect(system.unregistrations == 1)
     }
 
-    @Test("A tapped notification becomes a deep link")
-    func tap() {
+    @Test("A tapped notification becomes a deep link and reports the delivery")
+    func tap() async {
         let coordinator = makeCoordinator()
+        let deliveries = CallCounter()
+        coordinator.onLicenseDelivered = { deliveries.count += 1 }
 
-        coordinator.didOpen(.licenseDelivered(orderID: "5678"))
+        await coordinator.didOpen(.licenseDelivered(orderID: "5678"))
+        await coordinator.didReceive(.orderPaid(orderID: "5678"))
 
         #expect(coordinator.pendingURL?.absoluteString == "karinex://account/licenses")
+        #expect(deliveries.count == 1)
     }
 }
 

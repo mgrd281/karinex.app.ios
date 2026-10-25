@@ -108,6 +108,8 @@ final class AppContainer {
     let savedProductsStore: SavedProductsStore
     /// Push registration, only after consent.
     let pushCoordinator: PushRegistrationCoordinator
+    /// The license delivery Live Activity.
+    let liveActivities: LiveActivityController
 
     // MARK: - Init
 
@@ -208,13 +210,19 @@ final class AppContainer {
         self.sessionStore = sessionStore
         settingsStore = AppSettingsStore(store: services.preferences)
         savedProductsStore = SavedProductsStore(store: services.preferences)
-        pushCoordinator = PushRegistrationCoordinator(
+        let pushCoordinator = PushRegistrationCoordinator(
             system: SystemRemoteNotifications(),
             backend: account.backend,
             consentStore: consentStore,
             languageCode: { Bundle.main.preferredLocalizations.first ?? "de" },
             countryCode: { [marketStore] in marketStore.selection.country.rawValue }
         )
+        let liveActivities = LiveActivityController(consentStore: consentStore, backend: account.backend)
+        pushCoordinator.onLicenseDelivered = { [liveActivities] in
+            await liveActivities.markAllDelivered()
+        }
+        self.pushCoordinator = pushCoordinator
+        self.liveActivities = liveActivities
 
         let access = storefrontClient.isTokenless ? "tokenless" : "token"
         logger.info("App container ready: Storefront API \(resolution.configuration.storefrontAPIVersion), \(access)")

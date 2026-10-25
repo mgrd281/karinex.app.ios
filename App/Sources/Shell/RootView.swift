@@ -67,7 +67,8 @@ struct RootView: View {
         .commerceCountry(container.marketStore.selection.country)
         .environment(container.savedProductsStore)
         .environment(\.productLookup, container.productLookup)
-        .kxCheckout(isPresented: $isCheckoutPresented, cartStore: container.cartStore) { _ in
+        .kxCheckout(isPresented: $isCheckoutPresented, cartStore: container.cartStore) { order in
+            container.liveActivities.startDelivery(orderReference: order.id)
             router.finishCheckout()
         }
         .sheet(isPresented: $isMarketSheetPresented) {
@@ -269,6 +270,9 @@ struct RootView: View {
             wasInBackground = false
             Task {
                 await container.cartStore.refresh()
+            }
+            Task {
+                await container.liveActivities.refresh()
             }
         default:
             break

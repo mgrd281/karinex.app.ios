@@ -40,6 +40,8 @@ public final class PushRegistrationCoordinator {
     public var pendingURL: URL?
     /// Whether iOS refused the permission; the settings then point to the iOS settings.
     public private(set) var isPermissionDenied = false
+    /// Called when a `license.delivered` push arrives or is tapped; the App ends the Live Activity.
+    @ObservationIgnored public var onLicenseDelivered: (@MainActor () async -> Void)?
 
     @ObservationIgnored private let system: any RemoteNotificationRegistering
     @ObservationIgnored private let backend: any BackendClient
@@ -123,9 +125,17 @@ public final class PushRegistrationCoordinator {
         logger.notice("APNs registration failed")
     }
 
+    /// Called when a notification with a KARINEX payload arrives while the app is open.
+    public func didReceive(_ payload: PushPayload) async {
+        if case .licenseDelivered = payload {
+            await onLicenseDelivered?()
+        }
+    }
+
     /// Called when the customer tapped a notification with a KARINEX payload.
-    public func didOpen(_ payload: PushPayload) {
+    public func didOpen(_ payload: PushPayload) async {
         pendingURL = payload.deepLink
+        await didReceive(payload)
     }
 
     // MARK: Private

@@ -45,6 +45,7 @@ targets:
     sources:
       - path: App/Sources
       - path: App/Resources
+      - path: App/Widgets/Shared
     settings:
       base:
         PRODUCT_NAME: KARINEX
@@ -58,6 +59,7 @@ targets:
         ENABLE_PREVIEWS: YES
         TARGETED_DEVICE_FAMILY: "1,2"
     dependencies:
+      - target: KARINEXWidgets
       - package: Core
       - package: ShopifyKit
       - package: Backend
@@ -81,6 +83,29 @@ targets:
           - SupportFeature
           - LegalFeature
           - SettingsFeature
+
+  KARINEXWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: App/Widgets/Extension
+      - path: App/Widgets/Shared
+      - path: App/Resources/Localizable.xcstrings
+    settings:
+      base:
+        PRODUCT_NAME: KARINEXWidgets
+        PRODUCT_BUNDLE_IDENTIFIER: $(KX_BUNDLE_ID).widgets
+        INFOPLIST_FILE: App/Widgets/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        APPLICATION_EXTENSION_API_ONLY: YES
+        SKIP_INSTALL: YES
+        TARGETED_DEVICE_FAMILY: "1,2"
+    dependencies:
+      - package: Core
+      - package: ShopifyKit
+      - package: DesignSystem
+        products:
+          - DesignTokens
 
   KARINEXTests:
     type: bundle.unit-test
