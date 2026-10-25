@@ -68,7 +68,7 @@ struct DeepLinkParserTests {
         "https://www.karinex.de/pages/impressum",
         "https://www.karinex.de/blogs/guides",
         "https://www.karinex.de/products",
-        "https://www.karinex.de/account/orders/1",
+        "https://www.karinex.de/account/orders/abc",
         "https://www.karinex.de/collections/a/b",
         "https://shop.karinex.de/products/windows-11-pro",
         "https://karinex.de.example.com/products/windows-11-pro",
