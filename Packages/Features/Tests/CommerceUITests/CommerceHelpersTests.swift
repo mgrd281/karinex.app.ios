@@ -102,3 +102,17 @@ struct CommerceHelpersTests {
         #expect(RichTextStyle.headingStyle(level: 5) == .headline)
     }
 }
+
+// MARK: - Cart bag
+
+@Suite("Cart bag icon")
+struct CartBagIconTests {
+    @Test("The figure beside the bag is the count up to 99, then 99+, and nothing for an empty cart")
+    func figure() {
+        #expect(CartBagIcon.figure(for: 0).isEmpty)
+        #expect(CartBagIcon.figure(for: -1).isEmpty)
+        #expect(CartBagIcon.figure(for: 1) == "1")
+        #expect(CartBagIcon.figure(for: 99) == "99")
+        #expect(CartBagIcon.figure(for: 100) == "99+")
+    }
+}

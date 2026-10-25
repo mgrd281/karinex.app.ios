@@ -702,7 +702,9 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
   description), "So läuft es ab" and "Aktivierung", the "Passend dazu" row (Shopify's `COMPLEMENTARY`
   recommendations, loaded in parallel with the comparison row of `RELATED` recommendations),
   FAQ, the 100-day promise with its condition, the withdrawal notice for digital goods, and a
-  sticky purchase bar. Sections without data are omitted, never faked.
+  sticky purchase bar. Sections without data are omitted, never faked. `ProductToolbar` puts the
+  share arrow and the shopping bag with the cart's item count (`CartBagIcon`, opens the cart)
+  into the navigation bar as plain symbols (no glass circle on iOS 26).
 - `CatalogFeature`: the Shop tab laid out like the category pages of fashion retail apps
   (`CatalogDirectory` decides the sections: the bestseller and sale collections as two large
   cards, ink and sale red; the product families as rows with a short line and a photo; the

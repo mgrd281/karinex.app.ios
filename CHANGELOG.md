@@ -46,6 +46,10 @@ change.
   Ratgeber as tall story tiles and the support card. The modules and their store collections are
   described by `HomeModules`; the hero with "Zum Sortiment" is gone, and so is the chip bar
   above the tab bar (owner request).
+- **Product page bar like About You** (owner request): the share arrow and a shopping bag with
+  the number of items (it opens the cart, `CartBagIcon` in CommerceUI) sit in the navigation
+  bar as plain symbols; on iOS 26 without the glass circle (`ProductToolbar`,
+  `sharedBackgroundVisibility(.hidden)`).
 - **Shop tab like a top retail app** (owner request): the bestsellers and the sale open the
   tab as two large cards (ink and sale red) with a product photo, the product families follow
   as rows with a short line and the photo of their first product, the single versions as chips

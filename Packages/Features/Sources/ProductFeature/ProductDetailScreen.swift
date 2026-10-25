@@ -16,7 +16,8 @@ import SwiftUI
 /// activation instructions (when the store provides them) as collapsible rows, the money-back
 /// conditions and, for digital variants, the right of withdrawal notice, similar products and
 /// the FAQ (when present). A sticky bar keeps the price and "In den Warenkorb" in reach; the
-/// toolbar shares the product page of the web shop.
+/// navigation bar shares the product page of the web shop and shows the shopping bag with the
+/// number of items, which opens the cart (``ProductToolbar``).
 ///
 /// Every product fact comes from Shopify. The screen adds no ratings and no claims.
 ///
@@ -35,6 +36,7 @@ public struct ProductDetailScreen: View {
     @State private var model: ProductDetailViewModel
     @State private var isTitleVisible = true
 
+    private let cartStore: CartStore
     private let onRoute: @MainActor (CommerceRoute) -> Void
     private let onBuyNow: @MainActor () -> Void
 
@@ -59,6 +61,7 @@ public struct ProductDetailScreen: View {
         onBuyNow: @escaping @MainActor () -> Void
     ) {
         _model = State(initialValue: ProductDetailViewModel(handle: handle, catalog: catalog, cartStore: cartStore))
+        self.cartStore = cartStore
         self.onRoute = onRoute
         self.onBuyNow = onBuyNow
     }
@@ -90,29 +93,15 @@ public struct ProductDetailScreen: View {
         .kxScreenBackground()
         .navigationTitle(Text(verbatim: model.product?.title ?? String()))
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text(verbatim: model.product?.title ?? String())
-                    .kxFont(.headline)
-                    .foregroundStyle(KXColor.textPrimary)
-                    .lineLimit(1)
-                    .opacity(isTitleVisible ? 0 : 1)
-                    .accessibilityHidden(isTitleVisible)
-                    .kxAnimation(.fade, value: isTitleVisible)
-            }
-            if let url = model.product?.onlineStoreUrl {
-                ToolbarItem(placement: .primaryAction) {
-                    ShareLink(item: url, subject: Text(verbatim: model.product?.title ?? String())) {
-                        Label {
-                            Text("product.share", bundle: .module)
-                        } icon: {
-                            Image(systemName: "square.and.arrow.up")
-                        }
-                    }
-                    .accessibilityIdentifier("product.share")
-                }
-            }
-        }
+        .modifier(
+            ProductToolbar(
+                title: model.product?.title ?? String(),
+                isTitleVisible: isTitleVisible,
+                shareURL: model.product?.onlineStoreUrl,
+                cartCount: cartStore.itemCount,
+                onCart: { onRoute(.cart) }
+            )
+        )
         .safeAreaInset(edge: .bottom, spacing: 0) {
             if let variant = model.selectedVariant {
                 ProductPurchaseBar(
