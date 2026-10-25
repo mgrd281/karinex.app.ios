@@ -161,13 +161,8 @@ struct BackendCustomerTests {
                 [json(##"{"orders": [{"orderId": "5678", "name": "#1042", "deliveryStatus": "delivered", "hasLicenses": true}]}"##)]
             )
         let orders = try await makeClient(http).orders()
-        #expect(orders == [BackendOrderStatus(
-            orderID: "5678",
-            name: "#1042",
-            deliveryStatus: .delivered,
-            hasLicenses: true,
-            hasInvoice: true
-        )])
+        let expected = BackendOrderStatus(orderID: "5678", name: "#1042", deliveryStatus: .delivered, hasLicenses: true, hasInvoice: true)
+        #expect(orders == [expected])
         #expect(http.requests[0].value(forHeader: "Authorization") == "Bearer shcat_token")
     }
 

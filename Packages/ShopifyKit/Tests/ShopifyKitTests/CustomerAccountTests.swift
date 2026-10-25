@@ -598,11 +598,8 @@ struct CustomerAccountAPITests {
               "userErrors": [{"field": ["address", "zip"], "message": "Postleitzahl ist ungültig", "code": "INVALID"}]}}}
             """
         let (repository, http, _) = try await Self.makeRepository(graphQL: [.json(errors)])
-        await #expect(throws: ShopifyError.userErrors([UserError(
-            field: ["address", "zip"],
-            message: "Postleitzahl ist ungültig",
-            code: .invalid
-        )])) {
+        let expected = UserError(field: ["address", "zip"], message: "Postleitzahl ist ungültig", code: .invalid)
+        await #expect(throws: ShopifyError.userErrors([expected])) {
             try await repository.createAddress(CustomerAddressInput(zip: "x", territoryCode: "DE"), makeDefault: false)
         }
         let body = try SentGraphQLBody(#require(http.requests(to: "/customer/api/2026-10/graphql").first))
