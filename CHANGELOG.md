@@ -46,6 +46,9 @@ change.
   Ratgeber as tall story tiles and the support card. The modules and their store collections are
   described by `HomeModules`; the hero with "Zum Sortiment" is gone, and so is the chip bar
   above the tab bar (owner request).
+- **Cart bag like About You** (owner request): the Warenkorb tab and the product page bar show
+  one thin outline bag with the number of items beside it at half its height (`CartBagIcon` in
+  CommerceUI, used by the tab icon); the other tab symbols stay as they are.
 - **Cart lines like the lists of About You** (owner request): each line shows the photo on its
   light tile with the reduction in sale red at its lower edge, the vendor in capitals, the
   title, the price in sale red with "Ursprünglich" and the former price below it, the quantity

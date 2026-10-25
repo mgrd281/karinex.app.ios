@@ -338,8 +338,9 @@ struct RootView: View {
 
 // MARK: - CartTabIcon
 
-/// The Warenkorb tab icon in the style of fashion retail apps: the shopping bag with the number
-/// of items as a small figure beside it, in the tab's color, instead of a red badge.
+/// The Warenkorb tab icon in the style of fashion retail apps: ``CartBagIcon``, the thin
+/// shopping bag with the number of items beside it at half its height, in the tab's color,
+/// instead of a red badge.
 ///
 /// A tab bar item takes only an image and a title, so the icon is rendered into a template image
 /// that the tab bar tints like its other symbols. An invisible copy of the figure on the leading
@@ -350,34 +351,10 @@ struct CartTabIcon: View {
     let count: Int
 
     var body: some View {
-        HStack(alignment: .top, spacing: KXSpacing.xxs) {
-            figure
-                .hidden()
-            Image(systemName: AppTab.cart.systemImage)
-                .kxFont(.body)
-                .imageScale(.large)
-            figure
-        }
-        .dynamicTypeSize(.large)
-    }
-
-    @ViewBuilder private var figure: some View {
-        let text = Self.figure(for: count)
-        if !text.isEmpty {
-            Text(verbatim: text)
-                .fontWeight(.semibold)
-                .kxFont(.caption)
-                .monospacedDigit()
-        }
-    }
-
-    /// The figure beside the bag: the count up to 99, then "99+"; empty for an empty cart.
-    static func figure(for count: Int) -> String {
-        switch count {
-        case ..<1: ""
-        case 1...99: String(count)
-        default: "99+"
-        }
+        CartBagIcon(count: count, isCentered: true)
+            .kxFont(.body)
+            .imageScale(.large)
+            .dynamicTypeSize(.large)
     }
 
     /// The icon for `count` items as a template image at `scale`, or `nil` if rendering fails.
