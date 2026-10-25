@@ -36,7 +36,8 @@ public struct CollectionPage: Sendable, Hashable {
 
 // MARK: - CatalogRepository
 
-/// Read access to products, collections and recommendations in the current buyer context.
+/// Read access to products, collections, recommendations and the accepted payment methods in
+/// the current buyer context.
 public protocol CatalogRepository: Sendable {
     /// The product with `handle`, or `nil` when it does not exist in the current market.
     ///
@@ -73,9 +74,21 @@ public protocol CatalogRepository: Sendable {
     ///
     /// - Throws: `ShopifyError`.
     func recommendations(productID: ShopifyID, intent: ProductRecommendationIntent) async throws -> [ProductSummary]
+
+    /// The card brands and digital wallets the store accepts in the current market (Storefront
+    /// `shop.paymentSettings`).
+    ///
+    /// - Throws: `ShopifyError`.
+    func paymentSettings() async throws -> PaymentSettings
 }
 
 extension CatalogRepository {
+    /// No payment data, for catalogs that do not talk to Shopify (previews and tests). The app
+    /// then shows its neutral card symbol next to the business facts.
+    public func paymentSettings() async throws -> PaymentSettings {
+        .empty
+    }
+
     /// One page of the collection with `handle` without filters: 24 products in the
     /// collection's default order unless specified.
     ///
@@ -163,6 +176,12 @@ public final class StorefrontCatalogRepository: CatalogRepository {
         let context = await contextProvider.currentContext()
         let query = ProductRecommendationsQuery(productID: productID, intent: intent)
         return try await client.execute(query, context: context).productRecommendations ?? []
+    }
+
+    /// Loads the accepted card brands and digital wallets in the current context.
+    public func paymentSettings() async throws -> PaymentSettings {
+        let context = await contextProvider.currentContext()
+        return try await client.execute(PaymentSettingsQuery(), context: context).shop.paymentSettings
     }
 }
 

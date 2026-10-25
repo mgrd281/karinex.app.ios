@@ -41,6 +41,7 @@ struct OperationDocumentTests {
         Document(name: SearchProductsQuery.operationName, keyword: "query", text: SearchProductsQuery.document),
         Document(name: BlogArticlesQuery.operationName, keyword: "query", text: BlogArticlesQuery.document),
         Document(name: ArticleQuery.operationName, keyword: "query", text: ArticleQuery.document),
+        Document(name: PaymentSettingsQuery.operationName, keyword: "query", text: PaymentSettingsQuery.document),
     ]
 
     static let cartMutationDocuments = documents.filter { $0.keyword == "mutation" }
@@ -79,6 +80,7 @@ struct OperationDocumentTests {
         #expect(SearchProductsQuery.kind == .query)
         #expect(BlogArticlesQuery.kind == .query)
         #expect(ArticleQuery.kind == .query)
+        #expect(PaymentSettingsQuery.kind == .query)
     }
 
     @Test("Every cart operation selects the shared CartFields fragment", arguments: cartMutationDocuments)

@@ -278,14 +278,4 @@ final class CartViewModel {
         var seen = Set(cart.lines.map(\.merchandise.product.id))
         return Array(products.filter { seen.insert($0.id).inserted }.prefix(crossSellLimit))
     }
-
-    // MARK: Payment methods
-
-    /// The store's payment methods as single badges, split from the localized list
-    /// "Apple Pay, Kreditkarte, Klarna".
-    static func paymentMethods(from list: String) -> [String] {
-        list.split(separator: ",")
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .filter { !$0.isEmpty }
-    }
 }

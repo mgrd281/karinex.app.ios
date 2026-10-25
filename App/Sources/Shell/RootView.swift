@@ -63,7 +63,9 @@ struct RootView: View {
                         }
                 }
                 .tabItem {
+                    // Outline symbols everywhere, matching the shopping bag of the Warenkorb tab.
                     tabLabel(for: tab)
+                        .environment(\.symbolVariants, .none)
                 }
                 .tag(tab)
             }
@@ -71,6 +73,7 @@ struct RootView: View {
         .offlineBanner(monitor: container.networkMonitor)
         .commerceCountry(container.marketStore.selection.country)
         .environment(container.savedProductsStore)
+        .environment(container.paymentMethodsStore)
         .environment(\.productLookup, container.productLookup)
         .kxCheckout(isPresented: $isCheckoutPresented, cartStore: container.cartStore) { order in
             container.liveActivities.startDelivery(orderReference: order.id)
@@ -358,8 +361,9 @@ struct CartTabIcon: View {
     }
 
     @ViewBuilder private var figure: some View {
-        if count > 0 {
-            Text(verbatim: Self.figure(for: count))
+        let text = Self.figure(for: count)
+        if !text.isEmpty {
+            Text(verbatim: text)
                 .fontWeight(.semibold)
                 .kxFont(.caption)
                 .monospacedDigit()

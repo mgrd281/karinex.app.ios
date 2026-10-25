@@ -117,6 +117,7 @@ public struct ProductDetailScreen: View {
             if let variant = model.selectedVariant {
                 ProductPurchaseBar(
                     variant: variant,
+                    image: variant.image ?? model.product?.featuredImage,
                     isAdding: model.isAddingToCart,
                     onAddToCart: addToCart
                 )
@@ -241,22 +242,20 @@ private struct ProductDetailBody: View {
                             .disabled(!variant.availableForSale || model.isAddingToCart)
                             .accessibilityIdentifier("product.buyNow")
                         }
+                        ProductPaymentMethods()
                     }
                     .padding(.horizontal, KXSpacing.gutter)
                 }
 
                 Group {
-                    if !content.description.isEmpty {
-                        ProductRichTextSection(
-                            title: String(localized: "product.description.title", bundle: .module),
-                            document: content.description
-                        )
-                        .accessibilityIdentifier("product.description")
-                    }
                     if !content.facts.isEmpty {
                         ProductFactsSection(facts: content.facts)
                     }
-                    ProductMoreInformationSection(fulfillment: model.fulfillment, activation: content.activation)
+                    ProductMoreInformationSection(
+                        description: content.description,
+                        fulfillment: model.fulfillment,
+                        activation: content.activation
+                    )
                     VStack(alignment: .leading, spacing: KXSpacing.l) {
                         ProductRefundSection()
                         if model.fulfillment.showsDigitalContentNotice {

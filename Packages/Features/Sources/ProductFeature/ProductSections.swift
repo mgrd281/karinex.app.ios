@@ -263,10 +263,12 @@ struct ProductFactsSection: View {
 
 // MARK: - ProductMoreInformationSection
 
-/// Collapsible rows below the description, in the style of fashion retail apps: "So läuft es ab"
-/// (order, pay and receive the key by e-mail, or the shipping process for physical variants) and
-/// the activation instructions when the store provides them.
+/// Collapsible rows in the style of fashion retail apps ("Produktdetails"): the full product
+/// description from the store, "So läuft es ab" (order, pay and receive the key by e-mail, or
+/// the shipping process for physical variants) and the activation instructions when the store
+/// provides them. An opened row shows its whole content, however long.
 struct ProductMoreInformationSection: View {
+    let description: HTMLDocument
     let fulfillment: ProductFulfillment
     let activation: HTMLDocument?
 
@@ -275,13 +277,23 @@ struct ProductMoreInformationSection: View {
     }
 
     private var rows: [KXAccordionItem] {
-        var rows = [
+        var rows: [KXAccordionItem] = []
+        if !description.isEmpty {
+            rows.append(
+                KXAccordionItem(title: String(localized: "product.description.title", bundle: .module), id: "description") {
+                    RichTextView(document: description)
+                        .padding(.top, KXSpacing.xs)
+                        .accessibilityIdentifier("product.description")
+                }
+            )
+        }
+        rows.append(
             KXAccordionItem(title: String(localized: "product.process.title", bundle: .module), id: "process") {
                 KXStepTimeline(steps: fulfillment.steps.map { KXStepTimeline.Step(title: $0.title, detail: $0.detail) })
                     .padding(.top, KXSpacing.xs)
                     .accessibilityIdentifier("product.process")
-            },
-        ]
+            }
+        )
         if let activation {
             rows.append(
                 KXAccordionItem(title: String(localized: "product.activation.title", bundle: .module), id: "activation") {
@@ -294,18 +306,20 @@ struct ProductMoreInformationSection: View {
     }
 }
 
-// MARK: - ProductRichTextSection
+// MARK: - ProductPaymentMethods
 
-/// A titled section with store rich text, such as the description.
-struct ProductRichTextSection: View {
-    let title: String
-    let document: HTMLDocument
+/// The acceptance marks of the store's payment methods below the buy buttons, from the app's
+/// ``PaymentMethodsStore`` (the business facts while it loads and in previews).
+struct ProductPaymentMethods: View {
+    @Environment(PaymentMethodsStore.self) private var paymentMethods: PaymentMethodsStore?
 
     var body: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.m) {
-            KXSectionHeader(title)
-            RichTextView(document: document)
-        }
+        PaymentMethodsRow(methods: paymentMethods?.methods ?? PaymentMethod.fallback)
+            .padding(.top, KXSpacing.xxs)
+            .accessibilityIdentifier("product.payment")
+            .task {
+                await paymentMethods?.loadIfNeeded()
+            }
     }
 }
 

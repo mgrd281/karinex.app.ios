@@ -90,8 +90,9 @@ public struct KXProductCardModel: Identifiable, Hashable, Sendable {
 /// A product tile for grids and carousels, in the style of fashion retail apps: a square photo
 /// tile edge to edge on the light grey photo background (``SwiftUICore/View/kxPhotoTile()``)
 /// with an optional ``KXBadge`` in the corner, then the vendor as an eyebrow, the title in
-/// regular weight (up to two lines, more at accessibility sizes) and a compact ``KXPriceTag``
-/// with the struck-through compare-at price and the tax note. No card, border or shadow.
+/// regular weight (up to three lines with the space reserved, more at accessibility sizes) and
+/// a compact ``KXPriceTag`` with the sale red price, the struck-through compare-at price and
+/// the tax note. No card, border or shadow.
 ///
 /// The card fills the width it is offered; give it a width through the grid or carousel. It
 /// is not a button itself: wrap it in a `NavigationLink` or `Button`, which then supplies the
@@ -170,10 +171,15 @@ public struct KXProductCard<ImageContent: View>: View {
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
             }
+            // Three lines show the full name of nearly every product; the space is reserved so
+            // the prices of a row line up.
             Text(model.title)
                 .kxFont(.subheadline)
                 .foregroundStyle(KXColor.textPrimary)
-                .lineLimit(dynamicTypeSize.isAccessibilitySize ? 6 : 2)
+                .lineLimit(
+                    dynamicTypeSize.isAccessibilitySize ? 6 : 3,
+                    reservesSpace: !dynamicTypeSize.isAccessibilitySize
+                )
                 .multilineTextAlignment(.leading)
                 .fixedSize(horizontal: false, vertical: true)
             KXPriceTag(price: model.price, compareAtPrice: model.compareAtPrice, taxNote: model.taxNote, size: .compact)

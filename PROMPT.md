@@ -154,7 +154,7 @@ Opening (owner request): the launch screen shows the store logo centered on the 
 - Variant selector (segmented or chips) with live price update.
 - **Key facts** table with dot-leader rows (label ...... value) from `karinex.*` metafields: Lizenztyp, Architektur, Geräteanzahl, Lieferform, Aktivierungsart, Sprachen, Support-Status, MPN.
 - **"So läuft es ab"** 3-step timeline: Bestellen → Bezahlen → Schlüssel per E-Mail (Minuten). For physical variants: shipping timeline instead.
-- Description (`descriptionHtml`) rendered natively with brand typography; tables must render as real tables.
+- Description (`descriptionHtml`) rendered natively with brand typography; tables must render as real tables. It is the first collapsible row ("Beschreibung", as "Produktdetails" in fashion retail apps); an opened row shows the full text.
 - **Activation** section from `custom.details_content` or linked blog guide.
 - **Comparison** module: sibling products from the same collection (e.g., Office 2024 Home vs Standard vs Pro Plus) with thumbnails, key specs and price.
 - **FAQ accordion** from `karinex.faq` with chevron toggles.
@@ -165,7 +165,7 @@ Opening (owner request): the launch screen shows the store logo centered on the 
 - Predictive search as you type (products, collections, articles), recent searches, suggested queries ("Office 2024", "Windows 11 Pro"), empty state with category shortcuts.
 
 ### 6.5 Warenkorb (Cart)
-- Line items with quantity stepper, remove with undo, subtotal/discount/total, discount code field, digital-content notice, payment-method badges (Apple Pay, card, Klarna only), "Zur Kasse" (Checkout Kit), cross-sell row.
+- Line items with quantity stepper, remove with undo, subtotal/discount/total, discount code field, digital-content notice, payment-method acceptance marks (real Apple Pay, card brand and Klarna logos; card brands and Apple Pay as reported by Shopify's `shop.paymentSettings`, Klarna from section 2; never any other method), "Zur Kasse" (Checkout Kit), cross-sell row. The product page shows the same marks below its buy buttons.
 
 ### 6.6 Checkout
 - Checkout Kit sheet; success screen with order number, delivery expectation, buttons "Bestellungen ansehen" and "Weiter einkaufen".

@@ -7,15 +7,6 @@ import Testing
 
 @Suite("Cart strings")
 struct CartStringTests {
-    @Test("The payment methods are exactly Apple Pay, Kreditkarte, Klarna")
-    func paymentMethods() throws {
-        let german = try LocalizedStrings(language: "de", in: CartResources.bundle)
-        let english = try LocalizedStrings(language: "en", in: CartResources.bundle)
-
-        #expect(german("cart.payment.methods") == "Apple Pay, Kreditkarte, Klarna")
-        #expect(english("cart.payment.methods") == "Apple Pay, credit card, Klarna")
-    }
-
     @Test("The German notice states when the right of withdrawal for digital content expires")
     func germanDigitalContentNotice() throws {
         let german = try LocalizedStrings(language: "de", in: CartResources.bundle)
@@ -67,7 +58,6 @@ struct CartStringTests {
             "cart.empty.message",
             "cart.empty.action",
             "cart.payment.title",
-            "cart.payment.methods",
             "cart.notice.title",
             "cart.notice.digital",
         ]
@@ -326,17 +316,6 @@ struct CartViewModelTests {
 
         #expect(model.crossSell == .empty)
         #expect(await catalog.requests.isEmpty)
-    }
-
-    @Test("The payment methods split into exactly three badges", arguments: ["de", "en"])
-    func paymentBadges(language: String) throws {
-        let strings = try LocalizedStrings(language: language, in: CartResources.bundle)
-
-        let methods = CartViewModel.paymentMethods(from: strings("cart.payment.methods"))
-
-        #expect(methods.count == 3)
-        #expect(methods.first == "Apple Pay")
-        #expect(methods.last == "Klarna")
     }
 
     @Test("The variant line hides Shopify's default title and repeats of the product title")

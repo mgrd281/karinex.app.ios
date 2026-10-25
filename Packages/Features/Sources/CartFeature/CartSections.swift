@@ -244,33 +244,20 @@ struct CartSummaryCard: View {
 
 // MARK: - CartPaymentMethods
 
-/// The store's payment methods as text badges: Apple Pay, Kreditkarte, Klarna.
+/// The store's payment methods with their real acceptance marks (Apple Pay, the card brands
+/// Shopify reports, Klarna), from the app's ``PaymentMethodsStore``; the business facts while it
+/// loads and in previews.
 struct CartPaymentMethods: View {
-    var body: some View {
-        let list = String(localized: "cart.payment.methods", bundle: .module)
-        VStack(alignment: .leading, spacing: KXSpacing.xs) {
-            Text("cart.payment.title", bundle: .module)
-                .kxFont(.eyebrow)
-                .foregroundStyle(KXColor.accentText)
-            ViewThatFits(in: .horizontal) {
-                HStack(spacing: KXSpacing.xs) {
-                    badges(list)
-                }
-                VStack(alignment: .leading, spacing: KXSpacing.xs) {
-                    badges(list)
-                }
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("cart.payment.title", bundle: .module))
-        .accessibilityValue(Text(verbatim: list))
-        .accessibilityIdentifier("cart.payment")
-    }
+    @Environment(PaymentMethodsStore.self) private var paymentMethods: PaymentMethodsStore?
 
-    private func badges(_ list: String) -> some View {
-        ForEach(CartViewModel.paymentMethods(from: list), id: \.self) { method in
-            KXBadge(method, style: .neutral)
+    var body: some View {
+        PaymentMethodsRow(
+            methods: paymentMethods?.methods ?? PaymentMethod.fallback,
+            title: String(localized: "cart.payment.title", bundle: .module)
+        )
+        .accessibilityIdentifier("cart.payment")
+        .task {
+            await paymentMethods?.loadIfNeeded()
         }
     }
 }

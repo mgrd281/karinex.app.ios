@@ -36,6 +36,19 @@ change.
   "Zum Sortiment" button; the four brand facts are icon rows with hairlines
   (`KXTrustStrip` arrangement `.list`) instead of tiles. The KARINEX wordmark sits centered
   above the hero.
+- **Real payment logos** (owner request): the cart and the product page show the acceptance
+  marks of Apple Pay, the card brands and Klarna (the icons of Shopify's MIT-licensed
+  `payment_icons` set, as in the web shop footer, PDF assets in CommerceUI) instead of text
+  badges. Which ones appear comes from Shopify (`shop.paymentSettings`: accepted card brands and
+  Apple Pay as a supported wallet, new `PaymentSettingsQuery` and
+  `CatalogRepository.paymentSettings()`), loaded once per launch by `PaymentMethodsStore`;
+  until Shopify answers the business facts show (Apple Pay, a neutral card symbol, Klarna).
+- **Product details like About You:** the full description from the store is now the first
+  collapsible row ("Beschreibung") next to "So läuft es ab" and "Aktivierung", and an opened row
+  shows the whole text. Product cards show up to three lines of the product name with the
+  space reserved, so names are no longer cut after two lines. The bottom bar of the product
+  page shows a small photo of the product next to the price. The tab bar uses outline symbols,
+  matching the shopping bag.
 - **Sale look like About You** (owner request): reduced prices are sale red next to the
   struck-through former price; product cards show the reduction ("-80 %") as their badge
   instead of "Angebot"; on the product page the reduction badge sits above the price and the

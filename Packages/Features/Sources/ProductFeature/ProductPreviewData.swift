@@ -193,8 +193,13 @@ struct PreviewCartRepository: CartRepository {
 #Preview("Sections") {
     ScrollView {
         VStack(alignment: .leading, spacing: KXSpacing.xl) {
-            ProductMoreInformationSection(fulfillment: .digital, activation: nil)
-            ProductMoreInformationSection(fulfillment: .physical, activation: nil)
+            ProductMoreInformationSection(
+                description: HTMLDocument(html: ProductPreviewData.product.descriptionHtml),
+                fulfillment: .digital,
+                activation: nil
+            )
+            ProductMoreInformationSection(description: HTMLDocument(blocks: []), fulfillment: .physical, activation: nil)
+            ProductPaymentMethods()
             ProductRefundSection()
             ProductDigitalNoticeSection()
         }

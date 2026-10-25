@@ -561,7 +561,7 @@ light, dark and an accessibility text size, and snapshot tests:
 | `KXAccordion`, `KXAccordionItem` | Expandable rows with a chevron that turns upward, each followed by a hairline |
 | `KXCountdown`, `KXCountdownComponents` | Flip-digit countdown to a date, days from 24 h, `onExpire`, no flip with Reduce Motion |
 | `KXTrustStrip`, `KXTrustItem` | Grid or carousel of trust facts, optional footnote marker and tap action |
-| `KXProductCard`, `KXProductCardModel`, `KXProductImage` | Product tile: square photo tile without card or border, badge, regular two-line title and compact price tag |
+| `KXProductCard`, `KXProductCardModel`, `KXProductImage` | Product tile: square photo tile without card or border, badge, regular title of up to three lines (space reserved) and compact price tag |
 | `KXKeyCard`, `KXLicenseKeyFormatting` | Black license key card with masking, grouping and copy |
 | `KXClipboard` | `copySensitive(_:expiresAfter:)`: local-only pasteboard item that expires after 120 s |
 | `KXSkeleton`, `.kxSkeleton(isActive:)` | Placeholder with shimmer (none with Reduce Motion) |
@@ -690,15 +690,23 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
 **Features built on it.**
 - `ProductFeature`: gallery with full-screen zoom, variant selector, price in the sale look
   (with the store's lowest price of 30 days for single-variant products), the linked products
-  row (`ProductLinkedProductsRow`, from `Product.linkedProducts`), key facts from metafields,
-  "So läuft es ab", description, the "Passend dazu" row (Shopify's `COMPLEMENTARY`
+  row (`ProductLinkedProductsRow`, from `Product.linkedProducts`), the payment marks below the
+  buy buttons, key facts from metafields, the collapsible rows "Beschreibung" (the full
+  description), "So läuft es ab" and "Aktivierung", the "Passend dazu" row (Shopify's `COMPLEMENTARY`
   recommendations, loaded in parallel with the comparison row of `RELATED` recommendations),
   FAQ, the 100-day promise with its condition, the withdrawal notice for digital goods, and a
   sticky purchase bar. Sections without data are omitted, never faked.
 - `CatalogFeature`: collection directory, collection screen with sort, filters and cursor
   pagination. `SearchFeature`: predictive suggestions, results with sort and pagination, recent
   searches. `HomeFeature`: live rows from collections and the guides blog. `CartFeature`: lines,
-  quantity, undo, discount codes with `userErrors`, totals, cross-sell, notices.
+  quantity, undo, discount codes with `userErrors`, totals, cross-sell, payment marks, notices.
+- Payment marks (`CommerceUI/Payments`): `PaymentMethod.methods(for:)` turns Shopify's
+  `PaymentSettings` (`shop.paymentSettings`) into the marks to show: Apple Pay only when Shopify
+  lists it, the accepted card brands in Shopify's order (a neutral card symbol when Shopify
+  names none), then Klarna, which Shopify's settings do not cover (PROMPT.md section 2).
+  `PaymentMethodsStore` (in `AppContainer`, injected into the environment by `RootView`) loads
+  them once per launch and keeps the business facts on failure; `PaymentMethodsRow` draws the
+  PDF marks of `PaymentMethods.xcassets` (sources and MIT license in `Tools/Brand/payment-icons`).
 - `CheckoutFeature`: see below.
 
 **Checkout.** `CheckoutCoordinator` is the state machine, free of Checkout Kit so it is testable:
