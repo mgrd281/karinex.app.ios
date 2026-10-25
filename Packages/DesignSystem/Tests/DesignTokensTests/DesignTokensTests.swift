@@ -23,9 +23,9 @@ struct RGBAColorTests {
         #expect(abs(black.contrastRatio(against: white) - 21) < 0.001)
         #expect(abs(white.contrastRatio(against: white) - 1) < 0.001)
         // Symmetric.
-        let forest = BrandPalette.forest
-        let cream = BrandPalette.cream
-        #expect(abs(forest.contrastRatio(against: cream) - cream.contrastRatio(against: forest)) < 0.0001)
+        let ink = BrandPalette.ink
+        let fog = BrandPalette.fog
+        #expect(abs(ink.contrastRatio(against: fog) - fog.contrastRatio(against: ink)) < 0.0001)
     }
 
     @Test("Composites translucent colors before measuring")
@@ -41,30 +41,32 @@ struct RGBAColorTests {
 struct ColorTokenTests {
     @Test("Brand palette matches the brand spec")
     func brandPalette() {
-        #expect(BrandPalette.forest.hexString == "#1D4739")
-        #expect(BrandPalette.forestDeep.hexString == "#16382D")
-        #expect(BrandPalette.forestSoft.hexString == "#2A5F4C")
-        #expect(BrandPalette.cream.hexString == "#F5F2EC")
-        #expect(BrandPalette.creamPanel.hexString == "#F7F4ED")
-        #expect(BrandPalette.hairlineCream.hexString == "#E6E0D3")
-        #expect(BrandPalette.ink.hexString == "#17161A")
-        #expect(BrandPalette.graphite.hexString == "#424245")
-        #expect(BrandPalette.secondary.hexString == "#86868B")
-        #expect(BrandPalette.hairline.hexString == "#D2D2D7")
-        #expect(BrandPalette.gold.hexString == "#C9B486")
-        #expect(BrandPalette.goldDeep.hexString == "#B39B66")
-        #expect(BrandPalette.terracotta.hexString == "#BC5127")
-        #expect(BrandPalette.darkBackground.hexString == "#0F1C17")
-        #expect(BrandPalette.darkHairline.hexString == "#2E4A3F")
+        #expect(BrandPalette.ink.hexString == "#111111")
+        #expect(BrandPalette.inkPressed.hexString == "#3A3A3A")
+        #expect(BrandPalette.graphite.hexString == "#4D4D4D")
+        #expect(BrandPalette.slate.hexString == "#6B6B6B")
+        #expect(BrandPalette.steel.hexString == "#8A8A8A")
+        #expect(BrandPalette.silver.hexString == "#D9D9D9")
+        #expect(BrandPalette.mist.hexString == "#E8E8E8")
+        #expect(BrandPalette.cloud.hexString == "#F3F3F3")
+        #expect(BrandPalette.fog.hexString == "#F5F5F5")
+        #expect(BrandPalette.white.hexString == "#FFFFFF")
+        #expect(BrandPalette.sale.hexString == "#C20E2B")
+        #expect(BrandPalette.darkBackground.hexString == "#000000")
+        #expect(BrandPalette.darkPanel.hexString == "#1C1C1E")
+        #expect(BrandPalette.darkElevated.hexString == "#2C2C2E")
+        #expect(BrandPalette.darkDivider.hexString == "#3A3A3C")
+        #expect(BrandPalette.darkText.hexString == "#F5F5F5")
     }
 
     @Test("Dark mode follows the brand spec")
     func darkModeMapping() {
         #expect(ColorToken.background.dark == BrandPalette.darkBackground)
-        #expect(ColorToken.surface.dark == BrandPalette.forestDeep)
-        #expect(ColorToken.textPrimary.dark == BrandPalette.cream)
-        #expect(ColorToken.accent.dark == BrandPalette.gold)
-        #expect(ColorToken.hairline.dark == BrandPalette.darkHairline)
+        #expect(ColorToken.surface.dark == BrandPalette.darkPanel)
+        #expect(ColorToken.textPrimary.dark == BrandPalette.darkText)
+        #expect(ColorToken.brand.dark == BrandPalette.white)
+        #expect(ColorToken.textOnBrand.dark == BrandPalette.ink)
+        #expect(ColorToken.divider.dark == BrandPalette.darkDivider)
     }
 
     @Test(
@@ -82,14 +84,25 @@ struct ColorTokenTests {
         )
     }
 
-    @Test("Gold is never an allowed text color on light page surfaces")
-    func goldIsDecorativeInLightMode() {
-        let lightPageSurfaces: [ColorToken] = [.background, .surface, .surfaceElevated]
-        for surface in lightPageSurfaces {
-            #expect(ColorToken.accent.light.contrastRatio(against: surface.light) < 4.5)
-            #expect(!ContrastRequirement.all.contains {
-                $0.foreground == .accent && $0.background == surface && $0.kind == .text
-            })
+    @Test("The interface is monochrome: only status colors and the sale red have a hue")
+    func monochromeInterface() {
+        let colored: Set<ColorToken> = [.urgency, .urgencyText, .success, .warning, .error, .info]
+        for token in ColorToken.allCases where !colored.contains(token) {
+            for appearance in Appearance.allCases {
+                let value = token.value(for: appearance)
+                #expect(
+                    value.red == value.green && value.green == value.blue,
+                    "\(token.rawValue) (\(appearance.rawValue)) is \(value.hexString), not a neutral grey"
+                )
+            }
+        }
+    }
+
+    @Test("Product photos sit on a light grey in both appearances")
+    func imageBackgroundStaysLight() {
+        for appearance in Appearance.allCases {
+            let background = ColorToken.imageBackground.value(for: appearance)
+            #expect(background.contrastRatio(against: BrandPalette.white) < 1.3)
         }
     }
 }
@@ -108,9 +121,12 @@ struct LayoutTokenTests {
         #expect(SpacingToken.minimumTapTarget >= 44)
     }
 
-    @Test("Card radius follows the spec")
+    @Test("Radii follow the spec: rounded panels, square product photos")
     func radii() {
-        #expect(RadiusToken.card == 18)
+        #expect(RadiusToken.card == 12)
+        #expect(RadiusToken.image == 0)
+        let scale = [RadiusToken.image, RadiusToken.small, RadiusToken.medium, RadiusToken.large]
+        #expect(scale == scale.sorted())
     }
 
     @Test("Springs stay within the 0.25 to 0.35 s brand range")
@@ -120,12 +136,14 @@ struct LayoutTokenTests {
         }
     }
 
-    @Test("Headlines are serif, keys are monospaced, UI text is sans serif")
+    @Test("Every style is sans serif except the monospaced license keys")
     func typographyDesigns() {
-        #expect(TypographyToken.display.design == .serif)
-        #expect(TypographyToken.title1.design == .serif)
-        #expect(TypographyToken.licenseKey.design == .monospaced)
-        #expect(TypographyToken.body.design == .sans)
+        for style in TypographyToken.allCases {
+            #expect(style.design == (style == .licenseKey ? .monospaced : .sans))
+        }
+        #expect(TypographyToken.display.weight == .bold)
         #expect(TypographyToken.allCases.allSatisfy { $0.baseSize >= 11 })
+        #expect(TypographyToken.display.baseSize > TypographyToken.title1.baseSize)
+        #expect(TypographyToken.title1.baseSize > TypographyToken.title2.baseSize)
     }
 }

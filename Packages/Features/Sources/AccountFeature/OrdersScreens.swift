@@ -454,13 +454,13 @@ private struct OrderLineRow: View {
                     ProductImage(image, contentMode: .fit, isDecorative: true)
                 } else {
                     Image(systemName: "key")
-                        .foregroundStyle(KXColor.iconSecondary)
+                        .foregroundStyle(KXColor.imageIcon)
                         .accessibilityHidden(true)
                 }
             }
+            .kxPhotoTile()
             .frame(width: Self.imageSize, height: Self.imageSize)
-            .background(KXColor.surface)
-            .clipShape(RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: KXRadius.small, style: .continuous))
             VStack(alignment: .leading, spacing: KXSpacing.xxs) {
                 Text(line.name)
                     .kxFont(.body)

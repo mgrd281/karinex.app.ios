@@ -7,8 +7,8 @@ import SwiftUI
 // MARK: - RichTextView
 
 /// Renders Shopify rich text (`descriptionHtml`, `contentHtml`) natively from an
-/// `HTMLDocument`: serif headings, body paragraphs, bulleted and numbered lists, tables as real
-/// grids that scroll horizontally when they are wider than the screen, quotes with a gold rule,
+/// `HTMLDocument`: bold headings, body paragraphs, bulleted and numbered lists, tables as real
+/// grids that scroll horizontally when they are wider than the screen, quotes with an ink rule,
 /// images through ``ProductImage`` and hairline rules.
 ///
 /// Inline formatting keeps bold, italic and code. Only `http` and `https` links are tappable
@@ -206,7 +206,7 @@ private struct RichTextTable: View {
 
 /// The mapping from HTML to typography and attributed strings.
 enum RichTextStyle {
-    /// The typography token of a heading level: `h1` and `h2` large serif, `h3` serif, deeper
+    /// The typography token of a heading level: `h1` and `h2` large titles, `h3` a title, deeper
     /// levels the sans headline.
     static func headingStyle(level: Int) -> TypographyToken {
         switch level {

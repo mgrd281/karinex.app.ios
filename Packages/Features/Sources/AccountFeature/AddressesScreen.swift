@@ -205,7 +205,7 @@ private struct AddressCard: View {
         KXCard {
             VStack(alignment: .leading, spacing: KXSpacing.s) {
                 if isDefault {
-                    KXBadge(String(localized: "account.addresses.default", bundle: .module), style: .gold)
+                    KXBadge(String(localized: "account.addresses.default", bundle: .module), style: .accent)
                 }
                 Text(address.lines.joined(separator: "\n"))
                     .kxFont(.body)

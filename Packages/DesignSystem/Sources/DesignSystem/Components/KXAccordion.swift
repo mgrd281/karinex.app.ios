@@ -52,8 +52,9 @@ public struct KXAccordionItem: Identifiable {
 
 // MARK: - KXAccordion
 
-/// A list of expandable rows separated by hairlines, each with a gold "+" that turns into an
-/// "x" while the row is open. Used for the product FAQ and other progressive disclosure.
+/// A list of expandable rows, each followed by a hairline, with a chevron that turns upward
+/// while the row is open. Used for the product details, the FAQ and other progressive
+/// disclosure.
 ///
 /// Expansion is either ``Expansion/single`` (opening a row closes the others) or
 /// ``Expansion/multiple``. The accordion keeps its own state, or you can own it through the
@@ -61,7 +62,7 @@ public struct KXAccordionItem: Identifiable {
 ///
 /// Each title is a button for VoiceOver with the value "Ausgeklappt" or "Eingeklappt" and a
 /// hint describing the action. The content slides in with a snappy spring; with Reduce Motion
-/// it cross-fades and the "+" swaps to an "x" without rotating.
+/// it cross-fades and the chevron swaps without rotating.
 ///
 /// ```swift
 /// KXAccordion(items: faq.map { KXAccordionItem(title: $0.question, text: $0.answer) }, expansion: .single)
@@ -116,7 +117,6 @@ public struct KXAccordion: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            rule
             ForEach(items) { item in
                 KXAccordionRow(item: item, isExpanded: expandedIDs.contains(item.id)) {
                     toggle(item.id)
@@ -183,7 +183,7 @@ private struct KXAccordionRow: View {
     let onToggle: @MainActor () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @ScaledMetric(relativeTo: .headline) private var toggleSize: CGFloat = 28
+    @ScaledMetric(relativeTo: .headline) private var toggleSize: CGFloat = 24
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -199,7 +199,7 @@ private struct KXAccordionRow: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     toggleGlyph
                 }
-                .padding(.vertical, KXSpacing.m)
+                .padding(.vertical, KXSpacing.m + KXSpacing.xxs)
                 .frame(minHeight: KXSpacing.minimumTapTarget)
                 .contentShape(Rectangle())
             }
@@ -221,17 +221,14 @@ private struct KXAccordionRow: View {
         .clipped()
     }
 
-    /// Gold "+" in a gold ring. It rotates by 45 degrees into an "x"; with Reduce Motion the
-    /// symbol swaps without rotating.
+    /// A chevron that points down while the row is closed and turns upward when it opens; with
+    /// Reduce Motion the symbol swaps without rotating.
     private var toggleGlyph: some View {
-        Image(systemName: reduceMotion && isExpanded ? "xmark" : "plus")
-            .font(KXFont.font(.headline, size: Double(toggleSize * 0.46)))
-            .foregroundStyle(KXColor.accentText)
-            .rotationEffect(.degrees(!reduceMotion && isExpanded ? 45 : 0))
+        Image(systemName: reduceMotion && isExpanded ? "chevron.up" : "chevron.down")
+            .font(KXFont.font(.headline, size: Double(toggleSize * 0.75)))
+            .foregroundStyle(KXColor.textPrimary)
+            .rotationEffect(.degrees(!reduceMotion && isExpanded ? 180 : 0))
             .frame(width: toggleSize, height: toggleSize)
-            .overlay {
-                Circle().strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
-            }
             .accessibilityHidden(true)
     }
 

@@ -125,12 +125,12 @@ public struct SupportScreen: View {
     // MARK: Hours
 
     private var hoursCard: some View {
-        KXCard(showsInsetRing: true) {
+        KXCard {
             TimelineView(.everyMinute) { context in
                 VStack(alignment: .leading, spacing: KXSpacing.s) {
                     Text("support.intro.eyebrow", bundle: .module)
                         .kxFont(.eyebrow)
-                        .foregroundStyle(KXColor.accentText)
+                        .foregroundStyle(KXColor.textSecondary)
                     Text("support.intro.title", bundle: .module)
                         .kxFont(.title2)
                         .foregroundStyle(KXColor.textPrimary)

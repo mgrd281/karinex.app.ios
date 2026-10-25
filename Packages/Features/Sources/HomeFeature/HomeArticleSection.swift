@@ -94,8 +94,8 @@ struct HomeArticleSection: View {
 
 // MARK: - HomeArticleCard
 
-/// One guide article: the article image on a cream panel, the publication date as eyebrow, the
-/// serif title and the excerpt. VoiceOver reads it as one element.
+/// One guide article: the article image on a light grey panel, the publication date as eyebrow,
+/// the bold title and the excerpt. VoiceOver reads it as one element.
 struct HomeArticleCard: View {
     let article: ArticleSummary
 
@@ -111,7 +111,7 @@ struct HomeArticleCard: View {
                 } else {
                     Image(systemName: "book.pages")
                         .kxFont(.title1)
-                        .foregroundStyle(KXColor.accent)
+                        .foregroundStyle(KXColor.iconSecondary)
                         .accessibilityHidden(true)
                 }
             }
@@ -120,7 +120,7 @@ struct HomeArticleCard: View {
             VStack(alignment: .leading, spacing: KXSpacing.xs) {
                 Text(article.publishedAt, format: .dateTime.day().month(.wide).year())
                     .kxFont(.eyebrow)
-                    .foregroundStyle(KXColor.accentText)
+                    .foregroundStyle(KXColor.textSecondary)
                 Text(article.title)
                     .kxFont(.title3)
                     .foregroundStyle(KXColor.textPrimary)

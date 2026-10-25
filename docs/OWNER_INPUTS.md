@@ -23,5 +23,5 @@ store were filled in; everything else is still open. Secrets never go into git: 
 | Blog handle | Verified | `news` and `guides` | Phase 1 |
 | Metafield definitions | **Open** | See [STORE_AUDIT.md](STORE_AUDIT.md), owner actions 2 and 3 | Phase 1 |
 | Logo | Interim | Typographic wordmark "KARINEX" (`KXWordmark`) | |
-| App icon | Concept delivered for approval | `App/Resources/Assets.xcassets/AppIcon.appiconset`: gold serif "K" monogram with a double gold ring on forest green | Phase 1 |
+| App icon | Interim, replace with the final logo | `App/Resources/Assets.xcassets/AppIcon.appiconset`: white "K" on black (1024 x 1024 PNG, no alpha), matching the monochrome design of 2026-10-25 | Phase 1 |
 | Reviewer account, test product, 100 % discount code | **Open** | Needed for App Review | Phase 3 |

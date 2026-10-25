@@ -224,17 +224,18 @@ func assertComponentSnapshot<Content: View>(
 // MARK: - Local artwork
 
 /// A deterministic stand-in for a product photo, built from shapes only, so product card
-/// snapshots never load an image from the network.
+/// snapshots never load an image from the network. Like the store's photos it shows a dark
+/// product box on a white studio background, so the photo tile blend is visible.
 struct SnapshotProductArtwork: View {
     var body: some View {
         ZStack {
-            KXColor.brandSoft
-            Circle()
-                .strokeBorder(KXColor.accent, lineWidth: KXBorder.emphasis)
-                .padding(KXSpacing.l)
+            Color.white
             RoundedRectangle(cornerRadius: KXRadius.small, style: .continuous)
-                .fill(KXColor.accent)
-                .frame(width: KXSpacing.xl, height: KXSpacing.xl)
+                .fill(KXColor.keyCardBackground)
+                .padding(KXSpacing.l)
+            Circle()
+                .fill(KXColor.keyCardText)
+                .frame(width: KXSpacing.l, height: KXSpacing.l)
         }
     }
 }

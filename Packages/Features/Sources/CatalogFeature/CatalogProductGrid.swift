@@ -32,13 +32,13 @@ struct CatalogProductGrid: View {
     static let maximumColumns = 5
 
     private var columnWidth: CGFloat {
-        let spacing = KXSpacing.m * CGFloat(columnCount - 1)
+        let spacing = KXSpacing.xs * CGFloat(columnCount - 1)
         return max((width - spacing) / CGFloat(columnCount), 0)
     }
 
     var body: some View {
         LazyVGrid(
-            columns: Array(repeating: GridItem(.flexible(), spacing: KXSpacing.m, alignment: .top), count: columnCount),
+            columns: Array(repeating: GridItem(.flexible(), spacing: KXSpacing.xs, alignment: .top), count: columnCount),
             alignment: .leading,
             spacing: KXSpacing.l
         ) {
@@ -82,12 +82,12 @@ struct CatalogProductGridSkeleton: View {
             KXSkeleton()
                 .frame(width: 220, height: KXSpacing.l)
             LazyVGrid(
-                columns: [GridItem(.flexible(), spacing: KXSpacing.m), GridItem(.flexible(), spacing: KXSpacing.m)],
+                columns: [GridItem(.flexible(), spacing: KXSpacing.xs), GridItem(.flexible(), spacing: KXSpacing.xs)],
                 spacing: KXSpacing.l
             ) {
                 ForEach(0..<4, id: \.self) { _ in
                     VStack(alignment: .leading, spacing: KXSpacing.xs) {
-                        KXSkeleton(cornerRadius: KXRadius.card)
+                        KXSkeleton(cornerRadius: KXRadius.image)
                             .aspectRatio(1, contentMode: .fit)
                         KXSkeleton()
                             .frame(height: KXSpacing.m)

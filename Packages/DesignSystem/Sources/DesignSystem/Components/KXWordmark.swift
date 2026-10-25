@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - KXWordmark
 
-/// The interim KARINEX logo: the brand name set in the serif display face with wide tracking.
+/// The interim KARINEX logo: the brand name set in the bold display face with wide tracking.
 ///
 /// It replaces the logo until the redesigned brand assets arrive. The brand name is never
 /// translated, so it is not part of any String Catalog. The wordmark scales moderately with
@@ -37,7 +37,7 @@ public struct KXWordmark: View {
     /// Spoken form for VoiceOver, so the name is pronounced as a word and not spelled out.
     private static let spokenBrandName = "Karinex"
     /// Letter spacing as a fraction of the point size.
-    private static let trackingFactor: CGFloat = 0.28
+    private static let trackingFactor: CGFloat = 0.2
 
     private let size: Size
     private let color: Color

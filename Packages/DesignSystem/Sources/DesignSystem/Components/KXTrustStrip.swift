@@ -10,7 +10,7 @@ import SwiftUI
 public struct KXTrustItem: Identifiable {
     /// Stable identity. Defaults to the text; must be unique within one strip.
     public let id: String
-    /// SF Symbol name shown in the gold ring, e.g. `"envelope"`. Decorative.
+    /// SF Symbol name shown above the text, e.g. `"envelope"`. Decorative.
     public let systemImage: String
     /// The already-localized fact, without the footnote marker.
     public let text: String
@@ -58,7 +58,7 @@ public struct KXTrustItem: Identifiable {
 // MARK: - KXTrustStrip
 
 /// A set of short trust facts (delivery, payment methods, money-back condition, support
-/// hours), each an SF Symbol in a gold ring above a short text on a cream tile.
+/// hours), each a line icon above a short text on a light grey tile.
 ///
 /// Arrangements:
 /// - ``Arrangement/grid``: two columns with equal row heights (the 2x2 grid of the Start tab).
@@ -183,7 +183,6 @@ private struct KXTrustTile: View {
     let item: KXTrustItem
     let layout: TileLayout
 
-    @Environment(\.displayScale) private var displayScale
     @ScaledMetric(relativeTo: .subheadline) private var iconSize: CGFloat = 36
 
     var body: some View {
@@ -241,20 +240,15 @@ private struct KXTrustTile: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .frame(minHeight: KXSpacing.minimumTapTarget)
         .background(KXColor.surface, in: shape)
-        .overlay {
-            shape.strokeBorder(KXColor.hairline, lineWidth: 1 / max(displayScale, 1))
-        }
         .contentShape(shape)
     }
 
     private var icon: some View {
         Image(systemName: item.systemImage)
-            .font(KXFont.font(.headline, size: Double(iconSize * 0.45)))
-            .foregroundStyle(KXColor.brand)
-            .frame(width: iconSize, height: iconSize)
-            .overlay {
-                Circle().strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
-            }
+            .font(KXFont.font(.headline, size: Double(iconSize * 0.6)))
+            .fontWeight(.regular)
+            .foregroundStyle(KXColor.textPrimary)
+            .frame(width: iconSize, height: iconSize, alignment: .leading)
             .accessibilityHidden(true)
     }
 

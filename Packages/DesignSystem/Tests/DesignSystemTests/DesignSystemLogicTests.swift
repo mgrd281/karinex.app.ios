@@ -314,10 +314,10 @@ struct ComponentModelTests {
         #expect(explicit.id == "faq.support")
     }
 
-    @Test("A product card model defaults to a gold badge and no optional content")
+    @Test("A product card model defaults to an accent badge and no optional content")
     func productCardModelDefaults() {
         let model = KXProductCardModel(id: "windows-11-pro", title: "Windows 11 Pro", price: "12,90 €")
-        #expect(model.badgeTone == .gold)
+        #expect(model.badgeTone == .accent)
         #expect(model.vendor == nil)
         #expect(model.compareAtPrice == nil)
         #expect(model.taxNote == nil)
@@ -330,7 +330,7 @@ struct ComponentModelTests {
 
     @Test("Product card badge tones render as the badge styles of the same name")
     func badgeToneStyles() {
-        #expect(KXProductCardModel.BadgeTone.gold.badgeStyle == .gold)
+        #expect(KXProductCardModel.BadgeTone.accent.badgeStyle == .accent)
         #expect(KXProductCardModel.BadgeTone.urgency.badgeStyle == .urgency)
     }
 

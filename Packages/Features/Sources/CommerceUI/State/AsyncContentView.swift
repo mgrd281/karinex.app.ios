@@ -6,9 +6,9 @@ import SwiftUI
 /// What ``AsyncContentView`` shows for ``LoadState/empty``: an SF Symbol, a title, a message
 /// and an optional action, all already localized by the caller.
 public struct AsyncContentEmptyState {
-    /// The SF Symbol in the gold ring.
+    /// The SF Symbol on the light grey disc.
     public let systemImage: String
-    /// The serif title.
+    /// The bold title.
     public let title: String
     /// The explanation.
     public let message: String

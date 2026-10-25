@@ -2,8 +2,8 @@ import SwiftUI
 
 // MARK: - KXEmptyState
 
-/// The editorial empty state: an SF Symbol inside a double champagne-gold ring, a serif title,
-/// a short message and an optional primary action.
+/// The empty state: an SF Symbol on a light grey disc, a bold title, a short message and an
+/// optional primary action.
 ///
 /// Use it for empty lists and screens whose content is not available yet (empty cart, no
 /// search results, catalog placeholder). The content is centered and limited to a readable
@@ -31,7 +31,7 @@ public struct KXEmptyState: View {
     /// Creates an empty state.
     ///
     /// - Parameters:
-    ///   - systemImage: SF Symbol shown in the gold ring. Decorative, hidden from VoiceOver.
+    ///   - systemImage: SF Symbol shown on the disc. Decorative, hidden from VoiceOver.
     ///   - title: The already-localized title. It carries the header trait.
     ///   - message: The already-localized explanation, one or two sentences.
     ///   - actionTitle: Label of the optional primary button.
@@ -79,21 +79,16 @@ public struct KXEmptyState: View {
 
     // MARK: Parts
 
-    /// The ring and its symbol grow with Dynamic Type but stop at 144 pt and 48 pt, so that the
+    /// The disc and its symbol grow with Dynamic Type but stop at 144 pt and 48 pt, so that the
     /// title and message stay the focus at accessibility text sizes.
     private var symbolRing: some View {
         let diameter = min(ringDiameter, 144)
         return ZStack {
             Circle()
                 .fill(KXColor.surface)
-            Circle()
-                .strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
-            Circle()
-                .strokeBorder(KXColor.accent.opacity(0.45), lineWidth: KXBorder.hairline)
-                .padding(KXSpacing.xs - KXSpacing.xxs / 2)
             Image(systemName: systemImage)
-                .font(.system(size: min(symbolSize, 48), weight: .light))
-                .foregroundStyle(KXColor.brand)
+                .font(.system(size: min(symbolSize, 48), weight: .regular))
+                .foregroundStyle(KXColor.textPrimary)
         }
         .frame(width: diameter, height: diameter)
         .accessibilityHidden(true)

@@ -6,8 +6,8 @@ import SwiftUI
 /// "Sale", "Neu" or "Digital".
 ///
 /// Styles and their color pairings (all meet WCAG AA text contrast):
-/// - ``Style/gold``: champagne-gold fill with ink text.
-/// - ``Style/urgency``: terracotta fill with white text. Use sparingly.
+/// - ``Style/accent``: ink fill with white text (inverted in dark mode).
+/// - ``Style/urgency``: sale red fill with white text. Use sparingly.
 /// - ``Style/neutral``: hairline outline with `textSecondary` text.
 /// - ``Style/success``: outline and text in the `success` color.
 ///
@@ -20,9 +20,9 @@ import SwiftUI
 public struct KXBadge: View {
     /// Color treatment of a ``KXBadge``.
     public enum Style: String, CaseIterable, Sendable {
-        /// Gold fill, ink text. The default, for highlights.
-        case gold
-        /// Terracotta fill, white text. For urgency (sale, ending deals).
+        /// Ink fill, white text. The default, for highlights.
+        case accent
+        /// Sale red fill, white text. For savings, sale and ending deals.
         case urgency
         /// Hairline outline, secondary text. For neutral facts.
         case neutral
@@ -38,9 +38,9 @@ public struct KXBadge: View {
     ///
     /// - Parameters:
     ///   - text: The already-localized badge text. Keep it to one or two words.
-    ///   - style: Color treatment. Defaults to ``Style/gold``.
+    ///   - style: Color treatment. Defaults to ``Style/accent``.
     ///   - systemImage: Optional decorative SF Symbol shown before the text.
-    public init(_ text: String, style: Style = .gold, systemImage: String? = nil) {
+    public init(_ text: String, style: Style = .accent, systemImage: String? = nil) {
         self.text = text
         self.style = style
         self.systemImage = systemImage
@@ -74,7 +74,7 @@ public struct KXBadge: View {
 
     private var foregroundColor: Color {
         switch style {
-        case .gold: KXColor.textOnAccent
+        case .accent: KXColor.textOnAccent
         case .urgency: KXColor.textOnUrgency
         case .neutral: KXColor.textSecondary
         case .success: KXColor.success
@@ -83,7 +83,7 @@ public struct KXBadge: View {
 
     private var fillColor: Color {
         switch style {
-        case .gold: KXColor.accent
+        case .accent: KXColor.accent
         case .urgency: KXColor.urgency
         case .neutral, .success: Color.clear
         }
@@ -91,7 +91,7 @@ public struct KXBadge: View {
 
     private var strokeColor: Color? {
         switch style {
-        case .gold, .urgency: nil
+        case .accent, .urgency: nil
         case .neutral: KXColor.divider
         case .success: KXColor.success
         }

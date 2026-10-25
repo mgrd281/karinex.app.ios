@@ -1,8 +1,8 @@
 /// The KARINEX type scale.
 ///
-/// Display and title styles use a serif face (editorial headlines); UI and body text use
-/// the system sans serif; license keys use a monospaced face. Every style scales with
-/// Dynamic Type relative to the listed system text style.
+/// Every style uses the system sans serif (SF Pro): bold, tightly tracked headlines and calm
+/// regular body text, as in modern fashion retail apps. License keys use a monospaced face.
+/// Every style scales with Dynamic Type relative to the listed system text style.
 public enum TypographyToken: String, CaseIterable, Sendable {
     /// Hero headline.
     case display
@@ -35,7 +35,6 @@ public enum TypographyToken: String, CaseIterable, Sendable {
 
     /// Font family classification.
     public enum Design: String, Sendable {
-        case serif
         case sans
         case monospaced
     }
@@ -66,35 +65,31 @@ public enum TypographyToken: String, CaseIterable, Sendable {
     /// Point size at the default Dynamic Type setting (Large).
     public var baseSize: Double {
         switch self {
-        case .display: 38
-        case .title1: 30
-        case .title2: 24
-        case .title3: 20
+        case .display: 34
+        case .title1: 28
+        case .title2: 22
+        case .title3: 19
         case .headline: 17
         case .body: 17
         case .callout: 16
         case .subheadline: 15
         case .footnote: 13
         case .caption: 12
-        case .eyebrow: 12
-        case .price: 22
+        case .eyebrow: 11
+        case .price: 24
         case .numeral: 28
         case .licenseKey: 17
         }
     }
 
     public var design: Design {
-        switch self {
-        case .display, .title1, .title2, .title3, .numeral: .serif
-        case .licenseKey: .monospaced
-        case .headline, .body, .callout, .subheadline, .footnote, .caption, .eyebrow, .price: .sans
-        }
+        self == .licenseKey ? .monospaced : .sans
     }
 
     public var weight: Weight {
         switch self {
-        case .display, .title1, .title2: .medium
-        case .title3, .headline, .eyebrow, .price, .numeral: .semibold
+        case .display: .bold
+        case .title1, .title2, .title3, .headline, .eyebrow, .price, .numeral: .semibold
         case .licenseKey: .medium
         case .body, .callout, .subheadline, .footnote, .caption: .regular
         }
@@ -121,9 +116,10 @@ public enum TypographyToken: String, CaseIterable, Sendable {
     /// Letter spacing in points at the base size.
     public var tracking: Double {
         switch self {
-        case .display: -0.4
-        case .title1: -0.2
-        case .eyebrow: 1.4
+        case .display: -0.5
+        case .title1: -0.3
+        case .title2: -0.2
+        case .eyebrow: 0.8
         case .licenseKey: 1.2
         default: 0
         }

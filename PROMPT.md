@@ -36,7 +36,7 @@ Target outcome: an App Store–approved app that measurably increases repeat pur
 
 **Activation:** Activation instructions differ per product and come from Shopify product content (metafields / description). Do not hardcode activation steps. Typical example: Office 2024 Pro Plus activates via "File > Account > Enter product key", not via office.com/setup.
 
-**Brand identity ("KARINEX Editorial Luxe"):** Forest Green `#1D4739`, Cream `#F5F2EC` / `#F7F4ED`, Champagne Gold `#C9B486`, serif display headlines (Cormorant Garamond on the web). The owner explicitly wants visually rich, luxurious modules — not sparse grey "Apple-default" screens. A logo redesign is pending; use a typographic wordmark "KARINEX" until final assets arrive.
+**Brand identity ("KARINEX Clean", owner decision of 2026-10-25):** black `#111111`, white `#FFFFFF` and neutral greys, one sale red `#C20E2B`, bold SF Pro headlines, product photos edge to edge on light grey, as in modern fashion retail apps (reference: the OACE app). It replaces the earlier green, cream and gold "Editorial Luxe" identity, which the owner rejected after the first TestFlight build. A logo redesign is pending; use a typographic wordmark "KARINEX" until final assets arrive.
 
 **Known content risks (must be respected in app copy):**
 - Never claim that the license chain / license origin was "verified" or "documented".
@@ -113,7 +113,7 @@ Target outcome: an App Store–approved app that measurably increases repeat pur
 ### 5.3 Checkout Kit
 - `ShopifyCheckoutSheetKit.preload(checkout:)` when the cart screen appears and after every cart change (debounced).
 - `present(checkout:from:delegate:)` on "Zur Kasse". Implement `CheckoutDelegate`: on completion clear the local cart, store the order summary from the completed event, show a success screen ("Bestellung eingegangen. Ihr Lizenzschlüssel wird per E-Mail zugestellt.") with a button to the Orders tab; on cancel keep the cart; on failure show a recoverable error with retry.
-- Configure branding options to match the design system (cream/forest green, sheet corner radius, title).
+- Configure branding options to match the design system (black and white, sheet corner radius, title).
 - Pass the user's privacy consent state to the kit so Shopify applies the right tracking rules during checkout.
 - Handle external links (e.g., Klarna) and `returnTo`/deep links back into the app.
 
@@ -135,9 +135,9 @@ Target outcome: an App Store–approved app that measurably increases repeat pur
 Tab bar: **Start · Shop · Suche · Warenkorb · Konto** (badge on cart).
 
 ### 6.1 Start (Home)
-- Editorial hero (cream panel, serif headline, forest-green CTA) fed by `app_home` metaobject or fallback content.
+- Hero (flat light grey panel, bold headline, black CTA) fed by `app_home` metaobject or fallback content.
 - Trust strip: "Lieferung per E-Mail in Minuten" · "Apple Pay, Kreditkarte, Klarna" · "100 Tage Geld-zurück*" (with the condition in a tappable footnote) · "Support Mo. bis So., 06:00 bis 23:00 Uhr".
-- "Blitzangebote" carousel: products from collection `blitzangebote` (create if missing) with a flip-digit countdown from `karinex.deal_ends_at`, compare-at price, savings badge in gold.
+- "Blitzangebote" carousel: products from collection `blitzangebote` (create if missing) with a flip-digit countdown from `karinex.deal_ends_at`, compare-at price, savings badge in sale red.
 - Category showcase rows: Windows · Office · Server · Developer, each with 4–6 product cards and "Alle anzeigen".
 - Bestseller row, "Ratgeber" row (blog articles), support card (WhatsApp + email), account teaser.
 
@@ -146,14 +146,14 @@ Tab bar: **Start · Shop · Suche · Warenkorb · Konto** (badge on cart).
 - Infinite scroll with cursor pagination, pull-to-refresh, skeleton states.
 
 ### 6.3 Product detail (the most important screen)
-- Gallery (zoom, page dots), serif title, price with "inkl. MwSt." logic per market, compare-at price, availability.
+- Gallery edge to edge on the light grey photo tile (zoom, page dots, wishlist heart), bold title, price with "inkl. MwSt." logic per market, compare-at price, availability.
 - Variant selector (segmented or chips) with live price update.
 - **Key facts** table with dot-leader rows (label ...... value) from `karinex.*` metafields: Lizenztyp, Architektur, Geräteanzahl, Lieferform, Aktivierungsart, Sprachen, Support-Status, MPN.
 - **"So läuft es ab"** 3-step timeline: Bestellen → Bezahlen → Schlüssel per E-Mail (Minuten). For physical variants: shipping timeline instead.
 - Description (`descriptionHtml`) rendered natively with brand typography; tables must render as real tables.
 - **Activation** section from `custom.details_content` or linked blog guide.
 - **Comparison** module: sibling products from the same collection (e.g., Office 2024 Home vs Standard vs Pro Plus) with thumbnails, key specs and price.
-- **FAQ accordion** from `karinex.faq` with gold "+" toggles.
+- **FAQ accordion** from `karinex.faq` with chevron toggles.
 - Refund conditions block (exact policy logic from section 2) and digital-content notice (§ 356 Abs. 5 BGB).
 - Sticky bottom bar: price + "In den Warenkorb" (haptic on success) + secondary "Jetzt kaufen" (adds and opens checkout). Share sheet, wishlist heart.
 
@@ -169,7 +169,7 @@ Tab bar: **Start · Shop · Suche · Warenkorb · Konto** (badge on cart).
 ### 6.7 Konto (Account)
 - Logged-out: benefits list + "Anmelden" (passwordless). Logged-in: profile, orders, licenses, addresses, notifications, language and market, legal, help, account deletion, logout.
 - **Bestellungen:** list with status pills; detail with a vertical timeline (Bestellt → Bezahlt → Lizenz versendet / Versendet), line items, totals, "Rechnung (PDF)" and "Lizenzschlüssel anzeigen".
-- **Meine Lizenzen (License vault):** certificate-styled key cards (ink `#17161A` card, terracotta accent line, serif product name, monospaced key, "Kopieren" with haptic and expiring clipboard, "Anleitung" link, "Support zu dieser Lizenz"). Optional Face ID gate (setting). Keys cached in Keychain for offline viewing, hidden behind a privacy overlay in the app switcher.
+- **Meine Lizenzen (License vault):** black key cards (`#111111` card, bold product name, monospaced key, "Kopieren" with haptic and expiring clipboard, "Anleitung" link, "Support zu dieser Lizenz"). Optional Face ID gate (setting). Keys cached in Keychain for offline viewing, hidden behind a privacy overlay in the app switcher.
 - **Konto löschen:** in-app flow that submits a GDPR erasure request to the backend, confirms by email, and logs the user out (App Store requirement).
 
 ### 6.8 Hilfe & Support
@@ -189,27 +189,24 @@ Tab bar: **Start · Shop · Suche · Warenkorb · Konto** (badge on cart).
 
 ---
 
-## 7. DESIGN SYSTEM — "KARINEX Editorial Luxe for iOS"
+## 7. DESIGN SYSTEM — "KARINEX Clean for iOS"
 
-**Direction (locked):** luxurious editorial retail. Rich cream panels, deep forest green, restrained champagne gold, serif display type, generous whitespace, tactile motion. It must still feel unmistakably native iOS: system navigation chrome, standard gestures, Dynamic Type, SF Symbols.
+**Direction (owner decision of 2026-10-25, replaces "Editorial Luxe"):** clean, photo-first retail in the style of modern fashion apps. White pages, black type and buttons, neutral grey panels, product photos square and edge to edge on a light grey tile, bold sans serif headlines, capsule buttons and pills, collapsible detail rows, no ornaments. One sale red for savings and deals. It must still feel unmistakably native iOS: system navigation chrome, standard gestures, Dynamic Type, SF Symbols.
 
-**Color tokens (Asset Catalog with light/dark variants):**
-- `kx.forest` #1D4739 (primary), `kx.forestDeep` #16382D, `kx.forestSoft` #2A5F4C
-- `kx.cream` #F5F2EC (page background), `kx.creamPanel` #F7F4ED (cards), `kx.hairlineCream` #E6E0D3
-- `kx.ink` #17161A (primary text), `kx.graphite` #424245, `kx.secondary` #86868B, `kx.hairline` #D2D2D7
-- `kx.gold` #C9B486 (accents: badges, dividers, numerals, active tab tint), `kx.goldDeep` #B39B66
-- `kx.terracotta` #BC5127 (urgency: countdown, sale badge; sparingly)
+**Color tokens (in code, `DesignTokens`, with light/dark variants):**
+- `kx.ink` #111111 (primary text, filled buttons), `kx.inkPressed` #3A3A3A, `kx.graphite` #4D4D4D (secondary text), `kx.slate` #6B6B6B (tertiary text), `kx.steel` #8A8A8A (icons only)
+- `kx.white` #FFFFFF (page background), `kx.fog` #F5F5F5 (panels, purchase bar), `kx.cloud` #F3F3F3 (behind product photos), `kx.mist` #E8E8E8 (hairlines), `kx.silver` #D9D9D9 (dividers, inactive page dots)
+- `kx.sale` #C20E2B (savings and sale badges, countdown; sparingly). No other hue apart from the status colors.
 - Semantic: success, warning, error, info with accessible contrast.
-- Dark mode: background #0F1C17, panel #16382D, text cream, gold accents, hairlines #2E4A3F. Test every screen in both modes.
+- Dark mode: background #000000, panels #1C1C1E and #2C2C2E, text #F5F5F5, white buttons with black labels, dividers #3A3A3C; the photo tile stays light. Test every screen in both modes.
 
 **Typography:**
-- Display/headlines: serif. Bundle Cormorant Garamond (OFL) as custom font or use the system serif design (`.fontDesign(.serif)`); apply to hero headlines, product titles, section titles, drop caps in articles.
-- Body/UI: SF Pro via Dynamic Type text styles. License keys: SF Mono.
-- Never use gold for body text (contrast). Minimum contrast 4.5:1 for text.
+- All text in SF Pro via Dynamic Type text styles: bold, slightly tighter tracked headlines (display 34, title 28, section title 22), regular body text. License keys: SF Mono.
+- Minimum contrast 4.5:1 for text.
 
-**Components (each with previews and snapshot tests):** `KXButton` (primary forest, secondary outline with gold hairline, tertiary text), `KXCard` (cream panel, radius 18, optional gold inset ring), `KXBadge`, `KXPriceTag`, `KXSpecRow` (dot leaders), `KXStepTimeline`, `KXAccordion` (gold plus), `KXCountdown` (flip digits), `KXTrustStrip`, `KXProductCard`, `KXKeyCard` (certificate style), `KXSkeleton`, `KXEmptyState`, `KXBanner` (offline/error), `KXSectionHeader` (serif title + short gold rule).
+**Components (each with previews and snapshot tests):** `KXButton` (capsules: primary black, secondary thin ink outline, tertiary text), `KXCard` (flat light grey panel, radius 12; outlined variant for the money-back promise), `KXBadge`, `KXPriceTag`, `KXSpecRow` (dot leaders), `KXStepTimeline`, `KXAccordion` (chevrons), `KXCountdown` (flip digits), `KXTrustStrip`, `KXProductCard` (square photo tile without card or border), `KXKeyCard` (black card), `KXSkeleton`, `KXEmptyState`, `KXBanner` (offline/error), `KXSectionHeader` (bold title, optional eyebrow).
 
-**Motion and feel:** springs 0.25–0.35s, matched geometry for product card → detail, subtle parallax on hero, haptics for add-to-cart / copy key / successful checkout. Respect Reduce Motion and Reduce Transparency.
+**Motion and feel:** springs 0.25–0.35s, matched geometry for product card → detail, haptics for add-to-cart / copy key / successful checkout. Respect Reduce Motion and Reduce Transparency.
 
 **Layout:** 8pt grid, 16pt gutters, safe areas, large titles where appropriate, iPhone first, iPad-compatible adaptive layouts (Phase 3 polish).
 
@@ -313,7 +310,7 @@ DoD: App Store submission package complete; zero P1 bugs; all budgets met.
 - `{{BFF_BASE_URL}}` (Railway service), APNs key handled server-side
 - `{{BUNDLE_ID}}`, `{{APPLE_TEAM_ID}}`, App Store Connect access, Universal Links entitlement for `karinex.de` (`apple-app-site-association` deployed on the domain)
 - Confirmed collection handles (windows, office, server, bestseller, blitzangebote), page handle for Impressum, blog handle, metafield definitions as listed in 5.1
-- Brand assets: logo (interim wordmark is acceptable), app icon (provide or generate a forest-green/gold monogram concept for approval)
+- Brand assets: logo (interim wordmark is acceptable), app icon (interim: a white "K" on black, replace with the final logo)
 - Reviewer account, test product and 100% discount code for App Review
 
 ---

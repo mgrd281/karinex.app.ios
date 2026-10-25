@@ -5,9 +5,9 @@ import SwiftUI
 
 // MARK: - ProductSummarySection
 
-/// The top of the product: serif title, the price of the selected variant with the market's tax
-/// note and compare-at price, availability with the delivery form, and the variant chips when
-/// there is more than one variant.
+/// The top of the product: the bold title, the price of the selected variant with the market's
+/// tax note and compare-at price, availability and the delivery form as icon rows, and the
+/// variant pills when there is more than one variant.
 struct ProductSummarySection: View {
     let product: Product
     let variant: ProductVariant?
@@ -56,60 +56,46 @@ struct ProductSummarySection: View {
 // MARK: - ProductAvailabilityRow
 
 /// Availability of the selected variant ("Verfügbar" or "Derzeit nicht verfügbar") and how it is
-/// delivered (by e-mail or shipped), read by VoiceOver as one element.
+/// delivered (by e-mail or shipped), as two rows with a line icon each, read by VoiceOver as one
+/// element.
 struct ProductAvailabilityRow: View {
     let isAvailable: Bool
     let fulfillment: ProductFulfillment
 
+    @ScaledMetric(relativeTo: .callout) private var iconWidth: CGFloat = 28
+
     var body: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack(spacing: KXSpacing.m) {
-                availability
-                KXDivider(axis: .vertical)
-                    .frame(height: KXSpacing.m)
-                delivery
-            }
-            .fixedSize(horizontal: true, vertical: false)
-            VStack(alignment: .leading, spacing: KXSpacing.xs) {
-                availability
-                delivery
-            }
+        VStack(alignment: .leading, spacing: KXSpacing.s) {
+            row(
+                systemImage: isAvailable ? "checkmark.circle" : "clock",
+                iconColor: isAvailable ? KXColor.success : KXColor.textSecondary,
+                text: Text(isAvailable ? "product.availability.available" : "product.availability.unavailable", bundle: .module)
+            )
+            row(systemImage: fulfillment.systemImage, iconColor: KXColor.textPrimary, text: Text(fulfillment.deliveryNote))
         }
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("product.availability")
     }
 
-    private var availability: some View {
-        Label {
-            Text(isAvailable ? "product.availability.available" : "product.availability.unavailable", bundle: .module)
-                .fixedSize(horizontal: false, vertical: true)
-        } icon: {
-            Image(systemName: isAvailable ? "checkmark.circle.fill" : "clock")
-                .foregroundStyle(isAvailable ? KXColor.success : KXColor.textSecondary)
+    private func row(systemImage: String, iconColor: Color, text: Text) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: KXSpacing.s) {
+            Image(systemName: systemImage)
+                .foregroundStyle(iconColor)
+                .frame(width: iconWidth, alignment: .leading)
                 .accessibilityHidden(true)
-        }
-        .kxFont(.subheadline)
-        .foregroundStyle(KXColor.textPrimary)
-    }
-
-    private var delivery: some View {
-        Label {
-            Text(fulfillment.deliveryNote)
+            text
+                .foregroundStyle(KXColor.textPrimary)
                 .fixedSize(horizontal: false, vertical: true)
-        } icon: {
-            Image(systemName: fulfillment.systemImage)
-                .foregroundStyle(KXColor.accentText)
-                .accessibilityHidden(true)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .kxFont(.subheadline)
-        .foregroundStyle(KXColor.textSecondary)
+        .kxFont(.callout)
     }
 }
 
 // MARK: - ProductVariantPicker
 
-/// The variants as chips that wrap onto several lines. The selected chip is forest green;
-/// unavailable variants stay selectable (to show their price) but are marked.
+/// The variants as pills that wrap onto several lines. The selected pill is filled with ink;
+/// unavailable variants stay selectable (to show their price) but are struck through.
 struct ProductVariantPicker: View {
     let variants: [ProductVariant]
     let selectedVariantID: ShopifyID?
@@ -118,8 +104,9 @@ struct ProductVariantPicker: View {
     var body: some View {
         VStack(alignment: .leading, spacing: KXSpacing.s) {
             Text("product.variant.title", bundle: .module)
-                .kxFont(.eyebrow)
-                .foregroundStyle(KXColor.accentText)
+                .fontWeight(.semibold)
+                .kxFont(.subheadline)
+                .foregroundStyle(KXColor.textPrimary)
                 .accessibilityAddTraits(.isHeader)
             ProductFlowLayout(spacing: KXSpacing.xs) {
                 ForEach(Array(variants.enumerated()), id: \.element.id) { index, variant in
@@ -134,7 +121,7 @@ struct ProductVariantPicker: View {
     }
 }
 
-/// One variant chip.
+/// One variant pill.
 private struct ProductVariantChip: View {
     let variant: ProductVariant
     let isSelected: Bool
@@ -151,12 +138,12 @@ private struct ProductVariantChip: View {
                 .foregroundStyle(foreground)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, KXSpacing.m)
+                .padding(.horizontal, KXSpacing.l)
                 .padding(.vertical, KXSpacing.xs)
-                .frame(minWidth: KXSpacing.minimumTapTarget, minHeight: KXSpacing.minimumTapTarget)
-                .background(isSelected ? KXColor.brand : KXColor.surface, in: shape)
+                .frame(minWidth: KXSpacing.minimumTapTarget * 1.5, minHeight: KXSpacing.minimumTapTarget)
+                .background(isSelected ? KXColor.brand : Color.clear, in: shape)
                 .overlay {
-                    shape.strokeBorder(isSelected ? KXColor.accent : KXColor.hairline, lineWidth: KXBorder.regular)
+                    shape.strokeBorder(isSelected ? KXColor.brand : KXColor.textPrimary, lineWidth: KXBorder.regular)
                 }
                 .contentShape(shape)
         }
@@ -243,19 +230,19 @@ struct ProductFlowLayout: Layout {
 
 // MARK: - ProductFactsSection
 
-/// "Auf einen Blick": the key facts from the store's metafields as dot-leader rows. The caller
-/// hides the section when there are no facts.
+/// "Auf einen Blick": the key facts from the store's metafields as dot-leader rows separated by
+/// hairlines. The caller hides the section when there are no facts.
 struct ProductFactsSection: View {
     let facts: [ProductFact]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.m) {
+        VStack(alignment: .leading, spacing: KXSpacing.s) {
             KXSectionHeader(String(localized: "product.facts.title", bundle: .module))
-            KXCard {
-                VStack(spacing: 0) {
-                    ForEach(facts) { fact in
-                        KXSpecRow(fact.kind.label, value: fact.value)
-                    }
+            VStack(spacing: 0) {
+                ForEach(facts) { fact in
+                    KXSpecRow(fact.kind.label, value: fact.value)
+                        .padding(.vertical, KXSpacing.xxs)
+                    KXDivider()
                 }
             }
         }
@@ -263,49 +250,57 @@ struct ProductFactsSection: View {
     }
 }
 
-// MARK: - ProductProcessSection
+// MARK: - ProductMoreInformationSection
 
-/// "So läuft es ab": order, pay and receive the key by e-mail, or the shipping process for
-/// physical variants.
-struct ProductProcessSection: View {
+/// Collapsible rows below the description, in the style of fashion retail apps: "So läuft es ab"
+/// (order, pay and receive the key by e-mail, or the shipping process for physical variants) and
+/// the activation instructions when the store provides them.
+struct ProductMoreInformationSection: View {
     let fulfillment: ProductFulfillment
+    let activation: HTMLDocument?
 
     var body: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.m) {
-            KXSectionHeader(String(localized: "product.process.title", bundle: .module))
-            KXCard(padding: KXSpacing.l) {
+        KXAccordion(items: rows)
+    }
+
+    private var rows: [KXAccordionItem] {
+        var rows = [
+            KXAccordionItem(title: String(localized: "product.process.title", bundle: .module), id: "process") {
                 KXStepTimeline(steps: fulfillment.steps.map { KXStepTimeline.Step(title: $0.title, detail: $0.detail) })
-            }
+                    .padding(.top, KXSpacing.xs)
+                    .accessibilityIdentifier("product.process")
+            },
+        ]
+        if let activation {
+            rows.append(
+                KXAccordionItem(title: String(localized: "product.activation.title", bundle: .module), id: "activation") {
+                    RichTextView(document: activation)
+                        .accessibilityIdentifier("product.activation")
+                }
+            )
         }
-        .accessibilityIdentifier("product.process")
+        return rows
     }
 }
 
 // MARK: - ProductRichTextSection
 
-/// A titled section with store rich text: the description or the activation instructions.
+/// A titled section with store rich text, such as the description.
 struct ProductRichTextSection: View {
     let title: String
     let document: HTMLDocument
-    let isCard: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: KXSpacing.m) {
             KXSectionHeader(title)
-            if isCard {
-                KXCard(padding: KXSpacing.l) {
-                    RichTextView(document: document)
-                }
-            } else {
-                RichTextView(document: document)
-            }
+            RichTextView(document: document)
         }
     }
 }
 
 // MARK: - ProductFAQSection
 
-/// "Häufige Fragen": the questions of `karinex.faq` in an accordion with gold plus toggles.
+/// "Häufige Fragen": the questions of `karinex.faq` in an accordion with chevron toggles.
 struct ProductFAQSection: View {
     let items: [ProductFAQItem]
 
@@ -330,7 +325,7 @@ struct ProductFAQSection: View {
 /// The "100 Tage Geld-zurück" promise with its conditions right next to it (PROMPT.md section 2).
 struct ProductRefundSection: View {
     var body: some View {
-        KXCard(padding: KXSpacing.l, showsInsetRing: true) {
+        KXCard(padding: KXSpacing.l, isOutlined: true) {
             VStack(alignment: .leading, spacing: KXSpacing.m) {
                 HStack(alignment: .firstTextBaseline, spacing: KXSpacing.s) {
                     Image(systemName: "arrow.uturn.backward.circle")
@@ -343,7 +338,7 @@ struct ProductRefundSection: View {
                         .fixedSize(horizontal: false, vertical: true)
                         .accessibilityAddTraits(.isHeader)
                 }
-                KXDivider(.accent)
+                KXDivider()
                 ForEach(ProductRefundClause.allCases) { clause in
                     HStack(alignment: .firstTextBaseline, spacing: KXSpacing.s) {
                         Image(systemName: clause.systemImage)
@@ -395,27 +390,30 @@ struct ProductDigitalNoticeSection: View {
 
 // MARK: - ProductDetailSkeleton
 
-/// The placeholder while the product loads: gallery, title, price and a few text lines.
+/// The placeholder while the product loads: the photo tile edge to edge, title, price and a few
+/// text lines.
 struct ProductDetailSkeleton: View {
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: KXSpacing.m) {
-                KXSkeleton(cornerRadius: KXRadius.large)
+            VStack(alignment: .leading, spacing: KXSpacing.l) {
+                KXColor.imageBackground
                     .aspectRatio(1, contentMode: .fit)
-                KXSkeleton()
-                    .frame(height: KXSpacing.l)
-                KXSkeleton()
-                    .frame(height: KXSpacing.l)
-                    .padding(.trailing, KXSpacing.xxxl)
-                KXSkeleton()
-                    .frame(width: KXSpacing.xxxl * 2, height: KXSpacing.l)
-                    .padding(.top, KXSpacing.xs)
-                ForEach(0..<4, id: \.self) { _ in
+                VStack(alignment: .leading, spacing: KXSpacing.m) {
                     KXSkeleton()
-                        .frame(height: KXSpacing.s)
+                        .frame(height: KXSpacing.l)
+                    KXSkeleton()
+                        .frame(height: KXSpacing.l)
+                        .padding(.trailing, KXSpacing.xxxl)
+                    KXSkeleton()
+                        .frame(width: KXSpacing.xxxl * 2, height: KXSpacing.l)
+                        .padding(.top, KXSpacing.xs)
+                    ForEach(0..<4, id: \.self) { _ in
+                        KXSkeleton()
+                            .frame(height: KXSpacing.s)
+                    }
                 }
+                .padding(.horizontal, KXSpacing.gutter)
             }
-            .padding(KXSpacing.gutter)
         }
         .scrollDisabled(true)
         .accessibilityElement(children: .ignore)

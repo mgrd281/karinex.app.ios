@@ -106,12 +106,12 @@ public struct AccountView: View {
     // MARK: Signed out
 
     private var benefitsCard: some View {
-        KXCard(showsInsetRing: true) {
+        KXCard {
             VStack(alignment: .leading, spacing: KXSpacing.m) {
                 VStack(alignment: .leading, spacing: KXSpacing.xs) {
                     Text("account.intro.eyebrow", bundle: .module)
                         .kxFont(.eyebrow)
-                        .foregroundStyle(KXColor.accentText)
+                        .foregroundStyle(KXColor.textSecondary)
                     Text("account.intro.title", bundle: .module)
                         .kxFont(.title2)
                         .foregroundStyle(KXColor.textPrimary)
@@ -165,11 +165,11 @@ public struct AccountView: View {
     // MARK: Signed in
 
     private var profileCard: some View {
-        KXCard(showsInsetRing: true) {
+        KXCard {
             VStack(alignment: .leading, spacing: KXSpacing.xs) {
                 Text("account.profile.eyebrow", bundle: .module)
                     .kxFont(.eyebrow)
-                    .foregroundStyle(KXColor.accentText)
+                    .foregroundStyle(KXColor.textSecondary)
                 if let customer = sessionStore.customer {
                     Text(customer.displayName)
                         .kxFont(.title2)

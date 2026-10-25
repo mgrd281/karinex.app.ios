@@ -72,15 +72,11 @@ public struct SearchResultsScreen: View {
             VStack(alignment: .leading, spacing: KXSpacing.s) {
                 Text("search.results.count \(results.totalCount)", bundle: .module)
                     .kxFont(.eyebrow)
-                    .foregroundStyle(KXColor.accentText)
+                    .foregroundStyle(KXColor.textSecondary)
                 Text(verbatim: model.query)
                     .kxFont(.title1)
                     .foregroundStyle(KXColor.textPrimary)
                     .accessibilityAddTraits(.isHeader)
-                Rectangle()
-                    .fill(KXColor.accent)
-                    .frame(width: KXSpacing.xl, height: KXBorder.emphasis)
-                    .accessibilityHidden(true)
             }
             .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal, KXSpacing.gutter)

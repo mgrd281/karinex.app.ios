@@ -27,7 +27,6 @@ extension WidgetPalette {
 
     private static func design(_ design: TypographyToken.Design) -> Font.Design {
         switch design {
-        case .serif: .serif
         case .sans: .default
         case .monospaced: .monospaced
         }

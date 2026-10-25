@@ -19,7 +19,7 @@ struct KXGalleryStepTimelinePage: View {
 
     var body: some View {
         KXGalleryPage(topic: .stepTimeline) {
-            KXGalleryDemo("Informational steps, horizontal", note: "state: nil, gold numerals. Vertical at accessibility sizes.") {
+            KXGalleryDemo("Informational steps, horizontal", note: "state: nil, white numerals on ink discs. Vertical at accessibility sizes.") {
                 KXStepTimeline(steps: process, direction: .horizontal)
             }
             KXGalleryDemo("Informational steps, vertical") {

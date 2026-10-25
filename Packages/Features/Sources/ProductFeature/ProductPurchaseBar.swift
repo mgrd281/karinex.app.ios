@@ -5,38 +5,39 @@ import SwiftUI
 
 // MARK: - ProductPurchaseBar
 
-/// The sticky bar at the bottom of the product screen: the price of the selected variant with
-/// its tax note, "In den Warenkorb" and "Jetzt kaufen".
+/// The sticky bar at the bottom of the product screen, as in fashion retail apps: the price of
+/// the selected variant with its tax note on the leading side and the black "In den Warenkorb"
+/// button on the trailing side. The compare-at price and the savings stay in the summary above,
+/// so the bar stays calm.
 ///
-/// Both buttons are disabled while the variant cannot be bought or an add is running. The
-/// buttons sit side by side and stack at large text sizes, so nothing is cut off.
+/// The button is disabled while the variant cannot be bought or an add is running. When price
+/// and button do not fit side by side (long translations, large text sizes) the button moves
+/// below the price at full width, so nothing is cut off.
 struct ProductPurchaseBar: View {
     let variant: ProductVariant
     let isAdding: Bool
     let onAddToCart: @MainActor () -> Void
-    let onBuyNow: @MainActor () -> Void
-
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.s) {
-            PriceText(
-                price: variant.price,
-                compareAtPrice: variant.compareAtPrice,
-                requiresShipping: variant.requiresShipping,
-                size: .compact
-            )
-            .accessibilityIdentifier("product.bar.price")
-            buttons
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .center, spacing: KXSpacing.m) {
+                price
+                    .fixedSize()
+                addButton
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            VStack(alignment: .leading, spacing: KXSpacing.s) {
+                price
+                addButton
+            }
         }
         .padding(.horizontal, KXSpacing.gutter)
         .padding(.top, KXSpacing.s)
         .padding(.bottom, KXSpacing.xs)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background {
-            KXColor.surfaceElevated
+            KXColor.surface
                 .ignoresSafeArea(edges: .bottom)
-                .shadow(color: KXColor.scrim.opacity(0.12), radius: KXSpacing.s, x: 0, y: -2)
         }
         .overlay(alignment: .top) {
             KXDivider()
@@ -45,29 +46,24 @@ struct ProductPurchaseBar: View {
         .accessibilityIdentifier("product.bar")
     }
 
-    private var buttons: some View {
-        let layout = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(spacing: KXSpacing.xs))
-            : AnyLayout(HStackLayout(spacing: KXSpacing.s))
-        return layout {
-            KXButton(
-                String(localized: "product.cart.buy_now", bundle: .module),
-                style: .secondary,
-                isFullWidth: true
-            ) {
-                onBuyNow()
-            }
-            .accessibilityIdentifier("product.buyNow")
-            KXButton(
-                String(localized: "product.cart.add", bundle: .module),
-                systemImage: "bag",
-                isFullWidth: true,
-                isLoading: isAdding
-            ) {
-                onAddToCart()
-            }
-            .accessibilityIdentifier("product.addToCart")
+    private var price: some View {
+        PriceText(
+            price: variant.price,
+            requiresShipping: variant.requiresShipping,
+            showsSavings: false
+        )
+        .accessibilityIdentifier("product.bar.price")
+    }
+
+    private var addButton: some View {
+        KXButton(
+            String(localized: "product.cart.add", bundle: .module),
+            isFullWidth: true,
+            isLoading: isAdding
+        ) {
+            onAddToCart()
         }
         .disabled(!variant.availableForSale || isAdding)
+        .accessibilityIdentifier("product.addToCart")
     }
 }

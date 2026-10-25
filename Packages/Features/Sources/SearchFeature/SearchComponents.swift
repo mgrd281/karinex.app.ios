@@ -5,7 +5,7 @@ import SwiftUI
 
 // MARK: - SearchCategoryGrid
 
-/// The category shortcuts: a tile per main collection with its symbol in a gold ring.
+/// The category shortcuts: a tile per main collection with its symbol on a light grey disc.
 struct SearchCategoryGrid: View {
     let onSelect: @MainActor (SearchCategoryShortcut) -> Void
 
@@ -21,11 +21,9 @@ struct SearchCategoryGrid: View {
                     HStack(spacing: KXSpacing.s) {
                         Image(systemName: shortcut.systemImage)
                             .kxFont(.callout)
-                            .foregroundStyle(KXColor.brand)
+                            .foregroundStyle(KXColor.textPrimary)
                             .frame(width: ringDiameter, height: ringDiameter)
-                            .overlay {
-                                Circle().strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
-                            }
+                            .background(KXColor.surface, in: Circle())
                             .accessibilityHidden(true)
                         Text(shortcut.title)
                             .kxFont(.headline)
@@ -79,9 +77,6 @@ struct SearchChip: View {
             .padding(.horizontal, KXSpacing.m)
             .frame(minHeight: KXSpacing.minimumTapTarget)
             .background(KXColor.surface, in: Capsule())
-            .overlay {
-                Capsule().strokeBorder(KXColor.accent.opacity(0.6), lineWidth: KXBorder.regular)
-            }
             .contentShape(Capsule())
         }
         .buttonStyle(.plain)
@@ -165,7 +160,7 @@ struct SearchListCard<Item: Identifiable, Row: View>: View {
 
 // MARK: - SearchSectionTitle
 
-/// The small section title of the search screen: an uppercase eyebrow in gold text color.
+/// The small section title of the search screen: an uppercase eyebrow in the secondary text color.
 struct SearchSectionTitle: View {
     let title: String
     var actionTitle: String?
@@ -175,7 +170,7 @@ struct SearchSectionTitle: View {
         HStack(alignment: .firstTextBaseline, spacing: KXSpacing.s) {
             Text(title)
                 .kxFont(.eyebrow)
-                .foregroundStyle(KXColor.accentText)
+                .foregroundStyle(KXColor.textSecondary)
                 .accessibilityAddTraits(.isHeader)
                 .frame(maxWidth: .infinity, alignment: .leading)
             if let actionTitle, let action {
@@ -206,13 +201,13 @@ struct SearchProductGrid: View {
     }
 
     private var columnWidth: CGFloat {
-        let spacing = KXSpacing.m * CGFloat(columnCount - 1)
+        let spacing = KXSpacing.xs * CGFloat(columnCount - 1)
         return max((width - spacing) / CGFloat(columnCount), 0)
     }
 
     var body: some View {
         LazyVGrid(
-            columns: Array(repeating: GridItem(.flexible(), spacing: KXSpacing.m, alignment: .top), count: columnCount),
+            columns: Array(repeating: GridItem(.flexible(), spacing: KXSpacing.xs, alignment: .top), count: columnCount),
             alignment: .leading,
             spacing: KXSpacing.l
         ) {
@@ -256,12 +251,12 @@ struct SearchResultsSkeleton: View {
             KXSkeleton()
                 .frame(width: 160, height: KXSpacing.m)
             LazyVGrid(
-                columns: [GridItem(.flexible(), spacing: KXSpacing.m), GridItem(.flexible(), spacing: KXSpacing.m)],
+                columns: [GridItem(.flexible(), spacing: KXSpacing.xs), GridItem(.flexible(), spacing: KXSpacing.xs)],
                 spacing: KXSpacing.l
             ) {
                 ForEach(0..<4, id: \.self) { _ in
                     VStack(alignment: .leading, spacing: KXSpacing.xs) {
-                        KXSkeleton(cornerRadius: KXRadius.card)
+                        KXSkeleton(cornerRadius: KXRadius.image)
                             .aspectRatio(1, contentMode: .fit)
                         KXSkeleton()
                             .frame(height: KXSpacing.m)

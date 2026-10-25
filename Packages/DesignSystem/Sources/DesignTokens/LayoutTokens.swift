@@ -23,25 +23,27 @@ public enum SpacingToken {
     public static let minimumTapTarget: Double = 44
 }
 
-/// Corner radii.
+/// Corner radii. Buttons, chips and badges are capsules; product photos have square corners.
 public enum RadiusToken {
-    /// Badges, chips and small tags.
-    public static let small: Double = 8
-    /// Buttons and text fields.
-    public static let medium: Double = 14
+    /// Small tags and thumbnails.
+    public static let small: Double = 6
+    /// Text fields and inline panels.
+    public static let medium: Double = 12
     /// Cards and panels (`KXCard`).
-    public static let card: Double = 18
+    public static let card: Double = 12
     /// Hero panels and sheets.
-    public static let large: Double = 24
+    public static let large: Double = 20
+    /// Product photos: square, edge to edge, as in fashion retail apps.
+    public static let image: Double = 0
 }
 
 /// Stroke widths.
 public enum BorderToken {
     /// Hairline rule. Components convert it to one physical pixel where appropriate.
     public static let hairline: Double = 0.5
-    /// Standard outline (secondary button, gold inset ring).
+    /// Standard outline (secondary button, selected chip).
     public static let regular: Double = 1
-    /// Emphasis rule (section header gold rule, key card accent line).
+    /// Emphasis outline (selected variant, active tab underline).
     public static let emphasis: Double = 2
 }
 
@@ -59,6 +61,4 @@ public enum MotionToken {
     public static let fadeDuration: Double = 0.2
     /// Duration of one skeleton shimmer sweep.
     public static let shimmerDuration: Double = 1.4
-    /// Maximum parallax offset of the hero image in points.
-    public static let heroParallax: Double = 24
 }

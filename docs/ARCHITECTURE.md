@@ -480,8 +480,11 @@ setting for the UI language.
 
 ## Design system
 
-"KARINEX Editorial Luxe for iOS": cream panels, deep forest green, restrained champagne gold,
-serif display type, native iOS chrome.
+"KARINEX Clean": black, white and neutral greys with one sale red, bold sans serif type, product
+photos edge to edge on a light grey tile, flat panels and capsule buttons, in the style of modern
+fashion retail apps; native iOS chrome. The owner chose this direction on 2026-10-25 after the
+first TestFlight build; it replaces the earlier green, cream and gold "Editorial Luxe" look
+(see PROMPT.md section 7).
 
 ### Tokens in code, verified by tests
 
@@ -492,50 +495,46 @@ BrandPalette (raw brand hex values)
     -> KXColor (dynamic UIColor/Color per trait collection)     DesignSystem, SwiftUI
 ```
 
-- `ColorToken` defines every semantic color (`background`, `surface`, `textPrimary`, `brand`,
-  `textOnBrand`, `accent`, `accentText`, `urgency`, `keyCardBackground`, ...) with a light and a
-  dark value. In dark mode `brand` becomes gold and `textOnBrand` ink, so primary buttons invert
-  automatically.
+- `ColorToken` defines every semantic color (`background`, `surface`, `imageBackground`,
+  `textPrimary`, `brand`, `textOnBrand`, `accent`, `accentText`, `urgency`,
+  `keyCardBackground`, ...) with a light and a dark value. Light mode is a white page with
+  `#F5F5F5` panels and `#111111` ink; dark mode is black with graphite panels. `brand` and
+  `accent` are ink in light mode and white in dark mode, so primary buttons, selected pills and
+  page dots invert automatically. `urgency` (`#C20E2B`) is the only hue apart from the status
+  colors: savings badges, sale badges and the deal countdown.
+- `imageBackground` (`#F3F3F3`, `#E6E6E6` in dark mode) stays light in both appearances,
+  because the store's photos are shot on white. `.kxPhotoTile()` puts a photo on it with a
+  multiply blend, so the white studio background takes the tile color and the product sits in
+  the tile without a white box. Image views inside a tile read `kxIsInPhotoTile` and show only
+  the tile while loading.
 - `ContrastRequirement.all` lists the only pairs components may use for text (WCAG AA 4.5:1)
-  and non-text UI (3:1). `DesignTokensTests` checks every pair in both appearances and that
-  gold is never a text color on light surfaces (it is decorative; readable gold text uses
-  `accentText`). Changing a value that breaks contrast fails CI.
+  and non-text UI (3:1). `DesignTokensTests` checks every pair in both appearances, that every
+  token except the status colors and the sale red is a neutral grey, and that the photo tile
+  stays light. Changing a value that breaks contrast or adds a hue fails CI.
 - `TypographyToken` (display, title1 to title3, headline, body, callout, subheadline, footnote,
-  caption, eyebrow, price, numeral, licenseKey) defines design (serif, sans, monospaced), weight,
-  base size, the Dynamic Type text style it scales with, tracking and digit style.
-- `SpacingToken` (8 pt grid, 16 pt gutter, 44 pt tap target), `RadiusToken` (card 18),
-  `BorderToken` and `MotionToken` (springs between 0.25 and 0.35 s) complete the set; SwiftUI
-  code uses them through `KXSpacing`, `KXRadius`, `KXBorder` and `KXMotion`.
+  caption, eyebrow, price, numeral, licenseKey) defines design (sans or monospaced), weight,
+  base size, the Dynamic Type text style it scales with, tracking and digit style. Every style
+  is SF Pro except the monospaced license keys; headlines are bold or semibold and slightly
+  tighter tracked.
+- `SpacingToken` (8 pt grid, 16 pt gutter, 44 pt tap target), `RadiusToken` (card 12, product
+  photos 0), `BorderToken` and `MotionToken` (springs between 0.25 and 0.35 s) complete the
+  set; SwiftUI code uses them through `KXSpacing`, `KXRadius`, `KXBorder` and `KXMotion`.
 
-The asset catalog holds only what iOS reads by name before any code runs: `AppIcon`,
-`AccentColor` (global tint of system chrome; mirrors `ColorToken.brand`: forest in light, gold
-in dark) and `LaunchBackground` (the launch screen; mirrors `ColorToken.background`). Keep those
-two in sync by hand when the tokens change.
+The asset catalog holds only what iOS reads by name before any code runs: `AppIcon` (a white
+"K" on black), `AccentColor` (global tint of system chrome; mirrors `ColorToken.brand`: black in
+light, white in dark) and `LaunchBackground` (the launch screen; mirrors
+`ColorToken.background`). Keep those two in sync by hand when the tokens change.
 
-### Typography: system serif (New York) for now
+### Typography: SF Pro
 
 `.kxFont(_:)` applies a token through `KXFontModifier`, which scales size and tracking with
 `@ScaledMetric` relative to the token's text style, and `KXFont.font(_:size:)`, which returns
-`Font.system(size:weight:design:)`. For serif tokens the design is `.serif`, which iOS renders
-in **New York**, Apple's system serif with optical sizes, all weights and full Dynamic Type
-support. Cormorant Garamond (the web headline face) is not bundled yet (see the decision below).
-
-To switch the headlines to Cormorant Garamond later:
-
-1. Add the OFL font files (the weights used by serif tokens: medium and semibold) and the
-   license text under `Packages/DesignSystem/Sources/DesignSystem/Resources/Fonts/`; the
-   target already processes `Resources`.
-2. Register them once at launch from the package bundle with
-   `CTFontManagerRegisterFontsForURL` (package resources are not covered by the app's
-   `UIAppFonts`), called from `KarinexApp.init`.
-3. In `KXFont.font(_:size:)`, return `Font.custom(<PostScript name for the weight>, fixedSize:
-   size)` when `style.design == .serif`. Use `fixedSize:` because `KXFontModifier` has already
-   scaled the size; `Font.custom(_:size:)` would scale it a second time.
-4. Review `baseSize` and `tracking` of the serif tokens in `TypographyToken` (Cormorant has a
-   small x-height and thin strokes), check the `numeral` digits of `KXCountdown`, then re-record
-   the snapshots and review them in light, dark and the accessibility sizes.
-
-Nothing else changes, because every component uses `.kxFont(_:)`.
+`Font.system(size:weight:design:)` with the default (SF Pro) or monospaced design. No font is
+bundled. To use a brand face later, add the font files under
+`Packages/DesignSystem/Sources/DesignSystem/Resources/Fonts/`, register them at launch with
+`CTFontManagerRegisterFontsForURL`, return `Font.custom(_:fixedSize:)` from
+`KXFont.font(_:size:)` (fixed size, because `KXFontModifier` has already scaled it) and
+re-record the snapshots. Nothing else changes, because every component uses `.kxFont(_:)`.
 
 ### Components
 
@@ -544,29 +543,29 @@ light, dark and an accessibility text size, and snapshot tests:
 
 | Component | Purpose |
 | --- | --- |
-| `KXButton`, `KXButtonStyle` (`.kx(...)`) | Primary (brand fill), secondary (gold hairline outline), tertiary; regular and compact; loading, disabled, full width |
-| `KXCard`, `KXCardStyle` | Cream panel (standard or elevated), radius 18, hairline border, optional gold inset ring |
-| `KXBadge` | Gold, urgency, neutral and success capsules |
+| `KXButton`, `KXButtonStyle` (`.kx(...)`) | Capsules: primary (black fill), secondary (thin ink outline), tertiary; regular and compact; loading, disabled, full width |
+| `KXCard`, `KXCardStyle` | Flat light grey panel (standard or elevated), radius 12, no border; `isOutlined` draws it white with a thin ink outline for the money-back promise |
+| `KXBadge` | Accent (ink), urgency (sale red), neutral and success capsules |
 | `KXPriceTag` | Price, struck-through compare-at price, savings badge, optional tax note, combined accessibility label |
-| `KXSectionHeader` | Serif title, eyebrow, short gold rule, optional trailing action |
+| `KXSectionHeader` | Bold title, optional eyebrow, optional trailing action |
 | `KXSpecRow` | Label and value with a dot leader; stacks at large text sizes |
-| `KXStepTimeline` | Vertical or horizontal steps with gold numerals (done, current, upcoming) |
-| `KXAccordion`, `KXAccordionItem` | Expandable rows with a gold plus that turns into a cross |
+| `KXStepTimeline` | Vertical or horizontal steps with white numerals on ink discs (done, current, upcoming) |
+| `KXAccordion`, `KXAccordionItem` | Expandable rows with a chevron that turns upward, each followed by a hairline |
 | `KXCountdown`, `KXCountdownComponents` | Flip-digit countdown to a date, days from 24 h, `onExpire`, no flip with Reduce Motion |
 | `KXTrustStrip`, `KXTrustItem` | Grid or carousel of trust facts, optional footnote marker and tap action |
-| `KXProductCard`, `KXProductCardModel`, `KXProductImage` | Product tile with image, badge, serif title and compact price tag |
-| `KXKeyCard`, `KXLicenseKeyFormatting` | Certificate-style license key card with masking, grouping and copy |
+| `KXProductCard`, `KXProductCardModel`, `KXProductImage` | Product tile: square photo tile without card or border, badge, regular two-line title and compact price tag |
+| `KXKeyCard`, `KXLicenseKeyFormatting` | Black license key card with masking, grouping and copy |
 | `KXClipboard` | `copySensitive(_:expiresAfter:)`: local-only pasteboard item that expires after 120 s |
 | `KXSkeleton`, `.kxSkeleton(isActive:)` | Placeholder with shimmer (none with Reduce Motion) |
-| `KXEmptyState` | SF Symbol in a gold ring, serif title, message, optional action |
+| `KXEmptyState` | SF Symbol on a light grey disc, bold title, message, optional action |
 | `KXBanner`, `.kxBanner(isPresented:placement:banner:)` | Offline, error, info and success banners with VoiceOver announcements; `overlay` or `inset` placement |
 | `KXWordmark` | The interim typographic "KARINEX" logo |
-| `KXDivider` | Hairline divider, standard or gold accent, horizontal or vertical |
+| `KXDivider` | Hairline divider, standard or ink accent, horizontal or vertical |
 
 Foundation helpers in `Foundation/`: `KXColor`, `KXTypography` (`.kxFont(_:)`, `KXFont`),
 `KXLayout` (`KXSpacing`, `KXRadius`, `KXBorder`, `.kxScreenBackground()`, `.kxGutter()`),
-`KXMotion` (`.standard`, `.snappy`, `.gentle`, `.fade`, all Reduce Motion aware) and
-`KXHaptics`.
+`KXPhotoTile` (`.kxPhotoTile()`, `kxIsInPhotoTile`), `KXMotion` (`.standard`, `.snappy`,
+`.gentle`, `.fade`, all Reduce Motion aware) and `KXHaptics`.
 
 Components take already-localized strings from the caller. Strings that belong to a component
 itself (for example "Kopieren" on the key card or the default offline message) live in the
@@ -968,13 +967,11 @@ and `LaunchBackground`, which iOS reads by name before code runs; they mirror `b
 
 ### ADR 4: System serif (New York) instead of bundling Cormorant Garamond for now
 
+Superseded by ADR 11 on 2026-10-25: the app no longer uses a serif face.
+
 The brand uses Cormorant Garamond on the web, but the logo and brand redesign is still pending.
-The system serif gives optical sizes, every weight, complete glyph coverage for all 11 languages
-and first-class Dynamic Type at no binary, licensing or registration cost, and stays legible at
-small and accessibility sizes where a thin-stroked display face struggles. All serif text goes
-through `TypographyToken.design == .serif` and `KXFont.font(_:size:)`, so switching later is a
-local change (steps in [Typography](#typography-system-serif-new-york-for-now)) followed by
-re-recorded snapshots.
+The system serif gave optical sizes, every weight, complete glyph coverage for all 11 languages
+and first-class Dynamic Type at no binary, licensing or registration cost.
 
 ### ADR 5: `ProductCollection` instead of `Collection`
 
@@ -1034,6 +1031,19 @@ schema download in CI), gives full control over `@inContext` injection, retry se
 mutations, de-duplication and redacted logging, and runs on Linux. Every operation document is
 validated against the live API when fixtures are recorded, and decoding tests fail loudly on
 schema changes. Revisit if the operation count grows to where generated types pay off.
+
+### ADR 11: A monochrome, photo-first design ("KARINEX Clean")
+
+After using the first TestFlight build, the owner rejected the green, cream and gold
+"Editorial Luxe" look and asked for the clarity of fashion retail apps: big photos, black and
+white, modern type. The interface is therefore black, white and neutral grey with one sale red,
+all text is SF Pro, buttons are capsules, panels are flat and product photos are square and edge
+to edge on a light grey tile (`.kxPhotoTile()`). The product screen follows the same pattern:
+photos first, then title, price and icon rows, collapsible details, and a bar with the price and
+one black "In den Warenkorb" button; "Jetzt kaufen" stays as a secondary button below the
+variants. The change lives almost entirely in `DesignTokens` and the `KX*` components, so the
+feature screens kept their structure. `DesignTokensTests` now fails when a token other than the
+status colors and the sale red gets a hue, so the direction cannot drift back by accident.
 
 ## Roadmap
 

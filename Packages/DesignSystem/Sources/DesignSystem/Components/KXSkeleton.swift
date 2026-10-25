@@ -149,8 +149,8 @@ private struct KXShimmerHighlight: View {
         }
     }
 
-    /// A lighter tone in both appearances: the elevated cream in light mode, a faint cream
-    /// veil in dark mode.
+    /// A lighter tone in both appearances: the white elevated surface in light mode, a faint
+    /// light veil in dark mode.
     private var highlight: Color {
         colorScheme == .dark ? KXColor.textPrimary.opacity(0.08) : KXColor.surfaceElevated.opacity(0.7)
     }

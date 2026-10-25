@@ -31,7 +31,7 @@ import SwiftUI
 ///   appears after the first resolution (not in UI test runs, see `MarketConfirmationPolicy`).
 /// - The Warenkorb tab shows the number of items as a badge.
 ///
-/// The tint is left to the `AccentColor` asset (forest green in light mode, gold in dark mode).
+/// The tint is left to the `AccentColor` asset (black in light mode, white in dark mode).
 /// A color scheme forced with `-kx.appearance light|dark` overrides the system appearance.
 ///
 /// Each tab item carries the identifier `tab.<name>`. SwiftUI does not forward an identifier set

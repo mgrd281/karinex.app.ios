@@ -11,15 +11,15 @@ import SwiftUI
 public struct KXProductCardModel: Identifiable, Hashable, Sendable {
     /// Color treatment of the optional badge, rendered as the ``KXBadge`` style of the same name.
     public enum BadgeTone: String, CaseIterable, Sendable {
-        /// Champagne-gold fill with ink text, e.g. a savings badge.
-        case gold
-        /// Terracotta fill with white text, e.g. a sale or deal badge. Use sparingly.
+        /// Ink fill with white text, e.g. "Bestseller".
+        case accent
+        /// Sale red fill with white text, e.g. a sale or deal badge.
         case urgency
 
         /// The badge style that renders this tone.
         var badgeStyle: KXBadge.Style {
             switch self {
-            case .gold: .gold
+            case .accent: .accent
             case .urgency: .urgency
             }
         }
@@ -57,7 +57,7 @@ public struct KXProductCardModel: Identifiable, Hashable, Sendable {
     ///   - compareAtPrice: The formatted former price, or `nil`.
     ///   - taxNote: Optional tax note, only for markets whose prices include tax.
     ///   - badge: Optional badge text.
-    ///   - badgeTone: Badge color treatment. Defaults to ``BadgeTone/gold``.
+    ///   - badgeTone: Badge color treatment. Defaults to ``BadgeTone/accent``.
     ///   - imageURL: The product image URL, or `nil`.
     ///   - availabilityNote: Optional availability note.
     public init(
@@ -68,7 +68,7 @@ public struct KXProductCardModel: Identifiable, Hashable, Sendable {
         compareAtPrice: String? = nil,
         taxNote: String? = nil,
         badge: String? = nil,
-        badgeTone: BadgeTone = .gold,
+        badgeTone: BadgeTone = .accent,
         imageURL: URL? = nil,
         availabilityNote: String? = nil
     ) {
@@ -87,10 +87,11 @@ public struct KXProductCardModel: Identifiable, Hashable, Sendable {
 
 // MARK: - KXProductCard
 
-/// A product tile for grids and carousels: a 1:1 image area on the cream surface with a
-/// hairline border and an optional ``KXBadge``, the vendor as an eyebrow, the serif title (up to
-/// three lines, more at accessibility sizes) and a compact ``KXPriceTag`` with the
-/// struck-through compare-at price and the tax note.
+/// A product tile for grids and carousels, in the style of fashion retail apps: a square photo
+/// tile edge to edge on the light grey photo background (``SwiftUICore/View/kxPhotoTile()``)
+/// with an optional ``KXBadge`` in the corner, then the vendor as an eyebrow, the title in
+/// regular weight (up to two lines, more at accessibility sizes) and a compact ``KXPriceTag``
+/// with the struck-through compare-at price and the tax note. No card, border or shadow.
 ///
 /// The card fills the width it is offered; give it a width through the grid or carousel. It
 /// is not a button itself: wrap it in a `NavigationLink` or `Button`, which then supplies the
@@ -111,7 +112,6 @@ public struct KXProductCard<ImageContent: View>: View {
     private let imageContent: ImageContent
 
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    @Environment(\.displayScale) private var displayScale
 
     /// Creates a product card with custom image content.
     ///
@@ -128,6 +128,7 @@ public struct KXProductCard<ImageContent: View>: View {
         VStack(alignment: .leading, spacing: KXSpacing.s) {
             imageArea
             details
+                .padding(.horizontal, KXSpacing.xxs)
         }
         .frame(maxWidth: .infinity, alignment: .topLeading)
         .contentShape(Rectangle())
@@ -138,17 +139,13 @@ public struct KXProductCard<ImageContent: View>: View {
     // MARK: Image
 
     private var imageArea: some View {
-        let shape = RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous)
-        return Color.clear
+        Color.clear
             .aspectRatio(1, contentMode: .fit)
             .overlay {
                 imageContent
             }
-            .background(KXColor.surface)
-            .clipShape(shape)
-            .overlay {
-                shape.strokeBorder(KXColor.hairline, lineWidth: 1 / max(displayScale, 1))
-            }
+            .kxPhotoTile()
+            .clipShape(RoundedRectangle(cornerRadius: KXRadius.image, style: .continuous))
             .overlay(alignment: .topLeading) {
                 badge
             }
@@ -174,13 +171,13 @@ public struct KXProductCard<ImageContent: View>: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             Text(model.title)
-                .kxFont(.title3)
+                .kxFont(.subheadline)
                 .foregroundStyle(KXColor.textPrimary)
-                .lineLimit(dynamicTypeSize.isAccessibilitySize ? 6 : 3)
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? 6 : 2)
                 .multilineTextAlignment(.leading)
                 .fixedSize(horizontal: false, vertical: true)
             KXPriceTag(price: model.price, compareAtPrice: model.compareAtPrice, taxNote: model.taxNote, size: .compact)
-                .padding(.top, KXSpacing.xxs)
+                .padding(.top, KXSpacing.xxs / 2)
             if let availabilityNote = model.availabilityNote, !availabilityNote.isEmpty {
                 Text(availabilityNote)
                     .kxFont(.footnote)
@@ -218,9 +215,10 @@ extension KXProductCard where ImageContent == KXProductImage {
 
 /// A remote product image for cards: loads `url` with `AsyncImage` and scales it to fit.
 ///
-/// While loading it shows a ``KXSkeleton``; without a URL or after a failure it shows a neutral
-/// photo symbol. The image fades in (a cross-fade, also with Reduce Motion). It is decorative and
-/// hidden from VoiceOver; the surrounding card describes the product.
+/// While loading it shows a ``KXSkeleton`` (inside a ``SwiftUICore/View/kxPhotoTile()`` only the
+/// tile); without a URL or after a failure it shows a neutral photo symbol. The image fades in (a
+/// cross-fade, also with Reduce Motion). It is decorative and hidden from VoiceOver; the
+/// surrounding card describes the product.
 ///
 /// Lazy grids and lists cancel the downloads of cells that scroll away, and `AsyncImage` then
 /// keeps reporting the cancellation as a failure. A cancelled load therefore keeps the skeleton
@@ -258,13 +256,13 @@ public struct KXProductImage: View {
                             .scaledToFit()
                     } else if let error = phase.error {
                         if Self.isCancellation(error), reloadCount < Self.maximumReloadCount {
-                            KXSkeleton(cornerRadius: 0)
+                            KXProductImageLoadingPlaceholder()
                                 .onAppear { reloadCount += 1 }
                         } else {
                             KXProductImageFallback()
                         }
                     } else {
-                        KXSkeleton(cornerRadius: 0)
+                        KXProductImageLoadingPlaceholder()
                     }
                 }
                 .id(reloadCount)
@@ -289,14 +287,32 @@ public struct KXProductImage: View {
     }
 }
 
+/// The placeholder while an image loads: a skeleton, or nothing inside a photo tile, whose
+/// plain light grey already reads as a placeholder.
+private struct KXProductImageLoadingPlaceholder: View {
+    @Environment(\.kxIsInPhotoTile) private var isInPhotoTile
+
+    var body: some View {
+        if isInPhotoTile {
+            Color.clear
+        } else {
+            KXSkeleton(cornerRadius: 0)
+        }
+    }
+}
+
 /// Neutral stand-in when a product has no image or the image could not be loaded.
 private struct KXProductImageFallback: View {
+    @Environment(\.kxIsInPhotoTile) private var isInPhotoTile
+
     var body: some View {
         ZStack {
-            KXColor.surface
+            if !isInPhotoTile {
+                KXColor.surface
+            }
             Image(systemName: "photo")
                 .kxFont(.title2)
-                .foregroundStyle(KXColor.iconSecondary)
+                .foregroundStyle(isInPhotoTile ? KXColor.imageIcon : KXColor.iconSecondary)
         }
     }
 }

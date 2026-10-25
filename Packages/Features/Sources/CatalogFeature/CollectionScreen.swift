@@ -207,8 +207,8 @@ public struct CollectionScreen: View {
 
 // MARK: - CollectionHeader
 
-/// The editorial head of a collection: eyebrow with the sort order and active filters, the
-/// serif title, a gold rule and Shopify's description.
+/// The head of a collection: eyebrow with the sort order and active filters, the bold title and
+/// Shopify's description.
 private struct CollectionHeader: View {
     let collection: CollectionSummary
     let sort: CollectionSortOption
@@ -224,15 +224,11 @@ private struct CollectionHeader: View {
                 }
             }
             .kxFont(.eyebrow)
-            .foregroundStyle(KXColor.accentText)
+            .foregroundStyle(KXColor.textSecondary)
             Text(collection.title)
                 .kxFont(.title1)
                 .foregroundStyle(KXColor.textPrimary)
                 .accessibilityAddTraits(.isHeader)
-            Rectangle()
-                .fill(KXColor.accent)
-                .frame(width: KXSpacing.xl, height: KXBorder.emphasis)
-                .accessibilityHidden(true)
             let description = collection.description.trimmingCharacters(in: .whitespacesAndNewlines)
             if !description.isEmpty {
                 Text(description)

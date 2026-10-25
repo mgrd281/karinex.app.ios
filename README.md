@@ -21,7 +21,7 @@ Suche, Warenkorb, Konto) in light and dark mode, on top of:
   reachability, Keychain and preferences storage, privacy consent, feature flags,
 - `ShopifyKit`: a typed Storefront GraphQL client with `@inContext`, models, operations,
   repositories, market resolution and fixtures recorded from the live store,
-- `DesignSystem`: WCAG-tested design tokens, the "Editorial Luxe" component set (`KXButton`,
+- `DesignSystem`: WCAG-tested design tokens, the monochrome "KARINEX Clean" component set (`KXButton`,
   `KXCard`, `KXPriceTag`, `KXProductCard`, `KXKeyCard`, `KXCountdown`, ...), a DEBUG gallery and
   snapshot tests,
 - CI on GitHub Actions and a fastlane TestFlight lane.

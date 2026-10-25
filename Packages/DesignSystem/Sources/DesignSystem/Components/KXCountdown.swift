@@ -78,8 +78,8 @@ public struct KXCountdownComponents: Hashable, Sendable {
 /// A flip-clock style countdown to a date: HH:MM:SS, with a days field while 24 hours or more
 /// remain. Used for deals ("Blitzangebote") whose end comes from the store.
 ///
-/// Digits are serif numerals on ink (or brand) tiles with a terracotta accent edge; the
-/// separators are terracotta dots. Changing digits roll like flip cards
+/// Digits are bold numerals on black (or brand) tiles with a thin sale red edge; the
+/// separators are sale red dots. Changing digits roll like flip cards
 /// (`numericText(countsDown:)`); with Reduce Motion they change without animation.
 ///
 /// The live countdown updates once per second with `TimelineView(.periodic(from:by:))`, aligned
@@ -104,9 +104,9 @@ public struct KXCountdownComponents: Hashable, Sendable {
 public struct KXCountdown: View {
     /// Tile colors of a ``KXCountdown``.
     public enum Style: String, CaseIterable, Sendable {
-        /// Ink tiles with cream digits in both appearances (the certificate ink of the brand).
+        /// Black tiles with white digits in both appearances.
         case ink
-        /// Brand tiles: forest with cream digits in light mode, gold with ink digits in dark
+        /// Brand tiles: black with white digits in light mode, white with black digits in dark
         /// mode.
         case brand
     }
@@ -313,8 +313,8 @@ private struct KXCountdownUnitView: View {
     }
 }
 
-/// A flip-card tile: serif numerals, a subtle lighter upper half, a hinge line across the
-/// middle and a terracotta accent along the bottom edge.
+/// A flip-card tile: bold numerals, a subtle lighter upper half, a hinge line across the
+/// middle and a thin sale red edge along the bottom.
 private struct KXCountdownTile: View {
     let digits: String
     let style: KXCountdown.Style
@@ -354,7 +354,7 @@ private struct KXCountdownTile: View {
     }
 }
 
-/// Two terracotta dots between fields, centered on the tiles.
+/// Two sale red dots between fields, centered on the tiles.
 private struct KXCountdownSeparator: View {
     @ScaledMetric(relativeTo: .title) private var dotSize: CGFloat = 4
 

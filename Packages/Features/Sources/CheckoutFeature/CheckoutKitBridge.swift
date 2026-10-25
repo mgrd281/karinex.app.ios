@@ -45,8 +45,8 @@ public enum CheckoutConfiguration {
         String(localized: "checkout.title", bundle: .module)
     }
 
-    /// The tint of checkout buttons and the progress bar: the brand color (forest green, gold
-    /// in dark mode through the token).
+    /// The tint of checkout buttons and the progress bar: the brand color (black, white in dark
+    /// mode through the token).
     static var tintColor: UIColor {
         KXColor.uiColor(.brand)
     }

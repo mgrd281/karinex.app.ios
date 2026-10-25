@@ -4,7 +4,7 @@ import SwiftUI
 
 /// Background treatment of a ``KXCard``.
 public enum KXCardStyle: String, CaseIterable, Sendable {
-    /// The cream panel (`surface`). Use for cards placed on the page background.
+    /// The light grey panel (`surface`). Use for cards placed on the page background.
     case standard
     /// The lighter `surfaceElevated` panel. Use for cards nested in another panel or shown
     /// over imagery.
@@ -13,15 +13,18 @@ public enum KXCardStyle: String, CaseIterable, Sendable {
 
 // MARK: - KXCard
 
-/// The KARINEX panel: a cream (dark mode: deep forest) surface with an 18 pt continuous
-/// corner radius, a one-pixel hairline border and an optional champagne-gold inset ring.
+/// The KARINEX panel: a flat light grey (dark mode: graphite) surface with a 12 pt continuous
+/// corner radius. No border and no shadow, so cards read as calm blocks on the white page.
+///
+/// An outlined card (`isOutlined: true`) is white with a thin ink outline instead. Use it for
+/// the one card on a screen that carries a promise, such as the money-back conditions.
 ///
 /// The card fills the available width and aligns its content to the leading edge. Content
 /// is clipped to the rounded shape, so full-bleed images can be placed inside with
 /// `padding: 0`.
 ///
 /// ```swift
-/// KXCard(showsInsetRing: true) {
+/// KXCard(isOutlined: true) {
 ///     VStack(alignment: .leading, spacing: KXSpacing.s) {
 ///         Text(title).kxFont(.title3).foregroundStyle(KXColor.textPrimary)
 ///         Text(message).kxFont(.body).foregroundStyle(KXColor.textSecondary)
@@ -31,29 +34,26 @@ public enum KXCardStyle: String, CaseIterable, Sendable {
 public struct KXCard<Content: View>: View {
     private let padding: CGFloat
     private let style: KXCardStyle
-    private let showsInsetRing: Bool
+    private let isOutlined: Bool
     private let content: Content
-
-    @Environment(\.displayScale) private var displayScale
 
     /// Creates a card.
     ///
     /// - Parameters:
     ///   - padding: Inner padding around the content. Defaults to 16 pt (`KXSpacing.m`).
-    ///     With `showsInsetRing` keep it at 16 pt or more so the content clears the ring.
     ///   - style: Background treatment. Defaults to ``KXCardStyle/standard``.
-    ///   - showsInsetRing: Draws a thin gold ring inset from the edge, the certificate-like
-    ///     accent of the brand. Decorative and hidden from VoiceOver.
+    ///   - isOutlined: Draws the card white with a thin ink outline, for emphasis. Defaults to
+    ///     `false`.
     ///   - content: The card content.
     public init(
         padding: CGFloat = KXSpacing.m,
         style: KXCardStyle = .standard,
-        showsInsetRing: Bool = false,
+        isOutlined: Bool = false,
         @ViewBuilder content: () -> Content
     ) {
         self.padding = padding
         self.style = style
-        self.showsInsetRing = showsInsetRing
+        self.isOutlined = isOutlined
         self.content = content()
     }
 
@@ -65,13 +65,9 @@ public struct KXCard<Content: View>: View {
             .background(backgroundColor, in: shape)
             .clipShape(shape)
             .overlay {
-                shape.strokeBorder(KXColor.hairline, lineWidth: hairlineWidth)
-            }
-            .overlay {
-                if showsInsetRing {
-                    RoundedRectangle(cornerRadius: KXRadius.card - kxCardRingInset, style: .continuous)
-                        .strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
-                        .padding(kxCardRingInset)
+                if isOutlined {
+                    shape
+                        .strokeBorder(KXColor.textPrimary, lineWidth: KXBorder.regular)
                         .allowsHitTesting(false)
                         .accessibilityHidden(true)
                 }
@@ -80,21 +76,15 @@ public struct KXCard<Content: View>: View {
     }
 
     private var backgroundColor: Color {
+        if isOutlined {
+            return KXColor.surfaceElevated
+        }
         switch style {
-        case .standard: KXColor.surface
-        case .elevated: KXColor.surfaceElevated
+        case .standard: return KXColor.surface
+        case .elevated: return KXColor.surfaceElevated
         }
     }
-
-    /// One physical pixel, the thinnest line the display can draw.
-    private var hairlineWidth: CGFloat {
-        1 / max(displayScale, 1)
-    }
 }
-
-/// Distance of the gold inset ring from the card edge. A file-level constant because
-/// generic types cannot have static stored properties.
-private let kxCardRingInset: CGFloat = 6
 
 // MARK: - Previews
 
@@ -111,7 +101,7 @@ private struct KXCardPreviewGallery: View {
                         KXPriceTag(price: "29,90 €", compareAtPrice: "149,99 €", taxNote: "inkl. MwSt.")
                     }
                 }
-                KXCard(showsInsetRing: true) {
+                KXCard(isOutlined: true) {
                     VStack(alignment: .leading, spacing: KXSpacing.s) {
                         Text(verbatim: "Support")
                             .kxFont(.title3)

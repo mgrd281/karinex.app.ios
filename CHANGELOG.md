@@ -10,6 +10,25 @@ change.
 
 ## [Unreleased]
 
+### Changed
+
+- **New look, "KARINEX Clean"** (owner decision after the first TestFlight build): the green,
+  cream and gold "Editorial Luxe" design is replaced by a monochrome, photo-first design in the
+  style of fashion retail apps. White pages, black type and capsule buttons, flat light grey
+  panels, one sale red for savings and deals, every text in SF Pro (no serif). Dark mode is black
+  with white buttons. New app icon: a white "K" on black (interim until the final logo).
+- **Product photos edge to edge:** `.kxPhotoTile()` shows a photo on a light grey tile with a
+  multiply blend, so white studio backgrounds disappear into the tile. Product cards are square
+  photo tiles without card, border or shadow, with a regular two-line title.
+- **Product page:** full-width gallery with page dots and the wishlist heart on the photo, bold
+  title, availability and delivery as icon rows, ink pills for variants, "Jetzt kaufen" as an
+  outlined button below them, "So läuft es ab" and the activation instructions as collapsible
+  rows, and a calm bottom bar with the price and one black "In den Warenkorb" button.
+- Components: chevron accordion, step timeline with ink discs, section headers without the gold
+  rule, black license key card, empty states and icons without gold rings, tighter product grids.
+- `DesignTokensTests` now also fails when a token other than the status colors and the sale red
+  gets a hue. The unused `keyCardAccent` and hero parallax tokens are gone.
+
 ### Fixed
 
 - The TestFlight export step no longer fails with `option '-authenticationKeyPath' may only be

@@ -62,13 +62,9 @@ struct CartLineRow: View {
 
     private var image: some View {
         ProductImage(line.merchandise.image, contentMode: .fit, isDecorative: true)
+            .kxPhotoTile()
             .frame(width: Self.imageSize, height: Self.imageSize)
-            .background(KXColor.surface)
-            .clipShape(RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous))
-            .overlay {
-                RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous)
-                    .strokeBorder(KXColor.hairline, lineWidth: KXBorder.hairline)
-            }
+            .clipShape(RoundedRectangle(cornerRadius: KXRadius.small, style: .continuous))
             .accessibilityHidden(true)
     }
 

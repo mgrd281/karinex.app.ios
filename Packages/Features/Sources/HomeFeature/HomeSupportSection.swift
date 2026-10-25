@@ -15,7 +15,7 @@ struct HomeSupportSection: View {
                 String(localized: "home.support.title", bundle: .module),
                 eyebrow: String(localized: "home.support.eyebrow", bundle: .module)
             )
-            KXCard(showsInsetRing: true) {
+            KXCard {
                 VStack(alignment: .leading, spacing: KXSpacing.m) {
                     Text("home.support.message", bundle: .module)
                         .kxFont(.body)
@@ -26,14 +26,13 @@ struct HomeSupportSection: View {
                             SupportChannelRow(channel: channel)
                         }
                     }
-                    KXDivider(.accent)
+                    KXDivider()
                     KXSpecRow(
                         String(localized: "home.support.hours.label", bundle: .module),
                         value: String(localized: "home.support.hours.value", bundle: .module)
                     )
                 }
-                // Keeps the content clear of the gold inset ring.
-                .padding(KXSpacing.xs)
+                .padding(KXSpacing.xxs)
             }
             .accessibilityIdentifier("home.support")
         }
@@ -42,7 +41,7 @@ struct HomeSupportSection: View {
 
 // MARK: - Channel row
 
-/// One support channel: its symbol in a gold ring, its name and, for e-mail, the address.
+/// One support channel: its symbol on a white disc, its name and, for e-mail, the address.
 private struct SupportChannelRow: View {
     let channel: SupportChannel
 
@@ -53,11 +52,9 @@ private struct SupportChannelRow: View {
             Image(systemName: channel.systemImage)
                 .fontWeight(.medium)
                 .kxFont(.callout)
-                .foregroundStyle(KXColor.brand)
+                .foregroundStyle(KXColor.textPrimary)
                 .frame(width: iconDiameter, height: iconDiameter)
-                .overlay {
-                    Circle().strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
-                }
+                .background(KXColor.surfaceElevated, in: Circle())
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: KXSpacing.xxs) {
                 Text(channel.name)

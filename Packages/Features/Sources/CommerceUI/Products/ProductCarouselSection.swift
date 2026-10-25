@@ -42,7 +42,7 @@ public struct ProductRow: View {
 
     public var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack(alignment: .top, spacing: KXSpacing.m) {
+            LazyHStack(alignment: .top, spacing: KXSpacing.xs) {
                 ForEach(products) { product in
                     Button {
                         onSelect(product)
@@ -194,10 +194,10 @@ public struct ProductCarouselSection: View {
 
     private var skeletonRow: some View {
         let width = min(skeletonCardWidth, 300)
-        return HStack(alignment: .top, spacing: KXSpacing.m) {
+        return HStack(alignment: .top, spacing: KXSpacing.xs) {
             ForEach(0..<3, id: \.self) { _ in
                 VStack(alignment: .leading, spacing: KXSpacing.xs) {
-                    KXSkeleton(cornerRadius: KXRadius.card)
+                    KXSkeleton(cornerRadius: KXRadius.image)
                         .aspectRatio(1, contentMode: .fit)
                     KXSkeleton()
                         .frame(height: KXSpacing.m)

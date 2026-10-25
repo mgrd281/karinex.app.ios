@@ -11,8 +11,8 @@ import SwiftUI
 ///
 /// Layout: price, compare-at price and badge sit on one baseline. When they do not fit (narrow
 /// cards, large text sizes) the compare-at price and badge move below the price, and at the
-/// largest sizes everything stacks. The savings badge is gold (PROMPT.md section 6.1); terracotta
-/// stays reserved for urgency such as a running deal countdown.
+/// largest sizes everything stacks. The savings badge is sale red, the one color accent of the
+/// otherwise monochrome interface.
 ///
 /// Empty strings count as missing, so optional Shopify values can be passed through unchanged.
 ///
@@ -43,7 +43,7 @@ public struct KXPriceTag: View {
     ///   - price: The formatted current price.
     ///   - compareAtPrice: The formatted former price, shown struck through. Pass `nil` when
     ///     the store has no compare-at price or it is not higher than the price.
-    ///   - savings: Already-localized savings text shown in a gold badge, e.g. a value the
+    ///   - savings: Already-localized savings text shown in a red badge, e.g. a value the
     ///     caller derived from Shopify prices. `nil` hides the badge.
     ///   - taxNote: Already-localized tax note shown below, e.g. "inkl. MwSt.".
     ///   - size: Type scale. Defaults to ``Size/regular``.
@@ -116,7 +116,7 @@ public struct KXPriceTag: View {
 
     @ViewBuilder private var savingsBadge: some View {
         if let savings {
-            KXBadge(savings, style: .gold)
+            KXBadge(savings, style: .urgency)
         }
     }
 

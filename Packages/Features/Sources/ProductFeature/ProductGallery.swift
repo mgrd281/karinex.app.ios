@@ -5,8 +5,12 @@ import SwiftUI
 
 // MARK: - ProductGallery
 
-/// The product images as a paged gallery on a cream panel with gold page dots. Tapping an image
-/// opens the full-screen ``ProductImageViewer``.
+/// The product images as a paged gallery, edge to edge on the light grey photo tile, the way
+/// fashion retail apps present their products. The page dots sit in the bottom leading corner of
+/// the photo, the wishlist heart in the bottom trailing corner. Tapping an image opens the
+/// full-screen ``ProductImageViewer``.
+///
+/// The tile is light in both appearances, so its overlays always use the light-appearance ink.
 ///
 /// VoiceOver reads each image with its alt text (or "Produktbild") and its position ("Bild 2
 /// von 5"); swiping with three fingers pages through the images.
@@ -15,29 +19,19 @@ struct ProductGallery: View {
     let images: [ShopifyImage]
     /// The visible page.
     @Binding var selection: Int
+    /// The wishlist state of the product, or `nil` to hide the heart.
+    let isSaved: Bool?
+    /// Adds the product to the wishlist or removes it.
+    let onToggleSaved: @MainActor () -> Void
     /// Opens the viewer at an index.
     let onOpen: @MainActor (Int) -> Void
 
-    @Environment(\.displayScale) private var displayScale
-
     var body: some View {
-        VStack(spacing: KXSpacing.s) {
-            panel
-            if images.count > 1 {
-                ProductPageDots(count: images.count, selection: selection)
-            }
-        }
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("product.gallery")
-    }
-
-    private var panel: some View {
-        let shape = RoundedRectangle(cornerRadius: KXRadius.large, style: .continuous)
-        return ZStack {
-            KXColor.surface
+        ZStack {
+            KXColor.imageBackground
             if images.isEmpty {
                 ProductImage(nil)
-                    .padding(KXSpacing.xl)
+                    .kxPhotoTile()
             } else {
                 TabView(selection: $selection) {
                     ForEach(images.indices, id: \.self) { index in
@@ -49,18 +43,22 @@ struct ProductGallery: View {
             }
         }
         .aspectRatio(1, contentMode: .fit)
-        .clipShape(shape)
-        .overlay {
-            shape.strokeBorder(KXColor.hairline, lineWidth: 1 / max(displayScale, 1))
+        .frame(maxWidth: .infinity)
+        .overlay(alignment: .bottom) {
+            overlays
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("product.gallery")
     }
 
     private func page(at index: Int) -> some View {
         Button {
             onOpen(index)
         } label: {
+            // Each page is its own photo tile: the blend has to happen inside the page, because
+            // the paging container is a platform view.
             ProductImage(images[index], isDecorative: true)
-                .padding(KXSpacing.l)
+                .kxPhotoTile()
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -71,6 +69,23 @@ struct ProductGallery: View {
         .accessibilityIdentifier("product.gallery.image.\(index)")
     }
 
+    /// The page dots and the heart over the photo, in the light appearance of the tile.
+    private var overlays: some View {
+        HStack(alignment: .center, spacing: KXSpacing.m) {
+            if images.count > 1 {
+                ProductPageDots(count: images.count, selection: selection)
+            }
+            Spacer(minLength: 0)
+            if let isSaved {
+                ProductWishlistButton(isSaved: isSaved, onToggle: onToggleSaved)
+            }
+        }
+        .padding(.leading, KXSpacing.gutter)
+        .padding(.trailing, KXSpacing.xs)
+        .padding(.bottom, KXSpacing.xs)
+        .environment(\.colorScheme, .light)
+    }
+
     /// The image's alt text, or "Produktbild" when the store has none.
     static func accessibilityLabel(for image: ShopifyImage) -> String {
         let altText = image.altText?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
@@ -78,10 +93,37 @@ struct ProductGallery: View {
     }
 }
 
+// MARK: - ProductWishlistButton
+
+/// The heart over the product photo: outlined while the product is not saved, filled once it is.
+struct ProductWishlistButton: View {
+    let isSaved: Bool
+    let onToggle: @MainActor () -> Void
+
+    @ScaledMetric(relativeTo: .title2) private var iconSize: CGFloat = 24
+
+    var body: some View {
+        Button {
+            onToggle()
+        } label: {
+            Image(systemName: isSaved ? "heart.fill" : "heart")
+                .font(.system(size: min(iconSize, 36), weight: .regular))
+                .foregroundStyle(KXColor.textPrimary)
+                .frame(minWidth: KXSpacing.minimumTapTarget, minHeight: KXSpacing.minimumTapTarget)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .sensoryFeedback(.selection, trigger: isSaved)
+        .accessibilityLabel(isSaved ? Text("product.wishlist.remove", bundle: .module) : Text("product.wishlist.add", bundle: .module))
+        .accessibilityAddTraits(isSaved ? .isSelected : [])
+        .accessibilityIdentifier("product.wishlist")
+    }
+}
+
 // MARK: - ProductPageDots
 
-/// Page dots below the gallery: the current page is a short gold capsule, the others are small
-/// hairline dots. Decorative; VoiceOver reads the position on each image instead.
+/// Page dots: the current page is a short ink capsule, the others are small light grey dots.
+/// Decorative; VoiceOver reads the position on each image instead.
 struct ProductPageDots: View {
     /// The number of pages.
     let count: Int
@@ -92,14 +134,13 @@ struct ProductPageDots: View {
     @ScaledMetric(relativeTo: .caption) private var dotSize: CGFloat = 6
 
     var body: some View {
-        HStack(spacing: KXSpacing.xs) {
+        HStack(spacing: KXSpacing.xs - KXSpacing.xxs / 2) {
             ForEach(0..<count, id: \.self) { index in
                 Capsule(style: .continuous)
                     .fill(index == selection ? KXColor.accent : KXColor.divider)
-                    .frame(width: index == selection ? dotSize * 3 : dotSize, height: dotSize)
+                    .frame(width: index == selection ? dotSize * 4 : dotSize, height: dotSize)
             }
         }
-        .frame(maxWidth: .infinity)
         .animation(KXMotion.animation(.snappy, reduceMotion: reduceMotion), value: selection)
         .accessibilityHidden(true)
     }
@@ -150,6 +191,7 @@ struct ProductImageViewer: View {
         .safeAreaInset(edge: .bottom, spacing: 0) {
             if images.count > 1 {
                 ProductPageDots(count: images.count, selection: selection)
+                    .frame(maxWidth: .infinity)
                     .padding(.vertical, KXSpacing.m)
             }
         }
@@ -176,10 +218,7 @@ struct ProductImageViewer: View {
                     .kxFont(.headline)
                     .foregroundStyle(KXColor.textPrimary)
                     .frame(width: KXSpacing.minimumTapTarget, height: KXSpacing.minimumTapTarget)
-                    .background(KXColor.surfaceElevated, in: Circle())
-                    .overlay {
-                        Circle().strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
-                    }
+                    .background(KXColor.surface, in: Circle())
                     .contentShape(Circle())
             }
             .buttonStyle(.plain)

@@ -11,8 +11,9 @@ import SwiftUI
 /// The view fills the space it is offered and requests the image at exactly that width in
 /// pixels (rendered width times display scale, see ``KXImagePipeline/pixelWidth(pointWidth:scale:)``)
 /// with the WebP `Accept` header, so a product card downloads about 15 to 30 KB instead of the
-/// original. While loading it shows a ``KXSkeleton``; without an image or after a failure a
-/// neutral photo symbol. The image fades in (a plain cross-fade with Reduce Motion).
+/// original. While loading it shows a ``KXSkeleton`` (inside a photo tile, see
+/// `kxPhotoTile()`, only the tile); without an image or after a failure a neutral photo symbol.
+/// The image fades in (a plain cross-fade with Reduce Motion).
 ///
 /// Accessibility: the image is hidden from VoiceOver unless it has alt text and is not marked
 /// decorative. Inside a product card pass `isDecorative: true`, because the card describes the
@@ -29,6 +30,7 @@ public struct ProductImage: View {
 
     @Environment(\.displayScale) private var displayScale
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.kxIsInPhotoTile) private var isInPhotoTile
 
     /// Creates a product image.
     ///
@@ -75,11 +77,21 @@ public struct ProductImage: View {
                 } else if state.error != nil {
                     ProductImageFallback()
                 } else {
-                    KXSkeleton(cornerRadius: 0)
+                    loadingPlaceholder
                 }
             }
         } else if image == nil {
             ProductImageFallback()
+        } else {
+            loadingPlaceholder
+        }
+    }
+
+    /// A skeleton, or nothing inside a photo tile, whose plain light grey already reads as a
+    /// placeholder.
+    @ViewBuilder private var loadingPlaceholder: some View {
+        if isInPhotoTile {
+            Color.clear
         } else {
             KXSkeleton(cornerRadius: 0)
         }
@@ -117,12 +129,16 @@ private struct ProductImageAccessibility: ViewModifier {
 
 /// Neutral stand-in when there is no image or it could not be loaded.
 private struct ProductImageFallback: View {
+    @Environment(\.kxIsInPhotoTile) private var isInPhotoTile
+
     var body: some View {
         ZStack {
-            KXColor.surface
+            if !isInPhotoTile {
+                KXColor.surface
+            }
             Image(systemName: "photo")
                 .kxFont(.title2)
-                .foregroundStyle(KXColor.iconSecondary)
+                .foregroundStyle(isInPhotoTile ? KXColor.imageIcon : KXColor.iconSecondary)
         }
     }
 }
@@ -140,6 +156,7 @@ private let productImagePreviewImage = ShopifyImage(
 #Preview("ProductImage") {
     VStack(spacing: KXSpacing.m) {
         ProductImage(productImagePreviewImage)
+            .kxPhotoTile()
             .aspectRatio(1, contentMode: .fit)
             .frame(width: 180)
         ProductImage(nil)

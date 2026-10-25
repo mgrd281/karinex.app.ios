@@ -26,7 +26,7 @@ enum HomeTrustFact: String, CaseIterable, Identifiable, Sendable {
         rawValue
     }
 
-    /// SF Symbol shown in the tile's gold ring.
+    /// SF Symbol shown on the tile.
     var systemImage: String {
         switch self {
         case .emailDelivery: "envelope"
@@ -136,7 +136,7 @@ enum SupportChannel: String, CaseIterable, Identifiable, Sendable {
         rawValue
     }
 
-    /// Decorative SF Symbol shown in the channel's gold ring.
+    /// Decorative SF Symbol shown on the channel's disc.
     var systemImage: String {
         switch self {
         case .whatsApp: "message"

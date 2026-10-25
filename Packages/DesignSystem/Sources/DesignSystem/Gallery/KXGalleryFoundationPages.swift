@@ -14,16 +14,19 @@ struct KXGalleryColorGroup: Identifiable, Sendable {
 
     /// Every token grouped by role, in the order of `ColorToken`. Each token appears exactly once.
     static let all: [KXGalleryColorGroup] = [
-        KXGalleryColorGroup(title: "Surfaces", tokens: [.background, .surface, .surfaceElevated, .skeleton]),
+        KXGalleryColorGroup(
+            title: "Surfaces",
+            tokens: [.background, .surface, .surfaceElevated, .skeleton, .imageBackground, .imageIcon]
+        ),
         KXGalleryColorGroup(title: "Text", tokens: [.textPrimary, .textSecondary, .textTertiary]),
         KXGalleryColorGroup(title: "Brand and actions", tokens: [.brand, .brandPressed, .brandSoft, .textOnBrand]),
         KXGalleryColorGroup(title: "Accent", tokens: [.accent, .accentDeep, .accentText, .textOnAccent]),
-        KXGalleryColorGroup(title: "Urgency", tokens: [.urgency, .urgencyText, .textOnUrgency]),
+        KXGalleryColorGroup(title: "Sale and urgency", tokens: [.urgency, .urgencyText, .textOnUrgency]),
         KXGalleryColorGroup(title: "Lines and icons", tokens: [.hairline, .divider, .iconSecondary]),
         KXGalleryColorGroup(title: "Status", tokens: [.success, .warning, .error, .info]),
         KXGalleryColorGroup(
             title: "License key card",
-            tokens: [.keyCardBackground, .keyCardText, .keyCardMuted, .keyCardAccent]
+            tokens: [.keyCardBackground, .keyCardText, .keyCardMuted]
         ),
         KXGalleryColorGroup(title: "Overlays", tokens: [.scrim]),
     ]
@@ -186,7 +189,7 @@ struct KXGalleryTypographyPage: View {
         }
     }
 
-    /// "title2: 24 pt, serif, medium, relative to title2, tracking -0.2".
+    /// "title2: 22 pt, sans, semibold, relative to title2, tracking -0.2".
     private static func metrics(of token: TypographyToken) -> String {
         var parts = [
             "\(token.rawValue): \(token.baseSize.formatted()) pt",
@@ -247,7 +250,7 @@ struct KXGalleryLayoutPage: View {
 
     var body: some View {
         KXGalleryPage(topic: .layout) {
-            KXGalleryDemo("Spacing", note: "KXSpacing on the 8 pt grid, drawn as gold bars.") {
+            KXGalleryDemo("Spacing", note: "KXSpacing on the 8 pt grid, drawn as ink bars.") {
                 VStack(alignment: .leading, spacing: KXSpacing.xs) {
                     ForEach(spacing) { metric in
                         HStack(spacing: KXSpacing.s) {
@@ -304,7 +307,7 @@ struct KXGalleryLayoutPage: View {
     }
 }
 
-/// The four brand curves side by side: each row moves a gold dot across its track.
+/// The four brand curves side by side: each row moves an ink dot across its track.
 private struct KXGalleryMotionDemo: View {
     /// A motion curve with its developer label.
     private struct MotionSample: Identifiable {

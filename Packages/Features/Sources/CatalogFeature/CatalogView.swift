@@ -141,8 +141,8 @@ private struct CatalogDirectoryContent: View {
 
 // MARK: - Tile
 
-/// A curated collection: the collection image or a symbol in a gold ring, and the serif title,
-/// on a cream panel with the gold inset ring.
+/// A curated collection: the collection image or a symbol on a white disc, and the bold title,
+/// on a light grey panel.
 private struct CatalogCollectionTile: View {
     let collection: CollectionSummary
 
@@ -150,7 +150,7 @@ private struct CatalogCollectionTile: View {
     @ScaledMetric(relativeTo: .body) private var minimumHeight: CGFloat = 150
 
     var body: some View {
-        KXCard(showsInsetRing: true) {
+        KXCard {
             VStack(alignment: .leading, spacing: KXSpacing.m) {
                 if let image = collection.image {
                     ProductImage(image, contentMode: .fill, isDecorative: true)
@@ -159,11 +159,9 @@ private struct CatalogCollectionTile: View {
                 } else {
                     Image(systemName: CatalogDirectory.systemImage(for: collection.handle))
                         .kxFont(.title3)
-                        .foregroundStyle(KXColor.brand)
+                        .foregroundStyle(KXColor.textPrimary)
                         .frame(width: ringDiameter, height: ringDiameter)
-                        .overlay {
-                            Circle().strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
-                        }
+                        .background(KXColor.surfaceElevated, in: Circle())
                         .accessibilityHidden(true)
                 }
                 Spacer(minLength: 0)
