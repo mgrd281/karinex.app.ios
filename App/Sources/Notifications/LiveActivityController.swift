@@ -17,7 +17,7 @@ final class LiveActivityController {
     /// How long the activity stays fresh without an update.
     static let staleInterval: TimeInterval = 2 * 60 * 60
     /// How long "Zugestellt" stays on the Lock Screen.
-    static let deliveredDismissal: TimeInterval = 15 * 60
+    nonisolated static let deliveredDismissal: TimeInterval = 15 * 60
 
     private let consentStore: any ConsentStoring
     private let backend: any BackendClient
@@ -49,30 +49,30 @@ final class LiveActivityController {
 
     /// Ends every running activity as delivered, e.g. after a `license.delivered` push.
     func markAllDelivered() async {
-        for activity in Activity<LicenseDeliveryAttributes>.activities {
-            await end(activity)
-        }
+        await Self.endActivities { _ in true }
     }
 
     /// Asks the BFF whether a running activity's order was delivered meanwhile.
     func refresh() async {
-        let activities = Activity<LicenseDeliveryAttributes>.activities
-        guard !activities.isEmpty, let orders = try? await backend.orders() else { return }
+        guard !Activity<LicenseDeliveryAttributes>.activities.isEmpty, let orders = try? await backend.orders() else { return }
         let delivered = Set(orders.filter { $0.deliveryStatus == .delivered }.map(\.orderID))
-        for activity in activities where Self.matches(activity.attributes.orderReference, delivered) {
-            await end(activity)
-        }
+        await Self.endActivities { Self.matches($0.orderReference, delivered) }
     }
 
     /// Whether `reference` (a numeric ID or a GID ending in it) is one of `orderIDs`.
-    static func matches(_ reference: String, _ orderIDs: Set<String>) -> Bool {
+    nonisolated static func matches(_ reference: String, _ orderIDs: Set<String>) -> Bool {
         let last = reference.split(separator: "/").last.map(String.init) ?? reference
         let numeric = last.split(separator: "?").first.map(String.init) ?? last
         return orderIDs.contains(numeric)
     }
 
-    private func end(_ activity: Activity<LicenseDeliveryAttributes>) async {
+    /// Ends the running activities whose attributes match `predicate` as delivered. Nonisolated,
+    /// so the non-Sendable `Activity` values never cross from the main actor.
+    private nonisolated static func endActivities(where predicate: @Sendable (LicenseDeliveryAttributes) -> Bool) async {
         let content = ActivityContent(state: LicenseDeliveryAttributes.ContentState(phase: .delivered), staleDate: nil)
-        await activity.end(content, dismissalPolicy: .after(Date().addingTimeInterval(Self.deliveredDismissal)))
+        let dismissal = ActivityUIDismissalPolicy.after(Date().addingTimeInterval(deliveredDismissal))
+        for activity in Activity<LicenseDeliveryAttributes>.activities where predicate(activity.attributes) {
+            await activity.end(content, dismissalPolicy: dismissal)
+        }
     }
 }
