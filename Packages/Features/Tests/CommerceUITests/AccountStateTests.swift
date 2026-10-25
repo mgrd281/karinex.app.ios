@@ -10,7 +10,7 @@ import Testing
 /// Counts calls of a `@MainActor` callback.
 @MainActor
 final class CallCounter {
-    var count = 0
+    var calls = 0
 }
 
 // MARK: - Deep links
@@ -98,7 +98,7 @@ struct CustomerSessionStoreTests {
     func unavailable() async {
         let store = CustomerSessionStore(session: nil, repository: nil, callbackScheme: nil, hasStoredTokens: true)
         let signedOutCalls = CallCounter()
-        store.onSignedOut = { signedOutCalls.count += 1 }
+        store.onSignedOut = { signedOutCalls.calls += 1 }
 
         #expect(store.status == .unavailable)
         #expect(!store.isAvailable)
@@ -109,7 +109,7 @@ struct CustomerSessionStoreTests {
         }
         #expect(store.status == .unavailable)
         #expect(await store.signOut() == nil)
-        #expect(signedOutCalls.count == 0)
+        #expect(signedOutCalls.calls == 0)
     }
 }
 

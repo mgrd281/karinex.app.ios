@@ -183,13 +183,13 @@ struct PushRegistrationTests {
     func tap() async {
         let coordinator = makeCoordinator()
         let deliveries = CallCounter()
-        coordinator.onLicenseDelivered = { deliveries.count += 1 }
+        coordinator.onLicenseDelivered = { deliveries.calls += 1 }
 
         await coordinator.didOpen(.licenseDelivered(orderID: "5678"))
         await coordinator.didReceive(.orderPaid(orderID: "5678"))
 
         #expect(coordinator.pendingURL?.absoluteString == "karinex://account/licenses")
-        #expect(deliveries.count == 1)
+        #expect(deliveries.calls == 1)
     }
 }
 
