@@ -173,7 +173,6 @@ public struct HomeStory: Sendable, Hashable, Identifiable {
 /// - ``deals``: the dark sale panel.
 /// - ``versions``: the two by two grid of product versions (one photo each).
 /// - ``guidesBlog``: the Ratgeber stories.
-/// - ``feed``: the chips at the bottom that switch the screen to one category.
 ///
 /// The fixed texts, the trust facts, "Zuletzt angesehen", the service tiles and the support
 /// card need no store data and are not listed here.
@@ -190,8 +189,6 @@ public struct HomeModules: Sendable, Hashable {
     public let versions: [HomeCategory]
     /// The blog of the Ratgeber stories.
     public let guidesBlog: String
-    /// The categories of the feed chips.
-    public let feed: [HomeCategory]
 
     /// Creates the modules.
     public init(
@@ -200,8 +197,7 @@ public struct HomeModules: Sendable, Hashable {
         bestsellers: HomeCategory,
         deals: HomeCategory,
         versions: [HomeCategory],
-        guidesBlog: String,
-        feed: [HomeCategory]
+        guidesBlog: String
     ) {
         self.stories = stories
         self.showcase = showcase
@@ -209,13 +205,12 @@ public struct HomeModules: Sendable, Hashable {
         self.deals = deals
         self.versions = versions
         self.guidesBlog = guidesBlog
-        self.feed = feed
     }
 
     /// The rows to load: every collection once, with the larger size when a collection is both
     /// a row and a tile, then the guides blog.
     public var layout: HomeLayout {
-        let rowCategories = stories.map(\.category) + showcase + [bestsellers, deals] + feed
+        let rowCategories = stories.map(\.category) + showcase + [bestsellers, deals]
         let rowHandles = rowCategories.map(\.handle)
         let rows = Set(rowHandles)
         var sections = rowHandles.map { handle in
@@ -265,8 +260,7 @@ public struct HomeModules: Sendable, Hashable {
             HomeCategory(handle: "microsoft-office-2024", title: .verbatim("Office 2024"), systemImage: "doc.richtext"),
             HomeCategory(handle: "microsoft-office-2021", title: .verbatim("Office 2021"), systemImage: "doc.richtext"),
         ],
-        guidesBlog: "guides",
-        feed: [.windows, .office, .server, .mac, .development, .deals]
+        guidesBlog: "guides"
     )
 }
 

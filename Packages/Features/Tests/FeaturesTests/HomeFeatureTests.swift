@@ -168,8 +168,6 @@ struct HomeStringTests {
             "home.versions.title",
             "home.service.eyebrow",
             "home.service.title",
-            "home.feed.for_you",
-            "home.feed.show_all",
             "home.trust.eyebrow",
             "home.trust.title",
             "home.trust.moneyback.hint",
@@ -244,8 +242,7 @@ struct HomeLayoutTests {
             bestsellers: .bestseller,
             deals: .deals,
             versions: [windows, HomeCategory(handle: "windows-11", title: .verbatim("Windows 11"), systemImage: "macwindow")],
-            guidesBlog: "news",
-            feed: []
+            guidesBlog: "news"
         )
 
         #expect(custom.layout.sections.map(\.id) == ["windows", "bestseller", "sale", "windows-11", "news"])
@@ -268,7 +265,6 @@ struct HomeLayoutTests {
         #expect(names(modules.showcase) == ["Windows", "Office", "Server", "Office für Mac", "Entwicklung", "Microsoft 365"])
         #expect(names([modules.bestsellers, modules.deals]) == ["Bestseller", "Angebote"])
         #expect(names(modules.versions) == ["Windows 11", "Windows 10", "Office 2024", "Office 2021"])
-        #expect(names(modules.feed) == ["Windows", "Office", "Server", "Office für Mac", "Entwicklung", "Angebote"])
         #expect(modules.stories.map { $0.tag.resolved(in: german.bundle) } == [
             "Unsere Bestseller", "Aus unserem Sortiment", "Aus unserem Sortiment", "Aus unserem Sortiment", "Aus unserem Sortiment",
         ])
@@ -282,7 +278,6 @@ struct HomeLayoutTests {
             modules.showcase,
             [modules.bestsellers, modules.deals],
             modules.versions,
-            modules.feed,
         ]
         let titles = groups.joined().flatMap { category in [category.title, category.eyebrow].compactMap(\.self) }
         let texts = titles + modules.stories.map(\.tag)
@@ -297,7 +292,7 @@ struct HomeLayoutTests {
 
     @Test("Category handles are unique within each module")
     func uniqueCategories() {
-        for categories in [modules.stories.map(\.category), modules.showcase, modules.versions, modules.feed] {
+        for categories in [modules.stories.map(\.category), modules.showcase, modules.versions] {
             #expect(Set(categories.map(\.handle)).count == categories.count)
         }
     }

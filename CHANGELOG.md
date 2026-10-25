@@ -43,9 +43,9 @@ change.
   (category tiles above a dark product panel tinted by the category's photo), the bestsellers,
   the dark sale panel, "Zuletzt angesehen", "Nach Version finden" (Windows 11, Windows 10,
   Office 2024, Office 2021), service tiles into the account area (help, licenses, orders), the
-  Ratgeber as tall story tiles and the support card. Chips above the tab bar ("Für Sie" and one
-  per category) switch the page to the products of one category. The modules and their store
-  collections are described by `HomeModules`; the hero with "Zum Sortiment" is gone.
+  Ratgeber as tall story tiles and the support card. The modules and their store collections are
+  described by `HomeModules`; the hero with "Zum Sortiment" is gone, and so is the chip bar
+  above the tab bar (owner request).
 - **Shop tab like a top retail app** (owner request): the bestsellers and the sale open the
   tab as two large cards (ink and sale red) with a product photo, the product families follow
   as rows with a short line and the photo of their first product, the single versions as chips

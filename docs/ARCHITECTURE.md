@@ -726,7 +726,7 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
   opens the tab. `CartFeature`: lines, quantity, undo, discount codes with `userErrors`,
   totals, cross-sell, payment marks, notices.
 - `HomeFeature`, laid out like the About You app: `HomeModules` names the modules and their
-  store collections (stories, showcase, bestsellers, deals, versions, guides blog, feed chips);
+  store collections (stories, showcase, bestsellers, deals, versions, guides blog);
   its `layout` lists every collection once (8 products for rows, 1 for a version tile, the
   larger size when both) and `HomeViewModel` loads them concurrently, each with its own
   `LoadState`, readable and reloadable by handle. `HomeView` is a `LazyVStack` with the logo bar
@@ -737,9 +737,7 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
   `HomeStoryCarousel` (a fixed tinted panel, pages with `scrollPosition(id:)`, fixed dots),
   `HomeTrustSection`, `HomeCategoryShowcase` (tiles and a tinted `HomeProductPanel`), the
   bestseller row, the sale panel, "Zuletzt angesehen", `HomeVersionGrid`, `HomeServiceTiles`
-  (account routes), `HomeArticleSection` and the support card. `HomeFeedBar` sits in the bottom
-  safe area inset; choosing a category shows `HomeCategoryFeed` (a card grid and "Alle Produkte
-  anzeigen") and scrolls to the top. Empty collections drop their module, failed ones show a
+  (account routes), `HomeArticleSection` and the support card. Empty collections drop their module, failed ones show a
   compact error with "Erneut versuchen".
 - Payment marks (`CommerceUI/Payments`): `PaymentMethod.methods(for:)` turns Shopify's
   `PaymentSettings` (`shop.paymentSettings`) into the marks to show: Apple Pay only when Shopify

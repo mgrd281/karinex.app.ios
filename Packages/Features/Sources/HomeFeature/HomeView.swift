@@ -9,12 +9,10 @@ import SwiftUI
 ///
 /// - On top the KARINEX logo with the Merkliste heart, which scroll away, and the search field,
 ///   which stays pinned and opens the Suche tab.
-/// - "Für Sie": the story carousel of featured collections tinted with the color of their photos,
+/// - Below: the story carousel of featured collections tinted with the color of their photos,
 ///   the trust facts (the money-back promise opens its conditions), the category showcase with
 ///   its dark product panel, the bestsellers, the dark sale panel, "Zuletzt angesehen", the
 ///   version grid, the service tiles, the Ratgeber stories and the support card.
-/// - Above the tab bar the feed chips: "Für Sie" and one chip per category, which switches the
-///   page to that category's products.
 ///
 /// Every collection loads concurrently with its own skeleton and error state; pull to refresh
 /// reloads them all. Product facts come only from the Storefront API.
@@ -39,14 +37,10 @@ public struct HomeView: View {
 
     @State private var model: HomeViewModel
     @State private var isMoneyBackConditionPresented = false
-    /// The handle of the category chosen in the feed bar, `nil` for "Für Sie".
-    @State private var feedSelection: String?
     /// The height of the logo bar: how far the page scrolls before the search field pins.
     @State private var brandBarHeight = CGFloat.infinity
     @State private var isSearchPinned = false
 
-    /// The scroll target at the top of the page.
-    private static let topID = "home.top"
     /// The coordinate space of the page content.
     private static let contentSpace = "home.content"
 
@@ -74,47 +68,36 @@ public struct HomeView: View {
     }
 
     public var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 0, pinnedViews: [.sectionHeaders]) {
-                    HomeBrandBar {
-                        onRoute(.account(.wishlist))
-                    }
-                    .id(Self.topID)
-                    .onGeometryChange(for: CGFloat.self) { geometry in
-                        geometry.size.height
-                    } action: { height in
-                        brandBarHeight = height
-                    }
-                    Section {
-                        // One plain stack, so every module exists as soon as the page loads.
-                        VStack(alignment: .leading, spacing: 0) {
-                            pageContent
-                        }
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: [.sectionHeaders]) {
+                HomeBrandBar {
+                    onRoute(.account(.wishlist))
+                }
+                .onGeometryChange(for: CGFloat.self) { geometry in
+                    geometry.size.height
+                } action: { height in
+                    brandBarHeight = height
+                }
+                Section {
+                    // One plain stack, so every module exists as soon as the page loads.
+                    forYou
                         .padding(.top, KXSpacing.s)
                         .padding(.bottom, KXSpacing.xl)
-                    } header: {
-                        searchField
-                    }
+                } header: {
+                    searchField
                 }
-                .coordinateSpace(.named(Self.contentSpace))
             }
-            .refreshable {
-                await model.reload()
-            }
-            .onChange(of: feedSelection) {
-                proxy.scrollTo(Self.topID, anchor: .top)
-            }
-            .accessibilityIdentifier("screen.home")
+            .coordinateSpace(.named(Self.contentSpace))
         }
+        .refreshable {
+            await model.reload()
+        }
+        .accessibilityIdentifier("screen.home")
         .task {
             await model.loadIfNeeded()
         }
         .safeAreaInset(edge: .top, spacing: 0) {
             statusBarBackdrop
-        }
-        .safeAreaInset(edge: .bottom, spacing: 0) {
-            HomeFeedBar(categories: modules.feed, selection: $feedSelection)
         }
         .kxScreenBackground()
         .navigationTitle(Text("home.title", bundle: .module))
@@ -143,23 +126,7 @@ public struct HomeView: View {
 
     // MARK: Content
 
-    /// The products of the feed category, or "Für Sie".
-    @ViewBuilder private var pageContent: some View {
-        if let category = modules.feed.first(where: { $0.handle == feedSelection }) {
-            HomeCategoryFeed(
-                category: category,
-                state: model.productState(for: category.handle),
-                retry: { await model.reload(handles: [category.handle]) },
-                onShowAll: { openCategory(category) },
-                onSelect: openProduct
-            )
-            .id(category.handle)
-        } else {
-            forYou
-        }
-    }
-
-    /// The "Für Sie" page.
+    /// The modules, top to bottom.
     private var forYou: some View {
         VStack(alignment: .leading, spacing: KXSpacing.xxl) {
             HomeStoryCarousel(
