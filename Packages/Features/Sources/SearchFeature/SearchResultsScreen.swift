@@ -140,7 +140,7 @@ public struct SearchResultsScreen: View {
             .accessibilityIdentifier("state.empty")
             VStack(alignment: .leading, spacing: KXSpacing.s) {
                 SearchSectionTitle(title: String(localized: "search.categories.title", bundle: .module))
-                SearchCategoryGrid { shortcut in
+                SearchCategoryGrid(images: [:]) { shortcut in
                     onRoute(.collection(handle: shortcut.handle, title: shortcut.title))
                 }
             }

@@ -133,6 +133,7 @@ struct RootView: View {
             SearchView(
                 search: container.searchRepository,
                 preferences: container.preferences,
+                catalog: container.catalogRepository,
                 onRoute: { router.open($0, from: .search) }
             )
         case .cart:

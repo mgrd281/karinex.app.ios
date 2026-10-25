@@ -31,6 +31,10 @@ change.
   "Zum Sortiment" button; the four brand facts are icon rows with hairlines
   (`KXTrustStrip` arrangement `.list`) instead of tiles. The KARINEX wordmark sits centered
   above the hero.
+- **Suche like a fashion retail app:** recent searches as removable grey chips in a scrolling
+  row, suggestions as chips, and the categories as grey tiles with the bold name and a real
+  product photo of the collection (the first product, loaded from Shopify), with light grey
+  bands between the sections and an inline title above the search field.
 - Product card prices use the regular weight of the card title.
 - Dark-mode greys are exactly neutral (`#1C1C1C`, `#2C2C2C`, `#3A3A3A`).
 - Components: chevron accordion, step timeline with ink discs, section headers without the gold
