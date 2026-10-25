@@ -12,6 +12,9 @@ change.
 
 ### Fixed
 
+- The TestFlight export step no longer fails with `option '-authenticationKeyPath' may only be
+  provided once`: fastlane already adds the App Store Connect key flags to the export, so the
+  lane stops passing them a second time (`export_xcargs`).
 - TestFlight builds now carry `App/KARINEX.entitlements` (Push Notifications and Associated
   Domains for Universal Links): the `beta` lane sets `KX_CODE_SIGN_ENTITLEMENTS` itself and
   `scripts/write-secrets-xcconfig.sh` accepts exactly that value or an empty one. Unsigned CI and

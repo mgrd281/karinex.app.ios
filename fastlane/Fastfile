@@ -152,6 +152,9 @@ platform :ios do
       # highest precedence, so the archive carries it even without Apple Generic Versioning.
       increment_build_number(xcodeproj: PROJECT, build_number: build_number, skip_info_plist: true)
 
+      # gym adds the same -allowProvisioningUpdates and -authenticationKey* flags to the export
+      # step itself (from the api_key above); passing them again through export_xcargs makes
+      # xcodebuild fail with "option '-authenticationKeyPath' may only be provided once".
       authentication = [
         "-allowProvisioningUpdates",
         "-authenticationKeyPath #{key_path.shellescape}",
@@ -171,7 +174,6 @@ platform :ios do
           uploadSymbols: true,
         },
         xcargs: "#{authentication} CURRENT_PROJECT_VERSION=#{build_number} DEVELOPMENT_TEAM=#{team_id.shellescape}",
-        export_xcargs: authentication,
         derived_data_path: DERIVED_DATA,
         cloned_source_packages_path: SOURCE_PACKAGES,
         output_directory: File.join(RESULTS_DIR, "beta"),
