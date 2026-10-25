@@ -22,6 +22,7 @@ KARINEX's service provider; the BFF reads it to check order ownership.
 | Contact Info | Email Address | Customer Account API `customer`; BFF token check | App Functionality |
 | Contact Info | Physical Address | Customer Account API addresses (view and edit) | App Functionality |
 | Purchases | Purchase History | Customer Account API orders; BFF delivery states, keys, invoices | App Functionality |
+| Identifiers | Device ID | The APNs device token, sent to the BFF only after the customer turned on notifications in the settings | App Functionality |
 
 Not collected: no contact number field exists in the app, in the address form or in the
 Customer Account queries.
@@ -39,7 +40,8 @@ None today.
 | Market and language | Stored on the device; sent to Shopify as `@inContext` to get prices and texts of the right market. Not collected. |
 | Support messages | WhatsApp, e-mail and live chat open outside the app; the app only prefills an order number. |
 | Usage data, diagnostics | Not collected. `PrivacyConsent.analytics` and `.crashReports` exist but nothing reads them yet; no SDK is linked. If one is added it starts only after opt-in, and this document and the manifest change before release. |
-| Device ID (APNs token) | Phase 3. Registered with the BFF only after the customer opted in to notifications, used only to deliver them. Declare "Device ID, App Functionality, linked" when push ships. |
+| Wishlist and recently viewed | Product IDs stored on the device only; never sent anywhere. |
+| Widget | Requests the public bestseller collection from Shopify with the device's region and language; no identifier is sent. |
 
 ## On-device storage
 

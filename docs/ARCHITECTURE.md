@@ -18,13 +18,14 @@ current with every change (see [CLAUDE.md](../CLAUDE.md)); the product specifica
 9. [Images](#images)
 10. [Commerce layer (Phase 1)](#commerce-layer-phase-1)
 11. [Account layer (Phase 2)](#account-layer-phase-2)
-12. [Package pins](#package-pins)
-13. [Security and privacy](#security-and-privacy)
-14. [Localization](#localization)
-15. [Testing strategy](#testing-strategy)
-16. [CI/CD](#cicd)
-17. [Decisions](#decisions)
-18. [Roadmap](#roadmap)
+12. [Delight layer (Phase 3)](#delight-layer-phase-3)
+13. [Package pins](#package-pins)
+14. [Security and privacy](#security-and-privacy)
+15. [Localization](#localization)
+16. [Testing strategy](#testing-strategy)
+17. [CI/CD](#cicd)
+18. [Decisions](#decisions)
+19. [Roadmap](#roadmap)
 
 ## Purpose
 
@@ -754,6 +755,50 @@ selects the Konto tab; the others push onto the current tab's stack. Deep links:
 `karinex://account`, `karinex://account/orders[/<number>]`, `karinex://account/licenses` and the
 web paths `/account` and `/account/orders/<number>`.
 
+## Delight layer (Phase 3)
+
+### Wishlist and recently viewed
+
+`SavedProductsStore` (CommerceUI, `@MainActor @Observable`) keeps two lists of product GIDs in
+`preferences`: the wishlist (newest first, at most 100) and the history (at most 20). No titles
+or prices are stored, so nothing stale can be shown: `SavedProductsLoader` loads the products
+through `ProductLookupRepository` (`ProductsByIDQuery`, one Storefront `nodes` call, missing
+products dropped) in the current market. The App puts the store and the lookup into the SwiftUI
+environment (`.environment(savedProductsStore)`, `\.productLookup`); the product page reads
+them optionally, so previews and tests without them simply show no heart and no history.
+
+### Push notifications
+
+`PushRegistrationCoordinator` (CommerceUI) is the only code that touches APNs, through the
+`RemoteNotificationRegistering` protocol (`SystemRemoteNotifications` in the app, a stub in
+tests):
+
+- Launch: nothing happens unless `PrivacyConsent.allowsPushRegistration` is already true and
+  iOS still authorizes; then the registration is renewed silently. The permission prompt never
+  appears at launch.
+- Settings toggle on: prompt, `registerForRemoteNotifications`, then `POST /v1/app/devices`
+  with both consents, the UI language and the market country. Both off: unregister locally and
+  `DELETE /v1/app/devices/{token}`.
+- `AppDelegate` forwards the token and parses taps into the Sendable `PushPayload` before
+  hopping to the main actor; `pendingURL` is opened by RootView through `DeepLinkParser`.
+- `aps-environment` is in `App/KARINEX.entitlements`, which only applies once
+  `KX_CODE_SIGN_ENTITLEMENTS` is set with a team ID.
+
+### Widget extension and Live Activity
+
+`KARINEXWidgets` (target in `project.yml`, sources `App/Widgets/Extension`) links only
+extension-safe modules: `Core`, `ShopifyKit` and `DesignTokens`. Colors and fonts come from the
+tokens through `WidgetPalette`, the same values as `KXColor` and `.kxFont(_:)`. Its strings live
+in the App's String Catalog, which is compiled into both bundles.
+
+- The bestseller widget reads the collection `bestseller` with its own tokenless Storefront
+  client in the device's region and language, every two hours. Without an answer it shows a
+  neutral hint, never cached or invented values.
+- `LicenseDeliveryAttributes` (`App/Widgets/Shared`, compiled into app and extension) carries
+  only the order reference and the phase. `LiveActivityController` starts the activity after
+  checkout when order updates are allowed and ends it on `license.delivered` or when the BFF
+  reports the delivery on return to the app.
+
 ## Package pins
 
 `KARINEX.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved` is committed, so
@@ -1047,6 +1092,9 @@ Customer Account client ID and BFF host for an end-to-end test on a device.
   TestFlight build 2.
 
 ### Phase 3: Delight and launch
+
+Status: implemented (see [Delight layer](#delight-layer-phase-3)); App Store submission
+waits for the owner inputs in [OWNER_INPUTS.md](OWNER_INPUTS.md).
 
 - Push notifications through the BFF (consent-gated), the "Blitzangebot" widget and the "Lizenz
   wird zugestellt" Live Activity (new extension targets in `project.yml`; flags

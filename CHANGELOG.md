@@ -10,6 +10,32 @@ change.
 
 ## [Unreleased]
 
+Phase 3: delight and launch preparation. Written and checked by compilation and unit tests in
+CI; push, the widget and the Live Activity need a device, the owner's Apple Team ID and APNs on
+the BFF for an end-to-end test.
+
+### Added (Phase 3)
+
+- **Wishlist and recently viewed:** `SavedProductsStore` keeps only product IDs on the device
+  (no account needed, nothing leaves the device); `ProductsByIDQuery` (Storefront `nodes`) and
+  `ProductLookupRepository` load the products fresh in the current market. Heart button on the
+  product page, "Merkliste" in the Konto tab, "Zuletzt angesehen" on Start.
+- **Push notifications, strictly opt-in:** `PushRegistrationCoordinator` asks for permission
+  and registers with APNs only after the customer turns on "Bestellstatus" or "Angebote" in the
+  settings, sends the token and consents to `POST /v1/app/devices`, unregisters when both are
+  off, and turns taps into deep links. A hint links to the iOS settings when iOS refused.
+- **Widget extension `KARINEXWidgets`:** the bestseller widget (small and medium) from the
+  Storefront API, and the "Lizenz wird zugestellt" Live Activity, started after checkout only
+  with order update consent and ended by the `license.delivered` push or the BFF delivery state.
+- **App Store:** metadata in 11 languages under `fastlane/metadata` with
+  `scripts/check_metadata.py` (limits and copy rules, part of `make check` and CI),
+  [docs/APP_STORE_REVIEW_NOTES.md](docs/APP_STORE_REVIEW_NOTES.md) and
+  [docs/SCREENSHOTS.md](docs/SCREENSHOTS.md).
+
+---
+
+### Phase 2
+
 Phase 2: account and licenses. Shopify customer login, orders, addresses, the license vault,
 invoices, support, legal texts, settings and account deletion, in all 11 languages. Written and
 checked by compilation, unit tests and the Linux package tests; an end-to-end test needs the
