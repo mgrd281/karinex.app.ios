@@ -523,10 +523,15 @@ BrandPalette (raw brand hex values)
   photos 0), `BorderToken` and `MotionToken` (springs between 0.25 and 0.35 s) complete the
   set; SwiftUI code uses them through `KXSpacing`, `KXRadius`, `KXBorder` and `KXMotion`.
 
-The asset catalog holds only what iOS reads by name before any code runs: `AppIcon` (a white
-"K" on black), `AccentColor` (global tint of system chrome; mirrors `ColorToken.brand`: black in
-light, white in dark) and `LaunchBackground` (the launch screen; mirrors
-`ColorToken.background`). Keep those two in sync by hand when the tokens change.
+The asset catalog holds only what iOS reads by name before any code runs: `AppIcon` (the white
+store logo on black), `AccentColor` (global tint of system chrome; mirrors `ColorToken.brand`:
+black in light, white in dark), `LaunchBackground` (the launch screen; mirrors
+`ColorToken.background`) and `LaunchLogo` (the store logo of the launch screen, black and white
+for dark mode, only a @3x image so it is 167 pt wide on every device). Keep the colors in sync by
+hand when the tokens change. `RootView` hands `LaunchLogo` to `KXLaunchIntro`, which takes over
+from the launch screen without a jump (same logo, same size, centered on the whole screen), holds
+it for `MotionToken.launchHoldDuration`, zooms it by `launchZoomScale` while fading out and
+reveals the app; with Reduce Motion it only fades, and UI test runs skip it.
 
 ### Typography: SF Pro
 
@@ -568,7 +573,8 @@ light, dark and an accessibility text size, and snapshot tests:
 Foundation helpers in `Foundation/`: `KXColor`, `KXTypography` (`.kxFont(_:)`, `KXFont`),
 `KXLayout` (`KXSpacing`, `KXRadius`, `KXBorder`, `.kxScreenBackground()`, `.kxGutter()`),
 `KXPhotoTile` (`.kxPhotoTile()`, `kxIsInPhotoTile`), `KXMotion` (`.standard`, `.snappy`,
-`.gentle`, `.fade`, all Reduce Motion aware) and `KXHaptics`.
+`.gentle`, `.fade`, all Reduce Motion aware), `KXLaunchIntro` (the zoom into the logo at app
+launch) and `KXHaptics`.
 
 Components take already-localized strings from the caller. Strings that belong to a component
 itself (for example "Kopieren" on the key card or the default offline message) live in the

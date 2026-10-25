@@ -30,7 +30,7 @@ enum AppTab: String, CaseIterable, Hashable, Identifiable, Sendable {
         case .home: "house"
         case .shop: "square.grid.2x2"
         case .search: "magnifyingglass"
-        case .cart: "cart"
+        case .cart: "bag"
         case .account: "person.crop.circle"
         }
     }

@@ -25,7 +25,12 @@ change.
   outlined button below them, "So läuft es ab" and the activation instructions as collapsible
   rows, and a calm bottom bar with the price and one black "In den Warenkorb" button.
 - The tab bar keeps the system design with its titles (Start, Shop, Suche, Warenkorb, Konto),
-  now tinted black; the Warenkorb tab shows a shopping cart instead of a bag (owner request).
+  now tinted black. The Warenkorb tab shows a shopping bag with the number of items as a small
+  figure beside it, in the tab's color, instead of a red badge (`CartTabIcon`, owner request,
+  as in the About You app); VoiceOver still reads the number as the tab's value.
+- **Opening like a fashion retail app:** the launch screen shows the store logo (`LaunchLogo`)
+  and `KXLaunchIntro` zooms into it and reveals the Start tab in under one second (only a fade
+  with Reduce Motion, skipped in UI test runs).
 - **Start tab like a campaign page:** the hero shows the photo of the store's top bestseller
   edge to edge on the photo tile (tap opens the product), then the bold headline and the black
   "Zum Sortiment" button; the four brand facts are icon rows with hairlines

@@ -61,4 +61,10 @@ public enum MotionToken {
     public static let fadeDuration: Double = 0.2
     /// Duration of one skeleton shimmer sweep.
     public static let shimmerDuration: Double = 1.4
+    /// How long the logo of the launch intro stays still before it zooms.
+    public static let launchHoldDuration: Double = 0.4
+    /// Duration of the launch intro's zoom into the logo.
+    public static let launchZoomDuration: Double = 0.55
+    /// How far the logo grows during the launch intro.
+    public static let launchZoomScale: Double = 12
 }

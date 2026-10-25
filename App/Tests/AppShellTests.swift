@@ -3,6 +3,7 @@ import Foundation
 @testable import KARINEX
 import SwiftUI
 import Testing
+import UIKit
 
 // MARK: - AppTab
 
@@ -19,7 +20,7 @@ struct AppTabTests {
             "house",
             "square.grid.2x2",
             "magnifyingglass",
-            "cart",
+            "bag",
             "person.crop.circle",
         ])
     }
@@ -63,6 +64,32 @@ struct AppTabTests {
 }
 
 // MARK: - Shell behaviour
+
+// MARK: - CartTabIcon
+
+@MainActor
+@Suite("Cart tab icon")
+struct CartTabIconTests {
+    @Test("The figure beside the bag counts up to 99, then shows 99+")
+    func figures() {
+        #expect(CartTabIcon.figure(for: 0).isEmpty)
+        #expect(CartTabIcon.figure(for: -1).isEmpty)
+        #expect(CartTabIcon.figure(for: 1) == "1")
+        #expect(CartTabIcon.figure(for: 99) == "99")
+        #expect(CartTabIcon.figure(for: 100) == "99+")
+    }
+
+    @Test("The icon renders as a template image that widens for the figure")
+    func image() throws {
+        let empty = try #require(CartTabIcon.image(count: 0, scale: 3))
+        let filled = try #require(CartTabIcon.image(count: 2, scale: 3))
+        #expect(empty.renderingMode == .alwaysTemplate)
+        #expect(filled.renderingMode == .alwaysTemplate)
+        #expect(filled.size.width > empty.size.width)
+    }
+}
+
+// MARK: - App shell
 
 @Suite("App shell")
 struct AppShellTests {

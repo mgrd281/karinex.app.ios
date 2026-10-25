@@ -136,6 +136,13 @@ struct LayoutTokenTests {
         }
     }
 
+    @Test("The launch intro stays under one second and zooms the logo past the screen")
+    func launchIntro() {
+        #expect(MotionToken.launchHoldDuration + MotionToken.launchZoomDuration < 1)
+        #expect(MotionToken.launchHoldDuration > 0)
+        #expect(MotionToken.launchZoomScale >= 8)
+    }
+
     @Test("Every style is sans serif except the monospaced license keys")
     func typographyDesigns() {
         for style in TypographyToken.allCases {
