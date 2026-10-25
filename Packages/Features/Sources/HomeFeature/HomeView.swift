@@ -5,15 +5,17 @@ import SwiftUI
 
 // MARK: - HomeView
 
-/// The Start tab: the editorial hero with the call to action into the range, the trust strip
-/// with the four brand facts (the money-back promise opens its conditions), the live modules of
-/// a ``HomeLayout`` (deals, category rows, bestsellers, guides) and the support card.
+/// The Start tab, laid out like a fashion retail app: the hero with the photo of the top
+/// bestseller edge to edge and the call to action into the range, the four brand facts as icon
+/// rows (the money-back promise opens its conditions), the live modules of a ``HomeLayout``
+/// (deals, category rows, bestsellers, guides) and the support card.
 ///
 /// Every live row loads concurrently with its own skeleton and error state; pull to refresh
 /// reloads them all. Product facts come only from the Storefront API.
 ///
-/// Place it inside a `NavigationStack`. The navigation bar is hidden because the hero carries
-/// the wordmark; a solid backdrop behind the status bar keeps scrolled content legible.
+/// Place it inside a `NavigationStack`. The navigation bar is hidden (the wordmark sits in the
+/// middle of the bottom bar); a solid backdrop behind the status bar keeps scrolled content
+/// legible.
 ///
 /// ```swift
 /// NavigationStack(path: $path) {
@@ -57,11 +59,13 @@ public struct HomeView: View {
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: KXSpacing.xxl) {
-                VStack(alignment: .leading, spacing: KXSpacing.xxl) {
-                    HomeHero(onBrowse: onBrowse)
-                    HomeTrustSection(isConditionPresented: $isMoneyBackConditionPresented)
-                }
-                .padding(.horizontal, KXSpacing.gutter)
+                HomeHero(
+                    bestsellers: bestsellerState,
+                    onBrowse: onBrowse,
+                    onSelect: { product in onRoute(.product(handle: product.handle)) }
+                )
+                HomeTrustSection(isConditionPresented: $isMoneyBackConditionPresented)
+                    .padding(.horizontal, KXSpacing.gutter)
                 ForEach(model.layout.sections) { section in
                     sectionView(section)
                         .accessibilityElement(children: .contain)
@@ -73,7 +77,6 @@ public struct HomeView: View {
                 HomeSupportSection()
                     .padding(.horizontal, KXSpacing.gutter)
             }
-            .padding(.top, KXSpacing.s)
             .padding(.bottom, KXSpacing.xl)
         }
         .refreshable {
@@ -121,6 +124,16 @@ public struct HomeView: View {
                 }
             )
         }
+    }
+
+    /// The load state of the bestseller row, whose first product is the photo of the hero.
+    private var bestsellerState: LoadState<[ProductSummary]> {
+        for section in model.layout.sections {
+            if case let .collection(_, _, highlight) = section.content, highlight == .bestseller {
+                return model.productState(for: section)
+            }
+        }
+        return .empty
     }
 
     /// A zero-height view whose page-colored background extends behind the status bar, so that

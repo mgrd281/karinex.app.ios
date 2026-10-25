@@ -65,9 +65,11 @@ public struct KXTrustItem: Identifiable {
 ///   Place it inside the screen gutters like any other content.
 /// - ``Arrangement/carousel``: one horizontally scrolling row that snaps to tiles. Place it edge
 ///   to edge (without horizontal padding); it applies the standard gutter as content margins.
+/// - ``Arrangement/list``: one fact per row, icon and text separated by hairlines, without
+///   tiles, in the style of the delivery rows of fashion retail apps.
 ///
-/// At accessibility text sizes both arrangements become a single column of full-width rows so
-/// that no text is truncated.
+/// At accessibility text sizes the grid and the carousel become a single column of full-width
+/// rows so that no text is truncated.
 ///
 /// Items with `onTap` are buttons: they show an info glyph, and VoiceOver reads the text with
 /// the button trait and a hint. Static items are read as plain text.
@@ -87,6 +89,8 @@ public struct KXTrustStrip: View {
         case grid
         /// A single horizontally scrolling row.
         case carousel
+        /// One row per fact, separated by hairlines, without tiles.
+        case list
     }
 
     private let items: [KXTrustItem]
@@ -107,7 +111,9 @@ public struct KXTrustStrip: View {
 
     public var body: some View {
         Group {
-            if dynamicTypeSize.isAccessibilitySize {
+            if arrangement == .list {
+                rows
+            } else if dynamicTypeSize.isAccessibilitySize {
                 list
             } else {
                 switch arrangement {
@@ -115,6 +121,8 @@ public struct KXTrustStrip: View {
                     grid
                 case .carousel:
                     carousel
+                case .list:
+                    rows
                 }
             }
         }
@@ -159,6 +167,15 @@ public struct KXTrustStrip: View {
         .contentMargins(.horizontal, KXSpacing.gutter, for: .scrollContent)
     }
 
+    private var rows: some View {
+        VStack(spacing: 0) {
+            ForEach(items) { item in
+                KXTrustTile(item: item, layout: .row)
+                KXDivider()
+            }
+        }
+    }
+
     private var list: some View {
         VStack(spacing: KXSpacing.s) {
             ForEach(items) { item in
@@ -178,6 +195,8 @@ private struct KXTrustTile: View {
         case stacked
         /// Icon leading the text (single-column fallback).
         case inline
+        /// Icon leading the text without a tile (``KXTrustStrip/Arrangement/list``).
+        case row
     }
 
     let item: KXTrustItem
@@ -225,7 +244,7 @@ private struct KXTrustTile: View {
                     }
                     label
                 }
-            case .inline:
+            case .inline, .row:
                 HStack(alignment: .center, spacing: KXSpacing.s) {
                     icon
                     label
@@ -236,10 +255,11 @@ private struct KXTrustTile: View {
                 }
             }
         }
-        .padding(KXSpacing.m)
+        .padding(.horizontal, layout == .row ? 0 : KXSpacing.m)
+        .padding(.vertical, layout == .row ? KXSpacing.s : KXSpacing.m)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .frame(minHeight: KXSpacing.minimumTapTarget)
-        .background(KXColor.surface, in: shape)
+        .background(layout == .row ? Color.clear : KXColor.surface, in: shape)
         .contentShape(shape)
     }
 

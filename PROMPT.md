@@ -135,7 +135,7 @@ Target outcome: an App Store–approved app that measurably increases repeat pur
 Tab bar (owner decision of 2026-10-25, in the style of fashion retail apps): icon-only bar **Shop · Suche · KARINEX wordmark (Start) · Warenkorb · Konto** with an ink line under the selected item and a badge on the cart; it replaces the system tab bar.
 
 ### 6.1 Start (Home)
-- Hero (flat light grey panel, bold headline, black CTA) fed by `app_home` metaobject or fallback content.
+- Hero like a campaign banner: the photo of the top product of the `bestseller` collection edge to edge on the photo tile, bold headline, black CTA; text from the `app_home` metaobject or fallback content.
 - Trust strip: "Lieferung per E-Mail in Minuten" · "Apple Pay, Kreditkarte, Klarna" · "100 Tage Geld-zurück*" (with the condition in a tappable footnote) · "Support Mo. bis So., 06:00 bis 23:00 Uhr".
 - "Blitzangebote" carousel: products from collection `blitzangebote` (create if missing) with a flip-digit countdown from `karinex.deal_ends_at`, compare-at price, savings badge in sale red.
 - Category showcase rows: Windows · Office · Server · Developer, each with 4–6 product cards and "Alle anzeigen".

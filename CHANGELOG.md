@@ -29,6 +29,10 @@ change.
   item count, Konto) with a short ink line under the selected item. It hides while the keyboard
   is up; tapping the selected item again shows the tab's root screen. UI tests find it as
   `tab.bar`.
+- **Start tab like a campaign page:** the hero shows the photo of the store's top bestseller
+  edge to edge on the photo tile (tap opens the product), then the bold headline and the black
+  "Zum Sortiment" button; the four brand facts are icon rows with hairlines
+  (`KXTrustStrip` arrangement `.list`) instead of tiles. The wordmark moved to the bottom bar.
 - Product card prices use the regular weight of the card title.
 - Dark-mode greys are exactly neutral (`#1C1C1C`, `#2C2C2C`, `#3A3A3A`).
 - Components: chevron accordion, step timeline with ink discs, section headers without the gold
