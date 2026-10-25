@@ -16,6 +16,10 @@ public enum KXMotion {
         case fade
     }
 
+    /// Maximum distance in points that decorative hero artwork drifts while the page scrolls
+    /// (`MotionToken.heroParallax`). Apply it only while Reduce Motion is off.
+    public static let heroParallax = CGFloat(MotionToken.heroParallax)
+
     /// Returns the animation for `curve`, or a short cross-fade when Reduce Motion is on.
     public static func animation(_ curve: Curve, reduceMotion: Bool) -> Animation {
         if reduceMotion {

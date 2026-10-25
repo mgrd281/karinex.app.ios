@@ -1,0 +1,401 @@
+{
+  "data": {
+    "predictiveSearch": {
+      "articles": [
+        {
+          "blog": {
+            "handle": "news"
+          },
+          "excerpt": "",
+          "handle": "windows-10-vs-windows-11-vergleich-2026",
+          "id": "gid://shopify/Article/643195339019",
+          "image": {
+            "altText": "Windows 10 vs Windows 11 Vergleich 2026 – Unterschiede und Funktionen",
+            "height": 832,
+            "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/articles/windows-10-vs-windows-11-2026-welches-ist-wirklich-besser_1_9ea23301-e087-4b03-a77a-cdc5fc1bcdf1.webp?v=1782979629",
+            "width": 1248
+          },
+          "onlineStoreUrl": "https://www.karinex.de/blogs/news/windows-10-vs-windows-11-vergleich-2026",
+          "publishedAt": "2026-03-13T17:56:52Z",
+          "title": "Windows 10 vs Windows 11 2026: Welches ist wirklich besser?"
+        },
+        {
+          "blog": {
+            "handle": "guides"
+          },
+          "excerpt": "Alte Windows-7- und Windows-8.1-Produktschlüssel sind kein verlässlicher Aktivierungsweg mehr für aktuelle Windows-Versionen. Dieser Leitfaden erklärt, was sich geändert hat, wie digitale Lizenzen funktionieren und welche offiziellen Schritte Microsoft bei Aktivierungsproblemen empfiehlt.",
+          "handle": "windows-11-aktivierung-windows-7-8-key",
+          "id": "gid://shopify/Article/644677861643",
+          "image": null,
+          "onlineStoreUrl": "https://www.karinex.de/blogs/guides/windows-11-aktivierung-windows-7-8-key",
+          "publishedAt": "2026-08-29T02:18:34Z",
+          "title": "Windows 11 mit Windows-7- oder 8.1-Key aktivieren? Was heute noch funktioniert"
+        },
+        {
+          "blog": {
+            "handle": "news"
+          },
+          "excerpt": "",
+          "handle": "windows-11-aktivieren-anleitung-key-kaufen-2026",
+          "id": "gid://shopify/Article/643297411339",
+          "image": {
+            "altText": "windows-11-aktivieren-anleitung-key.jpg",
+            "height": 832,
+            "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/articles/windows-11-aktivieren-anleitung-key-kaufen-2026_1_beb7b109-0f34-480f-9d6b-2661f9517ec2.webp?v=1782979632",
+            "width": 1248
+          },
+          "onlineStoreUrl": "https://www.karinex.de/blogs/news/windows-11-aktivieren-anleitung-key-kaufen-2026",
+          "publishedAt": "2026-03-22T15:12:30Z",
+          "title": "Windows 11 aktivieren – Anleitung + Key kaufen 2026"
+        },
+        {
+          "blog": {
+            "handle": "news"
+          },
+          "excerpt": "Zwischen Windows 11 Home und Pro liegen mehr als nur der Preis. Welche Version für Ihren Anwendungsfall die richtige ist, hängt an drei konkreten Funktionen.",
+          "handle": "windows-11-home-oder-pro-die-ehrliche-entscheidung",
+          "id": "gid://shopify/Article/643708977419",
+          "image": {
+            "altText": "Windows 11 Home oder Pro – die ehrliche Entscheidungshilfe bei KARINEX",
+            "height": 832,
+            "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/articles/karinex-hero-windows-11-home-oder-pro-die-ehrliche-entscheidung.jpg?v=1786876360",
+            "width": 1248
+          },
+          "onlineStoreUrl": "https://www.karinex.de/blogs/news/windows-11-home-oder-pro-die-ehrliche-entscheidung",
+          "publishedAt": "2026-04-30T20:02:23Z",
+          "title": "Windows 11 Home oder Pro? Die ehrliche Entscheidung"
+        },
+        {
+          "blog": {
+            "handle": "news"
+          },
+          "excerpt": "Windows 11 Pro oder Enterprise? Beide Versionen versprechen Produktivität und Sicherheit. Doch nur eine passt wirklich zu deinem Workflow und deinem Budget.",
+          "handle": "windows-11-pro-vs-enterprise-die-richtige-wahl",
+          "id": "gid://shopify/Article/643693347083",
+          "image": {
+            "altText": "Windows 11 Pro vs. Enterprise – die richtige Wahl treffen, bei KARINEX",
+            "height": 832,
+            "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/articles/karinex-hero-windows-11-pro-vs-enterprise.jpg?v=1787436327",
+            "width": 1248
+          },
+          "onlineStoreUrl": "https://www.karinex.de/blogs/news/windows-11-pro-vs-enterprise-die-richtige-wahl",
+          "publishedAt": "2026-04-29T12:38:53Z",
+          "title": "Windows 11 Pro vs. Enterprise – Die richtige Wahl"
+        },
+        {
+          "blog": {
+            "handle": "news"
+          },
+          "excerpt": "Microsoft gibt Nutzern endlich mehr Kontrolle: Updates lassen sich jetzt unbegrenzt pausieren, Setup-Schritte überspringen und Neustarts minimieren. Was das für Ihre Windows-11-Installation bedeutet.",
+          "handle": "windows-11-updates-pausieren-die-neuen-funktionen-2026",
+          "id": "gid://shopify/Article/643744727307",
+          "image": {
+            "altText": "Windows 11 Updates pausieren – Die neuen Funktionen 2026",
+            "height": 1024,
+            "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/articles/windows-11-updates-pausieren-neue-funktionen-2026_1_8d043bf8-efce-44cd-9af9-de632b297364.webp?v=1782979646",
+            "width": 1536
+          },
+          "onlineStoreUrl": "https://www.karinex.de/blogs/news/windows-11-updates-pausieren-die-neuen-funktionen-2026",
+          "publishedAt": "2026-05-04T16:45:24Z",
+          "title": "Windows 11 Updates pausieren – Die neuen Funktionen 2026"
+        }
+      ],
+      "collections": [
+        {
+          "description": "Microsoft Windows als Original-Lizenz kaufen Windows 11, Windows 10, Windows Server und ältere Windows-Versionen – bei Karinex erhalten Sie das Betriebssystem von Microsoft als echte Original-Lizenz für Privatanwender, Selbstständige und Unternehmen. Einmal kaufen, dauerhaft nutzen: Eine Windows-Dauerlizenz verursacht keine monatlichen Kosten und bleibt an Sie beziehungsweise Ihr Gerät gebunden. Sie erhalten Ihren Produktschlüssel digital per E-Mail oder – je nach gewähltem Produkt – als physische Installations-DVD per Post, immer inklusive Schritt-für-Schritt-Installationsanleitung und einer ordentlichen Rechnung mit ausgewiesener Mehrwertsteuer. Lieferung – digital in wenigen Minuten per E-Mail oder als DVD per Post Aktivierung – dauerhaft online über die Microsoft-Server Lizenztyp – Dauerlizenz ohne Abo und ohne Folgekosten Rechnung – mit ausgewiesener MwSt., für Selbstständige absetzbar Garantie – gesetzliches Widerrufsrecht (14 Tage) bei Karinex Auf dieser Seite finden Sie alle aktuellen Windows-Betriebssysteme im Überblick – dazu einen ausführlichen Ratgeber, der Ihnen bei der Auswahl der richtigen Version und Edition hilft, die wichtigsten Funktionen erklärt und häufige Fragen rund um Download, Installation, Update und Aktivierung beantwortet. Wählen Sie oben Ihr passendes Produkt aus, oder lesen Sie zunächst weiter, wenn Sie unsicher sind, welche Windows-Version für Sie die richtige ist.",
+          "handle": "windows",
+          "id": "gid://shopify/Collection/645089231115",
+          "image": null,
+          "title": "Windows"
+        },
+        {
+          "description": "Windows 8 bei Karinex Microsoft Windows 8 & 8.1 – die Brücke zwischen 7 und 10 Windows 8 und Windows 8.1 als Original-Dauerlizenz für PCs, die nicht mehr auf Windows 11 aufrüstbar sind, aber moderner laufen sollen als unter Windows 7. Touch-Bedienung, schneller Bootvorgang und der Microsoft Store auf bewährter Hardware. Bei Karinex erhalten Sie Ihren Produktschlüssel innerhalb weniger Minuten per E-Mail. Inklusive Installationsanleitung und Rechnung mit ausgewiesener Mehrwertsteuer. Hinweis: Der Microsoft-Support für Windows 8.1 endete im Januar 2023 – die Lizenzen bleiben aktivierbar. Lieferung Digital per E-Mail Aktivierung Online über Microsoft Lizenztyp Dauerlizenz Garantie gesetzliches Widerrufsrecht (14 Tage) Vorteile von Windows 8 / 8.1 Geschwindigkeit Deutlich schnellerer Boot- und Login-Vorgang im Vergleich zu Windows 7 Touch-Bedienung Vollständige Touch-Unterstützung – ideal für Convertibles, Tablets und Hybrid-Notebooks Microsoft Store Erste Windows-Version mit integriertem App-Store für moderne Anwendungen Geringer Ressourcenbedarf Läuft auch auf Hardware, die für Windows 10/11 zu schwach ist 8.1-Update kostenfrei Windows 8 lässt sich kostenlos auf 8.1 aktualisieren – inklusive Startmenü-Button Editionen im Überblick Home / Core Für Privatanwender – alle wesentlichen Funktionen, Microsoft Store, Modern UI Pro Für Selbstständige – BitLocker, Hyper-V, Remote Desktop und Domain-Anbindung Enterprise Für Unternehmen mit erweiterten Verwaltungs- und Sicherheitsfunktionen Hardware-Anforderungen Prozessor 1 GHz oder schneller mit PAE-, NX- und SSE2-Unterstützung Arbeitsspeicher 1 GB RAM (32-Bit) bzw. 2 GB RAM (64-Bit) Speicherplatz 16 GB (32-Bit) bzw. 20 GB (64-Bit) freier Festplattenspeicher Grafik Microsoft DirectX 9 mit WDDM-Treiber Warum Windows 8 bei Karinex kaufen? 01 Sofortige digitale Lieferung – Produktschlüssel innerhalb weniger Minuten per E-Mail 02 Deutschsprachiger Support – Persönliche Hilfe bei Installation und Aktivierung 03 Original Microsoft-Schlüssel – Geprüfte Dauerlizenz, dauerhaft aktivierbar 04 Rechnung mit MwSt. – Vollständig steuerlich absetzbar 05 gesetzliches Widerrufsrecht (14 Tage) – es erlischt bei digitalen Lizenzschlüsseln mit der Zustellung des Schlüssels (§ 356 Abs. 5 BGB) Wählen Sie unten Ihre passende Windows 8 Edition. Unser deutschsprachiger Support hilft Ihnen gerne bei Fragen zur Installation oder zum 8.1-Upgrade.",
+          "handle": "windows-8",
+          "id": "gid://shopify/Collection/645226856715",
+          "image": null,
+          "title": "Windows 8"
+        },
+        {
+          "description": "Windows 7 bei Karinex Microsoft Windows 7 – das bewährte Betriebssystem Windows 7 als Original-OEM-Lizenz für ältere PCs, Industrie-Hardware und Software-Anwendungen, die ausschließlich auf Windows 7 lauffähig sind. Bewährte Stabilität, hohe Kompatibilität und vertraute Bedienung – einmal kaufen, dauerhaft nutzen. Bei Karinex erhalten Sie Ihren Produktschlüssel innerhalb weniger Minuten per E-Mail. Inklusive Installationsanleitung und Rechnung mit ausgewiesener Mehrwertsteuer. Hinweis: Der reguläre Microsoft-Support für Windows 7 endete im Januar 2020 – die Lizenzen bleiben jedoch dauerhaft aktivierbar. Lieferung Digital per E-Mail Aktivierung Online über Microsoft Lizenztyp OEM-Dauerlizenz Garantie gesetzliches Widerrufsrecht (14 Tage) Wofür Windows 7 sich eignet Trotz seines Alters bleibt Windows 7 in spezifischen Szenarien unverzichtbar: Legacy-Software Programme, die nur unter Windows 7 lauffähig sind – z. B. ältere Branchen- und CAD-Software Industrie-PCs Steuerungssysteme, Messgeräte und Produktionsanlagen mit zertifizierter Windows-7-Umgebung Ältere Hardware PCs mit geringen Ressourcen, auf denen Windows 10/11 nicht ausreichend Leistung bringt Vertraute Bedienung Klassisches Startmenü, einfache Navigation – ideal für Anwender, die auf Bewährtes setzen Reaktivierung Frische Installation nach Festplattenwechsel oder Neuaufsetzung auf bestehender Hardware Editionen im Überblick Home Premium Für Privatanwender – Media Center, Aero-Glass-Oberfläche, Heimnetzgruppen Professional Für Selbstständige und kleine Unternehmen – Domain-Anbindung, Windows-XP-Modus Ultimate Die Vollausstattung – BitLocker-Verschlüsselung, 35 Sprachen, alle Pro-Features inklusive Hardware-Anforderungen Prozessor 1 GHz oder schneller (32-Bit oder 64-Bit) Arbeitsspeicher 1 GB RAM (32-Bit) bzw. 2 GB RAM (64-Bit) Speicherplatz 16 GB (32-Bit) bzw. 20 GB (64-Bit) freier Festplattenspeicher Grafik DirectX 9-fähige Grafikkarte mit WDDM 1.0-Treiber Warum Windows 7 bei Karinex kaufen? 01 Sofortige digitale Lieferung – Produktschlüssel innerhalb weniger Minuten per E-Mail 02 Deutschsprachiger Support – Persönliche Hilfe bei Installation und Aktivierung 03 Original Microsoft-Schlüssel – Geprüfte OEM-Lizenzen, dauerhaft aktivierbar 04 Rechnung mit MwSt. – Vollständig steuerlich absetzbar 05 gesetzliches Widerrufsrecht (14 Tage) – es erlischt bei digitalen Lizenzschlüsseln mit der Zustellung des Schlüssels (§ 356 Abs. 5 BGB) Wählen Sie unten Ihre passende Windows 7 Edition. Unser deutschsprachiger Support hilft Ihnen bei Fragen zur Edition oder zur Installation auf älterer Hardware.",
+          "handle": "windows-7",
+          "id": "gid://shopify/Collection/645226823947",
+          "image": null,
+          "title": "Windows 7"
+        },
+        {
+          "description": "Windows 10 bei Karinex Microsoft Windows 10 – die bewährte Generation Windows 10 als Original-Dauerlizenz für Privatanwender, Selbstständige, Unternehmen und Bildungseinrichtungen. Die bewährte Wahl für PCs, die die strikten Hardware-Anforderungen von Windows 11 nicht erfüllen – oder für Anwender, die bei der gewohnten Oberfläche bleiben möchten. Bei Karinex erhalten Sie Ihren Produktschlüssel digital per E-Mail – innerhalb weniger Minuten nach Zahlungseingang. Inklusive Download-Link, Installationsanleitung und Rechnung mit ausgewiesener Mehrwertsteuer. Lieferung Sofort per E-Mail Aktivierung Online über Microsoft Lizenztyp Dauerlizenz Garantie gesetzliches Widerrufsrecht (14 Tage) Wichtig: Support-Status Microsoft hat den regulären Support für Windows 10 am 14. Oktober 2025 beendet. Über das Extended Security Updates (ESU)-Programm sind weiterhin Sicherheitsupdates verfügbar – für Privatanwender bis Oktober 2026, für Unternehmen bis Oktober 2028. Für neue Systeme empfehlen wir Windows 11. Wann ist Windows 10 die richtige Wahl? Hardware Wenn Ihr PC die Mindestanforderungen von Windows 11 (TPM 2.0, Secure Boot) nicht erfüllt Bildung Windows 10 Education bietet spezielle Funktionen für Schulen und Universitäten Kompatibilität Für spezifische Anwendungen oder Treiber, die noch nicht Windows-11-zertifiziert sind Vertrautheit Für Anwender, die das klassische Startmenü und die gewohnte Oberfläche bevorzugen Editionen im Überblick Windows 10 ist in mehreren Editionen verfügbar: Home Für Privatanwender – alle wesentlichen Funktionen für den täglichen Gebrauch Pro Für Selbstständige und Power-User – mit BitLocker, Hyper-V und Domain-Anbindung Education Für Schulen, Universitäten und Bildungseinrichtungen – mit erweiterten Verwaltungsfunktionen Enterprise Für große Unternehmen – mit AppLocker, DirectAccess und erweiterter Sicherheit Warum Windows 10 bei Karinex kaufen? 01 Sofortige digitale Lieferung – Produktschlüssel innerhalb weniger Minuten per E-Mail 02 Deutschsprachiger Support – Persönliche Hilfe bei Installation und Aktivierung 03 Sichere Zahlung – SSL-verschlüsselt mit PayPal, Klarna, Apple Pay und mehr 04 Rechnung mit MwSt. – Vollständig steuerlich absetzbar 05 gesetzliches Widerrufsrecht (14 Tage) – es erlischt bei digitalen Lizenzschlüsseln mit der Zustellung des Schlüssels (§ 356 Abs. 5 BGB) Wählen Sie unten Ihre passende Windows 10 Edition. Bei Fragen zu Support, Kompatibilität oder Upgrade auf Windows 11 steht Ihnen unser deutschsprachiger Support per E-Mail jederzeit zur Verfügung.",
+          "handle": "windows-10",
+          "id": "gid://shopify/Collection/645180031243",
+          "image": null,
+          "title": "Windows 10"
+        },
+        {
+          "description": "Windows 11 bei Karinex Microsoft Windows 11 – das aktuelle Betriebssystem Windows 11 als Original-Dauerlizenz für Privatanwender, Selbstständige und Unternehmen. Modernes Design, verbesserte Sicherheit, optimierte Performance und volle Microsoft-Unterstützung. Einmal kaufen, dauerhaft nutzen – ohne Abonnement. Bei Karinex erhalten Sie Ihren Produktschlüssel digital per E-Mail oder als physische OEM-Lizenz mit DVD per Post – je nach gewähltem Produkt. Inklusive Installationsanleitung und Rechnung mit ausgewiesener Mehrwertsteuer. Lieferung Digital oder per Post Aktivierung Online über Microsoft Lizenztyp Dauerlizenz Garantie gesetzliches Widerrufsrecht (14 Tage) Vorteile von Windows 11 Windows 11 ist die modernste Windows-Generation – mit deutlichen Verbesserungen gegenüber Windows 10: Design Modernes Interface mit zentriertem Startmenü, abgerundeten Ecken und neuer Taskleiste Sicherheit TPM 2.0, Secure Boot und virtualisierungsbasierte Sicherheit standardmäßig aktiviert Performance Optimierte Speichernutzung und schnellere Start- und Reaktionszeiten Multitasking Snap Layouts und virtuelle Desktops für effizientes Arbeiten mit mehreren Apps Support Vollständige Microsoft-Unterstützung mit regelmäßigen Sicherheits- und Funktionsupdates Editionen im Überblick Windows 11 ist in mehreren Editionen verfügbar – die Wahl hängt von Ihrem Einsatzzweck ab: Home Für Privatanwender – alle wesentlichen Funktionen für den täglichen Gebrauch Pro Für Selbstständige und Power-User – mit BitLocker, Hyper-V und Domain-Anbindung Pro for Workstations Für High-End-Workstations mit ReFS, SMB Direct und Persistent Memory – ideal für CAD, 3D-Rendering, Machine Learning Enterprise Für große Unternehmen mit erweiterten Sicherheits- und Verwaltungsfunktionen Hardware-Anforderungen Windows 11 stellt höhere Hardware-Anforderungen als Windows 10. Prüfen Sie vor dem Kauf, ob Ihr PC kompatibel ist: Prozessor 1 GHz oder schneller mit zwei oder mehr Kernen auf einem kompatiblen 64-Bit-Prozessor Arbeitsspeicher Mindestens 4 GB RAM (8 GB empfohlen) Speicherplatz 64 GB oder mehr freier Speicherplatz Sicherheit TPM 2.0 (Trusted Platform Module) und UEFI mit Secure Boot Warum Windows 11 bei Karinex kaufen? 01 Sofortige digitale Lieferung – Produktschlüssel innerhalb weniger Minuten per E-Mail 02 Deutschsprachiger Support – Persönliche Hilfe bei Installation und Aktivierung 03 Sichere Zahlung – SSL-verschlüsselt mit PayPal, Klarna, Apple Pay und mehr 04 Rechnung mit MwSt. – Vollständig steuerlich absetzbar 05 gesetzliches Widerrufsrecht (14 Tage) – es erlischt bei digitalen Lizenzschlüsseln mit der Zustellung des Schlüssels (§ 356 Abs. 5 BGB) Wählen Sie unten Ihre passende Windows 11 Edition. Bei Fragen zur Hardware-Kompatibilität oder zur richtigen Edition steht Ihnen unser deutschsprachiger Support per E-Mail jederzeit zur Verfügung.",
+          "handle": "windows-11",
+          "id": "gid://shopify/Collection/645179998475",
+          "image": null,
+          "title": "Windows 11"
+        },
+        {
+          "description": "Windows Server bei Karinex Windows Server – das Betriebssystem für Unternehmen Windows Server 2025, 2022 und 2019 als Original-Lizenz für Unternehmen, IT-Abteilungen und Systemhauser. Standard- und Datacenter-Editionen für Virtualisierung, Active Directory, Dateifreigaben und Netzwerkdienste. Einmal kaufen, dauerhaft nutzen. Bei Karinex erhalten Sie Ihren Produktschlüssel digital per E-Mail – innerhalb weniger Minuten nach Zahlungseingang. Inklusive Download-Link, Installationsanleitung und Rechnung mit ausgewiesener Mehrwertsteuer. Lieferung Sofort per E-Mail Aktivierung Online über Microsoft Lizenztyp Dauerlizenz Garantie gesetzliches Widerrufsrecht (14 Tage) Verfügbare Versionen Wir führen aktuelle und bewährte Windows-Server-Versionen – passend für Migration, Neuaufbau und Bestandssysteme: Windows Server 2025 Aktuelle Version – verbesserte Sicherheit, Hotpatching und volle Microsoft-Unterstützung Windows Server 2022 Bewährte Version mit erweiterten Cloud- und Sicherheitsfunktionen – langfristig unterstützt Windows Server 2019 Stabile Version für Bestandssysteme und Anwendungen mit spezifischen Kompatibilitätsanforderungen Ältere Versionen Windows Server 2016, 2012 R2 und 2008 R2 für Migration und Legacy-Anwendungen Editionen im Überblick Microsoft bietet zwei Haupt-Editionen – die Wahl hängt vom Virtualisierungsbedarf ab: Standard Für physische oder gering virtualisierte Umgebungen – inklusive zwei VM-Lizenzen Datacenter Für stark virtualisierte Rechenzentren – unbegrenzte VM-Lizenzen pro lizenziertem Host Essentials Für kleine Unternehmen bis 25 Nutzer – vereinfachte Lizenzierung ohne CALs Typische Einsatzgebiete Windows Server bildet die Grundlage für zentrale IT-Dienste in Unternehmen: Active Directory Zentrale Benutzerverwaltung, Authentifizierung und Gruppenrichtlinien Hyper-V Virtualisierungsplattform für virtuelle Maschinen und Container Dateifreigaben Zentrale Datei- und Druckdienste mit Berechtigungssteuerung Remote Desktop Terminalserver-Dienste für zentrale Anwendungsbereitstellung Hinweis zu CALs Für den Zugriff auf Windows Server (außer Essentials) benötigen Sie zusätzlich Client Access Licenses (CALs) – entweder pro Benutzer oder pro Gerät. Bei Fragen zur passenden Lizenzierung beraten wir Sie gerne per E-Mail. Warum Windows Server bei Karinex kaufen? 01 Sofortige digitale Lieferung – Produktschlüssel innerhalb weniger Minuten per E-Mail 02 Deutschsprachiger Support – Persönliche Hilfe bei Installation, Aktivierung und Lizenzierung 03 Sichere Zahlung – SSL-verschlüsselt mit PayPal, Klarna, Apple Pay und mehr 04 Rechnung mit MwSt. – Vollständig steuerlich absetzbar für Unternehmen 05 gesetzliches Widerrufsrecht (14 Tage) – es erlischt bei digitalen Lizenzschlüsseln mit der Zustellung des Schlüssels (§ 356 Abs. 5 BGB) Wählen Sie unten Ihre passende Windows-Server-Version. Bei Fragen zu Edition, Anzahl der CALs oder Lizenzmodell steht Ihnen unser deutschsprachiger Support per E-Mail jederzeit zur Verfügung.",
+          "handle": "windows-server",
+          "id": "gid://shopify/Collection/645154963723",
+          "image": null,
+          "title": "Windows Server"
+        }
+      ],
+      "products": [
+        {
+          "availableForSale": true,
+          "compareAtPriceRange": {
+            "maxVariantPrice": {
+              "amount": "39.99",
+              "currencyCode": "EUR"
+            },
+            "minVariantPrice": {
+              "amount": "39.99",
+              "currencyCode": "EUR"
+            }
+          },
+          "featuredImage": {
+            "altText": "Windows 11 Pro günstig kaufen – Dauerlizenz für 1 PC mit Sofort-Download per E-Mail von Karinex",
+            "height": 2048,
+            "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/Windows-11-Pro-Key-Download-kaufen..webp?v=1787442708",
+            "width": 2048
+          },
+          "handle": "windows-11-pro-key-kaufen-download",
+          "id": "gid://shopify/Product/10650102169867",
+          "priceRange": {
+            "maxVariantPrice": {
+              "amount": "13.9",
+              "currencyCode": "EUR"
+            },
+            "minVariantPrice": {
+              "amount": "13.9",
+              "currencyCode": "EUR"
+            }
+          },
+          "title": "Windows 11 Pro kaufen – Dauerlizenz 1 PC, Download",
+          "variants": {
+            "nodes": [
+              {
+                "requiresShipping": false
+              }
+            ]
+          },
+          "vendor": "Microsoft"
+        },
+        {
+          "availableForSale": true,
+          "compareAtPriceRange": {
+            "maxVariantPrice": {
+              "amount": "119.9",
+              "currencyCode": "EUR"
+            },
+            "minVariantPrice": {
+              "amount": "119.9",
+              "currencyCode": "EUR"
+            }
+          },
+          "featuredImage": {
+            "altText": "Offizielle Windows 11 Enterprise Verpackungsdarstellung mit blauem Windows-11-Design",
+            "height": 2048,
+            "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/windows-11-enterprise-lizenz-pc-download.webp?v=1787436571",
+            "width": 2048
+          },
+          "handle": "windows-11-enterprise",
+          "id": "gid://shopify/Product/10822318981387",
+          "priceRange": {
+            "maxVariantPrice": {
+              "amount": "28.9",
+              "currencyCode": "EUR"
+            },
+            "minVariantPrice": {
+              "amount": "28.9",
+              "currencyCode": "EUR"
+            }
+          },
+          "title": "Windows 11 Enterprise Key kaufen – Original Lizenz + Download für 1 PC",
+          "variants": {
+            "nodes": [
+              {
+                "requiresShipping": false
+              }
+            ]
+          },
+          "vendor": "Microsoft"
+        },
+        {
+          "availableForSale": true,
+          "compareAtPriceRange": {
+            "maxVariantPrice": {
+              "amount": "79.9",
+              "currencyCode": "EUR"
+            },
+            "minVariantPrice": {
+              "amount": "79.9",
+              "currencyCode": "EUR"
+            }
+          },
+          "featuredImage": {
+            "altText": "Windows 11 Home günstig kaufen – Dauerlizenz für 1 PC mit Sofort-Download per E-Mail von Karinex",
+            "height": 2048,
+            "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/windows-11-home-download-produktkey-kein-abo.webp?v=1787443067",
+            "width": 2048
+          },
+          "handle": "windows-11-home-key",
+          "id": "gid://shopify/Product/10662950863115",
+          "priceRange": {
+            "maxVariantPrice": {
+              "amount": "13.9",
+              "currencyCode": "EUR"
+            },
+            "minVariantPrice": {
+              "amount": "13.9",
+              "currencyCode": "EUR"
+            }
+          },
+          "title": "Windows 11 Home Key kaufen – Original Lizenz + Sofort-Download für 1 PC",
+          "variants": {
+            "nodes": [
+              {
+                "requiresShipping": false
+              }
+            ]
+          },
+          "vendor": "Microsoft"
+        },
+        {
+          "availableForSale": true,
+          "compareAtPriceRange": {
+            "maxVariantPrice": {
+              "amount": "39.9",
+              "currencyCode": "EUR"
+            },
+            "minVariantPrice": {
+              "amount": "39.9",
+              "currencyCode": "EUR"
+            }
+          },
+          "featuredImage": {
+            "altText": "Produktverpackung von Microsoft Windows 10 Home OEM als 32- und 64-Bit Download-Lizenz – offizielles Betriebssystem für PCs mit modernem Windows 10 Desktop",
+            "height": 2048,
+            "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-windows-10-home-oem-32-64-bit-download-lizenz-betriebssystem.avif?v=1787444157",
+            "width": 2048
+          },
+          "handle": "windows-10-home-oem",
+          "id": "gid://shopify/Product/10822322127115",
+          "priceRange": {
+            "maxVariantPrice": {
+              "amount": "9.9",
+              "currencyCode": "EUR"
+            },
+            "minVariantPrice": {
+              "amount": "9.9",
+              "currencyCode": "EUR"
+            }
+          },
+          "title": "Windows 10 Home OEM",
+          "variants": {
+            "nodes": [
+              {
+                "requiresShipping": false
+              }
+            ]
+          },
+          "vendor": "Microsoft"
+        },
+        {
+          "availableForSale": true,
+          "compareAtPriceRange": {
+            "maxVariantPrice": {
+              "amount": "79.9",
+              "currencyCode": "EUR"
+            },
+            "minVariantPrice": {
+              "amount": "79.9",
+              "currencyCode": "EUR"
+            }
+          },
+          "featuredImage": {
+            "altText": "Windows 11 Pro 64 Bit USB-Stick mit Produktschlüssel von KARINEX",
+            "height": 2048,
+            "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/KeinTitel_2048x2048px_50.webp?v=1787443372",
+            "width": 2048
+          },
+          "handle": "windows-11-pro-64-bit-usb",
+          "id": "gid://shopify/Product/10959700853003",
+          "priceRange": {
+            "maxVariantPrice": {
+              "amount": "29.99",
+              "currencyCode": "EUR"
+            },
+            "minVariantPrice": {
+              "amount": "29.99",
+              "currencyCode": "EUR"
+            }
+          },
+          "title": "Windows 11 Pro USB-Stick kaufen – Dauerlizenz + Key sofort per E-Mail",
+          "variants": {
+            "nodes": [
+              {
+                "requiresShipping": true
+              }
+            ]
+          },
+          "vendor": "Microsoft"
+        },
+        {
+          "availableForSale": true,
+          "compareAtPriceRange": {
+            "maxVariantPrice": {
+              "amount": "69.99",
+              "currencyCode": "EUR"
+            },
+            "minVariantPrice": {
+              "amount": "69.99",
+              "currencyCode": "EUR"
+            }
+          },
+          "featuredImage": {
+            "altText": "Microsoft Office 2024 Home für Windows ",
+            "height": 2048,
+            "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-office-2024-home-windows-aktiv.avif?v=1787444041",
+            "width": 2048
+          },
+          "handle": "office-2024-home-windows",
+          "id": "gid://shopify/Product/10794541547787",
+          "priceRange": {
+            "maxVariantPrice": {
+              "amount": "18.9",
+              "currencyCode": "EUR"
+            },
+            "minVariantPrice": {
+              "amount": "18.9",
+              "currencyCode": "EUR"
+            }
+          },
+          "title": "Microsoft Office 2024 Home für Windows – Original Lizenz | E-Mail Versand",
+          "variants": {
+            "nodes": [
+              {
+                "requiresShipping": false
+              }
+            ]
+          },
+          "vendor": "Microsoft"
+        }
+      ],
+      "queries": []
+    }
+  },
+  "extensions": {
+    "context": {
+      "country": "DE",
+      "language": "DE"
+    },
+    "cost": {
+      "requestedQueryCost": 17
+    }
+  }
+}

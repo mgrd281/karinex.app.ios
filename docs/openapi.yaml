@@ -1,0 +1,383 @@
+openapi: 3.1.0
+info:
+  title: KARINEX app BFF
+  version: 1.0.0
+  description: >
+    Backend for frontend of the KARINEX iOS app. See BFF_CONTRACT.md for behavior,
+    authentication and logging rules. Shopify stays the source of product, price and
+    order truth; this service only adds license keys, invoices, delivery states,
+    account deletion, push devices and the support configuration.
+servers:
+  - url: https://{host}
+    variables:
+      host:
+        default: localhost:8787
+        description: The value of KXBackendHost.
+security:
+  - customerAccountToken: []
+paths:
+  /v1/app/config:
+    get:
+      operationId: getAppConfig
+      summary: Support details and feature switches
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/IfNoneMatch'
+        - $ref: '#/components/parameters/AppVersion'
+      responses:
+        '200':
+          description: The configuration.
+          headers:
+            ETag:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppConfig'
+        '304':
+          description: Unchanged since the given ETag.
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        default:
+          $ref: '#/components/responses/Error'
+  /v1/app/orders:
+    get:
+      operationId: listOrders
+      summary: The customer's orders with delivery states
+      parameters:
+        - $ref: '#/components/parameters/AppVersion'
+      responses:
+        '200':
+          description: Newest first, at most 100.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [orders]
+                properties:
+                  orders:
+                    type: array
+                    maxItems: 100
+                    items:
+                      $ref: '#/components/schemas/OrderStatus'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        default:
+          $ref: '#/components/responses/Error'
+  /v1/app/orders/{orderId}/licenses:
+    get:
+      operationId: getOrderLicenses
+      summary: The license keys of one order
+      parameters:
+        - $ref: '#/components/parameters/OrderId'
+        - $ref: '#/components/parameters/AppVersion'
+      responses:
+        '200':
+          description: The keys.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [licenses]
+                properties:
+                  licenses:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/License'
+        '202':
+          description: The keys are not delivered yet.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        default:
+          $ref: '#/components/responses/Error'
+  /v1/app/orders/{orderId}/invoice:
+    get:
+      operationId: getOrderInvoice
+      summary: A short-lived signed invoice PDF link
+      parameters:
+        - $ref: '#/components/parameters/OrderId'
+        - $ref: '#/components/parameters/AppVersion'
+      responses:
+        '200':
+          description: The link.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Error'
+  /v1/app/account/delete:
+    post:
+      operationId: requestAccountDeletion
+      summary: Starts the GDPR erasure workflow
+      parameters:
+        - $ref: '#/components/parameters/AppVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [confirm]
+              properties:
+                confirm:
+                  const: true
+      responses:
+        '202':
+          description: Accepted. Repeated requests return the same requestId.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Error'
+  /v1/app/devices:
+    post:
+      operationId: registerDevice
+      summary: Registers an APNs token after consent
+      parameters:
+        - $ref: '#/components/parameters/AppVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceRegistration'
+      responses:
+        '201':
+          description: Registered.
+        '204':
+          description: Updated.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Error'
+  /v1/app/devices/{apnsToken}:
+    delete:
+      operationId: unregisterDevice
+      summary: Removes an APNs token
+      parameters:
+        - name: apnsToken
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F]+$'
+      responses:
+        '204':
+          description: Removed.
+        '404':
+          description: Unknown token; the app treats it as removed.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Error'
+components:
+  securitySchemes:
+    customerAccountToken:
+      type: http
+      scheme: bearer
+      description: The customer's Shopify Customer Account API access token.
+  parameters:
+    OrderId:
+      name: orderId
+      in: path
+      required: true
+      description: Numeric Shopify order ID.
+      schema:
+        type: string
+        pattern: '^[0-9]{1,20}$'
+    AppVersion:
+      name: X-KX-App-Version
+      in: header
+      required: false
+      schema:
+        type: string
+        examples: ['0.2.0']
+    IfNoneMatch:
+      name: If-None-Match
+      in: header
+      required: false
+      schema:
+        type: string
+  responses:
+    Error:
+      description: Any other error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Token missing, expired or rejected by Shopify.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: The order belongs to another customer.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Nothing to return yet.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Too many requests.
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+            minimum: 0
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      required: [code, message, requestId]
+      properties:
+        code:
+          type: string
+          pattern: '^[a-z0-9_]+$'
+        message:
+          type: string
+          description: English text for logs; never shown in the app.
+        requestId:
+          type: string
+    SupportHours:
+      type: object
+      required: [opensAt, closesAt]
+      properties:
+        timeZone:
+          type: string
+          default: Europe/Berlin
+        weekdays:
+          type: array
+          items:
+            type: integer
+            minimum: 1
+            maximum: 7
+          default: [1, 2, 3, 4, 5, 6, 7]
+        opensAt:
+          type: string
+          pattern: '^[0-2][0-9]:[0-5][0-9]$'
+          examples: ['06:00']
+        closesAt:
+          type: string
+          pattern: '^[0-2][0-9]:[0-5][0-9]$'
+          examples: ['23:00']
+    AppConfig:
+      type: object
+      properties:
+        supportHours:
+          $ref: '#/components/schemas/SupportHours'
+        whatsappNumber:
+          type: [string, 'null']
+          pattern: '^[0-9]{6,15}$'
+          description: Only used to build a https://wa.me/ link.
+        liveChatUrl:
+          type: [string, 'null']
+          format: uri
+          pattern: '^https://'
+        supportEmail:
+          type: string
+          format: email
+          default: kundenservice@karinex.de
+        featureFlags:
+          type: object
+          additionalProperties:
+            type: boolean
+        minSupportedAppVersion:
+          type: [string, 'null']
+    OrderStatus:
+      type: object
+      required: [orderId, deliveryStatus]
+      properties:
+        orderId:
+          type: string
+          pattern: '^[0-9]{1,20}$'
+        name:
+          type: [string, 'null']
+          examples: ['#1042']
+        deliveryStatus:
+          type: string
+          enum: [pending, delivered, shipped]
+        hasLicenses:
+          type: boolean
+          default: false
+        hasInvoice:
+          type: boolean
+          default: true
+    License:
+      type: object
+      required: [lineItemId, productTitle, key]
+      properties:
+        lineItemId:
+          type: string
+        productTitle:
+          type: string
+        sku:
+          type: [string, 'null']
+        key:
+          type: string
+        deliveredAt:
+          type: [string, 'null']
+          format: date-time
+        activationGuideUrl:
+          type: [string, 'null']
+          format: uri
+          pattern: '^https://'
+    Invoice:
+      type: object
+      required: [url]
+      properties:
+        url:
+          type: string
+          format: uri
+          pattern: '^https://'
+        expiresAt:
+          type: [string, 'null']
+          format: date-time
+    DeviceRegistration:
+      type: object
+      required: [apnsToken, locale, country, consent]
+      properties:
+        apnsToken:
+          type: string
+        locale:
+          type: string
+          examples: [de, pt-PT]
+        country:
+          type: string
+          pattern: '^[A-Z]{2}$'
+        consent:
+          type: object
+          required: [orderUpdates, deals]
+          properties:
+            orderUpdates:
+              type: boolean
+            deals:
+              type: boolean

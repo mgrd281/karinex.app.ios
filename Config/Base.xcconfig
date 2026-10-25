@@ -11,9 +11,12 @@ CURRENT_PROJECT_VERSION = 1
 
 // MARK: Shopify (verified 2026-09-26, see docs/API_VERSIONS.md)
 KX_SHOP_DOMAIN = 45dv93-bk.myshopify.com
+// Numeric shop ID (not secret). The Customer Account API login redirects to
+// shop.<KX_SHOP_ID>.app://callback, the custom scheme Shopify requires for mobile clients.
+KX_SHOP_ID = 91753283851
 KX_STORE_WEB_DOMAIN = www.karinex.de
-KX_STOREFRONT_API_VERSION = 2026-07
-KX_CUSTOMER_ACCOUNT_API_VERSION = 2026-07
+KX_STOREFRONT_API_VERSION = 2026-10
+KX_CUSTOMER_ACCOUNT_API_VERSION = 2026-10
 
 // MARK: Secret defaults (overridden by Secrets.xcconfig)
 // An empty Storefront token runs the app in Shopify's tokenless mode: catalog, search and
@@ -21,6 +24,9 @@ KX_CUSTOMER_ACCOUNT_API_VERSION = 2026-07
 KX_STOREFRONT_ACCESS_TOKEN =
 KX_CUSTOMER_ACCOUNT_CLIENT_ID =
 KX_APPLE_TEAM_ID =
+// Host name of the KARINEX backend (BFF) on Railway, without scheme. Empty until the backend
+// exists: the license vault then shows the e-mail delivery notice instead of keys.
+KX_BACKEND_HOST =
 
 // MARK: Toolchain
 IPHONEOS_DEPLOYMENT_TARGET = 17.0
@@ -38,5 +44,15 @@ GCC_TREAT_WARNINGS_AS_ERRORS = NO
 // MARK: Signing
 CODE_SIGN_STYLE = Automatic
 DEVELOPMENT_TEAM = $(KX_APPLE_TEAM_ID)
+
+// MARK: Entitlements
+// Universal Links (applinks:www.karinex.de, applinks:karinex.de) need the Associated Domains
+// entitlement in App/KARINEX.entitlements, and that entitlement needs a signing team. Without a
+// team (simulator builds, CI) the app is built without entitlements, so the variable is empty
+// here. Set KX_CODE_SIGN_ENTITLEMENTS = App/KARINEX.entitlements in Config/Secrets.xcconfig once
+// KX_APPLE_TEAM_ID is set. The app target sets CODE_SIGN_ENTITLEMENTS to this variable
+// (project.yml), so test bundles never carry the entitlement. The custom URL scheme works
+// either way.
+KX_CODE_SIGN_ENTITLEMENTS =
 
 #include? "Secrets.xcconfig"

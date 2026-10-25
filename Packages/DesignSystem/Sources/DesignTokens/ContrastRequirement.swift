@@ -50,6 +50,8 @@ public struct ContrastRequirement: Hashable, Sendable {
         requirements += [
             .init(foreground: .textOnBrand, background: .brand, kind: .text),
             .init(foreground: .textOnBrand, background: .brandPressed, kind: .text),
+            .init(foreground: .textOnAccent, background: .accent, kind: .text),
+            .init(foreground: .textOnAccent, background: .accentDeep, kind: .text),
             .init(foreground: .textOnUrgency, background: .urgency, kind: .text),
             .init(foreground: .keyCardText, background: .keyCardBackground, kind: .text),
             .init(foreground: .keyCardMuted, background: .keyCardBackground, kind: .text),

@@ -1,0 +1,78 @@
+{
+  "sourceLanguage" : "de",
+  "strings" : {
+    "NSFaceIDUsageDescription" : {
+      "comment" : "Info.plist: why the app asks for Face ID (license vault lock).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Damit Sie Ihre Lizenzschlüssel mit Face ID entsperren können."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "So that you can unlock your licence keys with Face ID."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aby odblokowywać klucze licencyjne za pomocą Face ID."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zodat je je licentiesleutels met Face ID kunt ontgrendelen."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para poder desbloquear as suas chaves de licença com Face ID."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Så att du kan låsa upp dina licensnycklar med Face ID."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Så du kan låse dine licensnøgler op med Face ID."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para que puedas desbloquear tus claves de licencia con Face ID."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour que vous puissiez déverrouiller vos clés de licence avec Face ID."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per sbloccare i tuoi codici di licenza con Face ID."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jotta voit avata lisenssiavaimesi Face ID:llä."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

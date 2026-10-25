@@ -25,6 +25,8 @@ public enum KXColor {
     public static let accent = color(.accent)
     public static let accentDeep = color(.accentDeep)
     public static let accentText = color(.accentText)
+    /// Ink text on gold (`accent`) fills such as badges and numerals, in both appearances.
+    public static let textOnAccent = color(.textOnAccent)
 
     public static let urgency = color(.urgency)
     public static let urgencyText = color(.urgencyText)

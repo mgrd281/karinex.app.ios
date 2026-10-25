@@ -26,6 +26,7 @@ public enum ColorToken: String, CaseIterable, Sendable {
     case accent
     case accentDeep
     case accentText
+    case textOnAccent
 
     // Urgency (terracotta)
     case urgency
@@ -69,6 +70,7 @@ public enum ColorToken: String, CaseIterable, Sendable {
         case .accent: BrandPalette.gold
         case .accentDeep: BrandPalette.goldDeep
         case .accentText: RGBAColor(hex: 0x7A6534)
+        case .textOnAccent: BrandPalette.ink
         case .urgency: BrandPalette.terracotta
         case .urgencyText: RGBAColor(hex: 0xA8461F)
         case .textOnUrgency: RGBAColor(hex: 0xFFFFFF)
@@ -104,6 +106,7 @@ public enum ColorToken: String, CaseIterable, Sendable {
         case .accent: BrandPalette.gold
         case .accentDeep: BrandPalette.goldDeep
         case .accentText: BrandPalette.gold
+        case .textOnAccent: BrandPalette.ink
         case .urgency: BrandPalette.terracotta
         case .urgencyText: RGBAColor(hex: 0xE98F6B)
         case .textOnUrgency: RGBAColor(hex: 0xFFFFFF)

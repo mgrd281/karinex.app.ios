@@ -1,0 +1,1 @@
+lisenssiavain,tuoteavain,ohjelmisto,lisenssi,ESD,lataus,toimisto,käyttöjärjestelmä,palvelin

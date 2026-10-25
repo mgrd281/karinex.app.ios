@@ -32,16 +32,37 @@
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLName</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>karinex</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Damit Sie Ihre Lizenzschlüssel mit Face ID entsperren können.</string>
+	<key>KXBackendHost</key>
+	<string>$(KX_BACKEND_HOST)</string>
 	<key>KXCustomerAccountAPIVersion</key>
 	<string>$(KX_CUSTOMER_ACCOUNT_API_VERSION)</string>
 	<key>KXCustomerAccountClientID</key>
 	<string>$(KX_CUSTOMER_ACCOUNT_CLIENT_ID)</string>
 	<key>KXShopDomain</key>
 	<string>$(KX_SHOP_DOMAIN)</string>
+	<key>KXShopID</key>
+	<string>$(KX_SHOP_ID)</string>
 	<key>KXStoreWebDomain</key>
 	<string>$(KX_STORE_WEB_DOMAIN)</string>
 	<key>KXStorefrontAPIVersion</key>

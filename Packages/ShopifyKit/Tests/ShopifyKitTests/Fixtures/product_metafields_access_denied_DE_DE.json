@@ -1,0 +1,34 @@
+{
+  "data": {
+    "product": null
+  },
+  "errors": [
+    {
+      "extensions": {
+        "code": "ACCESS_DENIED",
+        "documentation": "https://shopify.dev/api/usage/access-scopes",
+        "requiredAccess": "`unauthenticated_read_metafields` access scope."
+      },
+      "locations": [
+        {
+          "column": 3,
+          "line": 85
+        }
+      ],
+      "message": "Access denied for metafield field. Required access: `unauthenticated_read_metafields` access scope.",
+      "path": [
+        "product",
+        "metafields"
+      ]
+    }
+  ],
+  "extensions": {
+    "context": {
+      "country": "DE",
+      "language": "DE"
+    },
+    "cost": {
+      "requestedQueryCost": 47
+    }
+  }
+}

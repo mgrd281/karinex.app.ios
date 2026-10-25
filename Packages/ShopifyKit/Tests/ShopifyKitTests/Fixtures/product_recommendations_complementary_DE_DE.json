@@ -1,0 +1,14 @@
+{
+  "data": {
+    "productRecommendations": []
+  },
+  "extensions": {
+    "context": {
+      "country": "DE",
+      "language": "DE"
+    },
+    "cost": {
+      "requestedQueryCost": 10
+    }
+  }
+}

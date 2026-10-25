@@ -1,0 +1,1 @@
+Første version af KARINEX-appen: butik, kurv, sikker kasse, kundekonto med ordrer, fakturaer og licensnøgler samt kundeservice via WhatsApp, e-mail og livechat.

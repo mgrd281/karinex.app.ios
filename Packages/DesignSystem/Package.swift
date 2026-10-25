@@ -28,6 +28,7 @@ targets.append(contentsOf: [
         name: "DesignSystemTests",
         dependencies: [
             "DesignSystem",
+            "DesignTokens",
             .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
         ],
         exclude: ["__Snapshots__"]

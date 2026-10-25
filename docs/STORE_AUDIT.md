@@ -82,6 +82,23 @@ fixed section order with the live handles above.
 | Social proof | `custom.units_sold`, `custom.recently_sold_count`, `custom.recently_sold_city`, `custom.recently_sold_hours` | the app **never** displays these (PROMPT.md section 2: no "sold X times") |
 | Comparison | `custom.siblings` (list of product references) on 2 products, `custom.wird_oft_zusammen_gekauft`, `custom.frequently_bought`, Shopify `related_products` | partly |
 
+## Product content conflicts with the hard rules
+
+The app renders product descriptions from Shopify as they are (PROMPT.md 2 and 3.1), so store
+content that breaks a hard rule would appear in the app:
+
+- The German and French `descriptionHtml` of `office-2024-professional-plus-key` (recorded in
+  `Packages/ShopifyKit/Tests/ShopifyKitTests/Fixtures`) lists **PayPal** as a payment method and
+  contains a **"Service-Hotline"** with a **`tel:` link and phone number** ("Telefon",
+  "telefonisch"). PayPal is not offered and phone support does not exist (PROMPT.md 2 and hard
+  rule 4). Other products are likely affected too.
+- Several product titles and SEO descriptions say "Original-Lizenz" / "Original Lizenz". This is
+  store content (allowed), but it is one of the known content risks in PROMPT.md 2.
+
+Phase 1 mitigation in the app: the native HTML renderer drops `tel:` links (rendering their text
+as plain text) and never turns phone numbers into actions. The text itself can only be fixed in
+the store.
+
 ## Required owner actions (blocking Phase 1 product details)
 
 1. **Create a Headless channel Storefront token** and put it into `Config/Secrets.xcconfig`
@@ -105,3 +122,5 @@ fixed section order with the live handles above.
    so the app can show it alongside.
 8. **Norway / USA**: PROMPT.md lists them as markets, the store does not sell there. No app
    change is needed either way.
+9. **Product descriptions**: remove PayPal, the service hotline and phone numbers from the
+   product descriptions (all languages), see "Product content conflicts" above.

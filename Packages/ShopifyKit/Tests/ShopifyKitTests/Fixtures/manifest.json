@@ -1,0 +1,1005 @@
+{
+  "apiVersion": "2026-10",
+  "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+  "fixtures": [
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "localization_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "Localization",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "Store countries, currencies and languages in the DE/DE context.",
+      "tokenless": true,
+      "variables": {}
+    },
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "product_office-2024-professional-plus-key_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "ProductByHandle",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "Office 2024 Professional Plus with the ProductDetail fragment in the DE/DE context (EUR).",
+      "tokenless": true,
+      "variables": {
+        "handle": "office-2024-professional-plus-key",
+        "includeMetafields": false,
+        "metafieldIdentifiers": [
+          {
+            "key": "faq",
+            "namespace": "karinex"
+          },
+          {
+            "key": "lizenztyp",
+            "namespace": "karinex"
+          },
+          {
+            "key": "architektur",
+            "namespace": "karinex"
+          },
+          {
+            "key": "geraeteanzahl",
+            "namespace": "karinex"
+          },
+          {
+            "key": "lieferform",
+            "namespace": "karinex"
+          },
+          {
+            "key": "aktivierungsart",
+            "namespace": "karinex"
+          },
+          {
+            "key": "sprachen",
+            "namespace": "karinex"
+          },
+          {
+            "key": "support_status",
+            "namespace": "karinex"
+          },
+          {
+            "key": "details_content",
+            "namespace": "custom"
+          },
+          {
+            "key": "shipping_content",
+            "namespace": "custom"
+          },
+          {
+            "key": "warranty_content",
+            "namespace": "custom"
+          },
+          {
+            "key": "mpn",
+            "namespace": "custom"
+          },
+          {
+            "key": "deal_ends_at",
+            "namespace": "karinex"
+          },
+          {
+            "key": "angebotsende",
+            "namespace": "custom"
+          },
+          {
+            "key": "mpn",
+            "namespace": "mm-google-shopping"
+          },
+          {
+            "key": "lowest_price_30d",
+            "namespace": "karinex"
+          }
+        ]
+      }
+    },
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "CH",
+        "directive": "@inContext(country: CH, language: FR, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "FR",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "product_office-2024-professional-plus-key_CH_FR.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "ProductByHandle",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "The same product in the CH/FR context (French content, CHF prices).",
+      "tokenless": true,
+      "variables": {
+        "handle": "office-2024-professional-plus-key",
+        "includeMetafields": false,
+        "metafieldIdentifiers": [
+          {
+            "key": "faq",
+            "namespace": "karinex"
+          },
+          {
+            "key": "lizenztyp",
+            "namespace": "karinex"
+          },
+          {
+            "key": "architektur",
+            "namespace": "karinex"
+          },
+          {
+            "key": "geraeteanzahl",
+            "namespace": "karinex"
+          },
+          {
+            "key": "lieferform",
+            "namespace": "karinex"
+          },
+          {
+            "key": "aktivierungsart",
+            "namespace": "karinex"
+          },
+          {
+            "key": "sprachen",
+            "namespace": "karinex"
+          },
+          {
+            "key": "support_status",
+            "namespace": "karinex"
+          },
+          {
+            "key": "details_content",
+            "namespace": "custom"
+          },
+          {
+            "key": "shipping_content",
+            "namespace": "custom"
+          },
+          {
+            "key": "warranty_content",
+            "namespace": "custom"
+          },
+          {
+            "key": "mpn",
+            "namespace": "custom"
+          },
+          {
+            "key": "deal_ends_at",
+            "namespace": "karinex"
+          },
+          {
+            "key": "angebotsende",
+            "namespace": "custom"
+          },
+          {
+            "key": "mpn",
+            "namespace": "mm-google-shopping"
+          },
+          {
+            "key": "lowest_price_30d",
+            "namespace": "karinex"
+          }
+        ]
+      }
+    },
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "notFound",
+      "file": "product_not_found_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "ProductByHandle",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "product(handle:) for a handle that does not exist: data.product is null.",
+      "tokenless": true,
+      "variables": {
+        "handle": "kx-fixture-no-such-product",
+        "includeMetafields": false,
+        "metafieldIdentifiers": [
+          {
+            "key": "faq",
+            "namespace": "karinex"
+          },
+          {
+            "key": "lizenztyp",
+            "namespace": "karinex"
+          },
+          {
+            "key": "architektur",
+            "namespace": "karinex"
+          },
+          {
+            "key": "geraeteanzahl",
+            "namespace": "karinex"
+          },
+          {
+            "key": "lieferform",
+            "namespace": "karinex"
+          },
+          {
+            "key": "aktivierungsart",
+            "namespace": "karinex"
+          },
+          {
+            "key": "sprachen",
+            "namespace": "karinex"
+          },
+          {
+            "key": "support_status",
+            "namespace": "karinex"
+          },
+          {
+            "key": "details_content",
+            "namespace": "custom"
+          },
+          {
+            "key": "shipping_content",
+            "namespace": "custom"
+          },
+          {
+            "key": "warranty_content",
+            "namespace": "custom"
+          },
+          {
+            "key": "mpn",
+            "namespace": "custom"
+          },
+          {
+            "key": "deal_ends_at",
+            "namespace": "karinex"
+          },
+          {
+            "key": "angebotsende",
+            "namespace": "custom"
+          },
+          {
+            "key": "mpn",
+            "namespace": "mm-google-shopping"
+          },
+          {
+            "key": "lowest_price_30d",
+            "namespace": "karinex"
+          }
+        ]
+      }
+    },
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "collection_bestseller_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "CollectionProducts",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "The first 8 products of the bestseller collection in its default order, with the store's filters, DE/DE.",
+      "tokenless": true,
+      "variables": {
+        "first": 8,
+        "handle": "bestseller",
+        "reverse": false,
+        "sortKey": "COLLECTION_DEFAULT"
+      }
+    },
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "collection_windows_price_filtered_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "CollectionProducts",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "The windows collection sorted by price with the price filter 10 to 30 EUR, DE/DE.",
+      "tokenless": true,
+      "variables": {
+        "filters": [
+          {
+            "price": {
+              "max": 30,
+              "min": 10
+            }
+          }
+        ],
+        "first": 8,
+        "handle": "windows",
+        "reverse": false,
+        "sortKey": "PRICE"
+      }
+    },
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "collections_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "Collections",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "The store's collections by title (first 50), DE/DE.",
+      "tokenless": true,
+      "variables": {
+        "first": 50
+      }
+    },
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "product_recommendations_related_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "ProductRecommendations",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "RELATED recommendations for Office 2024 Professional Plus, DE/DE.",
+      "tokenless": true,
+      "variables": {
+        "intent": "RELATED",
+        "productId": "gid://shopify/Product/10534352027915"
+      }
+    },
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "product_recommendations_complementary_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "ProductRecommendations",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "COMPLEMENTARY recommendations for Office 2024 Professional Plus, DE/DE (the store configures none).",
+      "tokenless": true,
+      "variables": {
+        "intent": "COMPLEMENTARY",
+        "productId": "gid://shopify/Product/10534352027915"
+      }
+    },
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "predictive_search_win_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "PredictiveSearch",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "Predictive search for \"win\" (6 per type): products, collections, articles, query suggestions, DE/DE.",
+      "tokenless": true,
+      "variables": {
+        "limit": 6,
+        "query": "win"
+      }
+    },
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "search_office-2024_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "SearchProducts",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "Product search for \"office 2024\" by relevance (first 8) with total count and filters, DE/DE.",
+      "tokenless": true,
+      "variables": {
+        "first": 8,
+        "query": "office 2024",
+        "reverse": false,
+        "sortKey": "RELEVANCE"
+      }
+    },
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "blog_guides_articles_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "BlogArticles",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "The 6 newest articles of the guides blog, DE/DE.",
+      "tokenless": true,
+      "variables": {
+        "blogHandle": "guides",
+        "first": 6
+      }
+    },
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "article_guides_windows-11-kompatibilitaet-pruefen_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "Article",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "One guide article with its contentHtml (style, script, image, tables, details, code), DE/DE.",
+      "tokenless": true,
+      "variables": {
+        "articleHandle": "windows-11-kompatibilitaet-pruefen",
+        "blogHandle": "guides"
+      }
+    },
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "userErrors",
+      "file": "cart_create_invalid_merchandise_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "mutation",
+      "operation": "CartCreate",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "cartCreate with a merchandise ID that does not exist: a userError (code INVALID), no cart.",
+      "tokenless": true,
+      "variables": {
+        "input": {
+          "attributes": [
+            {
+              "key": "app_platform",
+              "value": "ios"
+            }
+          ],
+          "buyerIdentity": {
+            "countryCode": "DE"
+          },
+          "lines": [
+            {
+              "merchandiseId": "gid://shopify/ProductVariant/1",
+              "quantity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "anonymizedPaths": [
+        "data.cartCreate.cart.checkoutUrl",
+        "data.cartCreate.cart.id",
+        "data.cartCreate.cart.lines.nodes[0].id"
+      ],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "cart_create_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "mutation",
+      "operation": "CartCreate",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "cartCreate with 1x the cheapest digital variant, country DE and the recorder's attributes.",
+      "tokenless": true,
+      "variables": {
+        "input": {
+          "attributes": [
+            {
+              "key": "app_platform",
+              "value": "ios"
+            },
+            {
+              "key": "kx_fixture_recording",
+              "value": "true"
+            }
+          ],
+          "buyerIdentity": {
+            "countryCode": "DE"
+          },
+          "lines": [
+            {
+              "merchandiseId": "gid://shopify/ProductVariant/52555874009355",
+              "quantity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "anonymizedPaths": [
+        "data.cartLinesAdd.cart.checkoutUrl",
+        "data.cartLinesAdd.cart.id",
+        "data.cartLinesAdd.cart.lines.nodes[0].id",
+        "data.cartLinesAdd.cart.lines.nodes[1].id",
+        "variables.cartId"
+      ],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "cart_lines_add_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "mutation",
+      "operation": "CartLinesAdd",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "cartLinesAdd with 1x the second cheapest digital variant: two lines.",
+      "tokenless": true,
+      "variables": {
+        "cartId": "gid://shopify/Cart/REDACTED?key=REDACTED",
+        "lines": [
+          {
+            "merchandiseId": "gid://shopify/ProductVariant/52711848345867",
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "anonymizedPaths": [
+        "data.cartLinesUpdate.cart.checkoutUrl",
+        "data.cartLinesUpdate.cart.id",
+        "data.cartLinesUpdate.cart.lines.nodes[0].id",
+        "data.cartLinesUpdate.cart.lines.nodes[1].id",
+        "variables.cartId",
+        "variables.lines[0].id"
+      ],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "cart_lines_update_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "mutation",
+      "operation": "CartLinesUpdate",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "cartLinesUpdate: the first line to quantity 2 (the store's automatic quantity discount applies).",
+      "tokenless": true,
+      "variables": {
+        "cartId": "gid://shopify/Cart/REDACTED?key=REDACTED",
+        "lines": [
+          {
+            "id": "gid://shopify/CartLine/d3d7a518-3d46-4fe1-a1a8-42b4bf435053?cart=REDACTED",
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "anonymizedPaths": [
+        "data.cartDiscountCodesUpdate.cart.checkoutUrl",
+        "data.cartDiscountCodesUpdate.cart.id",
+        "data.cartDiscountCodesUpdate.cart.lines.nodes[0].id",
+        "data.cartDiscountCodesUpdate.cart.lines.nodes[1].id",
+        "data.cartDiscountCodesUpdate.warnings[0].target",
+        "variables.cartId"
+      ],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "cart_discount_codes_invalid_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "mutation",
+      "operation": "CartDiscountCodesUpdate",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "cartDiscountCodesUpdate with a code that does not exist: applicable false and a DISCOUNT_NOT_FOUND warning.",
+      "tokenless": true,
+      "variables": {
+        "cartId": "gid://shopify/Cart/REDACTED?key=REDACTED",
+        "discountCodes": [
+          "KX-FIXTURE-NOT-A-CODE"
+        ]
+      }
+    },
+    {
+      "anonymizedPaths": [
+        "data.cartLinesRemove.cart.checkoutUrl",
+        "data.cartLinesRemove.cart.id",
+        "data.cartLinesRemove.cart.lines.nodes[0].id",
+        "data.cartLinesRemove.warnings[0].target",
+        "variables.cartId",
+        "variables.lineIds[0]"
+      ],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "cart_lines_remove_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "mutation",
+      "operation": "CartLinesRemove",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "cartLinesRemove of the second line: one line left.",
+      "tokenless": true,
+      "variables": {
+        "cartId": "gid://shopify/Cart/REDACTED?key=REDACTED",
+        "lineIds": [
+          "gid://shopify/CartLine/c23d2112-5d21-4e03-83ab-674d570ebee0?cart=REDACTED"
+        ]
+      }
+    },
+    {
+      "anonymizedPaths": [
+        "data.cart.checkoutUrl",
+        "data.cart.id",
+        "data.cart.lines.nodes[0].id",
+        "variables.id"
+      ],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "success",
+      "file": "cart_query_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "Cart",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "cart(id:) of the recorder's cart after the lifecycle: one line, quantity 2, the invalid code.",
+      "tokenless": true,
+      "variables": {
+        "id": "gid://shopify/Cart/REDACTED?key=REDACTED"
+      }
+    },
+    {
+      "anonymizedPaths": [],
+      "apiVersion": "2026-10",
+      "attempts": 1,
+      "context": {
+        "country": "DE",
+        "directive": "@inContext(country: DE, language: DE, visitorConsent: {analytics: false, preferences: true, marketing: false, saleOfData: false})",
+        "language": "DE",
+        "visitorConsent": {
+          "analytics": false,
+          "marketing": false,
+          "preferences": true,
+          "saleOfData": false
+        }
+      },
+      "endpoint": "https://45dv93-bk.myshopify.com/api/2026-10/graphql.json",
+      "expectedOutcome": "accessDenied",
+      "file": "product_metafields_access_denied_DE_DE.json",
+      "httpStatus": 200,
+      "kind": "query",
+      "operation": "ProductByHandle",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "live",
+      "summary": "The product query with metafields but without a token: ACCESS_DENIED (requiredAccess unauthenticated_read_metafields), data.product null.",
+      "tokenless": true,
+      "variables": {
+        "handle": "office-2024-professional-plus-key",
+        "includeMetafields": true,
+        "metafieldIdentifiers": [
+          {
+            "key": "faq",
+            "namespace": "karinex"
+          },
+          {
+            "key": "lizenztyp",
+            "namespace": "karinex"
+          },
+          {
+            "key": "architektur",
+            "namespace": "karinex"
+          },
+          {
+            "key": "geraeteanzahl",
+            "namespace": "karinex"
+          },
+          {
+            "key": "lieferform",
+            "namespace": "karinex"
+          },
+          {
+            "key": "aktivierungsart",
+            "namespace": "karinex"
+          },
+          {
+            "key": "sprachen",
+            "namespace": "karinex"
+          },
+          {
+            "key": "support_status",
+            "namespace": "karinex"
+          },
+          {
+            "key": "details_content",
+            "namespace": "custom"
+          },
+          {
+            "key": "shipping_content",
+            "namespace": "custom"
+          },
+          {
+            "key": "warranty_content",
+            "namespace": "custom"
+          },
+          {
+            "key": "mpn",
+            "namespace": "custom"
+          },
+          {
+            "key": "deal_ends_at",
+            "namespace": "karinex"
+          },
+          {
+            "key": "angebotsende",
+            "namespace": "custom"
+          },
+          {
+            "key": "mpn",
+            "namespace": "mm-google-shopping"
+          },
+          {
+            "key": "lowest_price_30d",
+            "namespace": "karinex"
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2026-10",
+      "documentation": "https://shopify.dev/docs/api/storefront/2026-10#status-and-error-codes",
+      "file": "synthetic_throttled.json",
+      "recordedAt": "2026-10-24T21:40:57Z",
+      "source": "synthetic",
+      "summary": "Documented GraphQL THROTTLED error envelope (HTTP 200, top-level errors, no data)."
+    }
+  ],
+  "generator": "Tools/FixtureRecorder (swift run fixture-recorder)",
+  "recordedAt": "2026-10-24T21:40:57Z",
+  "shopDomain": "45dv93-bk.myshopify.com",
+  "tokenless": true
+}

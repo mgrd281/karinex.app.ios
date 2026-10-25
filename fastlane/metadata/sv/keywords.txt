@@ -1,0 +1,1 @@
+licensnyckel,produktnyckel,programvara,licens,ESD,nedladdning,kontor,operativsystem,server

@@ -1,0 +1,415 @@
+{
+  "data": {
+    "productRecommendations": [
+      {
+        "availableForSale": true,
+        "compareAtPriceRange": {
+          "maxVariantPrice": {
+            "amount": "39.99",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "39.99",
+            "currencyCode": "EUR"
+          }
+        },
+        "featuredImage": {
+          "altText": "Windows 11 Pro günstig kaufen – Dauerlizenz für 1 PC mit Sofort-Download per E-Mail von Karinex",
+          "height": 2048,
+          "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/Windows-11-Pro-Key-Download-kaufen..webp?v=1787442708",
+          "width": 2048
+        },
+        "handle": "windows-11-pro-key-kaufen-download",
+        "id": "gid://shopify/Product/10650102169867",
+        "priceRange": {
+          "maxVariantPrice": {
+            "amount": "13.9",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "13.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "title": "Windows 11 Pro kaufen – Dauerlizenz 1 PC, Download",
+        "variants": {
+          "nodes": [
+            {
+              "requiresShipping": false
+            }
+          ]
+        },
+        "vendor": "Microsoft"
+      },
+      {
+        "availableForSale": true,
+        "compareAtPriceRange": {
+          "maxVariantPrice": {
+            "amount": "79.0",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "79.0",
+            "currencyCode": "EUR"
+          }
+        },
+        "featuredImage": {
+          "altText": "Microsoft Office 2021 Standard Vollversion Key – Download und Aktivierung per E-Mail, Original Microsoft Lizenz für Word, Excel, PowerPoint, Outlook und Publisher",
+          "height": 2048,
+          "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-office-2021-standard-vollversion-key-sofort-email-versand.avif?v=1787444040",
+          "width": 2048
+        },
+        "handle": "microsoft-office-2021-standard-dauerlizenz",
+        "id": "gid://shopify/Product/10661741035787",
+        "priceRange": {
+          "maxVariantPrice": {
+            "amount": "10.9",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "10.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "title": "Microsoft Office 2021 Standard Dauerlizenz – Download & Key für 1 PC",
+        "variants": {
+          "nodes": [
+            {
+              "requiresShipping": false
+            }
+          ]
+        },
+        "vendor": "Microsoft"
+      },
+      {
+        "availableForSale": true,
+        "compareAtPriceRange": {
+          "maxVariantPrice": {
+            "amount": "69.99",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "69.99",
+            "currencyCode": "EUR"
+          }
+        },
+        "featuredImage": {
+          "altText": "Microsoft Office 2024 Home für Windows ",
+          "height": 2048,
+          "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-office-2024-home-windows-aktiv.avif?v=1787444041",
+          "width": 2048
+        },
+        "handle": "office-2024-home-windows",
+        "id": "gid://shopify/Product/10794541547787",
+        "priceRange": {
+          "maxVariantPrice": {
+            "amount": "18.9",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "18.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "title": "Microsoft Office 2024 Home für Windows – Original Lizenz | E-Mail Versand",
+        "variants": {
+          "nodes": [
+            {
+              "requiresShipping": false
+            }
+          ]
+        },
+        "vendor": "Microsoft"
+      },
+      {
+        "availableForSale": true,
+        "compareAtPriceRange": {
+          "maxVariantPrice": {
+            "amount": "59.9",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "59.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "featuredImage": {
+          "altText": "Screenshot der Benutzeroberfläche von Microsoft Visual Studio Professional 2022 mit geöffnetem Windows-Forms-Projekt und Balkendiagramm zur Visualisierung von Daten – Entwicklungsumgebung für Programmierer",
+          "height": 2048,
+          "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-visual-studio-professional-2022-pc.avif?v=1787444157",
+          "width": 2048
+        },
+        "handle": "microsoft-visual-studio-2022-professional",
+        "id": "gid://shopify/Product/10822322815243",
+        "priceRange": {
+          "maxVariantPrice": {
+            "amount": "11.9",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "11.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "title": "Microsoft Visual Studio Professional 2022 (PC)",
+        "variants": {
+          "nodes": [
+            {
+              "requiresShipping": false
+            }
+          ]
+        },
+        "vendor": "Microsoft"
+      },
+      {
+        "availableForSale": true,
+        "compareAtPriceRange": {
+          "maxVariantPrice": {
+            "amount": "129.9",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "129.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "featuredImage": {
+          "altText": "Microsoft Office 2024 Home & Business Dauerlizenz für 1 Windows-PC mit Word, Excel, PowerPoint, Outlook und OneNote – Sofort-Download per E-Mail",
+          "height": 2048,
+          "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/Office2024_Home-Business_G_LP.webp?v=1787443373",
+          "width": 2048
+        },
+        "handle": "office-2024-home-business-windows",
+        "id": "gid://shopify/Product/10966544908555",
+        "priceRange": {
+          "maxVariantPrice": {
+            "amount": "34.9",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "34.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "title": "Microsoft Office 2024 Home & Business für Windows – Dauerlizenz für 1 PC | Sofort-Download",
+        "variants": {
+          "nodes": [
+            {
+              "requiresShipping": false
+            }
+          ]
+        },
+        "vendor": "Microsoft"
+      },
+      {
+        "availableForSale": true,
+        "compareAtPriceRange": {
+          "maxVariantPrice": {
+            "amount": "79.9",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "79.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "featuredImage": {
+          "altText": "Windows 11 Home günstig kaufen – Dauerlizenz für 1 PC mit Sofort-Download per E-Mail von Karinex",
+          "height": 2048,
+          "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/windows-11-home-download-produktkey-kein-abo.webp?v=1787443067",
+          "width": 2048
+        },
+        "handle": "windows-11-home-key",
+        "id": "gid://shopify/Product/10662950863115",
+        "priceRange": {
+          "maxVariantPrice": {
+            "amount": "13.9",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "13.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "title": "Windows 11 Home Key kaufen – Original Lizenz + Sofort-Download für 1 PC",
+        "variants": {
+          "nodes": [
+            {
+              "requiresShipping": false
+            }
+          ]
+        },
+        "vendor": "Microsoft"
+      },
+      {
+        "availableForSale": true,
+        "compareAtPriceRange": {
+          "maxVariantPrice": {
+            "amount": "79.9",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "79.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "featuredImage": {
+          "altText": "Verpackung von Microsoft Office Standard 2024 für Windows, zeigt Symbole für Word, Excel, OneNote, PowerPoint, Outlook und Publisher",
+          "height": 2048,
+          "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/Microsoft-Office-2024-Standard-kaufen.avif?v=1787444040",
+          "width": 2048
+        },
+        "handle": "microsoft-office-2024-standard-vollversion-fur-windows",
+        "id": "gid://shopify/Product/10662481953035",
+        "priceRange": {
+          "maxVariantPrice": {
+            "amount": "19.9",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "19.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "title": "Microsoft Office 2024 Standard Vollversion für Windows – Original Lizenz | E-Mail Versand",
+        "variants": {
+          "nodes": [
+            {
+              "requiresShipping": false
+            }
+          ]
+        },
+        "vendor": "Microsoft"
+      },
+      {
+        "availableForSale": true,
+        "compareAtPriceRange": {
+          "maxVariantPrice": {
+            "amount": "79.99",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "79.99",
+            "currencyCode": "EUR"
+          }
+        },
+        "featuredImage": {
+          "altText": "Microsoft Office 2024 Home and Business für Mac Box mit Word, Excel, PowerPoint, Outlook und OneNote",
+          "height": 2048,
+          "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/microsoft-office-2024-home-and-business-mac.avif?v=1787444040",
+          "width": 2048
+        },
+        "handle": "microsoft-office-2024-home-business-mac-lizenz",
+        "id": "gid://shopify/Product/10794551968011",
+        "priceRange": {
+          "maxVariantPrice": {
+            "amount": "13.9",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "13.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "title": "Microsoft Office 2024 Home & Business für Mac | Original Lizenz",
+        "variants": {
+          "nodes": [
+            {
+              "requiresShipping": false
+            }
+          ]
+        },
+        "vendor": "Microsoft"
+      },
+      {
+        "availableForSale": true,
+        "compareAtPriceRange": {
+          "maxVariantPrice": {
+            "amount": "79.9",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "79.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "featuredImage": {
+          "altText": "Windows 11 Pro 64 Bit USB-Stick mit Produktschlüssel von KARINEX",
+          "height": 2048,
+          "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/KeinTitel_2048x2048px_50.webp?v=1787443372",
+          "width": 2048
+        },
+        "handle": "windows-11-pro-64-bit-usb",
+        "id": "gid://shopify/Product/10959700853003",
+        "priceRange": {
+          "maxVariantPrice": {
+            "amount": "29.99",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "29.99",
+            "currencyCode": "EUR"
+          }
+        },
+        "title": "Windows 11 Pro USB-Stick kaufen – Dauerlizenz + Key sofort per E-Mail",
+        "variants": {
+          "nodes": [
+            {
+              "requiresShipping": true
+            }
+          ]
+        },
+        "vendor": "Microsoft"
+      },
+      {
+        "availableForSale": true,
+        "compareAtPriceRange": {
+          "maxVariantPrice": {
+            "amount": "39.99",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "39.99",
+            "currencyCode": "EUR"
+          }
+        },
+        "featuredImage": {
+          "altText": "Microsoft Office 2021 Professional Plus Dauerlizenz für 1 PC – Volumenlizenz mit unbegrenzter Laufzeit ",
+          "height": 2048,
+          "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/files/Microsoft_Office_2021_Professional_Plus_Dauerlizenz_f_r_1_PC_Volumenlizenz_mit_unbegrenzter_Laufzeit.webp?v=1787443067",
+          "width": 2048
+        },
+        "handle": "office-2021-professional-plus-1pc",
+        "id": "gid://shopify/Product/10654810439947",
+        "priceRange": {
+          "maxVariantPrice": {
+            "amount": "11.9",
+            "currencyCode": "EUR"
+          },
+          "minVariantPrice": {
+            "amount": "11.9",
+            "currencyCode": "EUR"
+          }
+        },
+        "title": "Microsoft Office 2021 Professional Plus – Volumenlizenz für 1 PC | Sofort-Download",
+        "variants": {
+          "nodes": [
+            {
+              "requiresShipping": false
+            }
+          ]
+        },
+        "vendor": "Microsoft"
+      }
+    ]
+  },
+  "extensions": {
+    "context": {
+      "country": "DE",
+      "language": "DE"
+    },
+    "cost": {
+      "requestedQueryCost": 10
+    }
+  }
+}

@@ -1,0 +1,1 @@
+First version of the KARINEX app: shop, basket, secure checkout, customer account with orders, invoices and licence keys, and customer service by WhatsApp, email and live chat.

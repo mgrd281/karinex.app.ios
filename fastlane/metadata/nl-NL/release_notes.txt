@@ -1,0 +1,1 @@
+Eerste versie van de KARINEX-app: winkel, winkelwagen, veilige checkout, klantaccount met bestellingen, facturen en licentiesleutels, en klantenservice via WhatsApp, e-mail en livechat.

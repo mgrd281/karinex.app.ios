@@ -1,0 +1,111 @@
+{
+  "data": {
+    "blog": {
+      "articles": {
+        "nodes": [
+          {
+            "blog": {
+              "handle": "guides"
+            },
+            "excerpt": "Technischer Leitfaden für reproduzierbare Windows-Testumgebungen: Systeminformationen, TPM 2.0, UEFI, Secure Boot, DirectX, Treibermodell, CPU, RAM und Build-Version sauber erfassen.",
+            "handle": "windows-testgeraet-systeminformationen-dokumentieren",
+            "id": "gid://shopify/Article/644681695499",
+            "image": null,
+            "onlineStoreUrl": "https://www.karinex.de/blogs/guides/windows-testgeraet-systeminformationen-dokumentieren",
+            "publishedAt": "2026-08-29T21:16:35Z",
+            "title": "Windows-Testgerät dokumentieren: TPM, UEFI, Secure Boot, DirectX und Hardware auslesen"
+          },
+          {
+            "blog": {
+              "handle": "guides"
+            },
+            "excerpt": "Prüfen Sie in wenigen Minuten, ob Ihr PC Windows 11 unterstützt. Der Guide erklärt PC Health Check, TPM 2.0, Secure Boot, CPU, RAM und Speicher – inklusive Lösungen bei einem negativen Ergebnis.",
+            "handle": "windows-11-kompatibilitaet-pruefen",
+            "id": "gid://shopify/Article/644680122635",
+            "image": {
+              "altText": "Windows 11 Kompatibilität prüfen – PC mit erfolgreich geprüften Hardware-Anforderungen",
+              "height": 832,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/articles/windows-11-kompatibilitaet-pruefen.webp?v=1788015473",
+              "width": 1248
+            },
+            "onlineStoreUrl": "https://www.karinex.de/blogs/guides/windows-11-kompatibilitaet-pruefen",
+            "publishedAt": "2026-08-29T15:33:05Z",
+            "title": "Windows 11 Kompatibilität prüfen: Ist Ihr PC bereit?"
+          },
+          {
+            "blog": {
+              "handle": "guides"
+            },
+            "excerpt": "Alte Windows-7- und Windows-8.1-Produktschlüssel sind kein verlässlicher Aktivierungsweg mehr für aktuelle Windows-Versionen. Dieser Leitfaden erklärt, was sich geändert hat, wie digitale Lizenzen funktionieren und welche offiziellen Schritte Microsoft bei Aktivierungsproblemen empfiehlt.",
+            "handle": "windows-11-aktivierung-windows-7-8-key",
+            "id": "gid://shopify/Article/644677861643",
+            "image": null,
+            "onlineStoreUrl": "https://www.karinex.de/blogs/guides/windows-11-aktivierung-windows-7-8-key",
+            "publishedAt": "2026-08-29T02:18:34Z",
+            "title": "Windows 11 mit Windows-7- oder 8.1-Key aktivieren? Was heute noch funktioniert"
+          },
+          {
+            "blog": {
+              "handle": "guides"
+            },
+            "excerpt": "Microsoft Office 2024 kaufen? Dieser Ratgeber erklärt die Unterschiede zwischen Office 2024 Professional Plus, Standard, Home und Microsoft 365 sowie wichtige Punkte zu Download, Lizenz und Auswahl.",
+            "handle": "microsoft-office-2024-kaufen",
+            "id": "gid://shopify/Article/644600594699",
+            "image": {
+              "altText": "Microsoft Office 2024 kaufen – welche Version die richtige ist, bei KARINEX",
+              "height": 832,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/articles/karinex-hero-microsoft-office-2024-kaufen.jpg?v=1787436329",
+              "width": 1248
+            },
+            "onlineStoreUrl": "https://www.karinex.de/blogs/guides/microsoft-office-2024-kaufen",
+            "publishedAt": "2026-08-16T18:53:44Z",
+            "title": "Microsoft Office 2024 kaufen: Welche Version ist die richtige?"
+          },
+          {
+            "blog": {
+              "handle": "guides"
+            },
+            "excerpt": "Visual Studio 2026 Professional oder Enterprise? Wir vergleichen Funktionen, exklusive Werkzeuge und Zielgruppen beider Editionen – damit Sie die richtige Wahl für Ihr Projekt treffen.",
+            "handle": "visual-studio-2026-professional-vs-enterprise",
+            "id": "gid://shopify/Article/644522017035",
+            "image": {
+              "altText": "Visual Studio 2026 Professional oder Enterprise – der große Editionen-Vergleich bei KARINEX",
+              "height": 832,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/articles/karinex-hero-visual-studio-2026-professional-vs-enterprise.jpg?v=1786876413",
+              "width": 1248
+            },
+            "onlineStoreUrl": "https://www.karinex.de/blogs/guides/visual-studio-2026-professional-vs-enterprise",
+            "publishedAt": "2026-08-04T12:18:01Z",
+            "title": "Visual Studio 2026: Professional oder Enterprise? Der große Editionen-Vergleich"
+          },
+          {
+            "blog": {
+              "handle": "guides"
+            },
+            "excerpt": "Schritt-für-Schritt-Anleitung: Microsoft 365 Family installieren und aktivieren – Systemvoraussetzungen, Setup, Lizenzschlüssel einlösen, Copilot und häufige Fragen.",
+            "handle": "microsoft-365-family-installieren-aktivieren",
+            "id": "gid://shopify/Article/643704783115",
+            "image": {
+              "altText": "Microsoft 365 Family installieren und aktivieren",
+              "height": 832,
+              "url": "https://cdn.shopify.com/s/files/1/0917/5328/3851/articles/microsoft-365-family-installieren-und-aktivieren_98826f51-b740-4763-98d3-39d0e424983b.webp?v=1782979645",
+              "width": 1248
+            },
+            "onlineStoreUrl": "https://www.karinex.de/blogs/guides/microsoft-365-family-installieren-aktivieren",
+            "publishedAt": "2026-06-20T10:18:00Z",
+            "title": "Microsoft 365 Family installieren und aktivieren"
+          }
+        ]
+      }
+    }
+  },
+  "extensions": {
+    "context": {
+      "country": "DE",
+      "language": "DE"
+    },
+    "cost": {
+      "requestedQueryCost": 11
+    }
+  }
+}
