@@ -9,6 +9,8 @@
 #   KX_STOREFRONT_ACCESS_TOKEN      public Storefront API token of the Headless channel
 #   KX_CUSTOMER_ACCOUNT_CLIENT_ID   Customer Account API public client ID
 #   KX_APPLE_TEAM_ID                Apple Developer team ID (10 characters)
+#   KX_CODE_SIGN_ENTITLEMENTS       App/KARINEX.entitlements for signed builds (Push and
+#                                   Universal Links need a team), empty for unsigned ones
 #
 # Values are validated so that nothing can break out of the xcconfig syntax ("//" starts a
 # comment there, newlines start a new setting). The values themselves are never printed.
@@ -23,6 +25,7 @@ settings=(
     "KX_STOREFRONT_ACCESS_TOKEN|^[A-Za-z0-9_-]*$|letters, digits, '_' and '-'"
     "KX_CUSTOMER_ACCOUNT_CLIENT_ID|^[A-Za-z0-9_.-]*$|letters, digits, '_', '.' and '-'"
     "KX_APPLE_TEAM_ID|^([A-Z0-9]{10})?$|exactly 10 upper-case letters or digits"
+    "KX_CODE_SIGN_ENTITLEMENTS|^(App/KARINEX\.entitlements)?$|empty or exactly App/KARINEX.entitlements"
 )
 
 lines=()

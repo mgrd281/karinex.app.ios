@@ -10,6 +10,13 @@ change.
 
 ## [Unreleased]
 
+### Fixed
+
+- TestFlight builds now carry `App/KARINEX.entitlements` (Push Notifications and Associated
+  Domains for Universal Links): the `beta` lane sets `KX_CODE_SIGN_ENTITLEMENTS` itself and
+  `scripts/write-secrets-xcconfig.sh` accepts exactly that value or an empty one. Unsigned CI and
+  simulator builds are unchanged.
+
 Phase 3: delight and launch preparation. Written and checked by compilation and unit tests in
 CI; push, the widget and the Live Activity need a device, the owner's Apple Team ID and APNs on
 the BFF for an end-to-end test.

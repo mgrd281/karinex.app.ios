@@ -11,6 +11,8 @@
 #   KX_APPLE_TEAM_ID              Apple Developer team ID
 # and optionally KX_STOREFRONT_ACCESS_TOKEN and KX_CUSTOMER_ACCOUNT_CLIENT_ID, which are
 # written into Config/Secrets.xcconfig (empty values keep the app's tokenless fallback).
+# A signed `beta` build always carries App/KARINEX.entitlements (Push Notifications and
+# Associated Domains for Universal Links); the lane sets KX_CODE_SIGN_ENTITLEMENTS itself.
 #
 # Paths: actions resolve paths from the repository root, while Ruby code and `sh` run inside
 # ./fastlane, so everything below uses absolute paths built from REPO_ROOT.
@@ -31,6 +33,7 @@ DERIVED_DATA = File.join(REPO_ROOT, "build", "DerivedData")
 RESULTS_DIR = File.join(REPO_ROOT, "build", "results")
 SOURCE_PACKAGES = File.join(REPO_ROOT, ".spm")
 BETA_REQUIRED_ENV = %w[ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_CONTENT KX_APPLE_TEAM_ID].freeze
+BETA_ENTITLEMENTS = "App/KARINEX.entitlements"
 
 # Fails the lane with one message naming every missing variable (never their values).
 def require_environment!(names)
@@ -119,6 +122,9 @@ platform :ios do
       )
 
       verify_generated_project
+      # The beta build is signed with the team, so it carries the entitlements file; unsigned
+      # CI and simulator builds leave the variable empty (Config/Base.xcconfig).
+      ENV["KX_CODE_SIGN_ENTITLEMENTS"] = BETA_ENTITLEMENTS
       sh(File.join(REPO_ROOT, "scripts", "write-secrets-xcconfig.sh").shellescape)
 
       latest = latest_testflight_build_number(
