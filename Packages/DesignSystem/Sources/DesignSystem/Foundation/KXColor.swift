@@ -53,8 +53,13 @@ public enum KXColor {
 
     public static let scrim = color(.scrim)
 
-    /// A static color for a computed value, such as a ``DesignTokens/TintToken`` panel derived
-    /// from a product photo. It is the same in light and dark mode.
+    /// The KARINEX store color `#0E4343` of the large dark panels (``DesignTokens/TintToken``),
+    /// the same in light and dark mode.
+    public static let storePanel = fixed(TintToken.store)
+    /// The deepened lower end of a store color panel gradient.
+    public static let storePanelDeep = fixed(TintToken.deepened(TintToken.store))
+
+    /// A static color for a computed value. It is the same in light and dark mode.
     public static func fixed(_ value: RGBAColor) -> Color {
         Color(uiColor: UIColor(rgba: value))
     }

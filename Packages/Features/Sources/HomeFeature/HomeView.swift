@@ -9,7 +9,7 @@ import SwiftUI
 ///
 /// - On top the KARINEX logo with the Merkliste heart, which scroll away, and the search field,
 ///   which stays pinned and opens the Suche tab.
-/// - Below: the story carousel of featured collections tinted with the color of their photos,
+/// - Below: the story carousel of featured collections in the store color,
 ///   the trust facts (the money-back promise opens its conditions), the category showcase with
 ///   its dark product panel, the bestsellers, the dark sale panel, "Zuletzt angesehen", the
 ///   version grid, the service tiles, the Ratgeber stories and the support card.

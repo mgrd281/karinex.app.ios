@@ -8,7 +8,7 @@ import SwiftUI
 /// A dark panel with a row of product cards, like the brand panels of fashion retail apps: the
 /// small label and the name on top with "Alle anzeigen", then the products with light text on
 /// the dark panel. The photos stay on their light tiles. The sale panel shows its name in sale
-/// red. With a tint the panel takes the color of a product photo (``ProductImageTint``).
+/// red. The panel is the KARINEX store color (``KXColor/storePanel``).
 ///
 /// Like ``ProductCarouselSection`` it shows a skeleton while loading, a compact error with
 /// "Erneut versuchen" when the request failed, and nothing at all when the collection is empty.
@@ -17,8 +17,6 @@ struct HomeProductPanel: View {
     let title: String
     /// Whether the name is drawn in sale red.
     let isSale: Bool
-    /// The colors of the panel, `nil` for the neutral dark panel.
-    var tint: ProductPanelTint?
     let state: LoadState<[ProductSummary]>
     let retry: @MainActor () async -> Void
     let onShowAll: @MainActor () -> Void
@@ -39,14 +37,13 @@ struct HomeProductPanel: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background {
                 LinearGradient(
-                    colors: [tint?.top ?? KXColor.surface, tint?.bottom ?? KXColor.surface],
+                    colors: [KXColor.storePanel, KXColor.storePanelDeep],
                     startPoint: .top,
                     endPoint: .bottom
                 )
             }
             .clipShape(shape)
             .environment(\.colorScheme, .dark)
-            .kxAnimation(.fade, value: tint)
         }
     }
 
@@ -131,9 +128,8 @@ struct HomeProductPanel: View {
 // MARK: - HomeCategoryShowcase
 
 /// "Unsere Kategorien": a row of category tiles, the chosen one filled in ink, above the dark
-/// product panel of the chosen category, as the brand strip of fashion retail apps. The panel
-/// takes the color of the category's first product photo. The last tile leads to the whole range
-/// in the Shop tab.
+/// product panel of the chosen category, as the brand strip of fashion retail apps. The last tile
+/// leads to the whole range in the Shop tab.
 struct HomeCategoryShowcase: View {
     let categories: [HomeCategory]
     let state: @MainActor (HomeCategory) -> LoadState<[ProductSummary]>
@@ -143,8 +139,6 @@ struct HomeCategoryShowcase: View {
     let onSelect: @MainActor (ProductSummary) -> Void
 
     @State private var selectedHandle: String?
-    /// The panel colors by photo URL, filled as the photos are sampled.
-    @State private var tints: [URL: ProductPanelTint] = [:]
 
     /// The chosen category, the first one until the customer picks another.
     private var selected: HomeCategory? {
@@ -153,7 +147,6 @@ struct HomeCategoryShowcase: View {
 
     var body: some View {
         if let selected {
-            let photo = state(selected).value?.first?.featuredImage
             VStack(alignment: .leading, spacing: KXSpacing.m) {
                 KXSectionHeader(
                     String(localized: "home.showcase.title", bundle: .module),
@@ -165,7 +158,6 @@ struct HomeCategoryShowcase: View {
                     eyebrow: selected.eyebrow?.resolved,
                     title: selected.title.resolved,
                     isSale: false,
-                    tint: photo.flatMap { tints[$0.url] },
                     state: state(selected),
                     retry: { await retry(selected) },
                     onShowAll: { onOpen(selected) },
@@ -178,11 +170,6 @@ struct HomeCategoryShowcase: View {
                 .id(selected.handle)
             }
             .sensoryFeedback(.selection, trigger: selectedHandle)
-            .task(id: photo?.url) {
-                if let photo, tints[photo.url] == nil, let tint = await ProductImageTint.shared.panel(for: photo) {
-                    tints[photo.url] = tint
-                }
-            }
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("home.showcase")
         }

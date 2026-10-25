@@ -29,10 +29,9 @@ struct HomeStoryItem: Identifiable, Hashable {
 /// fashion retail apps: one large rounded panel in which the stories page sideways, the
 /// neighbours peeking in at the edges, with the page dots fixed at the bottom.
 ///
-/// The panel takes the color of the photo of the story in view (``ProductImageTint``), dark
-/// enough for light text, or the neutral dark panel when the photo has no clear color. While a
-/// collection loads, its story is a skeleton; an empty or failed collection drops out. When
-/// every collection failed, one compact error with "Erneut versuchen" replaces the carousel.
+/// The panel is the KARINEX store color (``KXColor/storePanel``). While a collection loads, its
+/// story is a skeleton; an empty or failed collection drops out. When every collection failed,
+/// one compact error with "Erneut versuchen" replaces the carousel.
 struct HomeStoryCarousel: View {
     let items: [HomeStoryItem]
     let retry: @MainActor () async -> Void
@@ -41,8 +40,6 @@ struct HomeStoryCarousel: View {
 
     /// The story in view, `nil` until the customer pages (the first one).
     @State private var currentID: String?
-    /// The panel colors by photo URL, filled as the photos are sampled.
-    @State private var tints: [URL: ProductPanelTint] = [:]
 
     /// The stories that are loading or have products.
     private var visible: [HomeStoryItem] {
@@ -71,7 +68,6 @@ struct HomeStoryCarousel: View {
     private func panel(_ stories: [HomeStoryItem]) -> some View {
         let shape = RoundedRectangle(cornerRadius: KXRadius.large, style: .continuous)
         let index = stories.firstIndex { $0.id == currentID } ?? 0
-        let tint = stories[index].photo.flatMap { tints[$0.url] }
         return VStack(spacing: KXSpacing.m) {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .top, spacing: KXSpacing.s) {
@@ -94,31 +90,18 @@ struct HomeStoryCarousel: View {
         .frame(maxWidth: .infinity)
         .background {
             LinearGradient(
-                colors: [tint?.top ?? KXColor.surfaceElevated, tint?.bottom ?? KXColor.surface],
+                colors: [KXColor.storePanel, KXColor.storePanelDeep],
                 startPoint: .top,
                 endPoint: .bottom
             )
         }
         .clipShape(shape)
         .environment(\.colorScheme, .dark)
-        .kxAnimation(.fade, value: tint)
         .padding(.horizontal, KXSpacing.gutter)
         // On a wide iPad window the panel keeps the proportions of a phone card.
         .kxReadableWidth()
-        .task(id: stories.map(\.photo?.url)) {
-            await loadTints(of: stories)
-        }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("home.stories")
-    }
-
-    /// Samples the photos of `stories` in order, so the first panel color arrives first.
-    private func loadTints(of stories: [HomeStoryItem]) async {
-        for photo in stories.compactMap(\.photo) where tints[photo.url] == nil {
-            if let tint = await ProductImageTint.shared.panel(for: photo) {
-                tints[photo.url] = tint
-            }
-        }
     }
 }
 

@@ -37,11 +37,11 @@ change.
   `fieldActivation`, `AppRouter.searchFieldRequests`). Below it a story carousel of featured
   collections (bestsellers, Windows, Office, Server, Entwicklung): one large rounded panel in
   which the stories page sideways, each with the photo of the collection's first product, a tag,
-  four product tiles and "Kategorie entdecken", and fixed page dots. The panel takes the color of
-  the photo in view (`TintToken` in DesignTokens, `ProductImageTint` in CommerceUI), always dark
-  enough for the light text (WCAG AA). Then the trust facts as icon rows, "Unsere Kategorien"
-  (category tiles above a dark product panel tinted by the category's photo), the bestsellers,
-  the dark sale panel, "Zuletzt angesehen", "Nach Version finden" (Windows 11, Windows 10,
+  four product tiles and "Kategorie entdecken", and fixed page dots. The panel is the KARINEX store
+  color `#0E4343` (`TintToken.store`, `KXColor.storePanel`, owner request), with light text
+  that meets WCAG AA. Then the trust facts as icon rows, "Unsere Kategorien"
+  (category tiles above a product panel in the store color), the bestsellers,
+  the sale panel in the store color, "Zuletzt angesehen", "Nach Version finden" (Windows 11, Windows 10,
   Office 2024, Office 2021), service tiles into the account area (help, licenses, orders), the
   Ratgeber as tall story tiles and the support card. The modules and their store collections are
   described by `HomeModules`; the hero with "Zum Sortiment" is gone, and so is the chip bar

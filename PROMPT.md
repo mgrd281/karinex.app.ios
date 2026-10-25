@@ -139,9 +139,9 @@ Opening (owner request): the launch screen shows the store logo centered on the 
 ### 6.1 Start (Home)
 Laid out like the home screen of the About You app (owner request of 2026-10-25), with KARINEX's own products; every product, photo and price comes from Shopify.
 - Top: the logo with the Merkliste heart (number of saved products beside it) scrolls away; the search field stays pinned and opens Suche with the cursor in the field.
-- Story carousel: one large rounded panel tinted with the color of the product photo in view (always dark enough for light text), the stories paging sideways inside it (Bestseller, Windows, Office, Server, Entwicklung), each with the photo of the collection's first product, a tag, four product tiles and "Kategorie entdecken"; fixed page dots.
+- Story carousel: one large rounded panel in the store color `#0E4343`, the stories paging sideways inside it (Bestseller, Windows, Office, Server, Entwicklung), each with the photo of the collection's first product, a tag, four product tiles and "Kategorie entdecken"; fixed page dots.
 - Trust strip: "Lieferung per E-Mail in Minuten" · "Apple Pay, Kreditkarte, Klarna" · "100 Tage Geld-zurück*" (with the condition in a tappable footnote) · "Support Mo. bis So., 06:00 bis 23:00 Uhr".
-- "Unsere Kategorien": category tiles (Windows · Office · Server · Office für Mac · Entwicklung · Microsoft 365 · Alle Kategorien) above a dark panel with the products of the chosen category, tinted by its photo, and "Alle anzeigen".
+- "Unsere Kategorien": category tiles (Windows · Office · Server · Office für Mac · Entwicklung · Microsoft 365 · Alle Kategorien) above a store color panel with the products of the chosen category and "Alle anzeigen".
 - Bestseller row; the dark sale panel with the products of the sale collection (compare-at price, savings badge and the title in sale red).
 - "Zuletzt angesehen", "Nach Version finden" (Windows 11, Windows 10, Office 2024, Office 2021 as photo tiles), service tiles into Konto (Hilfe und Support, Meine Lizenzen, Meine Bestellungen), "Ratgeber" as tall story tiles (blog articles), support card (WhatsApp + email).
 
