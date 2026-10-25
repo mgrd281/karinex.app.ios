@@ -41,3 +41,20 @@ extension View {
         padding(.horizontal, KXSpacing.gutter)
     }
 }
+
+// MARK: - Readable width
+
+extension View {
+    /// Limits running text and forms to a comfortable line length and centers them, so they do
+    /// not stretch across a wide iPad window. On iPhone the limit is never reached.
+    public func kxReadableWidth() -> some View {
+        frame(maxWidth: KXLayoutMetrics.readableWidth)
+            .frame(maxWidth: .infinity)
+    }
+}
+
+/// Layout metrics that are not spacing tokens.
+public enum KXLayoutMetrics {
+    /// The widest column of running text, about 75 characters of body text.
+    public static let readableWidth: CGFloat = 720
+}

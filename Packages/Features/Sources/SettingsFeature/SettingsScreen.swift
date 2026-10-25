@@ -66,6 +66,7 @@ public struct SettingsScreen: View {
             }
             .padding(.horizontal, KXSpacing.gutter)
             .padding(.vertical, KXSpacing.m)
+            .kxReadableWidth()
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("screen.settings")

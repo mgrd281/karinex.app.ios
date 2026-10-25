@@ -141,6 +141,7 @@ public struct ArticleScreen: View {
         }
         .padding(.horizontal, KXSpacing.gutter)
         .padding(.vertical, KXSpacing.m)
+        .kxReadableWidth()
     }
 
     private func byline(for article: Article) -> String {

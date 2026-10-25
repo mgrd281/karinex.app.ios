@@ -29,8 +29,10 @@ public struct WishlistScreen: View {
     }
 
     private var columns: [GridItem] {
-        let count = dynamicTypeSize.isAccessibilitySize ? 1 : 2
-        return Array(repeating: GridItem(.flexible(), spacing: KXSpacing.m, alignment: .top), count: count)
+        if dynamicTypeSize.isAccessibilitySize {
+            return [GridItem(.flexible(), spacing: KXSpacing.m, alignment: .top)]
+        }
+        return [GridItem(.adaptive(minimum: 160, maximum: 280), spacing: KXSpacing.m, alignment: .top)]
     }
 
     public var body: some View {

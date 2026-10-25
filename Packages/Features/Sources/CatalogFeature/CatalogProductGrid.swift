@@ -5,7 +5,8 @@ import SwiftUI
 
 // MARK: - CatalogProductGrid
 
-/// A lazy two-column grid of ``ProductCardView``s (one column at accessibility text sizes).
+/// A lazy grid of ``ProductCardView``s: two columns on iPhone, more on iPad, one at
+/// accessibility text sizes.
 /// Each card is a button with the identifier `product.card.<handle>`.
 ///
 /// The images of every loaded product are prefetched at the rendered card width as soon as a
@@ -20,9 +21,15 @@ struct CatalogProductGrid: View {
     @State private var prefetcher = ProductImagePrefetcher()
     @State private var width: CGFloat = 0
 
+    /// One column at accessibility sizes, else two on iPhone and up to five on wide iPad
+    /// layouts (one column per 200 points).
     private var columnCount: Int {
-        dynamicTypeSize.isAccessibilitySize ? 1 : 2
+        guard !dynamicTypeSize.isAccessibilitySize else { return 1 }
+        return min(max(Int(width / Self.minimumColumnWidth), 2), Self.maximumColumns)
     }
+
+    static let minimumColumnWidth: CGFloat = 200
+    static let maximumColumns = 5
 
     private var columnWidth: CGFloat {
         let spacing = KXSpacing.m * CGFloat(columnCount - 1)

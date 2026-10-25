@@ -46,6 +46,7 @@ public struct LegalListScreen: View {
             }
             .padding(.horizontal, KXSpacing.gutter)
             .padding(.vertical, KXSpacing.m)
+            .kxReadableWidth()
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("screen.legal")
@@ -216,6 +217,7 @@ public struct LegalDocumentScreen: View {
         }
         .padding(.horizontal, KXSpacing.gutter)
         .padding(.vertical, KXSpacing.m)
+        .kxReadableWidth()
     }
 }
 
