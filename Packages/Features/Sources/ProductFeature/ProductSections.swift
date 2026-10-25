@@ -6,11 +6,18 @@ import SwiftUI
 // MARK: - ProductSummarySection
 
 /// The top of the product: the bold title, the price of the selected variant with the market's
-/// tax note and compare-at price, availability and the delivery form as icon rows, and the
-/// variant pills when there is more than one variant.
+/// tax note, compare-at price and the store's lowest price of the last 30 days, the thumbnails
+/// of the linked products, availability and the delivery form as icon rows, and the variant
+/// pills when there is more than one variant.
 struct ProductSummarySection: View {
     let product: Product
     let variant: ProductVariant?
+    /// The store's lowest price of the last 30 days, shown with a reduced price.
+    let lowestPrice: MoneyV2?
+    /// The thumbnails of the linked products row; empty hides the row.
+    let linkedProducts: [ProductSummary]
+    /// Opens a linked product.
+    let onSelectLinkedProduct: @MainActor (ProductSummary) -> Void
     let fulfillment: ProductFulfillment
     let showsVariantPicker: Bool
     let selectedVariantID: ShopifyID?
@@ -36,9 +43,13 @@ struct ProductSummarySection: View {
                 PriceText(
                     price: variant.price,
                     compareAtPrice: variant.compareAtPrice,
-                    requiresShipping: variant.requiresShipping
+                    requiresShipping: variant.requiresShipping,
+                    lowestPrice: lowestPrice
                 )
                 .accessibilityIdentifier("product.price")
+            }
+            if !linkedProducts.isEmpty {
+                ProductLinkedProductsRow(products: linkedProducts, currentID: product.id, onSelect: onSelectLinkedProduct)
             }
             ProductAvailabilityRow(isAvailable: variant?.availableForSale ?? product.availableForSale, fulfillment: fulfillment)
             if showsVariantPicker {

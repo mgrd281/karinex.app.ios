@@ -19,9 +19,10 @@ public enum ProductCardHighlight: Sendable, Hashable {
 /// A ``KXProductCard`` for a Shopify ``ShopifyKit/ProductSummary``: title, price, compare-at
 /// price and the market's tax note from ``PriceDisplay``, the image through ``ProductImage``.
 ///
-/// Badges: a red "Angebot" when the product is reduced (compare-at price above the price);
-/// otherwise the caller's ``ProductCardHighlight`` in ink. No ratings, review counts or invented
-/// claims. A product that cannot be bought shows "Derzeit nicht verfügbar".
+/// Badges: when the product is reduced (compare-at price above the price) a red badge with the
+/// reduction ("-80 %"), or "Angebot" when it is below 1 %, and the price in sale red; otherwise
+/// the caller's ``ProductCardHighlight`` in ink. No ratings, review counts or invented claims.
+/// A product that cannot be bought shows "Derzeit nicht verfügbar".
 ///
 /// The card is not a button; wrap it in a `Button` or `NavigationLink`.
 public struct ProductCardView: View {
@@ -57,7 +58,7 @@ public struct ProductCardView: View {
     ) -> KXProductCardModel {
         let display = PriceDisplay(product: product, country: country, locale: locale)
         let badge: String? = if display.compareAtPrice != nil {
-            String(localized: "commerce.product.badge.sale", bundle: .module)
+            display.savingsText ?? String(localized: "commerce.product.badge.sale", bundle: .module)
         } else if highlight == .bestseller {
             String(localized: "commerce.product.badge.bestseller", bundle: .module)
         } else {

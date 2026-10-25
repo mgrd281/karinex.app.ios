@@ -142,9 +142,15 @@ private struct CatalogDirectoryContent: View {
 // MARK: - Tile
 
 /// A curated collection: the collection image or a symbol on a white disc, and the bold title,
-/// on a light grey panel.
+/// on a light grey panel. The sale collection's symbol, title and arrow are sale red, as fashion
+/// retail apps mark their sale.
 private struct CatalogCollectionTile: View {
     let collection: CollectionSummary
+
+    /// The color of symbol, title and arrow.
+    private var tint: Color {
+        CatalogDirectory.isSale(collection.handle) ? KXColor.urgencyText : KXColor.textPrimary
+    }
 
     @ScaledMetric(relativeTo: .title) private var ringDiameter: CGFloat = 48
     @ScaledMetric(relativeTo: .body) private var minimumHeight: CGFloat = 150
@@ -159,7 +165,7 @@ private struct CatalogCollectionTile: View {
                 } else {
                     Image(systemName: CatalogDirectory.systemImage(for: collection.handle))
                         .kxFont(.title3)
-                        .foregroundStyle(KXColor.textPrimary)
+                        .foregroundStyle(tint)
                         .frame(width: ringDiameter, height: ringDiameter)
                         .background(KXColor.surfaceElevated, in: Circle())
                         .accessibilityHidden(true)
@@ -168,13 +174,13 @@ private struct CatalogCollectionTile: View {
                 HStack(alignment: .lastTextBaseline, spacing: KXSpacing.xs) {
                     Text(collection.title)
                         .kxFont(.title3)
-                        .foregroundStyle(KXColor.textPrimary)
+                        .foregroundStyle(tint)
                         .multilineTextAlignment(.leading)
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Image(systemName: "arrow.right")
                         .kxFont(.footnote)
-                        .foregroundStyle(KXColor.accentText)
+                        .foregroundStyle(CatalogDirectory.isSale(collection.handle) ? KXColor.urgencyText : KXColor.accentText)
                         .accessibilityHidden(true)
                 }
             }

@@ -147,6 +147,8 @@ Tab bar: the system tab bar **Start · Shop · Suche · Warenkorb · Konto** (ba
 
 ### 6.3 Product detail (the most important screen)
 - Gallery edge to edge on the light grey photo tile (zoom, page dots, wishlist heart), bold title, price with "inkl. MwSt." logic per market, compare-at price, availability.
+- **Sale look** (owner request, reference: the About You app): a reduced price is sale red next to the struck-through compare-at price, the reduction badge ("-80 %") sits above it, and the store's lowest price of the last 30 days (`karinex.lowest_price_30d`) follows below when Shopify provides it. Product cards show the reduction badge and the red price.
+- **Linked products** (owner request): the products the owner linked in the web shop (list metafield `custom.siblings`) as photo thumbnails below the price, the current one outlined; tapping another opens it. A "Passend dazu" row shows Shopify's `COMPLEMENTARY` recommendations (set up in Search & Discovery).
 - Variant selector (segmented or chips) with live price update.
 - **Key facts** table with dot-leader rows (label ...... value) from `karinex.*` metafields: Lizenztyp, Architektur, Geräteanzahl, Lieferform, Aktivierungsart, Sprachen, Support-Status, MPN.
 - **"So läuft es ab"** 3-step timeline: Bestellen → Bezahlen → Schlüssel per E-Mail (Minuten). For physical variants: shipping timeline instead.

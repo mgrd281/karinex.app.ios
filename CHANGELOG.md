@@ -31,6 +31,16 @@ change.
   "Zum Sortiment" button; the four brand facts are icon rows with hairlines
   (`KXTrustStrip` arrangement `.list`) instead of tiles. The KARINEX wordmark sits centered
   above the hero.
+- **Sale look like About You** (owner request): reduced prices are sale red next to the
+  struck-through former price; product cards show the reduction ("-80 %") as their badge
+  instead of "Angebot"; on the product page the reduction badge sits above the price and the
+  store's lowest price of the last 30 days (`karinex.lowest_price_30d`, euro cents) follows
+  below when Shopify provides it. The sale collection is sale red in the Shop tab.
+- **Linked products on the product page** (owner request): the products linked in the web shop
+  (list metafield `custom.siblings`, new `Product.linkedProducts`) appear as photo thumbnails
+  below the price, the current one outlined in ink; a new "Passend dazu" row shows Shopify's
+  `COMPLEMENTARY` recommendations next to "Ähnliche Produkte". Linked products need the
+  Storefront token and Storefront access for the metafield (see docs/OWNER_INPUTS.md).
 - **Store logo:** `KXWordmark` now draws the KARINEX logo of the web shop (template asset
   `KarinexLogo` in the DesignSystem resources, tinted like text, scaled with Dynamic Type) instead
   of typeset letters. The source file is kept in `Tools/Brand/store-logo.png`, and the app icon

@@ -45,6 +45,8 @@ struct CatalogDirectoryTests {
         #expect(!symbols.contains("square.grid.2x2"))
         #expect(CatalogDirectory.systemImage(for: "windows-server-2022") == "server.rack")
         #expect(CatalogDirectory.systemImage(for: "unknown") == "square.grid.2x2")
+        #expect(CatalogDirectory.isSale("sale"))
+        #expect(!CatalogDirectory.isSale("bestseller"))
     }
 }
 

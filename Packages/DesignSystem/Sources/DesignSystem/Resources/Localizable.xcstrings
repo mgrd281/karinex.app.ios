@@ -2935,6 +2935,78 @@
         }
       }
     },
+    "kx.price.lowest_30_days %@" : {
+      "comment" : "Line below a reduced price on the product page: the lowest price of the last 30 days, as stored by the shop (required for price reductions in the EU). %@ is the price, already formatted with currency by the app, for example \"24,90 €\". Do not add currency symbols. Neutral, no urgency.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laveste pris de seneste 30 dage: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niedrigster Preis der letzten 30 Tage: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lowest price in the last 30 days: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precio más bajo de los últimos 30 días: %@"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alin hinta viimeisten 30 päivän aikana: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prix le plus bas des 30 derniers jours : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prezzo più basso degli ultimi 30 giorni: %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laagste prijs van de afgelopen 30 dagen: %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Najniższa cena z ostatnich 30 dni: %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preço mais baixo dos últimos 30 dias: %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lägsta pris de senaste 30 dagarna: %@"
+          }
+        }
+      }
+    },
     "kx.section.show_all" : {
       "comment" : "Default label of the small text button at the trailing end of a section header (for example next to \"Bestseller\") that opens the full list. Shares one line with the serif section title: max ~15 characters.",
       "extractionState" : "manual",

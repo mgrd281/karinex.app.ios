@@ -370,10 +370,18 @@ public struct ProductMetafields: Sendable, Hashable {
         date(Identifier.dealEndsAt) ?? date(Identifier.offerEndsAt)
     }
 
-    /// `karinex.lowest_price_30d`: a `money` metafield keeps its own currency; a plain number
-    /// is interpreted in `currency` (pass the currency of the current market's prices).
+    /// `karinex.lowest_price_30d`: a `money` metafield keeps its own currency; a decimal number
+    /// is interpreted in `currency` (pass the currency of the current market's prices). The
+    /// store's existing `number_integer` values are euro cents (docs/STORE_AUDIT.md), so they
+    /// count only when `currency` is EUR.
     public func lowestPrice30Days(currency: CurrencyCode) -> MoneyV2? {
-        money(Identifier.lowestPrice30Days, defaultCurrency: currency)
+        guard let metafield = metafield(Identifier.lowestPrice30Days), metafield.type == "number_integer" else {
+            return money(Identifier.lowestPrice30Days, defaultCurrency: currency)
+        }
+        guard currency == .eur, let cents = Self.nonBlank(metafield.value).flatMap({ Int($0) }), cents > 0 else {
+            return nil
+        }
+        return MoneyV2(amount: Decimal(cents) / 100, currencyCode: .eur)
     }
 
     // MARK: Generic accessors

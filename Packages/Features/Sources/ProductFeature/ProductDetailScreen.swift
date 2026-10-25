@@ -221,6 +221,9 @@ private struct ProductDetailBody: View {
                         ProductSummarySection(
                             product: content.product,
                             variant: model.selectedVariant,
+                            lowestPrice: model.lowestPrice,
+                            linkedProducts: model.linkedProducts,
+                            onSelectLinkedProduct: { onRoute(.product(handle: $0.handle)) },
                             fulfillment: model.fulfillment,
                             showsVariantPicker: model.showsVariantPicker,
                             selectedVariantID: model.selectedVariantID,
@@ -263,14 +266,7 @@ private struct ProductDetailBody: View {
                 }
                 .padding(.horizontal, KXSpacing.gutter)
 
-                ProductCarouselSection(
-                    title: String(localized: "product.comparison.title", bundle: .module),
-                    eyebrow: String(localized: "product.comparison.eyebrow", bundle: .module),
-                    state: model.comparison,
-                    retry: { await model.loadComparison() },
-                    onSelect: { onRoute(.product(handle: $0.handle)) }
-                )
-                .accessibilityIdentifier("product.comparison")
+                recommendationRows
 
                 if !content.faq.isEmpty {
                     ProductFAQSection(items: content.faq)
@@ -290,6 +286,30 @@ private struct ProductDetailBody: View {
         .fullScreenCover(item: $viewer) { request in
             ProductImageViewer(images: content.images, initialIndex: request.index)
         }
+    }
+}
+
+extension ProductDetailBody {
+    /// "Passend dazu" (Shopify's `COMPLEMENTARY` recommendations) and "Ähnliche Produkte"
+    /// (`RELATED`); each row hides itself when it is empty.
+    @ViewBuilder private var recommendationRows: some View {
+        ProductCarouselSection(
+            title: String(localized: "product.complementary.title", bundle: .module),
+            eyebrow: String(localized: "product.complementary.eyebrow", bundle: .module),
+            state: model.complementary,
+            retry: { await model.loadComplementary() },
+            onSelect: { onRoute(.product(handle: $0.handle)) }
+        )
+        .accessibilityIdentifier("product.complementary")
+
+        ProductCarouselSection(
+            title: String(localized: "product.comparison.title", bundle: .module),
+            eyebrow: String(localized: "product.comparison.eyebrow", bundle: .module),
+            state: model.comparison,
+            retry: { await model.loadComparison() },
+            onSelect: { onRoute(.product(handle: $0.handle)) }
+        )
+        .accessibilityIdentifier("product.comparison")
     }
 }
 

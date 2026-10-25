@@ -110,6 +110,12 @@ struct OperationDocumentTests {
     func metafieldsAreConditional() {
         #expect(ProductByHandleQuery.document.contains("metafields(identifiers: $metafieldIdentifiers) @include(if: $includeMetafields)"))
         #expect(ProductByHandleQuery.document.components(separatedBy: "metafields(").count == 2)
+        #expect(
+            ProductByHandleQuery.document.contains(
+                #"linkedProducts: metafield(namespace: "custom", key: "siblings") @include(if: $includeMetafields)"#
+            )
+        )
+        #expect(ProductByHandleQuery.document.components(separatedBy: "metafield(").count == 2)
     }
 
     @Test("The cart mutation requests user errors and warnings")

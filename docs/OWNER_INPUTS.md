@@ -21,7 +21,7 @@ store were filled in; everything else is still open. Secrets never go into git: 
 | Collection handles | Verified, differ from PROMPT.md | See [STORE_AUDIT.md](STORE_AUDIT.md): `microsoft-office`, `windows-server`, no `blitzangebote` | Phase 1 |
 | Impressum page handle | Assumed, **please confirm** | The app shows the page `rechtliche-hinweise` as Impressum and `widerrufsrecht` as Widerrufsbelehrung (refund policy as fallback) | Phase 2 |
 | Blog handle | Verified | `news` and `guides` | Phase 1 |
-| Metafield definitions | **Open** | See [STORE_AUDIT.md](STORE_AUDIT.md), owner actions 2 and 3 | Phase 1 |
+| Metafield definitions | **Open** | See [STORE_AUDIT.md](STORE_AUDIT.md), owner actions 2 and 3. For the linked products row also `custom.siblings` (list of products) and for the price note `karinex.lowest_price_30d`, each with Storefront access "Read" | Phase 1 |
 | Logo | Done | The store logo of www.karinex.de (`Tools/Brand/store-logo.png`), shown by `KXWordmark` | |
 | App icon | Done, replace if a dedicated icon arrives | `App/Resources/Assets.xcassets/AppIcon.appiconset`: the white store logo on black (1024 x 1024 PNG, no alpha) | Phase 1 |
 | Reviewer account, test product, 100 % discount code | **Open** | Needed for App Review | Phase 3 |

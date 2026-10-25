@@ -28,6 +28,14 @@ enum CatalogDirectory {
     /// The number of collections requested from the store (the live store has about 30).
     static let requestLimit = 100
 
+    /// The store's sale collection, whose tile is drawn in sale red.
+    static let saleHandle = "sale"
+
+    /// Whether `handle` is the sale collection.
+    static func isSale(_ handle: String) -> Bool {
+        handle == saleHandle
+    }
+
     /// The listed collections split into the curated ones (in curated order) and the rest (in
     /// the given order). Duplicate handles are listed once.
     static func arrange(_ collections: [CollectionSummary]) -> CatalogSections {
@@ -50,7 +58,7 @@ enum CatalogDirectory {
         case "windows-server": "server.rack"
         case "visual-studio-entwicklungstools": "chevron.left.forwardslash.chevron.right"
         case "bestseller": "sparkles"
-        case "sale": "tag"
+        case saleHandle: "tag"
         case "microsoft-tools", "microsoft-project", "microsoft-visio", "microsoft-sql-server": "wrench.and.screwdriver"
         case "microsoft-365-abonnement": "icloud"
         case "microsoft-office-fur-mac": "laptopcomputer"

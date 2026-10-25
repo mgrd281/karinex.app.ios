@@ -27,7 +27,8 @@ public struct ProductByHandleQuery: GraphQLOperation {
     public static let operationName = "ProductByHandle"
     /// A query.
     public static let kind = GraphQLOperationKind.query
-    /// The operation followed by `ProductDetail`, `ImageFields` and `MoneyFields`.
+    /// The operation followed by `ProductDetail`, `ProductSummaryFields`, `ImageFields` and
+    /// `MoneyFields`.
     public static let document = """
         query ProductByHandle(
           $handle: String!
@@ -39,7 +40,8 @@ public struct ProductByHandleQuery: GraphQLOperation {
           }
         }
 
-        """ + StorefrontFragments.productDetail + "\n\n" + StorefrontFragments.image + "\n\n" + StorefrontFragments.money + "\n"
+        """ + StorefrontFragments.productDetail + "\n\n" + StorefrontFragments.productSummary + "\n\n"
+        + StorefrontFragments.image + "\n\n" + StorefrontFragments.money + "\n"
 
     /// The variables of this call.
     public let variables: Variables

@@ -155,7 +155,7 @@ struct ProductMetafieldsTests {
         #expect(metafields([(ID.detailsContent, "rich_text_field", "kaputt")]).detailsContent == nil)
     }
 
-    @Test("Lowest price of 30 days as money JSON or plain decimal")
+    @Test("Lowest price of 30 days as money JSON, plain decimal or euro cents")
     func lowestPrice() {
         let money = metafields([(ID.lowestPrice30Days, "money", #"{"amount":"24.90","currency_code":"EUR"}"#)])
         #expect(money.lowestPrice30Days(currency: .chf) == MoneyV2(amount: decimal("24.9"), currencyCode: .eur))
@@ -165,6 +165,12 @@ struct ProductMetafieldsTests {
 
         #expect(metafields([(ID.lowestPrice30Days, "money", "{}")]).lowestPrice30Days(currency: .eur) == nil)
         #expect(metafields([(ID.lowestPrice30Days, "number_decimal", "24,90")]).lowestPrice30Days(currency: .eur) == nil)
+
+        let cents = metafields([(ID.lowestPrice30Days, "number_integer", "2490")])
+        #expect(cents.lowestPrice30Days(currency: .eur) == MoneyV2(amount: decimal("24.9"), currencyCode: .eur))
+        #expect(cents.lowestPrice30Days(currency: .chf) == nil)
+        #expect(metafields([(ID.lowestPrice30Days, "number_integer", "0")]).lowestPrice30Days(currency: .eur) == nil)
+        #expect(metafields([(ID.lowestPrice30Days, "number_integer", "24.90")]).lowestPrice30Days(currency: .eur) == nil)
     }
 
     @Test("Products decode metafields from a nullable array and drop nulls")

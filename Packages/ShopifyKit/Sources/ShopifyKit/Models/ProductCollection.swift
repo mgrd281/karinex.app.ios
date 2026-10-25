@@ -48,6 +48,22 @@ public struct ProductSummary: Sendable, Hashable, Codable, Identifiable {
         self.requiresShipping = requiresShipping
     }
 
+    /// The summary of a loaded product, for places that list it next to other products (the
+    /// linked products row of the product screen).
+    public init(_ product: Product) {
+        self.init(
+            id: product.id,
+            handle: product.handle,
+            title: product.title,
+            vendor: product.vendor,
+            availableForSale: product.availableForSale,
+            featuredImage: product.featuredImage,
+            priceRange: product.priceRange,
+            compareAtPriceRange: product.compareAtPriceRange,
+            requiresShipping: product.variants.first?.requiresShipping
+        )
+    }
+
     /// The lowest price, shown as "ab" price for multi-variant products.
     public var price: MoneyV2 {
         priceRange.minVariantPrice

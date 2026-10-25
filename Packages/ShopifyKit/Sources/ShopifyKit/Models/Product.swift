@@ -216,6 +216,11 @@ public struct Product: Sendable, Hashable, Codable, Identifiable {
     /// The requested metafields that exist on the product. Empty in tokenless mode, where
     /// metafields are not requested.
     public let metafields: [Metafield]
+    /// The products the merchant linked to this one in the web shop (the list metafield
+    /// `custom.siblings`, for example the other editions of a product), in the merchant's
+    /// order. May contain the product itself. Empty in tokenless mode, when nothing is linked
+    /// and when the metafield has no Storefront access.
+    public let linkedProducts: [ProductSummary]
 
     /// Creates a product.
     public init(
@@ -236,7 +241,8 @@ public struct Product: Sendable, Hashable, Codable, Identifiable {
         priceRange: PriceRange,
         compareAtPriceRange: PriceRange,
         onlineStoreUrl: URL?,
-        metafields: [Metafield]
+        metafields: [Metafield],
+        linkedProducts: [ProductSummary] = []
     ) {
         self.id = id
         self.handle = handle
@@ -256,6 +262,7 @@ public struct Product: Sendable, Hashable, Codable, Identifiable {
         self.compareAtPriceRange = compareAtPriceRange
         self.onlineStoreUrl = onlineStoreUrl
         self.metafields = metafields
+        self.linkedProducts = linkedProducts
     }
 
     // MARK: Derived values
@@ -292,10 +299,44 @@ public struct Product: Sendable, Hashable, Codable, Identifiable {
     private enum CodingKeys: String, CodingKey {
         case id, handle, title, vendor, productType, tags, availableForSale, descriptionHtml, featuredImage
         case images, options, variants, seo, collections, priceRange, compareAtPriceRange, onlineStoreUrl, metafields
+        case linkedProducts
+    }
+
+    /// `linkedProducts` as selected by `ProductDetail`: the metafield with its references as
+    /// `{references: {nodes: [...]}}`.
+    private struct LinkedProductsField: Codable {
+        let references: Connection<LinkedProductNode>?
+
+        init(products: [ProductSummary]) {
+            references = Connection(nodes: products.map(LinkedProductNode.init))
+        }
+
+        var products: [ProductSummary] {
+            references?.nodes.compactMap(\.product) ?? []
+        }
+    }
+
+    /// One reference of `custom.siblings`. A reference that is not a product (Shopify returns
+    /// `{}` for other reference types) or cannot be read is dropped instead of failing the product.
+    private struct LinkedProductNode: Codable {
+        let product: ProductSummary?
+
+        init(_ product: ProductSummary) {
+            self.product = product
+        }
+
+        init(from decoder: any Decoder) throws {
+            product = try? ProductSummary(from: decoder)
+        }
+
+        func encode(to encoder: any Encoder) throws {
+            try product?.encode(to: encoder)
+        }
     }
 
     /// Decodes the Storefront shape: `images`, `variants` and `collections` as `{nodes: [...]}`,
-    /// `metafields` as a nullable array whose `null` entries (missing metafields) are dropped.
+    /// `metafields` as a nullable array whose `null` entries (missing metafields) are dropped,
+    /// `linkedProducts` as a nullable metafield whose product references are kept.
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(ShopifyID.self, forKey: .id)
@@ -316,6 +357,7 @@ public struct Product: Sendable, Hashable, Codable, Identifiable {
         compareAtPriceRange = try container.decode(PriceRange.self, forKey: .compareAtPriceRange)
         onlineStoreUrl = try container.decodeIfPresent(URL.self, forKey: .onlineStoreUrl)
         metafields = try container.decodeIfPresent([Metafield?].self, forKey: .metafields)?.compactMap(\.self) ?? []
+        linkedProducts = try container.decodeIfPresent(LinkedProductsField.self, forKey: .linkedProducts)?.products ?? []
     }
 
     /// Encodes the same shape `init(from:)` reads, so cached products decode again.
@@ -339,5 +381,8 @@ public struct Product: Sendable, Hashable, Codable, Identifiable {
         try container.encode(compareAtPriceRange, forKey: .compareAtPriceRange)
         try container.encodeIfPresent(onlineStoreUrl, forKey: .onlineStoreUrl)
         try container.encode(metafields, forKey: .metafields)
+        if !linkedProducts.isEmpty {
+            try container.encode(LinkedProductsField(products: linkedProducts), forKey: .linkedProducts)
+        }
     }
 }

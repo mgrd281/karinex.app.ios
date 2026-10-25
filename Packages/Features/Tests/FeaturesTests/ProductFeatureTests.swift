@@ -50,9 +50,73 @@ struct ProductDetailLoadingTests {
 
         #expect(model.comparison.value?.map(\.handle) == (1...6).map { "product-\($0)" })
         let requests = await catalog.recommendationRequests
-        #expect(requests.count == 1)
-        #expect(requests.first?.productID == ProductFixtures.productID)
-        #expect(requests.first?.intent == .related)
+        #expect(requests.count == 2)
+        #expect(requests.allSatisfy { $0.productID == ProductFixtures.productID })
+        #expect(Set(requests.map(\.intent)) == [.related, .complementary])
+    }
+
+    @Test("Passend dazu loads COMPLEMENTARY recommendations without the product and its linked products")
+    func complementaryRow() async {
+        let linked = [ProductFixtures.summary(1), ProductFixtures.summary(2)]
+        let complements = [ProductFixtures.summary(0, id: ProductFixtures.productID)] + (1...9).map { ProductFixtures.summary($0) }
+        let catalog = ProductStubCatalogRepository(
+            product: ProductFixtures.product(linkedProducts: linked),
+            complementary: complements
+        )
+        let model = makeModel(catalog: catalog)
+
+        await model.load()
+
+        #expect(model.complementary.value?.map(\.handle) == (3...8).map { "product-\($0)" })
+        #expect(model.comparison == .empty)
+    }
+
+    @Test("A failing Passend dazu row keeps the comparison row and the product")
+    func complementaryFailure() async {
+        let catalog = ProductStubCatalogRepository(
+            product: ProductFixtures.product(),
+            recommendations: [ProductFixtures.summary(1)],
+            complementary: [ProductFixtures.summary(2)]
+        )
+        await catalog.failNextRecommendations(with: ShopifyError.network(.offline), intent: .complementary)
+        let model = makeModel(catalog: catalog)
+
+        await model.load()
+
+        #expect(model.content != nil)
+        #expect(model.comparison.value?.map(\.handle) == ["product-1"])
+        #expect(model.complementary.error?.kind == .offline)
+
+        await model.loadComplementary()
+        #expect(model.complementary.value?.map(\.handle) == ["product-2"])
+    }
+
+    @Test("Linked products: merchant order, the product in its place or first, hidden without others")
+    func linkedProducts() async {
+        let current = ProductFixtures.summary(0, id: ProductFixtures.productID)
+        let ordered = ProductFixtures.product(linkedProducts: [
+            ProductFixtures.summary(1), current, ProductFixtures.summary(2), ProductFixtures.summary(1),
+        ])
+        #expect(ProductDetailViewModel.linkedProducts(of: ordered).map(\.id) == [
+            ShopifyID("gid://shopify/Product/1"), ProductFixtures.productID, ShopifyID("gid://shopify/Product/2"),
+        ])
+
+        let withoutSelf = ProductFixtures.product(linkedProducts: [ProductFixtures.summary(3)])
+        let thumbnails = ProductDetailViewModel.linkedProducts(of: withoutSelf)
+        #expect(thumbnails.map(\.id) == [ProductFixtures.productID, ShopifyID("gid://shopify/Product/3")])
+        #expect(thumbnails.first?.handle == ProductFixtures.handle)
+        #expect(thumbnails.first?.featuredImage == withoutSelf.featuredImage)
+
+        #expect(ProductDetailViewModel.linkedProducts(of: ProductFixtures.product(linkedProducts: [current])).isEmpty)
+        #expect(ProductDetailViewModel.linkedProducts(of: ProductFixtures.product()).isEmpty)
+
+        let many = ProductFixtures.product(linkedProducts: (1...20).map { ProductFixtures.summary($0) })
+        #expect(ProductDetailViewModel.linkedProducts(of: many).count == ProductDetailViewModel.linkedProductsLimit)
+
+        let model = makeModel(catalog: ProductStubCatalogRepository(product: ordered))
+        #expect(model.linkedProducts.isEmpty)
+        await model.load()
+        #expect(model.linkedProducts.count == 3)
     }
 
     @Test("Without recommendations the comparison row is empty, which hides it")
@@ -91,6 +155,7 @@ struct ProductDetailLoadingTests {
         #expect(model.content == nil)
         #expect(model.state.error == nil)
         #expect(model.comparison == .empty)
+        #expect(model.complementary == .empty)
         #expect(model.selectedVariant == nil)
     }
 

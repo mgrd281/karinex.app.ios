@@ -6,7 +6,8 @@ import SwiftUI
 // MARK: - PriceDisplay
 
 /// The display strings of a price for ``KXPriceTag``: the formatted price and compare-at price,
-/// the savings badge and the tax note of the market.
+/// the savings badge, the tax note of the market and the store's lowest price of the last 30
+/// days.
 ///
 /// Rules (PROMPT.md sections 3 and 7):
 /// - Money is shown exactly as Shopify returns it for the market, formatted with the user's
@@ -17,6 +18,8 @@ import SwiftUI
 /// - Tax note: "inkl. MwSt." in EU markets (`CountryCode.isEUMember`), where Shopify's prices
 ///   include VAT; nothing in Switzerland and other non-EU markets. "zzgl. Versand" is added only
 ///   when the item requires shipping, never for digital keys.
+/// - The lowest price of the last 30 days is shown only with a reduced price and only in the
+///   price's currency; it comes from the store (`karinex.lowest_price_30d`), never from the app.
 public struct PriceDisplay: Sendable, Hashable {
     /// The tax and shipping note shown below a price.
     public enum TaxNote: Sendable, Hashable, CaseIterable {
@@ -48,6 +51,8 @@ public struct PriceDisplay: Sendable, Hashable {
     public let savingsPercent: Int?
     /// The tax note, or `nil` when the market shows none.
     public let taxNote: TaxNote?
+    /// The formatted lowest price of the last 30 days, or `nil` when it is not shown.
+    public let lowestPrice: String?
 
     /// Creates the display strings for a price.
     ///
@@ -58,14 +63,25 @@ public struct PriceDisplay: Sendable, Hashable {
     ///   - requiresShipping: Whether the item is shipped (physical) rather than delivered digitally.
     ///   - locale: The locale used for formatting, normally the user's (`Locale.current` or the
     ///     SwiftUI `locale` environment value).
-    public init(price: MoneyV2, compareAtPrice: MoneyV2?, country: CountryCode, requiresShipping: Bool, locale: Locale) {
+    ///   - lowestPrice: The store's lowest price of the last 30 days, if known.
+    public init(
+        price: MoneyV2,
+        compareAtPrice: MoneyV2?,
+        country: CountryCode,
+        requiresShipping: Bool,
+        locale: Locale,
+        lowestPrice: MoneyV2? = nil
+    ) {
         self.price = price.formatted(locale: locale)
-        let percent = Self.savingsPercent(price: price, compareAtPrice: compareAtPrice)
-        self.compareAtPrice = Self.isReduced(price: price, compareAtPrice: compareAtPrice)
-            ? compareAtPrice?.formatted(locale: locale)
-            : nil
-        savingsPercent = percent
+        let isReduced = Self.isReduced(price: price, compareAtPrice: compareAtPrice)
+        self.compareAtPrice = isReduced ? compareAtPrice?.formatted(locale: locale) : nil
+        savingsPercent = Self.savingsPercent(price: price, compareAtPrice: compareAtPrice)
         taxNote = Self.taxNote(country: country, requiresShipping: requiresShipping)
+        self.lowestPrice = if isReduced, let lowestPrice, lowestPrice.currencyCode == price.currencyCode, lowestPrice.amount > 0 {
+            lowestPrice.formatted(locale: locale)
+        } else {
+            nil
+        }
     }
 
     /// Creates the display strings for the lowest price of a product summary. A product whose
@@ -143,7 +159,9 @@ public struct PriceDisplay: Sendable, Hashable {
 // MARK: - PriceText
 
 /// A ``KXPriceTag`` for Shopify money: formats with the SwiftUI `locale` and takes the tax note
-/// from the market country in the environment (`EnvironmentValues.commerceCountry`).
+/// from the market country in the environment (`EnvironmentValues.commerceCountry`). A reduced
+/// price is drawn in sale red; the product page passes the store's lowest price of the last 30
+/// days.
 ///
 /// ```swift
 /// PriceText(price: variant.price, compareAtPrice: variant.compareAtPrice, requiresShipping: variant.requiresShipping)
@@ -154,6 +172,7 @@ public struct PriceText: View {
     private let requiresShipping: Bool
     private let size: KXPriceTag.Size
     private let showsSavings: Bool
+    private let lowestPrice: MoneyV2?
 
     @Environment(\.locale) private var locale
     @Environment(\.commerceCountry) private var country
@@ -166,18 +185,21 @@ public struct PriceText: View {
     ///   - requiresShipping: Whether the item is shipped. Digital keys pass `false`.
     ///   - size: The type scale. Defaults to `.regular`.
     ///   - showsSavings: Whether to show the savings badge. Defaults to `true`.
+    ///   - lowestPrice: The store's lowest price of the last 30 days, shown with a reduced price.
     public init(
         price: MoneyV2,
         compareAtPrice: MoneyV2? = nil,
         requiresShipping: Bool,
         size: KXPriceTag.Size = .regular,
-        showsSavings: Bool = true
+        showsSavings: Bool = true,
+        lowestPrice: MoneyV2? = nil
     ) {
         self.price = price
         self.compareAtPrice = compareAtPrice
         self.requiresShipping = requiresShipping
         self.size = size
         self.showsSavings = showsSavings
+        self.lowestPrice = lowestPrice
     }
 
     public var body: some View {
@@ -186,13 +208,15 @@ public struct PriceText: View {
             compareAtPrice: compareAtPrice,
             country: country,
             requiresShipping: requiresShipping,
-            locale: locale
+            locale: locale,
+            lowestPrice: lowestPrice
         )
         KXPriceTag(
             price: display.price,
             compareAtPrice: display.compareAtPrice,
             savings: showsSavings ? display.savingsText : nil,
             taxNote: display.taxNoteText,
+            lowestPrice: display.lowestPrice,
             size: size
         )
     }

@@ -20,14 +20,19 @@ struct ProductCartConfirmation: Sendable, Hashable, Identifiable {
 /// - The product loads once; reloading (pull to refresh) keeps the shown content when it fails
 ///   and reports the failure through ``actionError`` instead.
 /// - The comparison row loads Shopify's `RELATED` recommendations after the product, at most
-///   ``comparisonLimit`` products, without the product itself. A failing row never blocks the
-///   screen.
+///   ``comparisonLimit`` products, without the product itself. The "Passend dazu" row loads the
+///   `COMPLEMENTARY` recommendations the merchant set up in Shopify at the same time, without
+///   the product and its linked products. A failing row never blocks the screen.
+/// - The linked products row shows the products the merchant linked to this one in the web shop
+///   (``ShopifyKit/Product/linkedProducts``), see ``linkedProducts(of:)``.
 /// - Adding goes through the shared ``CartStore``, which creates the cart on the first add.
 @MainActor
 @Observable
 final class ProductDetailViewModel {
-    /// The maximum number of products in the comparison row.
+    /// The maximum number of products in the comparison and "Passend dazu" rows.
     static let comparisonLimit = 6
+    /// The maximum number of thumbnails in the linked products row.
+    static let linkedProductsLimit = 12
 
     /// The handle of the product.
     let handle: String
@@ -36,6 +41,8 @@ final class ProductDetailViewModel {
     private(set) var state: LoadState<ProductDetailContent> = .idle
     /// The load state of the comparison row.
     private(set) var comparison: LoadState<[ProductSummary]> = .idle
+    /// The load state of the "Passend dazu" row.
+    private(set) var complementary: LoadState<[ProductSummary]> = .idle
     /// The variant the customer chose, `nil` until the product has loaded.
     private(set) var selectedVariantID: ShopifyID?
     /// Whether an add to the cart is running.
@@ -96,9 +103,22 @@ final class ProductDetailViewModel {
         selectedVariant?.availableForSale == true
     }
 
+    /// The thumbnails of the linked products row; empty hides the row.
+    var linkedProducts: [ProductSummary] {
+        product.map(Self.linkedProducts(of:)) ?? []
+    }
+
+    /// The store's lowest price of the last 30 days for the selected variant. Only for products
+    /// with one variant, because the store keeps one value per product.
+    var lowestPrice: MoneyV2? {
+        guard let product, product.variants.count == 1, let variant = selectedVariant else { return nil }
+        return product.productMetafields.lowestPrice30Days(currency: variant.price.currencyCode)
+    }
+
     // MARK: Loading
 
-    /// Loads the product and then the comparison row. Keeps shown content while reloading.
+    /// Loads the product and then both recommendation rows. Keeps shown content while
+    /// reloading.
     func load() async {
         if state.value == nil {
             state = .loading
@@ -107,6 +127,7 @@ final class ProductDetailViewModel {
             guard let product = try await catalog.product(handle: handle) else {
                 state = .empty
                 comparison = .empty
+                complementary = .empty
                 return
             }
             let content = await ProductDetailContent.make(product)
@@ -125,7 +146,9 @@ final class ProductDetailViewModel {
             }
             return
         }
-        await loadComparison()
+        async let related: Void = loadComparison()
+        async let complements: Void = loadComplementary()
+        _ = await (related, complements)
     }
 
     /// Loads the comparison row for the loaded product. Keeps shown products while reloading.
@@ -143,11 +166,43 @@ final class ProductDetailViewModel {
         }
     }
 
+    /// Loads the "Passend dazu" row for the loaded product. Keeps shown products while
+    /// reloading.
+    func loadComplementary() async {
+        guard let product else { return }
+        if complementary.value == nil {
+            complementary = .loading
+        }
+        do {
+            let complements = try await catalog.recommendations(productID: product.id, intent: .complementary)
+            let excluded = Set(product.linkedProducts.map(\.id))
+            let products = Self.comparisonProducts(complements.filter { !excluded.contains($0.id) }, excluding: product.id)
+            complementary = LoadState(collection: products)
+        } catch {
+            guard let failure = UserFacingError(error), complementary.value == nil else { return }
+            complementary = .failed(failure)
+        }
+    }
+
     /// The products of the comparison row: `products` without the product itself and without
     /// repeats, at most ``comparisonLimit``.
     static func comparisonProducts(_ products: [ProductSummary], excluding productID: ShopifyID) -> [ProductSummary] {
         var seen: Set<ShopifyID> = [productID]
         return Array(products.filter { seen.insert($0.id).inserted }.prefix(comparisonLimit))
+    }
+
+    /// The thumbnails of the linked products row: the products the merchant linked to `product`
+    /// without repeats, in the merchant's order, with `product` itself in its place, or first
+    /// when the merchant's list leaves it out. At most ``linkedProductsLimit``. Empty unless at
+    /// least one other product is linked.
+    static func linkedProducts(of product: Product) -> [ProductSummary] {
+        var seen: Set<ShopifyID> = []
+        var products = product.linkedProducts.filter { seen.insert($0.id).inserted }
+        guard products.contains(where: { $0.id != product.id }) else { return [] }
+        if !seen.contains(product.id) {
+            products.insert(ProductSummary(product), at: 0)
+        }
+        return Array(products.prefix(linkedProductsLimit))
     }
 
     // MARK: Variants

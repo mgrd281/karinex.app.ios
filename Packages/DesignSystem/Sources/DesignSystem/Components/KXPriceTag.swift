@@ -3,16 +3,22 @@ import SwiftUI
 // MARK: - KXPriceTag
 
 /// Displays a price exactly as formatted by the caller, with an optional struck-through
-/// compare-at price, an optional savings badge and an optional tax note.
+/// compare-at price, an optional savings badge, an optional tax note and an optional lowest
+/// price of the last 30 days.
 ///
 /// The component never formats, computes or rounds money: pass the strings produced from
 /// Shopify's `MoneyV2` for the active market ("12,90 €", "CHF 29.00"). Pass the tax note
 /// ("inkl. MwSt.") only for markets whose prices include tax.
 ///
-/// Layout: price, compare-at price and badge sit on one baseline. When they do not fit (narrow
-/// cards, large text sizes) the compare-at price and badge move below the price, and at the
-/// largest sizes everything stacks. The savings badge is sale red, the one color accent of the
-/// otherwise monochrome interface.
+/// Sale look, as in fashion retail apps: a reduced price (one with a compare-at price) is sale
+/// red, next to the grey struck-through compare-at price. The savings badge is sale red too;
+/// in the ``Size/regular`` size of the product page it sits above the price, in the
+/// ``Size/compact`` size next to it. Sale red is the one color accent of the otherwise
+/// monochrome interface.
+///
+/// Layout: price and compare-at price (and the compact badge) sit on one baseline. When they
+/// do not fit (narrow cards, large text sizes) the compare-at price moves below the price, and
+/// at the largest sizes everything stacks. Tax note and lowest price follow below.
 ///
 /// Empty strings count as missing, so optional Shopify values can be passed through unchanged.
 ///
@@ -35,6 +41,7 @@ public struct KXPriceTag: View {
     private let compareAtPrice: String?
     private let savings: String?
     private let taxNote: String?
+    private let lowestPrice: String?
     private let size: Size
 
     /// Creates a price tag.
@@ -46,44 +53,59 @@ public struct KXPriceTag: View {
     ///   - savings: Already-localized savings text shown in a red badge, e.g. a value the
     ///     caller derived from Shopify prices. `nil` hides the badge.
     ///   - taxNote: Already-localized tax note shown below, e.g. "inkl. MwSt.".
+    ///   - lowestPrice: The formatted lowest price of the last 30 days from the store, shown
+    ///     below as "Niedrigster Preis der letzten 30 Tage: 24,90 €". `nil` hides the line.
     ///   - size: Type scale. Defaults to ``Size/regular``.
     public init(
         price: String,
         compareAtPrice: String? = nil,
         savings: String? = nil,
         taxNote: String? = nil,
+        lowestPrice: String? = nil,
         size: Size = .regular
     ) {
         self.price = price
         self.compareAtPrice = kxNonEmpty(compareAtPrice)
         self.savings = kxNonEmpty(savings)
         self.taxNote = kxNonEmpty(taxNote)
+        self.lowestPrice = kxNonEmpty(lowestPrice)
         self.size = size
     }
 
     public var body: some View {
         VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+            if size == .regular, let savings {
+                KXBadge(savings, style: .urgency)
+                    .padding(.bottom, KXSpacing.xxs)
+            }
             ViewThatFits(in: .horizontal) {
                 HStack(alignment: .firstTextBaseline, spacing: KXSpacing.xs) {
                     priceText
                     compareAtText
-                    savingsBadge
+                    inlineSavingsBadge
                 }
                 VStack(alignment: .leading, spacing: KXSpacing.xxs) {
                     priceText
                     HStack(alignment: .firstTextBaseline, spacing: KXSpacing.xs) {
                         compareAtText
-                        savingsBadge
+                        inlineSavingsBadge
                     }
                 }
                 VStack(alignment: .leading, spacing: KXSpacing.xxs) {
                     priceText
                     compareAtText
-                    savingsBadge
+                    inlineSavingsBadge
                 }
             }
             if let taxNote {
                 Text(taxNote)
+                    .kxFont(size == .regular ? .footnote : .caption)
+                    .foregroundStyle(KXColor.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            if let lowestPrice {
+                Text("kx.price.lowest_30_days \(lowestPrice)", bundle: .module)
+                    .monospacedDigit()
                     .kxFont(size == .regular ? .footnote : .caption)
                     .foregroundStyle(KXColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -100,7 +122,7 @@ public struct KXPriceTag: View {
         Text(price)
             .monospacedDigit()
             .kxFont(size == .regular ? .price : .subheadline)
-            .foregroundStyle(KXColor.textPrimary)
+            .foregroundStyle(compareAtPrice == nil ? KXColor.textPrimary : KXColor.urgencyText)
             .contentTransition(.numericText())
     }
 
@@ -114,18 +136,25 @@ public struct KXPriceTag: View {
         }
     }
 
-    @ViewBuilder private var savingsBadge: some View {
-        if let savings {
+    /// The savings badge next to the price, only in the compact size.
+    @ViewBuilder private var inlineSavingsBadge: some View {
+        if size == .compact, let savings {
             KXBadge(savings, style: .urgency)
         }
     }
 
+    /// The spoken "Niedrigster Preis der letzten 30 Tage: 24,90 €", or `nil`.
+    private var lowestPriceText: String? {
+        lowestPrice.map { String(localized: "kx.price.lowest_30_days \($0)", bundle: .module) }
+    }
+
     // MARK: Accessibility
 
-    /// "Preis 12,90 €, statt 79,99 €" plus the savings and tax note, comma separated.
+    /// "Preis 12,90 €, statt 79,99 €" plus the savings, tax note and lowest price, comma
+    /// separated.
     private var accessibilityText: String {
         let priceDescription = Self.spokenPrice(price, compareAtPrice: compareAtPrice)
-        return [priceDescription, savings, taxNote]
+        return [priceDescription, savings, taxNote, lowestPriceText]
             .compactMap(\.self)
             .joined(separator: ", ")
     }
@@ -157,8 +186,14 @@ private struct KXPriceTagPreviewGallery: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: KXSpacing.l) {
-                // Windows 11 Pro, DE/DE.
-                KXPriceTag(price: "12,90 €", compareAtPrice: "79,99 €", savings: "Sie sparen 67,09 €", taxNote: "inkl. MwSt.")
+                // Windows 11 Pro, DE/DE, with the store's lowest price of the last 30 days.
+                KXPriceTag(
+                    price: "12,90 €",
+                    compareAtPrice: "79,99 €",
+                    savings: "-83 %",
+                    taxNote: "inkl. MwSt.",
+                    lowestPrice: "12,90 €"
+                )
                 // Microsoft Office 2024 Professional Plus, DE/DE.
                 KXPriceTag(price: "29,90 €", compareAtPrice: "149,99 €", taxNote: "inkl. MwSt.")
                 // Microsoft Office 2024 Standard für Mac, DE/DE, compact as on a product card.

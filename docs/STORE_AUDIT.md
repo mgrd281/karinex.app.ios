@@ -105,7 +105,9 @@ the store.
    (and the CI secret `KX_STOREFRONT_ACCESS_TOKEN`).
 2. **Create metafield definitions with Storefront access "Read"** for every key the product
    screen uses (Settings > Custom data > Products): `karinex.faq` (JSON), `karinex.sprachen`,
-   and the spec keys. Values that already exist become visible as soon as a definition exists.
+   the spec keys, `custom.siblings` (list of products, the linked products row) and
+   `karinex.lowest_price_30d` (the lowest price of 30 days below reduced prices). Values that
+   already exist become visible as soon as a definition exists.
 3. **Decide the spec source**: either fill the `karinex.*` spec keys listed in PROMPT.md 5.1,
    or confirm that the app should map `custom.kx_spec` and the `shopify.*` standard taxonomy
    metafields (`shopify.license-type`, `shopify.operating-system`, `shopify.supported-language`,

@@ -418,7 +418,10 @@ tokenless mode:
   `ACCESS_DENIED` (`requiredAccess: unauthenticated_read_metafields`, recorded in
   `product_metafields_access_denied_DE_DE.json`). The `ProductDetail` fragment therefore selects
   `metafields(identifiers: $metafieldIdentifiers) @include(if: $includeMetafields)`, and
-  `StorefrontCatalogRepository` passes `includeMetafields: !client.isTokenless`.
+  `StorefrontCatalogRepository` passes `includeMetafields: !client.isTokenless`. The linked
+  products (`Product.linkedProducts`, the product references of the list metafield
+  `custom.siblings`, selected as `linkedProducts: metafield(...) { references { ... on Product } }`)
+  sit behind the same `@include`; references that are not products are dropped.
 - Tokenless requests are capped at a query cost of 1000; the Phase 0 queries cost 5 to 14.
 
 `ProductMetafields` gives typed, failure-tolerant access to the keys of PROMPT.md 5.1 and the
@@ -546,7 +549,7 @@ light, dark and an accessibility text size, and snapshot tests:
 | `KXButton`, `KXButtonStyle` (`.kx(...)`) | Capsules: primary (black fill), secondary (thin ink outline), tertiary; regular and compact; loading, disabled, full width |
 | `KXCard`, `KXCardStyle` | Flat light grey panel (standard or elevated), radius 12, no border; `isOutlined` draws it white with a thin ink outline for the money-back promise |
 | `KXBadge` | Accent (ink), urgency (sale red), neutral and success capsules |
-| `KXPriceTag` | Price, struck-through compare-at price, savings badge, optional tax note, combined accessibility label |
+| `KXPriceTag` | Price (sale red when reduced), struck-through compare-at price, savings badge (above the price in the regular size), optional tax note and lowest price of 30 days, combined accessibility label |
 | `KXSectionHeader` | Bold title, optional eyebrow, optional trailing action |
 | `KXSpecRow` | Label and value with a dot leader; stacks at large text sizes |
 | `KXStepTimeline` | Vertical or horizontal steps with white numerals on ink discs (done, current, upcoming) |
@@ -679,10 +682,13 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
 (PROMPT.md 3.4).
 
 **Features built on it.**
-- `ProductFeature`: gallery with full-screen zoom, variant selector, price, key facts from
-  metafields, "So läuft es ab", description, comparison row (Shopify's `RELATED`
-  recommendations), FAQ, the 100-day promise with its condition, the withdrawal notice for
-  digital goods, and a sticky purchase bar. Sections without data are omitted, never faked.
+- `ProductFeature`: gallery with full-screen zoom, variant selector, price in the sale look
+  (with the store's lowest price of 30 days for single-variant products), the linked products
+  row (`ProductLinkedProductsRow`, from `Product.linkedProducts`), key facts from metafields,
+  "So läuft es ab", description, the "Passend dazu" row (Shopify's `COMPLEMENTARY`
+  recommendations, loaded in parallel with the comparison row of `RELATED` recommendations),
+  FAQ, the 100-day promise with its condition, the withdrawal notice for digital goods, and a
+  sticky purchase bar. Sections without data are omitted, never faked.
 - `CatalogFeature`: collection directory, collection screen with sort, filters and cursor
   pagination. `SearchFeature`: predictive suggestions, results with sort and pagination, recent
   searches. `HomeFeature`: live rows from collections and the guides blog. `CartFeature`: lines,
