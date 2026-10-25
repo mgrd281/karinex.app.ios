@@ -136,9 +136,10 @@ format: ## Apply SwiftLint autocorrections and SwiftFormat
 	$(SWIFTLINT) lint --fix --quiet
 	$(SWIFTFORMAT) .
 
-check: ## Validate String Catalogs (11 languages) and the copy rules
+check: ## Validate String Catalogs (11 languages), the copy rules and the App Store metadata
 	$(PYTHON) scripts/check_strings.py
 	$(PYTHON) scripts/check_copy_rules.py
+	$(PYTHON) scripts/check_metadata.py
 
 # MARK: - Data
 

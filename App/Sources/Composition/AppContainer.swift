@@ -69,6 +69,8 @@ final class AppContainer {
     let storefrontContextProvider: MutableStorefrontContextProvider
     /// Products and collections.
     let catalogRepository: any CatalogRepository
+    /// Products by ID, for the wishlist and the recently viewed products.
+    let productLookup: any ProductLookupRepository
     /// The countries, currencies and languages the store sells in.
     let localizationRepository: any LocalizationRepository
     /// Predictive and full product search.
@@ -102,6 +104,10 @@ final class AppContainer {
     let licenseCache: LicenseKeyCache
     /// Appearance and license lock.
     let settingsStore: AppSettingsStore
+    /// The wishlist and the recently viewed products, on this device only.
+    let savedProductsStore: SavedProductsStore
+    /// Push registration, only after consent.
+    let pushCoordinator: PushRegistrationCoordinator
 
     // MARK: - Init
 
@@ -152,7 +158,9 @@ final class AppContainer {
         httpClient = services.httpClient
         self.storefrontClient = storefrontClient
         storefrontContextProvider = contextProvider
-        catalogRepository = StorefrontCatalogRepository(client: storefrontClient, contextProvider: contextProvider)
+        let catalogRepository = StorefrontCatalogRepository(client: storefrontClient, contextProvider: contextProvider)
+        self.catalogRepository = catalogRepository
+        productLookup = catalogRepository
         let localizationRepository = StorefrontLocalizationRepository(client: storefrontClient, contextProvider: contextProvider)
         self.localizationRepository = localizationRepository
         searchRepository = StorefrontSearchRepository(client: storefrontClient, contextProvider: contextProvider)
@@ -199,6 +207,14 @@ final class AppContainer {
         }
         self.sessionStore = sessionStore
         settingsStore = AppSettingsStore(store: services.preferences)
+        savedProductsStore = SavedProductsStore(store: services.preferences)
+        pushCoordinator = PushRegistrationCoordinator(
+            system: SystemRemoteNotifications(),
+            backend: account.backend,
+            consentStore: consentStore,
+            languageCode: { Bundle.main.preferredLocalizations.first ?? "de" },
+            countryCode: { [marketStore] in marketStore.selection.country.rawValue }
+        )
 
         let access = storefrontClient.isTokenless ? "tokenless" : "token"
         logger.info("App container ready: Storefront API \(resolution.configuration.storefrontAPIVersion), \(access)")
@@ -210,6 +226,7 @@ final class AppContainer {
     /// first launch) and re-reads the stored cart. Both run concurrently.
     func start() async {
         sessionStore.start()
+        await pushCoordinator.start()
         async let market: Void = marketStore.start()
         async let cart: Void = cartStore.refresh()
         _ = await (market, cart)

@@ -9,12 +9,16 @@ import SwiftUI
 /// `AppContainer.live()`.
 @main
 struct KarinexApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @State private var container = AppContainer.live()
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environment(container)
+                .onAppear {
+                    appDelegate.pushCoordinator = container.pushCoordinator
+                }
         }
     }
 }

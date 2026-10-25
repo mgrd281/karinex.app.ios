@@ -197,6 +197,7 @@ struct ContextInjectorTests {
             (CartAttributesUpdateMutation.document, ") @inContext"),
             (CollectionsQuery.document, "query Collections($first: Int!) @inContext"),
             (ProductRecommendationsQuery.document, ") @inContext"),
+            (ProductsByIDQuery.document, "query ProductsByID($ids: [ID!]!) @inContext"),
             (PredictiveSearchQuery.document, "query PredictiveSearch($query: String!, $limit: Int!) @inContext"),
             (SearchProductsQuery.document, ") @inContext"),
             (BlogArticlesQuery.document, ") @inContext"),

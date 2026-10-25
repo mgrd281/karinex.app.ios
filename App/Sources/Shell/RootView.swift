@@ -65,6 +65,8 @@ struct RootView: View {
         }
         .offlineBanner(monitor: container.networkMonitor)
         .commerceCountry(container.marketStore.selection.country)
+        .environment(container.savedProductsStore)
+        .environment(\.productLookup, container.productLookup)
         .kxCheckout(isPresented: $isCheckoutPresented, cartStore: container.cartStore) { _ in
             router.finishCheckout()
         }
@@ -72,6 +74,11 @@ struct RootView: View {
             MarketConfirmationSheet(store: container.marketStore)
         }
         .onOpenURL { url in
+            router.openDeepLink(url)
+        }
+        .onChange(of: container.pushCoordinator.pendingURL) { _, url in
+            guard let url else { return }
+            container.pushCoordinator.pendingURL = nil
             router.openDeepLink(url)
         }
         .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
@@ -196,6 +203,8 @@ struct RootView: View {
             )
         case .addresses:
             AddressesScreen(repository: container.customerRepository, countries: addressCountries)
+        case .wishlist:
+            WishlistScreen(savedProducts: container.savedProductsStore, onRoute: onRoute)
         case let .support(orderName):
             SupportScreen(orderName: orderName, backend: container.backendClient, content: container.contentRepository, onRoute: onRoute)
         case .legal:
@@ -207,6 +216,7 @@ struct RootView: View {
                 marketStore: container.marketStore,
                 settings: container.settingsStore,
                 consentStore: container.consentStore,
+                pushCoordinator: container.pushCoordinator,
                 appVersion: AccountVersionText.summary(
                     version: container.configuration.appVersion,
                     build: container.configuration.buildNumber

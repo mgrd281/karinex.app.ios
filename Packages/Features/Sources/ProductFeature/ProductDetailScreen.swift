@@ -37,6 +37,7 @@ public struct ProductDetailScreen: View {
     private let onBuyNow: @MainActor () -> Void
 
     @Environment(\.accessibilityVoiceOverEnabled) private var isVoiceOverEnabled
+    @Environment(SavedProductsStore.self) private var savedProducts: SavedProductsStore?
 
     /// Creates the screen.
     ///
@@ -94,6 +95,26 @@ public struct ProductDetailScreen: View {
                     .accessibilityHidden(isTitleVisible)
                     .kxAnimation(.fade, value: isTitleVisible)
             }
+            if let product = model.product, let savedProducts {
+                ToolbarItem(placement: .primaryAction) {
+                    let isSaved = savedProducts.isSaved(product.id)
+                    Button {
+                        savedProducts.toggle(product.id)
+                    } label: {
+                        Label {
+                            if isSaved {
+                                Text("product.wishlist.remove", bundle: .module)
+                            } else {
+                                Text("product.wishlist.add", bundle: .module)
+                            }
+                        } icon: {
+                            Image(systemName: isSaved ? "heart.fill" : "heart")
+                        }
+                    }
+                    .sensoryFeedback(.selection, trigger: isSaved)
+                    .accessibilityIdentifier("product.wishlist")
+                }
+            }
             if let url = model.product?.onlineStoreUrl {
                 ToolbarItem(placement: .primaryAction) {
                     ShareLink(item: url, subject: Text(verbatim: model.product?.title ?? String())) {
@@ -127,6 +148,11 @@ public struct ProductDetailScreen: View {
         .task {
             if model.state.value == nil {
                 await model.load()
+            }
+        }
+        .onChange(of: model.product?.id, initial: true) { _, id in
+            if let id {
+                savedProducts?.recordView(id)
             }
         }
         .accessibilityIdentifier("screen.product")

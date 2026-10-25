@@ -1,0 +1,1 @@
+KARINEX-sovelluksen ensimmäinen versio: kauppa, ostoskori, turvallinen kassa, asiakastili tilauksineen, laskuineen ja lisenssiavaimineen sekä asiakaspalvelu WhatsAppilla, sähköpostilla ja live-chatissa.

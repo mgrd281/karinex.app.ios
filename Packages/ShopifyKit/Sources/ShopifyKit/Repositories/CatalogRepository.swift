@@ -165,3 +165,26 @@ public final class StorefrontCatalogRepository: CatalogRepository {
         return try await client.execute(query, context: context).productRecommendations ?? []
     }
 }
+
+// MARK: - ProductLookupRepository
+
+/// Loads known products by GID, for lists the app keeps on the device (wishlist, recently
+/// viewed). The device stores only the IDs; titles, prices and images always come fresh from
+/// Shopify in the current market.
+public protocol ProductLookupRepository: Sendable {
+    /// The products with `ids` that exist in the current market, in the order of `ids`.
+    ///
+    /// - Throws: `ShopifyError`.
+    func products(ids: [ShopifyID]) async throws -> [ProductSummary]
+}
+
+extension StorefrontCatalogRepository: ProductLookupRepository {
+    /// Loads the products in the current context; an empty list makes no request.
+    public func products(ids: [ShopifyID]) async throws -> [ProductSummary] {
+        guard !ids.isEmpty else { return [] }
+        let context = await contextProvider.currentContext()
+        let products = try await client.execute(ProductsByIDQuery(ids: ids), context: context).products
+        let order = Dictionary(ids.enumerated().map { ($1, $0) }, uniquingKeysWith: { first, _ in first })
+        return products.sorted { (order[$0.id] ?? .max) < (order[$1.id] ?? .max) }
+    }
+}

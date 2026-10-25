@@ -1,0 +1,1 @@
+licensnøgle,produktnøgle,software,licens,ESD,download,kontor,styresystem,server

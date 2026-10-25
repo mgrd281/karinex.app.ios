@@ -67,6 +67,9 @@ public struct HomeView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityIdentifier(section.accessibilityIdentifier)
                 }
+                RecentlyViewedSection { product in
+                    onRoute(.product(handle: product.handle))
+                }
                 HomeSupportSection()
                     .padding(.horizontal, KXSpacing.gutter)
             }

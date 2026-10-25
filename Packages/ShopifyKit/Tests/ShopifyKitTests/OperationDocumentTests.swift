@@ -36,6 +36,7 @@ struct OperationDocumentTests {
         Document(name: CartAttributesUpdateMutation.operationName, keyword: "mutation", text: CartAttributesUpdateMutation.document),
         Document(name: CollectionsQuery.operationName, keyword: "query", text: CollectionsQuery.document),
         Document(name: ProductRecommendationsQuery.operationName, keyword: "query", text: ProductRecommendationsQuery.document),
+        Document(name: ProductsByIDQuery.operationName, keyword: "query", text: ProductsByIDQuery.document),
         Document(name: PredictiveSearchQuery.operationName, keyword: "query", text: PredictiveSearchQuery.document),
         Document(name: SearchProductsQuery.operationName, keyword: "query", text: SearchProductsQuery.document),
         Document(name: BlogArticlesQuery.operationName, keyword: "query", text: BlogArticlesQuery.document),
@@ -73,6 +74,7 @@ struct OperationDocumentTests {
         #expect(CartAttributesUpdateMutation.kind == .mutation)
         #expect(CollectionsQuery.kind == .query)
         #expect(ProductRecommendationsQuery.kind == .query)
+        #expect(ProductsByIDQuery.kind == .query)
         #expect(PredictiveSearchQuery.kind == .query)
         #expect(SearchProductsQuery.kind == .query)
         #expect(BlogArticlesQuery.kind == .query)

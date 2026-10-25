@@ -1,0 +1,1 @@
+Pierwsza wersja aplikacji KARINEX: sklep, koszyk, bezpieczna kasa, konto klienta z zamówieniami, fakturami i kluczami licencyjnymi oraz obsługa klienta przez WhatsApp, e-mail i czat na żywo.

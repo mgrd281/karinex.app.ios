@@ -96,6 +96,10 @@ jobs:
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
         run: python3 scripts/check_copy_rules.py
 
+      - name: App Store metadata (11 languages, limits, copy rules)
+        if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
+        run: python3 scripts/check_metadata.py
+
       - name: Install SwiftFormat 0.63.0
         id: tools
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}

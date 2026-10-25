@@ -8,10 +8,12 @@ import UIKit
 
 /// "Einstellungen" (PROMPT.md 6.10): shop country and content language, the app language
 /// (through the iOS per-app setting, ADR 9), appearance, privacy consents, the license lock,
-/// the legal texts and the app version. Push notifications follow in Phase 3.
+/// the legal texts and the app version. Notifications are off until the customer turns a
+/// category on here; only then does iOS ask for permission.
 public struct SettingsScreen: View {
     private let marketStore: MarketStore
     private let consentStore: any ConsentStoring
+    private let pushCoordinator: PushRegistrationCoordinator?
     private let appVersion: String
     private let onRoute: @MainActor (CommerceRoute) -> Void
 
@@ -28,18 +30,21 @@ public struct SettingsScreen: View {
     ///   - marketStore: The shop country and content language.
     ///   - settings: Appearance and license lock.
     ///   - consentStore: The privacy consents.
+    ///   - pushCoordinator: Registers for notifications after consent; `nil` hides the section.
     ///   - appVersion: The version line, e.g. `0.2.0 (12)`.
     ///   - onRoute: Opens the legal texts.
     public init(
         marketStore: MarketStore,
         settings: AppSettingsStore,
         consentStore: any ConsentStoring,
+        pushCoordinator: PushRegistrationCoordinator? = nil,
         appVersion: String,
         onRoute: @escaping @MainActor (CommerceRoute) -> Void
     ) {
         self.marketStore = marketStore
         _settings = Bindable(settings)
         self.consentStore = consentStore
+        self.pushCoordinator = pushCoordinator
         self.appVersion = appVersion
         self.onRoute = onRoute
         _consent = State(initialValue: consentStore.load())
@@ -52,6 +57,9 @@ public struct SettingsScreen: View {
                 languageSection
                 appearanceSection
                 privacySection
+                if pushCoordinator != nil {
+                    notificationsSection
+                }
                 licensesSection
                 legalSection
                 aboutSection
@@ -199,8 +207,53 @@ public struct SettingsScreen: View {
                 consent = updated
                 consentStore.save(updated)
                 marketStore.consentDidChange()
+                if keyPath == \.orderUpdateNotifications || keyPath == \.dealNotifications {
+                    Task {
+                        await pushCoordinator?.consentDidChange(updated)
+                    }
+                }
             }
         )
+    }
+
+    // MARK: Notifications
+
+    private var notificationsSection: some View {
+        VStack(alignment: .leading, spacing: KXSpacing.m) {
+            KXSectionHeader(String(localized: "settings.notifications.title", bundle: .module))
+            KXCard {
+                VStack(alignment: .leading, spacing: KXSpacing.m) {
+                    Toggle(isOn: consentBinding(\.orderUpdateNotifications)) {
+                        SettingsToggleLabel(
+                            title: String(localized: "settings.notifications.orders", bundle: .module),
+                            detail: String(localized: "settings.notifications.orders.detail", bundle: .module)
+                        )
+                    }
+                    .accessibilityIdentifier("settings.notifications.orders")
+                    KXDivider()
+                    Toggle(isOn: consentBinding(\.dealNotifications)) {
+                        SettingsToggleLabel(
+                            title: String(localized: "settings.notifications.deals", bundle: .module),
+                            detail: String(localized: "settings.notifications.deals.detail", bundle: .module)
+                        )
+                    }
+                    .accessibilityIdentifier("settings.notifications.deals")
+                }
+                .tint(KXColor.brand)
+            }
+            if pushCoordinator?.isPermissionDenied == true {
+                Button {
+                    if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
+                        openURL(url)
+                    }
+                } label: {
+                    Text("settings.notifications.denied", bundle: .module)
+                        .kxFont(.footnote)
+                        .multilineTextAlignment(.leading)
+                }
+                .accessibilityIdentifier("settings.notifications.denied")
+            }
+        }
     }
 
     // MARK: Licenses

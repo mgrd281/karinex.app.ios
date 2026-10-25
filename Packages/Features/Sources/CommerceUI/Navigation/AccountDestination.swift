@@ -17,6 +17,8 @@ public enum AccountDestination: Hashable, Sendable {
     case licenses(orderID: String?)
     /// The customer's addresses.
     case addresses
+    /// The wishlist kept on this device (no login needed).
+    case wishlist
     /// Help and support, optionally about an order (its name, e.g. `#1042`).
     case support(orderName: String?)
     /// The list of legal texts.

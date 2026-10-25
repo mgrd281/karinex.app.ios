@@ -1,0 +1,1 @@
+clave de licencia,clave de producto,software,licencia,ESD,descarga,oficina,sistema,servidor

@@ -289,6 +289,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
     case orders
     case licenses
     case addresses
+    case wishlist
     case settings
     case support
     case legal
@@ -296,7 +297,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
     /// The rows only a signed-in customer sees.
     static let signedIn: [AccountMenuItem] = [.orders, .licenses, .addresses]
     /// The rows everyone sees.
-    static let general: [AccountMenuItem] = [.settings, .support, .legal]
+    static let general: [AccountMenuItem] = [.wishlist, .settings, .support, .legal]
 
     var id: String {
         rawValue
@@ -307,6 +308,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
         case .orders: .orders
         case .licenses: .licenses(orderID: nil)
         case .addresses: .addresses
+        case .wishlist: .wishlist
         case .settings: .settings
         case .support: .support(orderName: nil)
         case .legal: .legal
@@ -318,6 +320,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
         case .orders: "shippingbox"
         case .licenses: "key"
         case .addresses: "house"
+        case .wishlist: "heart"
         case .settings: "gearshape"
         case .support: "questionmark.bubble"
         case .legal: "doc.text"
@@ -329,6 +332,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
         case .orders: String(localized: "account.menu.orders", bundle: .module)
         case .licenses: String(localized: "account.menu.licenses", bundle: .module)
         case .addresses: String(localized: "account.menu.addresses", bundle: .module)
+        case .wishlist: String(localized: "account.menu.wishlist", bundle: .module)
         case .settings: String(localized: "account.menu.settings", bundle: .module)
         case .support: String(localized: "account.menu.support", bundle: .module)
         case .legal: String(localized: "account.menu.legal", bundle: .module)
