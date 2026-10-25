@@ -17,13 +17,14 @@ current with every change (see [CLAUDE.md](../CLAUDE.md)); the product specifica
 8. [Design system](#design-system)
 9. [Images](#images)
 10. [Commerce layer (Phase 1)](#commerce-layer-phase-1)
-11. [Package pins](#package-pins)
-12. [Security and privacy](#security-and-privacy)
-13. [Localization](#localization)
-14. [Testing strategy](#testing-strategy)
-15. [CI/CD](#cicd)
-16. [Decisions](#decisions)
-17. [Roadmap](#roadmap)
+11. [Account layer (Phase 2)](#account-layer-phase-2)
+12. [Package pins](#package-pins)
+13. [Security and privacy](#security-and-privacy)
+14. [Localization](#localization)
+15. [Testing strategy](#testing-strategy)
+16. [CI/CD](#cicd)
+17. [Decisions](#decisions)
+18. [Roadmap](#roadmap)
 
 ## Purpose
 
@@ -68,7 +69,9 @@ that launches in light and dark mode.
    |   HomeFeature      CatalogFeature             |            |
    |   SearchFeature    CartFeature                |            |
    |   ProductFeature   CheckoutFeature            |            |
-   |   AccountFeature                              |            |
+   |   AccountFeature   LicensesFeature            |            |
+   |   SupportFeature   LegalFeature               |            |
+   |   SettingsFeature                             |            |
    |                                               |            |
    |   no feature imports another feature          |            |
    |   all import CommerceUI (shared commerce      |            |
@@ -87,17 +90,21 @@ that launches in light and dark mode.
    | pure Swift       |  | Foundation only                            |
    +------------------+  +--------------------------------------------+
 
+   Packages/Backend (BackendKit, Foundation only) --> Core; imported by CommerceUI,
+   the features that talk to the BFF, and the App target.
    Tools/FixtureRecorder (executable, macOS and Linux) --> ShopifyKit, Core
+   Tools/MockBFF (Node, no dependencies) implements docs/BFF_CONTRACT.md
 ```
 
 | Module | Package | Depends on | Builds on Linux | Responsibility |
 | --- | --- | --- | --- | --- |
 | `Core` | `Packages/Core` | Foundation | yes | `AppConfiguration`, `KXLogger` and `Redactor`, `HTTPClient` and `URLSessionHTTPClient`, `RetryPolicy` and `RetryExecutor`, `RequestDeduplicator`, `NetworkMonitoring`, `Locked`, `SecureStore` and `KeyValueStore`, `PrivacyConsent`, `FeatureFlags`, `LaunchEnvironment`, `AppLanguage` |
 | `ShopifyKit` | `Packages/ShopifyKit` | `Core` | yes | `GraphQLClient`, `StorefrontClient`, `@inContext` (`StorefrontContext`, `ContextInjector`), `ShopifyError`, models, operations, repositories, `MarketResolver`, recorded fixtures |
+| `BackendKit` | `Packages/Backend` | `Core` | yes | `BackendClient` (`HTTPBackendClient`, `UnavailableBackendClient`), contract models (`RemoteAppConfig`, `SupportHours`, `BackendOrderStatus`, `LicenseKey`, `InvoiceLink`, `DeviceRegistration`), `LicenseKeyCache`. See [BFF_CONTRACT.md](BFF_CONTRACT.md) |
 | `DesignTokens` | `Packages/DesignSystem` | Foundation | yes | `BrandPalette`, `ColorToken`, `ContrastRequirement`, `TypographyToken`, spacing, radius, border and motion tokens, `RGBAColor` with WCAG math |
 | `DesignSystem` | `Packages/DesignSystem` | `DesignTokens` | no (SwiftUI) | `KXColor`, `.kxFont(_:)`, layout and motion helpers, the `KX*` components, `KXDesignSystemGallery` |
 | `CommerceUI` | `Packages/Features` | `Core`, `DesignSystem`, `DesignTokens`, `ShopifyKit`, Nuke | no (SwiftUI) | Not a feature: the state and UI that several features share. `CartStore`, `MarketStore`, `CommerceEnvironment` and `PriceDisplay`, `CommerceRoute` and `DeepLinkParser`, `ProductCardView` and `ProductCarouselSection`, `KXImagePipeline` and `ProductImage`, `RichTextView`, `LoadState`, `AsyncContentView` and `UserFacingError`, `ArticleScreen`, `MarketConfirmationSheet`. See [Commerce layer](#commerce-layer-phase-1) |
-| `HomeFeature`, `CatalogFeature`, `SearchFeature`, `CartFeature`, `AccountFeature`, `ProductFeature`, `CheckoutFeature` | `Packages/Features` | `Core`, `DesignSystem`, `ShopifyKit`, `CommerceUI` (`CheckoutFeature` also Checkout Kit) | no (SwiftUI) | One feature each, with its own String Catalog. `CheckoutFeature` is the only module that imports Checkout Kit |
+| `HomeFeature`, `CatalogFeature`, `SearchFeature`, `CartFeature`, `AccountFeature`, `ProductFeature`, `CheckoutFeature`, `LicensesFeature`, `SupportFeature`, `LegalFeature`, `SettingsFeature` | `Packages/Features` | `Core`, `DesignSystem`, `ShopifyKit`, `BackendKit`, `CommerceUI` (`CheckoutFeature` also Checkout Kit) | no (SwiftUI) | One feature each, with its own String Catalog. `CheckoutFeature` is the only module that imports Checkout Kit |
 | `KARINEX` (App target) | `project.yml` | everything above | no | Composition root, tab shell, app resources |
 | `FixtureRecording`, `fixture-recorder` | `Tools/FixtureRecorder` | `Core`, `ShopifyKit` | yes | Records the ShopifyKit fixtures from the live store |
 
@@ -692,6 +699,61 @@ KARINEX branding, color scheme following the system, preloading on, confetti off
 consent travels inside the `checkoutUrl` (see [@inContext and visitor consent](#incontext-and-visitor-consent)).
 No Apple In-App Purchase is involved anywhere.
 
+## Account layer (Phase 2)
+
+### Login
+
+- `CustomerAccountDiscovery` reads `/.well-known/openid-configuration` and
+  `/.well-known/customer-account-api` of the shop domain once per launch and pins the GraphQL
+  endpoint to `KX_CUSTOMER_ACCOUNT_API_VERSION`.
+- `CustomerAccountSession` (actor, ShopifyKit) runs OAuth 2.0 with PKCE S256 as a public mobile
+  client: the redirect URI is `shop.<KX_SHOP_ID>.app://callback`, the format Shopify requires for
+  mobile apps. It checks `state` and the ID token's `nonce`, `iss`, `aud` and expiry, keeps the
+  tokens in the Keychain (`customerAccount.tokens.v1`), refreshes them single-flight before they
+  expire and publishes sign-outs (a rejected refresh token) as `events`.
+- The access token goes raw into `Authorization` for the Customer Account API (no `Bearer`, as
+  Shopify documents) and as `Bearer` to the BFF.
+- `CustomerSessionStore` (CommerceUI, `@MainActor @Observable`) is the UI state: `unavailable`
+  when the build has no client ID, `signedOut`, `signingIn`, `signedIn`. The Account feature
+  opens the hosted login page with SwiftUI's `webAuthenticationSession` in an ephemeral browser
+  session, so no Shopify cookie is left in Safari. A closed login page is no error.
+- `onSignedOut` is the single hook for cleanup: the App wipes the license key cache there.
+
+### Orders, addresses and keys
+
+- Orders, order detail and addresses come from the Customer Account API (`CustomerAccountRepository`)
+  and are the only order truth: totals are shown exactly as Shopify returns them.
+- The BFF adds what Shopify cannot: delivery states (`OrderStatusPill`, `OrderTimeline`), keys,
+  invoice links and the deletion request. Every BFF answer is optional: without
+  `KX_BACKEND_HOST` the App wires `UnavailableBackendClient`, and each screen degrades to its
+  e-mail fallback ("Ihr Schlüssel wurde per E-Mail zugestellt", invoice by e-mail, deletion by
+  prepared e-mail).
+- `LicenseVaultViewModel` shows the Keychain cache at once, then refreshes from the BFF (at most
+  25 orders per refresh); pending deliveries (HTTP 202) are listed by order name. Keys are masked
+  until revealed, hidden again when the app leaves the foreground, and optionally behind
+  `LocalAuthentication` (`AppSettingsStore.locksLicenses`). `PrivacyCover` hides the whole UI in
+  the app switcher.
+
+### Support, legal texts and settings
+
+- `SupportContact` offers exactly WhatsApp (`https://wa.me/` from the BFF config), e-mail
+  (`mailto:` with the order name prefilled) and live chat. There is no voice channel.
+  `SupportHoursText` formats the hours of `RemoteAppConfig.supportHours`, computed in
+  Europe/Berlin, in the user's locale.
+- `LegalDocumentViewModel.text(for:from:)` maps each legal text to its source: the Impressum is
+  the page `rechtliche-hinweise`, the Widerrufsbelehrung the page `widerrufsrecht` with the refund
+  policy as fallback, AGB, Datenschutz and Versand the shop policies. The HTML is rendered
+  natively with `RichTextView`.
+- `AppSettingsStore` keeps appearance and the license lock in `preferences`; the consent toggles
+  write `PrivacyConsent` and tell `MarketStore` (visitor consent in `@inContext`).
+
+### Navigation
+
+`CommerceRoute.account(AccountDestination)` covers every account screen. `.account(.overview)`
+selects the Konto tab; the others push onto the current tab's stack. Deep links:
+`karinex://account`, `karinex://account/orders[/<number>]`, `karinex://account/licenses` and the
+web paths `/account` and `/account/orders/<number>`.
+
 ## Package pins
 
 `KARINEX.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved` is committed, so
@@ -965,6 +1027,9 @@ metafield definitions ([OWNER_INPUTS.md](OWNER_INPUTS.md)).
   languages kept complete, TestFlight build 1.
 
 ### Phase 2: Account and licenses
+
+Status: implemented (see [Account layer](#account-layer-phase-2)); waiting for the owner's
+Customer Account client ID and BFF host for an end-to-end test on a device.
 
 - **New feature targets:** `LicensesFeature` (license vault with `KXKeyCard`, Keychain cache,
   privacy overlay, optional Face ID), `SupportFeature` (WhatsApp, e-mail, live chat, opening hours

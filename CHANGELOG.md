@@ -10,6 +10,50 @@ change.
 
 ## [Unreleased]
 
+Phase 2: account and licenses. Shopify customer login, orders, addresses, the license vault,
+invoices, support, legal texts, settings and account deletion, in all 11 languages. Written and
+checked by compilation, unit tests and the Linux package tests; an end-to-end test needs the
+owner's Customer Account client ID and BFF host (see [docs/OWNER_INPUTS.md](docs/OWNER_INPUTS.md)).
+Design: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#account-layer-phase-2).
+
+### Added (Phase 2)
+
+- **Core:** SHA-256, base64url and secure random (pure Swift, Linux-buildable);
+  `AppConfiguration` reads `KXShopID` (login redirect `shop.<id>.app://callback`) and
+  `KXBackendHost`.
+- **ShopifyKit:** Customer Account API login (discovery, PKCE S256, `state` and ID token checks,
+  code exchange, refresh, Keychain storage, sign-out with the end-session URL), the Customer
+  Account GraphQL client and `CustomerAccountRepository` (customer, orders with pagination, order
+  detail, addresses with create, update and delete), legal texts (`ShopPoliciesQuery`,
+  `PageByHandleQuery`, `LegalContentRepository`).
+- **BackendKit (new package `Packages/Backend`):** the BFF client with ETag config, delivery
+  states, license keys (HTTP 202 pending), invoice links, account deletion and device
+  registration; `UnavailableBackendClient` while no host is configured; `LicenseKeyCache` in the
+  Keychain. Keys never appear in descriptions or logs.
+- **CommerceUI:** `CustomerSessionStore`, `AppSettingsStore`, `AccountDestination` routes and
+  account deep links, error mapping for login and BFF errors.
+- **AccountFeature:** the Konto tab with login, orders with status pills and timeline, order
+  detail with invoice, keys and help with this order, addresses, sign-out and account deletion.
+- **LicensesFeature, SupportFeature, LegalFeature, SettingsFeature** (new feature targets): the
+  license vault (masked keys, optional Face ID lock, e-mail fallback), support by WhatsApp,
+  e-mail and live chat with the support hours, legal texts from Shopify rendered natively,
+  settings for market, language, appearance, privacy consents and the license lock.
+- **App:** `AccountServices` wiring, a privacy cover in the app switcher, `NSFaceIDUsageDescription`
+  localized through `InfoPlist.xcstrings`.
+- **Docs and tools:** [docs/BFF_CONTRACT.md](docs/BFF_CONTRACT.md),
+  [docs/openapi.yaml](docs/openapi.yaml), [Tools/MockBFF](Tools/MockBFF) with contract tests (run in
+  CI), [docs/PRIVACY_NUTRITION_LABEL.md](docs/PRIVACY_NUTRITION_LABEL.md).
+
+### Changed (Phase 2)
+
+- `PrivacyInfo.xcprivacy` declares name, e-mail address, physical address and purchase history
+  (linked, app functionality, no tracking), which the app reads after login.
+- The cart UI test finds the line through the lines card and its remove button.
+
+---
+
+### Phase 1
+
 Phase 1: commerce core. Browsing, product detail, search, the cart and checkout through Shopify
 Checkout Kit, with market resolution, deep links and the image pipeline. It was written and
 checked by compilation and the Linux package tests; the screens and UI tests have not run on a

@@ -63,6 +63,6 @@ struct AccountServices {
         } else {
             backend = UnavailableBackendClient()
         }
-        hasStoredTokens = session != nil && ((try? services.secureStore.data(for: CustomerAccountSession.tokenStorageKey)) ?? nil) != nil
+        hasStoredTokens = session != nil && (try? services.secureStore.data(for: CustomerAccountSession.tokenStorageKey)) != nil
     }
 }

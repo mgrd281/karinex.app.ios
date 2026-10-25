@@ -116,6 +116,11 @@ jobs:
             ghcr.io/realm/swiftlint:0.65.1 \
             lint --strict --no-cache --reporter github-actions-logging
 
+      - name: Mock BFF contract tests (docs/BFF_CONTRACT.md)
+        if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
+        working-directory: Tools/MockBFF
+        run: node --test
+
   ios:
     name: iOS build and tests
     runs-on: macos-26
