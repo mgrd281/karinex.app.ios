@@ -174,9 +174,11 @@ private struct SearchIdleContent: View {
             .accessibilityIdentifier("search.recent")
             SearchChipRow {
                 ForEach(recentSearches, id: \.self) { recent in
-                    SearchChip(title: recent, onRemove: { onRemoveRecent(recent) }) {
-                        onSearch(recent)
-                    }
+                    SearchChip(
+                        title: recent,
+                        onRemove: { onRemoveRecent(recent) },
+                        action: { onSearch(recent) }
+                    )
                 }
             }
         }
