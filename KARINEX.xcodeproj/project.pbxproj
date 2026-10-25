@@ -7,35 +7,56 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1570A59A0845C5996ECDD75D /* KARINEXWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5451DB4BD35AE419465064C6 /* KARINEXWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1B8FBDC7DE79B62186E1F016 /* LicensesFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 6434365872B6AB4F0115F107 /* LicensesFeature */; };
 		2227B1F5DB340FBAF2420E76 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 02292FA877EA0C1F1186B3D8 /* Localizable.xcstrings */; };
 		26890CE39A4B6844F4674D93 /* AppRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670303BFE81D2591BD21B4AA /* AppRouterTests.swift */; };
-		2D0C37088EC2550A64C074B0 /* HomeFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 8362ED36DCA5F0E3DD1B110E /* HomeFeature */; };
+		2D0C37088EC2550A64C074B0 /* CommerceUI in Frameworks */ = {isa = PBXBuildFile; productRef = B3B2CFF5FD318EFD916AD9B6 /* CommerceUI */; };
 		2D9039D1A262EDF5FD1D2759 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08653E80457407AA74F9E6BD /* AppRouter.swift */; };
 		30F8FAFA6492C484D62D3D62 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = EF859BD8D0E0472F78A915B1 /* PrivacyInfo.xcprivacy */; };
 		3429454AA86A23C1BA8EB695 /* AppShellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A04C59355BB09BE2752DE7B /* AppShellTests.swift */; };
 		38E87A70B15B3E4450FBBB41 /* OfflineBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF83D1F07484A5082F31D49F /* OfflineBanner.swift */; };
 		3C0068C37602B0608BDBC2C8 /* ConfigurationResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931E4E467DC4A4E954DB0273 /* ConfigurationResolution.swift */; };
+		401E04D0D148C0FF19CABE27 /* LiveActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF9A0D0373ACC9954C1304 /* LiveActivityController.swift */; };
+		43177F6F83DE64093FCBF95F /* AccountServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1143798235C63063DA5DB29C /* AccountServices.swift */; };
+		48F54F33899BD3D77D808681 /* PrivacyCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D453AE9A6BA3569D1C3D88 /* PrivacyCover.swift */; };
 		4A2C25C4AFDEE064FF547575 /* AppContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5146298F9A898DB941C1CDE5 /* AppContainerTests.swift */; };
-		4CFCAF1C64FC9A46EFCA9B50 /* CartFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 1C998F9229A0E1CA6F8F3AC4 /* CartFeature */; };
-		4D7024E754318AE5FEF2CA43 /* ProductFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 41DDB17CF76DB67349373B46 /* ProductFeature */; };
+		4CFCAF1C64FC9A46EFCA9B50 /* SearchFeature in Frameworks */ = {isa = PBXBuildFile; productRef = F2A902353425466E88056710 /* SearchFeature */; };
+		4D7024E754318AE5FEF2CA43 /* AccountFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 71303B6A833923388D115D00 /* AccountFeature */; };
+		4FE837AC5B973ADC7103F840 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 55298BF2F13FE8AD8AF50208 /* Core */; };
 		55EF073FA22AC35B62ED0625 /* AppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55394E456617B665F3A6DAF /* AppServices.swift */; };
+		6072F62E5F96F43CE333C8F7 /* ShopifyKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4B6493AAA42639C426A25F74 /* ShopifyKit */; };
 		631FBF5B32369D7C879ABC80 /* KarinexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C3BBDC8F4BE185B38A742D /* KarinexApp.swift */; };
-		67B3FAA6F040215161519473 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC2F9929CA28252A6E3F53F /* DesignSystem */; };
+		67B3FAA6F040215161519473 /* BackendKit in Frameworks */ = {isa = PBXBuildFile; productRef = FE084E0AB9763B693CDADAC6 /* BackendKit */; };
+		6F62FECD95965E118B0382B7 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 02292FA877EA0C1F1186B3D8 /* Localizable.xcstrings */; };
 		73B68146F5798E9137455D2A /* ShopifyKit in Frameworks */ = {isa = PBXBuildFile; productRef = E6179FBD55A47FF3E3937952 /* ShopifyKit */; };
 		8253FD72DF056C4148881F15 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832C8519869BFE1988A03980 /* AppContainer.swift */; };
+		84103776B82BD67F05B19C9B /* BestsellerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D7B6F30C992EF5B3CAF7D4 /* BestsellerWidget.swift */; };
+		8767C63FF2C0EC576AFEBC08 /* SettingsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = F4C1A32B9B6745292C7525CC /* SettingsFeature */; };
 		88D8FE1E4DF74A2B1EC663FE /* AppTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C7434801DBC3D43DB2D49F /* AppTab.swift */; };
-		92A25367996F094940A70AC9 /* DesignTokens in Frameworks */ = {isa = PBXBuildFile; productRef = B2BCC2F5A62C974C1B469461 /* DesignTokens */; };
+		892213FC886E2EB3E797785C /* CheckoutFeature in Frameworks */ = {isa = PBXBuildFile; productRef = C03CFB00953D3A394ACB3437 /* CheckoutFeature */; };
+		92A25367996F094940A70AC9 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC2F9929CA28252A6E3F53F /* DesignSystem */; };
 		9380B376A0BD06933070AA9F /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = E0BFF0553A4ADEE2532642CA /* Core */; };
-		9A67F4A6591C6080E1C60C03 /* CatalogFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 1A664998938A075002BF922D /* CatalogFeature */; };
-		AF2FD0D4A003AD5EB825D823 /* CommerceUI in Frameworks */ = {isa = PBXBuildFile; productRef = B3B2CFF5FD318EFD916AD9B6 /* CommerceUI */; };
-		B498E20B55B4612EDC6F4251 /* SearchFeature in Frameworks */ = {isa = PBXBuildFile; productRef = F2A902353425466E88056710 /* SearchFeature */; };
+		95041840E9C92FA7288E1894 /* LicenseDeliveryLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AB6C3BE11A6E1368BD1417 /* LicenseDeliveryLiveActivity.swift */; };
+		951594E866484C0FF95CBA34 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7CEDDD2BF78AB3A53B6E9F79 /* InfoPlist.xcstrings */; };
+		95CA800C91E7D361B5B61C45 /* SupportFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 47B9C886EFD0D5D71B7B82BA /* SupportFeature */; };
+		9A67F4A6591C6080E1C60C03 /* HomeFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 8362ED36DCA5F0E3DD1B110E /* HomeFeature */; };
+		A0AEDB49284DBEE55012DE08 /* WidgetPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F411D7CC728CCBEC10546DBB /* WidgetPalette.swift */; };
+		A83ABEC5CA579C7349EAA32F /* DesignTokens in Frameworks */ = {isa = PBXBuildFile; productRef = D564A196351683AC05A4F132 /* DesignTokens */; };
+		AF2FD0D4A003AD5EB825D823 /* DesignTokens in Frameworks */ = {isa = PBXBuildFile; productRef = B2BCC2F5A62C974C1B469461 /* DesignTokens */; };
+		B498E20B55B4612EDC6F4251 /* CatalogFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 1A664998938A075002BF922D /* CatalogFeature */; };
+		BFA1DE7FC0238582635A4AE2 /* LicenseDeliveryAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A4132A20E5CA3FE5120314 /* LicenseDeliveryAttributes.swift */; };
 		C46F05F28B4A974320718E6C /* CommerceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D65267B740D9A82F88804CC /* CommerceUITests.swift */; };
 		C5004E6B2FC70D43D144471B /* ShellUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48FF1AB87DA1D20E946C354 /* ShellUITests.swift */; };
 		CA10E5A9585F0BF48DA4E5D8 /* LaunchAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBF60476D5C656D167FE386 /* LaunchAppearance.swift */; };
-		CBE54979358AE52B7ACF5230 /* CheckoutFeature in Frameworks */ = {isa = PBXBuildFile; productRef = C03CFB00953D3A394ACB3437 /* CheckoutFeature */; };
-		D17161830E48A0F865A94388 /* AccountFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 71303B6A833923388D115D00 /* AccountFeature */; };
+		CBE54979358AE52B7ACF5230 /* ProductFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 41DDB17CF76DB67349373B46 /* ProductFeature */; };
+		D0B16B1FCC1E4B8C286CCD89 /* LicenseDeliveryAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A4132A20E5CA3FE5120314 /* LicenseDeliveryAttributes.swift */; };
+		D17161830E48A0F865A94388 /* CartFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 1C998F9229A0E1CA6F8F3AC4 /* CartFeature */; };
 		D3943EBE53F072F4D4D757D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E26C2F33D7C1A2115DB0B6E /* Assets.xcassets */; };
 		DFFF973EE3561D38B5C57D65 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435C3DF8D0B1667E8615C0F /* RootView.swift */; };
+		E60E45BF0F1DC7C313CFFD30 /* LegalFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 5F7632C953B5BF221CC8B5E7 /* LegalFeature */; };
+		EDCE99745E3C456D3648D1BD /* KARINEXWidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320BCB2D3D41B3FF7A0E8B95 /* KARINEXWidgetsBundle.swift */; };
+		EF8C3BB0F4446A1D413E0B6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9EC61327EE49BB27F241ED /* AppDelegate.swift */; };
 		FB6E195EB218F0A90FCE9ADF /* MarketConfirmationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E3259843A3F7D39E8D2C86 /* MarketConfirmationPolicy.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,40 +75,73 @@
 			remoteGlobalIDString = 730F919B7EA3134854691F27;
 			remoteInfo = KARINEX;
 		};
+		EA7B2C7A69CA91E3F9AB7841 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7DDCBF2E191482DDA14D875B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C45A853D953ED6B8A5031F47;
+			remoteInfo = KARINEXWidgets;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E4DD79EBDE69FCC98F3FED8D /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				1570A59A0845C5996ECDD75D /* KARINEXWidgets.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		02292FA877EA0C1F1186B3D8 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		02AB6C3BE11A6E1368BD1417 /* LicenseDeliveryLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseDeliveryLiveActivity.swift; sourceTree = "<group>"; };
 		0435C3DF8D0B1667E8615C0F /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		08653E80457407AA74F9E6BD /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		1143798235C63063DA5DB29C /* AccountServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountServices.swift; sourceTree = "<group>"; };
+		1B9EC61327EE49BB27F241ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2212BE8E9AD3600B4FA0C7BD /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		2787847A27AF8A73DB7731A9 /* Secrets.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.example.xcconfig; sourceTree = "<group>"; };
+		320BCB2D3D41B3FF7A0E8B95 /* KARINEXWidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KARINEXWidgetsBundle.swift; sourceTree = "<group>"; };
 		3425AE4A10A7282C286D0EAB /* Core */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Core; path = Packages/Core; sourceTree = SOURCE_ROOT; };
 		3E9819C0277D9C4FF99CE413 /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DesignSystem; path = Packages/DesignSystem; sourceTree = SOURCE_ROOT; };
 		4A04C59355BB09BE2752DE7B /* AppShellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShellTests.swift; sourceTree = "<group>"; };
 		5146298F9A898DB941C1CDE5 /* AppContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainerTests.swift; sourceTree = "<group>"; };
+		5451DB4BD35AE419465064C6 /* KARINEXWidgets.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = KARINEXWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		54C1202FB9C736ABDE1BDD76 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		5691FA338118D7A104542E12 /* Features */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Features; path = Packages/Features; sourceTree = SOURCE_ROOT; };
 		5E4F2D7C74AB5BDAFD6FA5F6 /* KARINEX.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = KARINEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		670303BFE81D2591BD21B4AA /* AppRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterTests.swift; sourceTree = "<group>"; };
+		68D7B6F30C992EF5B3CAF7D4 /* BestsellerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestsellerWidget.swift; sourceTree = "<group>"; };
 		70C3BBDC8F4BE185B38A742D /* KarinexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KarinexApp.swift; sourceTree = "<group>"; };
+		7CEDDD2BF78AB3A53B6E9F79 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		7D65267B740D9A82F88804CC /* CommerceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommerceUITests.swift; sourceTree = "<group>"; };
 		832C8519869BFE1988A03980 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		840214F089251F43623495FC /* KARINEX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KARINEX.entitlements; sourceTree = "<group>"; };
 		8E26C2F33D7C1A2115DB0B6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8FBF60476D5C656D167FE386 /* LaunchAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAppearance.swift; sourceTree = "<group>"; };
 		931E4E467DC4A4E954DB0273 /* ConfigurationResolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationResolution.swift; sourceTree = "<group>"; };
+		99D453AE9A6BA3569D1C3D88 /* PrivacyCover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyCover.swift; sourceTree = "<group>"; };
 		ADA581598474E20FB395B6DB /* project.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = project.yml; sourceTree = "<group>"; };
+		AE125DC417DFA8DC4C288A95 /* Backend */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Backend; path = Packages/Backend; sourceTree = SOURCE_ROOT; };
 		B2CE20A4E8D40B11FB63F7B0 /* ShopifyKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ShopifyKit; path = Packages/ShopifyKit; sourceTree = SOURCE_ROOT; };
 		B48FF1AB87DA1D20E946C354 /* ShellUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellUITests.swift; sourceTree = "<group>"; };
+		B8A4132A20E5CA3FE5120314 /* LicenseDeliveryAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseDeliveryAttributes.swift; sourceTree = "<group>"; };
 		BC6FE7344B4FBC082B6867F3 /* KARINEXTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = KARINEXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6C7434801DBC3D43DB2D49F /* AppTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTab.swift; sourceTree = "<group>"; };
+		E4CF9A0D0373ACC9954C1304 /* LiveActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityController.swift; sourceTree = "<group>"; };
 		E55394E456617B665F3A6DAF /* AppServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppServices.swift; sourceTree = "<group>"; };
 		E7E3259843A3F7D39E8D2C86 /* MarketConfirmationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketConfirmationPolicy.swift; sourceTree = "<group>"; };
 		E8E8B4E7108E01661D225A34 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		EF83D1F07484A5082F31D49F /* OfflineBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineBanner.swift; sourceTree = "<group>"; };
 		EF859BD8D0E0472F78A915B1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		EFAC6A5B57CED8DAF857217D /* KARINEXUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = KARINEXUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F411D7CC728CCBEC10546DBB /* WidgetPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetPalette.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,31 +151,75 @@
 			files = (
 				9380B376A0BD06933070AA9F /* Core in Frameworks */,
 				73B68146F5798E9137455D2A /* ShopifyKit in Frameworks */,
-				67B3FAA6F040215161519473 /* DesignSystem in Frameworks */,
-				92A25367996F094940A70AC9 /* DesignTokens in Frameworks */,
-				AF2FD0D4A003AD5EB825D823 /* CommerceUI in Frameworks */,
-				2D0C37088EC2550A64C074B0 /* HomeFeature in Frameworks */,
-				9A67F4A6591C6080E1C60C03 /* CatalogFeature in Frameworks */,
-				B498E20B55B4612EDC6F4251 /* SearchFeature in Frameworks */,
-				4CFCAF1C64FC9A46EFCA9B50 /* CartFeature in Frameworks */,
-				D17161830E48A0F865A94388 /* AccountFeature in Frameworks */,
-				4D7024E754318AE5FEF2CA43 /* ProductFeature in Frameworks */,
-				CBE54979358AE52B7ACF5230 /* CheckoutFeature in Frameworks */,
+				67B3FAA6F040215161519473 /* BackendKit in Frameworks */,
+				92A25367996F094940A70AC9 /* DesignSystem in Frameworks */,
+				AF2FD0D4A003AD5EB825D823 /* DesignTokens in Frameworks */,
+				2D0C37088EC2550A64C074B0 /* CommerceUI in Frameworks */,
+				9A67F4A6591C6080E1C60C03 /* HomeFeature in Frameworks */,
+				B498E20B55B4612EDC6F4251 /* CatalogFeature in Frameworks */,
+				4CFCAF1C64FC9A46EFCA9B50 /* SearchFeature in Frameworks */,
+				D17161830E48A0F865A94388 /* CartFeature in Frameworks */,
+				4D7024E754318AE5FEF2CA43 /* AccountFeature in Frameworks */,
+				CBE54979358AE52B7ACF5230 /* ProductFeature in Frameworks */,
+				892213FC886E2EB3E797785C /* CheckoutFeature in Frameworks */,
+				1B8FBDC7DE79B62186E1F016 /* LicensesFeature in Frameworks */,
+				95CA800C91E7D361B5B61C45 /* SupportFeature in Frameworks */,
+				E60E45BF0F1DC7C313CFFD30 /* LegalFeature in Frameworks */,
+				8767C63FF2C0EC576AFEBC08 /* SettingsFeature in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F34C9C0696158F191393096 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FE837AC5B973ADC7103F840 /* Core in Frameworks */,
+				6072F62E5F96F43CE333C8F7 /* ShopifyKit in Frameworks */,
+				A83ABEC5CA579C7349EAA32F /* DesignTokens in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		06424FEC676D3B70D1E45F01 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				0CF79FAE1116E8FD31D3B145 /* Extension */,
+				191E248E0F373E65C66445DC /* Shared */,
+			);
+			path = Widgets;
+			sourceTree = "<group>";
+		};
+		0CF79FAE1116E8FD31D3B145 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				68D7B6F30C992EF5B3CAF7D4 /* BestsellerWidget.swift */,
+				320BCB2D3D41B3FF7A0E8B95 /* KARINEXWidgetsBundle.swift */,
+				02AB6C3BE11A6E1368BD1417 /* LicenseDeliveryLiveActivity.swift */,
+				F411D7CC728CCBEC10546DBB /* WidgetPalette.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		13854CAC05B6DA8C85B59E93 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
+				AE125DC417DFA8DC4C288A95 /* Backend */,
 				3425AE4A10A7282C286D0EAB /* Core */,
 				3E9819C0277D9C4FF99CE413 /* DesignSystem */,
 				5691FA338118D7A104542E12 /* Features */,
 				B2CE20A4E8D40B11FB63F7B0 /* ShopifyKit */,
 			);
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		191E248E0F373E65C66445DC /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				B8A4132A20E5CA3FE5120314 /* LicenseDeliveryAttributes.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		279FC82C3AC2AD93AABDC9F8 /* Config */ = {
@@ -142,9 +240,19 @@
 				B13DB40382C66A5F60991B26 /* Sources */,
 				701B4FDACFA2DFF9B9D35B3B /* Tests */,
 				A43C73F03FCBE9F220D7EBDA /* UITests */,
+				06424FEC676D3B70D1E45F01 /* Widgets */,
 				840214F089251F43623495FC /* KARINEX.entitlements */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		5BE50A4E9E1FC184C4C7C44A /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				1B9EC61327EE49BB27F241ED /* AppDelegate.swift */,
+				E4CF9A0D0373ACC9954C1304 /* LiveActivityController.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		701B4FDACFA2DFF9B9D35B3B /* Tests */ = {
@@ -164,6 +272,7 @@
 				C6C7434801DBC3D43DB2D49F /* AppTab.swift */,
 				8FBF60476D5C656D167FE386 /* LaunchAppearance.swift */,
 				EF83D1F07484A5082F31D49F /* OfflineBanner.swift */,
+				99D453AE9A6BA3569D1C3D88 /* PrivacyCover.swift */,
 				0435C3DF8D0B1667E8615C0F /* RootView.swift */,
 			);
 			path = Shell;
@@ -175,6 +284,7 @@
 				5E4F2D7C74AB5BDAFD6FA5F6 /* KARINEX.app */,
 				BC6FE7344B4FBC082B6867F3 /* KARINEXTests.xctest */,
 				EFAC6A5B57CED8DAF857217D /* KARINEXUITests.xctest */,
+				5451DB4BD35AE419465064C6 /* KARINEXWidgets.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -182,6 +292,7 @@
 		A2030961232AB0E5F4B9E92E /* Composition */ = {
 			isa = PBXGroup;
 			children = (
+				1143798235C63063DA5DB29C /* AccountServices.swift */,
 				832C8519869BFE1988A03980 /* AppContainer.swift */,
 				E55394E456617B665F3A6DAF /* AppServices.swift */,
 				931E4E467DC4A4E954DB0273 /* ConfigurationResolution.swift */,
@@ -203,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				A2030961232AB0E5F4B9E92E /* Composition */,
+				5BE50A4E9E1FC184C4C7C44A /* Notifications */,
 				7F69EE010D4C1FA8BE36A99D /* Shell */,
 				70C3BBDC8F4BE185B38A742D /* KarinexApp.swift */,
 			);
@@ -224,6 +336,7 @@
 			isa = PBXGroup;
 			children = (
 				8E26C2F33D7C1A2115DB0B6E /* Assets.xcassets */,
+				7CEDDD2BF78AB3A53B6E9F79 /* InfoPlist.xcstrings */,
 				02292FA877EA0C1F1186B3D8 /* Localizable.xcstrings */,
 				EF859BD8D0E0472F78A915B1 /* PrivacyInfo.xcprivacy */,
 			);
@@ -258,15 +371,18 @@
 				32857C4E22411161696C1E14 /* Sources */,
 				DAC1BBCD486CF09CE5778BD4 /* Resources */,
 				485CA9B8175F1171C4154398 /* Frameworks */,
+				E4DD79EBDE69FCC98F3FED8D /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E082B433C9338DDC11B03B43 /* PBXTargetDependency */,
 			);
 			name = KARINEX;
 			packageProductDependencies = (
 				E0BFF0553A4ADEE2532642CA /* Core */,
 				E6179FBD55A47FF3E3937952 /* ShopifyKit */,
+				FE084E0AB9763B693CDADAC6 /* BackendKit */,
 				1EC2F9929CA28252A6E3F53F /* DesignSystem */,
 				B2BCC2F5A62C974C1B469461 /* DesignTokens */,
 				B3B2CFF5FD318EFD916AD9B6 /* CommerceUI */,
@@ -277,6 +393,10 @@
 				71303B6A833923388D115D00 /* AccountFeature */,
 				41DDB17CF76DB67349373B46 /* ProductFeature */,
 				C03CFB00953D3A394ACB3437 /* CheckoutFeature */,
+				6434365872B6AB4F0115F107 /* LicensesFeature */,
+				47B9C886EFD0D5D71B7B82BA /* SupportFeature */,
+				5F7632C953B5BF221CC8B5E7 /* LegalFeature */,
+				F4C1A32B9B6745292C7525CC /* SettingsFeature */,
 			);
 			productName = KARINEX;
 			productReference = 5E4F2D7C74AB5BDAFD6FA5F6 /* KARINEX.app */;
@@ -300,6 +420,28 @@
 			productReference = EFAC6A5B57CED8DAF857217D /* KARINEXUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		C45A853D953ED6B8A5031F47 /* KARINEXWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 36F693D2F2D5DDAF2D344CDD /* Build configuration list for PBXNativeTarget "KARINEXWidgets" */;
+			buildPhases = (
+				FAE96A01465CDA5557826D14 /* Sources */,
+				F603ACEF2F3754E8680CE6B4 /* Resources */,
+				5F34C9C0696158F191393096 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KARINEXWidgets;
+			packageProductDependencies = (
+				55298BF2F13FE8AD8AF50208 /* Core */,
+				4B6493AAA42639C426A25F74 /* ShopifyKit */,
+				D564A196351683AC05A4F132 /* DesignTokens */,
+			);
+			productName = KARINEXWidgets;
+			productReference = 5451DB4BD35AE419465064C6 /* KARINEXWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -321,6 +463,10 @@
 						DevelopmentTeam = "$(KX_APPLE_TEAM_ID)";
 						ProvisioningStyle = Automatic;
 						TestTargetID = 730F919B7EA3134854691F27;
+					};
+					C45A853D953ED6B8A5031F47 = {
+						DevelopmentTeam = "$(KX_APPLE_TEAM_ID)";
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -344,6 +490,7 @@
 			mainGroup = D5B559EBE32A5CB9481FA406;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				91496656CD62462EF61D7679 /* XCLocalSwiftPackageReference "Packages/Backend" */,
 				A8E53187C8209CB8C05043DA /* XCLocalSwiftPackageReference "Packages/Core" */,
 				3F9961122E705F231B9A6D07 /* XCLocalSwiftPackageReference "Packages/DesignSystem" */,
 				F961E2DB836F3923A5CD965F /* XCLocalSwiftPackageReference "Packages/Features" */,
@@ -355,6 +502,7 @@
 			projectRoot = "";
 			targets = (
 				730F919B7EA3134854691F27 /* KARINEX */,
+				C45A853D953ED6B8A5031F47 /* KARINEXWidgets */,
 				3464FA9A9F35427062F395F5 /* KARINEXTests */,
 				AA09AD32AE6EC89D407941EC /* KARINEXUITests */,
 			);
@@ -367,8 +515,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3943EBE53F072F4D4D757D3 /* Assets.xcassets in Resources */,
+				951594E866484C0FF95CBA34 /* InfoPlist.xcstrings in Resources */,
 				2227B1F5DB340FBAF2420E76 /* Localizable.xcstrings in Resources */,
 				30F8FAFA6492C484D62D3D62 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F603ACEF2F3754E8680CE6B4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6F62FECD95965E118B0382B7 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,15 +545,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43177F6F83DE64093FCBF95F /* AccountServices.swift in Sources */,
 				8253FD72DF056C4148881F15 /* AppContainer.swift in Sources */,
+				EF8C3BB0F4446A1D413E0B6E /* AppDelegate.swift in Sources */,
 				2D9039D1A262EDF5FD1D2759 /* AppRouter.swift in Sources */,
 				55EF073FA22AC35B62ED0625 /* AppServices.swift in Sources */,
 				88D8FE1E4DF74A2B1EC663FE /* AppTab.swift in Sources */,
 				3C0068C37602B0608BDBC2C8 /* ConfigurationResolution.swift in Sources */,
 				631FBF5B32369D7C879ABC80 /* KarinexApp.swift in Sources */,
 				CA10E5A9585F0BF48DA4E5D8 /* LaunchAppearance.swift in Sources */,
+				D0B16B1FCC1E4B8C286CCD89 /* LicenseDeliveryAttributes.swift in Sources */,
+				401E04D0D148C0FF19CABE27 /* LiveActivityController.swift in Sources */,
 				FB6E195EB218F0A90FCE9ADF /* MarketConfirmationPolicy.swift in Sources */,
 				38E87A70B15B3E4450FBBB41 /* OfflineBanner.swift in Sources */,
+				48F54F33899BD3D77D808681 /* PrivacyCover.swift in Sources */,
 				DFFF973EE3561D38B5C57D65 /* RootView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -408,6 +570,18 @@
 				4A2C25C4AFDEE064FF547575 /* AppContainerTests.swift in Sources */,
 				26890CE39A4B6844F4674D93 /* AppRouterTests.swift in Sources */,
 				3429454AA86A23C1BA8EB695 /* AppShellTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAE96A01465CDA5557826D14 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84103776B82BD67F05B19C9B /* BestsellerWidget.swift in Sources */,
+				EDCE99745E3C456D3648D1BD /* KARINEXWidgetsBundle.swift in Sources */,
+				BFA1DE7FC0238582635A4AE2 /* LicenseDeliveryAttributes.swift in Sources */,
+				95041840E9C92FA7288E1894 /* LicenseDeliveryLiveActivity.swift in Sources */,
+				A0AEDB49284DBEE55012DE08 /* WidgetPalette.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,9 +598,52 @@
 			target = 730F919B7EA3134854691F27 /* KARINEX */;
 			targetProxy = E3F482CECF06CF6551439EB7 /* PBXContainerItemProxy */;
 		};
+		E082B433C9338DDC11B03B43 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C45A853D953ED6B8A5031F47 /* KARINEXWidgets */;
+			targetProxy = EA7B2C7A69CA91E3F9AB7841 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		1A0DEBC8FD95D74FBCB546A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = App/Widgets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(KX_BUNDLE_ID).widgets";
+				PRODUCT_NAME = KARINEXWidgets;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2D567D446D62A3CC4301E4AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = App/Widgets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(KX_BUNDLE_ID).widgets";
+				PRODUCT_NAME = KARINEXWidgets;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		41E2007DBE7428727D257DE8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -643,6 +860,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		36F693D2F2D5DDAF2D344CDD /* Build configuration list for PBXNativeTarget "KARINEXWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A0DEBC8FD95D74FBCB546A8 /* Debug */,
+				2D567D446D62A3CC4301E4AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		717034AEA20CE83B671AAE0C /* Build configuration list for PBXNativeTarget "KARINEXTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -690,6 +916,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/DesignSystem;
 		};
+		91496656CD62462EF61D7679 /* XCLocalSwiftPackageReference "Packages/Backend" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Backend;
+		};
 		A8E53187C8209CB8C05043DA /* XCLocalSwiftPackageReference "Packages/Core" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/Core;
@@ -717,6 +947,26 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ProductFeature;
 		};
+		47B9C886EFD0D5D71B7B82BA /* SupportFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SupportFeature;
+		};
+		4B6493AAA42639C426A25F74 /* ShopifyKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ShopifyKit;
+		};
+		55298BF2F13FE8AD8AF50208 /* Core */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Core;
+		};
+		5F7632C953B5BF221CC8B5E7 /* LegalFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LegalFeature;
+		};
+		6434365872B6AB4F0115F107 /* LicensesFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LicensesFeature;
+		};
 		71303B6A833923388D115D00 /* AccountFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AccountFeature;
@@ -737,6 +987,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = CheckoutFeature;
 		};
+		D564A196351683AC05A4F132 /* DesignTokens */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DesignTokens;
+		};
 		E0BFF0553A4ADEE2532642CA /* Core */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Core;
@@ -748,6 +1002,14 @@
 		F2A902353425466E88056710 /* SearchFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SearchFeature;
+		};
+		F4C1A32B9B6745292C7525CC /* SettingsFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SettingsFeature;
+		};
+		FE084E0AB9763B693CDADAC6 /* BackendKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BackendKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
