@@ -16,7 +16,7 @@ store were filled in; everything else is still open. Secrets never go into git: 
 | `{{BFF_BASE_URL}}` | **Open** | Host name only (HTTPS, no path) as `KX_BACKEND_HOST` in `Config/Base.xcconfig` or `Secrets.xcconfig`. The service must implement [BFF_CONTRACT.md](BFF_CONTRACT.md); until then the app uses its e-mail fallbacks. | Phase 2 |
 | `{{BUNDLE_ID}}` | Done (registered) | `de.karinex.app` and `de.karinex.app.widgets` (the widget extension) exist as App IDs in the developer account | Phase 1 (TestFlight) |
 | `{{APPLE_TEAM_ID}}` | Provided | `3227J7CBXY`. Still to do by the owner: add it as the GitHub secret `KX_APPLE_TEAM_ID` (and in `Config/Secrets.xcconfig` for local device builds) | Phase 1 (device builds, TestFlight) |
-| App Store Connect API key | **Open** | CI secrets `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_CONTENT` (base64 of the .p8) | Phase 1 (TestFlight lane) |
+| App Store Connect API key | **Open** | CI secrets `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_CONTENT` (the text of the .p8 file, or its base64) | Phase 1 (TestFlight lane) |
 | Universal Links | **Open** | `apple-app-site-association` on `www.karinex.de` with the team ID and bundle ID | Phase 1 |
 | Collection handles | Verified, differ from PROMPT.md | See [STORE_AUDIT.md](STORE_AUDIT.md): `microsoft-office`, `windows-server`, no `blitzangebote` | Phase 1 |
 | Impressum page handle | Assumed, **please confirm** | The app shows the page `rechtliche-hinweise` as Impressum and `widerrufsrecht` as Widerrufsbelehrung (refund policy as fallback) | Phase 2 |

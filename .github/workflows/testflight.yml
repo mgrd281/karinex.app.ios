@@ -2,7 +2,8 @@
 #
 # Required repository secrets:
 #   ASC_KEY_ID, ASC_ISSUER_ID   App Store Connect API key (role App Manager or Admin)
-#   ASC_KEY_CONTENT             the .p8 key file, base64 encoded (`base64 -i AuthKey_XXXX.p8`)
+#   ASC_KEY_CONTENT             the .p8 key file as text (open it in a text editor and paste
+#                               everything) or base64 of the file (`base64 -i AuthKey_XXXX.p8`)
 #   KX_APPLE_TEAM_ID            Apple Developer team ID
 # Optional (empty keeps the app's documented fallback, e.g. tokenless Storefront access):
 #   KX_STOREFRONT_ACCESS_TOKEN, KX_CUSTOMER_ACCOUNT_CLIENT_ID

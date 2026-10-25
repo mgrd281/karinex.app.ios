@@ -144,7 +144,7 @@ GitHub Actions, defined in `.github/workflows`:
 
 Repository secrets: `KX_STOREFRONT_ACCESS_TOKEN`, `KX_CUSTOMER_ACCOUNT_CLIENT_ID` and
 `KX_APPLE_TEAM_ID` (optional for CI), plus `ASC_KEY_ID`, `ASC_ISSUER_ID` and `ASC_KEY_CONTENT`
-(base64 of the App Store Connect `.p8` key) for TestFlight. Details:
+(the text of the App Store Connect `.p8` key, or its base64) for TestFlight. Details:
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#cicd).
 
 ## Documentation
