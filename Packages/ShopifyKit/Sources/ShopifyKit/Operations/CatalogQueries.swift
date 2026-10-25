@@ -2,7 +2,11 @@ import Foundation
 
 // MARK: - CollectionsQuery
 
-/// Lists the store's collections by title (Storefront `collections`), for the catalog grid.
+/// Lists the store's collections by title (Storefront `collections`), for the Shop tab, each
+/// with the image of its first product as ``CollectionSummary/previewImage``.
+///
+/// The requested cost is about 4 per collection (the image, the one-product connection and its
+/// image), so 100 collections stay well below the tokenless limit of 1000.
 public struct CollectionsQuery: GraphQLOperation {
     /// The largest page size the Storefront API accepts.
     public static let maximumPageSize = 250
@@ -16,7 +20,36 @@ public struct CollectionsQuery: GraphQLOperation {
     /// The `data` of the response.
     public struct ResponseData: Decodable, Sendable, Equatable {
         /// The collections connection.
-        public let collections: Connection<CollectionSummary>
+        public let collections: Connection<Node>
+    }
+
+    /// One collection of the response: the summary fields and its first product's image.
+    public struct Node: Decodable, Sendable, Equatable {
+        /// The collection, with ``CollectionSummary/previewImage`` taken from its first product.
+        public let collection: CollectionSummary
+
+        private enum CodingKeys: String, CodingKey {
+            case products
+        }
+
+        /// The one field of a product the query asks for.
+        private struct FirstProduct: Decodable {
+            let featuredImage: ShopifyImage?
+        }
+
+        public init(from decoder: any Decoder) throws {
+            let summary = try CollectionSummary(from: decoder)
+            let products = try decoder.container(keyedBy: CodingKeys.self)
+                .decodeIfPresent(Connection<FirstProduct>.self, forKey: .products)
+            collection = CollectionSummary(
+                id: summary.id,
+                handle: summary.handle,
+                title: summary.title,
+                description: summary.description,
+                image: summary.image,
+                previewImage: products?.nodes.first?.featuredImage ?? summary.previewImage
+            )
+        }
     }
 
     /// `Collections`.
@@ -30,6 +63,13 @@ public struct CollectionsQuery: GraphQLOperation {
           collections(first: $first, sortKey: TITLE) {
             nodes {
               ...CollectionSummaryFields
+              products(first: 1) {
+                nodes {
+                  featuredImage {
+                    ...ImageFields
+                  }
+                }
+              }
             }
           }
         }

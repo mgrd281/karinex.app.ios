@@ -136,6 +136,12 @@ struct LayoutTokenTests {
         }
     }
 
+    @Test("A pressed card shrinks only slightly, or dims with Reduce Motion")
+    func pressedState() {
+        #expect((0.95..<1).contains(MotionToken.pressedScale))
+        #expect((0.5..<1).contains(MotionToken.pressedOpacity))
+    }
+
     @Test("The launch intro stays under one second and zooms the logo past the screen")
     func launchIntro() {
         #expect(MotionToken.launchHoldDuration + MotionToken.launchZoomDuration < 1)

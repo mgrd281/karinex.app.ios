@@ -46,6 +46,16 @@ change.
   Ratgeber as tall story tiles and the support card. Chips above the tab bar ("Für Sie" and one
   per category) switch the page to the products of one category. The modules and their store
   collections are described by `HomeModules`; the hero with "Zum Sortiment" is gone.
+- **Shop tab like a top retail app** (owner request): the bestsellers and the sale open the
+  tab as two large cards (ink and sale red) with a product photo, the product families follow
+  as rows with a short line and the photo of their first product, the single versions as chips
+  with a photo, every other collection as a list. All photos arrive in the one collections
+  request (`CollectionsQuery` now asks each collection for its first product's image,
+  `CollectionSummary.previewImage`). Short names (`CollectionNames`) replace the store's search
+  engine titles on the Shop tab, the collection screen and in the search suggestions ("Sale"
+  instead of "SALE – Stark reduzierte Angebote", "Visual Studio" instead of "Visual Studio –
+  Entwicklungstools"). Cards, rows and chips shrink a little while pressed
+  (`.buttonStyle(.kxPress)`, a dim with Reduce Motion); chips wrap with the new `KXFlowLayout`.
 - **Real payment logos** (owner request): the cart and the product page show the acceptance
   marks of Apple Pay, the card brands and Klarna (the icons of Shopify's MIT-licensed
   `payment_icons` set, as in the web shop footer, PDF assets in CommerceUI) instead of text

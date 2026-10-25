@@ -59,6 +59,10 @@ public enum MotionToken {
     public static let gentleResponse: Double = 0.35
     /// Duration of simple cross-fades.
     public static let fadeDuration: Double = 0.2
+    /// How far a pressed card or tile shrinks.
+    public static let pressedScale: Double = 0.97
+    /// The opacity of a pressed card or tile when Reduce Motion is on (it dims instead).
+    public static let pressedOpacity: Double = 0.7
     /// Duration of one skeleton shimmer sweep.
     public static let shimmerDuration: Double = 1.4
     /// How long the logo of the launch intro stays still before it zooms.

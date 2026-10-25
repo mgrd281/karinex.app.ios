@@ -63,7 +63,8 @@ public protocol CatalogRepository: Sendable {
         filters: [ProductFilterInput]
     ) async throws -> CollectionPage?
 
-    /// The store's collections, sorted by title.
+    /// The store's collections, sorted by title, each with the photo of its first product
+    /// (``CollectionSummary/previewImage``).
     ///
     /// - Parameter first: The number of collections (1 to 250).
     /// - Throws: `ShopifyError`.
@@ -168,7 +169,7 @@ public final class StorefrontCatalogRepository: CatalogRepository {
     /// Loads the store's collections in the current context.
     public func collections(first: Int) async throws -> [CollectionSummary] {
         let context = await contextProvider.currentContext()
-        return try await client.execute(CollectionsQuery(first: first), context: context).collections.nodes
+        return try await client.execute(CollectionsQuery(first: first), context: context).collections.nodes.map(\.collection)
     }
 
     /// Loads recommendations in the current context.

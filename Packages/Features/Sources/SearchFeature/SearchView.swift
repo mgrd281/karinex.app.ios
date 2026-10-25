@@ -238,8 +238,9 @@ private struct SearchPredictiveContent: View {
                             title: String(localized: "search.section.collections", bundle: .module),
                             items: result.collections
                         ) { collection in
-                            SearchListRow(systemImage: "square.grid.2x2", title: collection.title, detail: nil) {
-                                onRoute(.collection(handle: collection.handle, title: collection.title))
+                            let name = CollectionNames.title(for: collection)
+                            SearchListRow(systemImage: "square.grid.2x2", title: name, detail: nil) {
+                                onRoute(.collection(handle: collection.handle, title: name))
                             }
                             .accessibilityIdentifier("search.collection.\(collection.handle)")
                         }

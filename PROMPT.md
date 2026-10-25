@@ -147,7 +147,8 @@ Laid out like the home screen of the About You app (owner request of 2026-10-25)
 - Chips above the tab bar: "Für Sie" and one per category; a category chip switches the page to that category's products with "Alle Produkte anzeigen".
 
 ### 6.2 Shop (Catalog)
-- Collections grid with imagery; product list with sort (relevance, price, newest) and filters derived from product options/metafields: edition, device count, delivery form (download/USB), platform (Windows/Mac).
+- Laid out like the category pages of fashion retail apps (owner request of 2026-10-25): the bestsellers and the sale as two large cards (ink and sale red) with a product photo; the product families (Windows, Microsoft Office, Office für Mac, Microsoft 365, Windows Server, Visual Studio, Microsoft Tools) as rows with a short line and the photo of their first product; the single versions (Windows 11, Microsoft Office 2024, Windows Server 2025, ...) as chips with a photo; every other collection as a list. Short names replace the store's search engine titles; cards shrink a little while pressed.
+- Product list with sort (relevance, price, newest) and filters derived from product options/metafields: edition, device count, delivery form (download/USB), platform (Windows/Mac).
 - Infinite scroll with cursor pagination, pull-to-refresh, skeleton states.
 
 ### 6.3 Product detail (the most important screen)

@@ -580,7 +580,9 @@ light, dark and an accessibility text size, and snapshot tests:
 Foundation helpers in `Foundation/`: `KXColor`, `KXTypography` (`.kxFont(_:)`, `KXFont`),
 `KXLayout` (`KXSpacing`, `KXRadius`, `KXBorder`, `.kxScreenBackground()`, `.kxGutter()`),
 `KXPhotoTile` (`.kxPhotoTile()`, `kxIsInPhotoTile`), `KXMotion` (`.standard`, `.snappy`,
-`.gentle`, `.fade`, all Reduce Motion aware), `KXLaunchIntro` (the zoom into the logo at app
+`.gentle`, `.fade`, all Reduce Motion aware), `KXPressStyle` (`.buttonStyle(.kxPress)`: cards,
+tiles and chips shrink to `MotionToken.pressedScale` while pressed, or dim with Reduce Motion),
+`KXFlowLayout` (rows of chips that wrap), `KXLaunchIntro` (the zoom into the logo at app
 launch) and `KXHaptics`.
 
 Components take already-localized strings from the caller. Strings that belong to a component
@@ -709,8 +711,16 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
   recommendations, loaded in parallel with the comparison row of `RELATED` recommendations),
   FAQ, the 100-day promise with its condition, the withdrawal notice for digital goods, and a
   sticky purchase bar. Sections without data are omitted, never faked.
-- `CatalogFeature`: collection directory, collection screen with sort, filters and cursor
-  pagination. `SearchFeature`: predictive suggestions, results with sort and pagination, recent
+- `CatalogFeature`: the Shop tab laid out like the category pages of fashion retail apps
+  (`CatalogDirectory` decides the sections: the bestseller and sale collections as two large
+  cards, ink and sale red; the product families as rows with a short line and a photo; the
+  single versions as chips with a photo; every other collection as a list), and the collection
+  screen with sort, filters and cursor pagination. The photos come from one request:
+  `CollectionsQuery` asks every collection for its first product's image
+  (`CollectionSummary.previewImage`, about 4 query cost per collection, so the 60 requested
+  stay well below the tokenless limit of 1000). `CollectionNames` (CommerceUI) replaces the
+  store's search engine titles ("SALE – Stark reduzierte Angebote") with short names on the
+  Shop tab, the collection screen and in the search suggestions; clean store titles stay. `SearchFeature`: predictive suggestions, results with sort and pagination, recent
   searches; `fieldActivation` (from `AppRouter.searchFieldRequests`, counted for every empty
   search a screen asks for) puts the cursor into the field when the Start tab's search field
   opens the tab. `CartFeature`: lines, quantity, undo, discount codes with `userErrors`,

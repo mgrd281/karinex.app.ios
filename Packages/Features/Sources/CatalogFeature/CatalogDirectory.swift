@@ -3,32 +3,56 @@ import ShopifyKit
 
 // MARK: - CatalogDirectory
 
-/// Which collections the Shop tab lists and in which order.
+/// What the Shop tab shows and in which order, with the live store handles
+/// (docs/STORE_AUDIT.md):
 ///
-/// The curated collections (docs/STORE_AUDIT.md) come first, in the order below, followed by
-/// every other collection of the store in the store's order (by title). `all` (the whole range)
-/// and `digital-goods-vat-tax` (a helper collection for tax settings) are never listed.
+/// - ``highlightHandles``: the bestsellers and the sale as two large cards on top.
+/// - ``categoryHandles``: the product families as rows with a photo and a short line.
+/// - ``versionHandles``: the single versions (Windows 11, Office 2024, ...) as chips.
+/// - Every other collection of the store, in the store's order (by title), as a list.
+///
+/// `all` (the whole range) and `digital-goods-vat-tax` (a helper collection for tax settings)
+/// are never listed, and a handle the store does not have is left out.
 enum CatalogDirectory {
-    /// The curated collection handles, in display order.
-    static let curatedHandles = [
+    /// The collections of the two large cards on top, in display order.
+    static let highlightHandles = ["bestseller", "sale"]
+
+    /// The product families, in display order.
+    static let categoryHandles = [
         "windows",
         "microsoft-office",
+        "microsoft-office-fur-mac",
+        "microsoft-365-abonnement",
         "windows-server",
         "visual-studio-entwicklungstools",
-        "bestseller",
-        "sale",
         "microsoft-tools",
-        "microsoft-365-abonnement",
-        "microsoft-office-fur-mac",
+    ]
+
+    /// The single product versions, in display order: newest first within each family.
+    static let versionHandles = [
+        "windows-11",
+        "windows-10",
+        "microsoft-office-2024",
+        "microsoft-office-2021",
+        "microsoft-office-2019",
+        "microsoft-office-2024-fur-mac",
+        "microsoft-office-2021-fur-mac",
+        "windows-server-2025",
+        "windows-server-2022",
+        "windows-server-2019",
+        "microsoft-project",
+        "microsoft-visio",
+        "microsoft-sql-server",
     ]
 
     /// Handles that are never listed.
     static let excludedHandles: Set<String> = ["all", "digital-goods-vat-tax"]
 
-    /// The number of collections requested from the store (the live store has about 30).
-    static let requestLimit = 100
+    /// The number of collections requested from the store. The live store has about 30, and
+    /// each costs about 4 of the 1000 a tokenless request may cost (``CollectionsQuery``).
+    static let requestLimit = 60
 
-    /// The store's sale collection, whose tile is drawn in sale red.
+    /// The store's sale collection, whose card is sale red.
     static let saleHandle = "sale"
 
     /// Whether `handle` is the sale collection.
@@ -36,55 +60,81 @@ enum CatalogDirectory {
         handle == saleHandle
     }
 
-    /// The listed collections split into the curated ones (in curated order) and the rest (in
-    /// the given order). Duplicate handles are listed once.
+    /// The listed collections in the sections of the Shop tab. Duplicate handles are listed
+    /// once.
     static func arrange(_ collections: [CollectionSummary]) -> CatalogSections {
         var seen = Set<String>()
         let listed = collections.filter { collection in
             !excludedHandles.contains(collection.handle) && seen.insert(collection.handle).inserted
         }
         let byHandle = Dictionary(listed.map { ($0.handle, $0) }, uniquingKeysWith: { first, _ in first })
-        let featured = curatedHandles.compactMap { byHandle[$0] }
-        let curated = Set(curatedHandles)
-        let more = listed.filter { !curated.contains($0.handle) }
-        return CatalogSections(featured: featured, more: more)
+        let placed = Set(highlightHandles + categoryHandles + versionHandles)
+        return CatalogSections(
+            highlights: highlightHandles.compactMap { byHandle[$0] },
+            categories: categoryHandles.compactMap { byHandle[$0] },
+            versions: versionHandles.compactMap { byHandle[$0] },
+            more: listed.filter { !placed.contains($0.handle) }
+        )
     }
 
-    /// The decorative SF Symbol of a collection tile.
-    static func systemImage(for handle: String) -> String {
+    /// The short line below a family's name, e.g. "Betriebssysteme"; `nil` for every other
+    /// collection.
+    static func detail(for handle: String) -> String? {
+        detail(for: handle, in: CatalogResources.bundle)
+    }
+
+    /// The line resolved against `bundle`: the module bundle, or one of its `.lproj` folders.
+    static func detail(for handle: String, in bundle: Bundle) -> String? {
+        detailKey(for: handle).map { String(localized: $0, bundle: bundle) }
+    }
+
+    /// What a highlight card invites to, e.g. "Jetzt entdecken"; `nil` for other collections.
+    static func highlightAction(for handle: String) -> String? {
+        highlightAction(for: handle, in: CatalogResources.bundle)
+    }
+
+    /// The invitation resolved against `bundle`.
+    static func highlightAction(for handle: String, in bundle: Bundle) -> String? {
+        highlightActionKey(for: handle).map { String(localized: $0, bundle: bundle) }
+    }
+
+    private static func detailKey(for handle: String) -> String.LocalizationValue? {
         switch handle {
-        case "windows", "windows-10", "windows-11", "windows-7", "windows-8": "macwindow"
-        case "microsoft-office", "microsoft-office-2019", "microsoft-office-2021", "microsoft-office-2024": "doc.richtext"
-        case "windows-server": "server.rack"
-        case "visual-studio-entwicklungstools": "chevron.left.forwardslash.chevron.right"
-        case "bestseller": "sparkles"
-        case saleHandle: "tag"
-        case "microsoft-tools", "microsoft-project", "microsoft-visio", "microsoft-sql-server": "wrench.and.screwdriver"
-        case "microsoft-365-abonnement": "icloud"
-        case "microsoft-office-fur-mac": "laptopcomputer"
-        default:
-            if handle.hasPrefix("windows-server") {
-                "server.rack"
-            } else if handle.hasSuffix("fur-mac") {
-                "laptopcomputer"
-            } else {
-                "square.grid.2x2"
-            }
+        case "windows": "catalog.category.windows.detail"
+        case "microsoft-office": "catalog.category.office.detail"
+        case "microsoft-office-fur-mac": "catalog.category.mac.detail"
+        case "microsoft-365-abonnement": "catalog.category.microsoft365.detail"
+        case "windows-server": "catalog.category.server.detail"
+        case "visual-studio-entwicklungstools": "catalog.category.development.detail"
+        case "microsoft-tools": "catalog.category.tools.detail"
+        default: nil
+        }
+    }
+
+    private static func highlightActionKey(for handle: String) -> String.LocalizationValue? {
+        switch handle {
+        case "bestseller": "catalog.highlight.bestseller.action"
+        case saleHandle: "catalog.highlight.sale.action"
+        default: nil
         }
     }
 }
 
 // MARK: - CatalogSections
 
-/// The collections of the Shop tab: the curated ones as large tiles, the rest as a list.
+/// The collections of the Shop tab, section by section.
 struct CatalogSections: Sendable, Hashable {
-    /// The curated collections, in curated order.
-    let featured: [CollectionSummary]
+    /// The bestsellers and the sale, as large cards.
+    let highlights: [CollectionSummary]
+    /// The product families, as rows with a photo.
+    let categories: [CollectionSummary]
+    /// The single versions, as chips.
+    let versions: [CollectionSummary]
     /// Every other listed collection, in the store's order.
     let more: [CollectionSummary]
 
     /// Whether nothing is listed.
     var isEmpty: Bool {
-        featured.isEmpty && more.isEmpty
+        highlights.isEmpty && categories.isEmpty && versions.isEmpty && more.isEmpty
     }
 }

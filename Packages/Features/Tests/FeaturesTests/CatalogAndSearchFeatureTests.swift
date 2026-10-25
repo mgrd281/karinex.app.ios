@@ -10,15 +10,20 @@ import Testing
 
 @Suite("Catalog directory")
 struct CatalogDirectoryTests {
-    @Test("Curated collections come first in curated order, then the rest in store order")
+    @Test("Highlights, families and versions come in curated order, every other collection in store order")
     func arrangement() {
-        let store = ["bestseller", "all", "digital-goods-vat-tax", "microsoft-project", "sale", "windows", "windows-11", "microsoft-office"]
-            .map { BrowseFixtures.collection($0) }
+        let store = [
+            "bestseller", "all", "digital-goods-vat-tax", "microsoft-project", "sale", "windows", "windows-11",
+            "microsoft-office", "windows-7", "windows-server-2016",
+        ]
+        .map { BrowseFixtures.collection($0) }
 
         let sections = CatalogDirectory.arrange(store)
 
-        #expect(sections.featured.map(\.handle) == ["windows", "microsoft-office", "bestseller", "sale"])
-        #expect(sections.more.map(\.handle) == ["microsoft-project", "windows-11"])
+        #expect(sections.highlights.map(\.handle) == ["bestseller", "sale"])
+        #expect(sections.categories.map(\.handle) == ["windows", "microsoft-office"])
+        #expect(sections.versions.map(\.handle) == ["windows-11", "microsoft-project"])
+        #expect(sections.more.map(\.handle) == ["windows-7", "windows-server-2016"])
     }
 
     @Test("All products and the tax helper collection are never listed")
@@ -35,18 +40,84 @@ struct CatalogDirectoryTests {
             BrowseFixtures.collection("windows", title: "Again"),
         ])
 
-        #expect(sections.featured.map(\.title) == ["windows"])
+        #expect(sections.categories.map(\.title) == ["windows"])
         #expect(sections.more.isEmpty)
     }
 
-    @Test("Every curated collection has its own symbol")
-    func symbols() {
-        let symbols = CatalogDirectory.curatedHandles.map(CatalogDirectory.systemImage(for:))
-        #expect(!symbols.contains("square.grid.2x2"))
-        #expect(CatalogDirectory.systemImage(for: "windows-server-2022") == "server.rack")
-        #expect(CatalogDirectory.systemImage(for: "unknown") == "square.grid.2x2")
+    @Test("No handle sits in two sections")
+    func disjointSections() {
+        let handles = CatalogDirectory.highlightHandles + CatalogDirectory.categoryHandles + CatalogDirectory.versionHandles
+        #expect(Set(handles).count == handles.count)
+        #expect(Set(handles).isDisjoint(with: CatalogDirectory.excludedHandles))
         #expect(CatalogDirectory.isSale("sale"))
         #expect(!CatalogDirectory.isSale("bestseller"))
+    }
+
+    @Test("Every family has its short line and every highlight its invitation, without dashes", arguments: appLanguages)
+    func texts(language: String) throws {
+        let strings = try LocalizedStrings(language: language, in: CatalogResources.bundle)
+        let lines = try CatalogDirectory.categoryHandles.map { try #require(CatalogDirectory.detail(for: $0, in: strings.bundle)) }
+            + CatalogDirectory.highlightHandles.map { try #require(CatalogDirectory.highlightAction(for: $0, in: strings.bundle)) }
+
+        for line in lines {
+            #expect(!line.isEmpty)
+            #expect(!line.hasPrefix("catalog."), "Unresolved key \(line) in \(language)")
+            #expect(!containsForbiddenDash(line), "Dash in \(line)")
+        }
+        #expect(CatalogDirectory.detail(for: "windows-11", in: strings.bundle) == nil)
+        #expect(CatalogDirectory.highlightAction(for: "windows", in: strings.bundle) == nil)
+        for key in ["catalog.versions.eyebrow", "catalog.versions.title", "catalog.featured.title", "catalog.more.title"] {
+            #expect(strings(key) != key, "\(key) has no \(language) value")
+        }
+    }
+
+    @Test("The German lines describe the families")
+    func germanLines() throws {
+        let german = try LocalizedStrings(language: "de", in: CatalogResources.bundle)
+
+        #expect(CatalogDirectory.categoryHandles.compactMap { CatalogDirectory.detail(for: $0, in: german.bundle) } == [
+            "Betriebssysteme für Ihren PC",
+            "Word, Excel, PowerPoint und mehr",
+            "Office für macOS",
+            "Im Abonnement",
+            "Für Unternehmen",
+            "Entwicklungstools",
+            "Project, Visio und SQL Server",
+        ])
+        #expect(CatalogDirectory.highlightAction(for: "sale", in: german.bundle) == "Reduzierte Preise")
+    }
+}
+
+// MARK: - Collection names
+
+@Suite("Collection names")
+struct CollectionNameTests {
+    @Test("Search engine titles of the store give way to short names, clean titles stay")
+    func shortNames() throws {
+        let german = try LocalizedStrings(language: "de", in: CommerceUIResources.bundle)
+        func name(_ handle: String, _ storeTitle: String) -> String {
+            CollectionNames.title(handle: handle, storeTitle: storeTitle, in: german.bundle)
+        }
+
+        #expect(name("bestseller", "Bestseller günstig kaufen") == "Bestseller")
+        #expect(name("sale", "SALE \u{2013} Stark reduzierte Angebote") == "Sale")
+        #expect(name("visual-studio-entwicklungstools", "Visual Studio \u{2013} Entwicklungstools") == "Visual Studio")
+        #expect(name("microsoft-tools", "Microsoft Tools \u{2013} Visual Studio, SQL, Project, Visio") == "Microsoft Tools")
+        #expect(name("microsoft-365-abonnement", "Microsoft 365 Abonnement") == "Microsoft 365")
+        #expect(name("windows-server", "Windows Server") == "Windows Server")
+        #expect(name("microsoft-office-2024-fur-mac", "Microsoft Office 2024 für Mac") == "Microsoft Office 2024 für Mac")
+        #expect(CollectionNames.title(for: BrowseFixtures.collection("windows", title: "Windows")) == "Windows")
+    }
+
+    @Test("The short names exist in every language, without dashes", arguments: appLanguages)
+    func everyLanguage(language: String) throws {
+        let strings = try LocalizedStrings(language: language, in: CommerceUIResources.bundle)
+        for handle in ["bestseller", "sale"] {
+            let name = CollectionNames.title(handle: handle, storeTitle: "x", in: strings.bundle)
+            #expect(name != "x")
+            #expect(!name.hasPrefix("commerce."), "Unresolved key \(name) in \(language)")
+            #expect(!containsForbiddenDash(name), "Dash in \(name)")
+        }
     }
 }
 
@@ -58,15 +129,18 @@ struct CatalogViewModelTests {
     @Test("The collections are requested once and arranged")
     func load() async {
         let catalog = BrowseStubCatalogRepository(collections: {
-            ["windows", "all", "sale", "windows-10"].map { BrowseFixtures.collection($0) }
+            ["windows", "all", "sale", "windows-10", "windows-7"].map { BrowseFixtures.collection($0) }
         })
         let model = CatalogViewModel(catalog: catalog)
 
         await model.load()
 
         #expect(await catalog.collectionsRequests == [CatalogDirectory.requestLimit])
-        #expect(model.state.value?.featured.map(\.handle) == ["windows", "sale"])
-        #expect(model.state.value?.more.map(\.handle) == ["windows-10"])
+        #expect(CatalogDirectory.requestLimit >= 30)
+        #expect(model.state.value?.highlights.map(\.handle) == ["sale"])
+        #expect(model.state.value?.categories.map(\.handle) == ["windows"])
+        #expect(model.state.value?.versions.map(\.handle) == ["windows-10"])
+        #expect(model.state.value?.more.map(\.handle) == ["windows-7"])
     }
 
     @Test("No listable collection is the empty state, a failure the error state")
