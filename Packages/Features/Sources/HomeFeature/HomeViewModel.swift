@@ -5,7 +5,7 @@ import ShopifyKit
 
 // MARK: - HomeViewModel
 
-/// Loads the live modules of the Start screen described by a ``HomeLayout``.
+/// Loads the rows of the Start screen described by a ``HomeLayout``.
 ///
 /// Every row loads concurrently and independently: each has its own ``LoadState``, so a slow or
 /// failing row shows its own skeleton or error while the others are already visible. A reload
@@ -36,7 +36,13 @@ final class HomeViewModel {
 
     /// The state of the collection row `section`, `.idle` before the first load.
     func productState(for section: HomeSection) -> LoadState<[ProductSummary]> {
-        productRows[section.id] ?? .idle
+        productState(for: section.id)
+    }
+
+    /// The state of the collection row with `handle`, `.idle` before the first load (and for a
+    /// handle the layout does not load).
+    func productState(for handle: String) -> LoadState<[ProductSummary]> {
+        productRows[handle] ?? .idle
     }
 
     /// The state of the blog row `section`, `.idle` before the first load.
@@ -78,6 +84,19 @@ final class HomeViewModel {
         markLoading(section)
         let outcome = await Self.fetch(section, catalog: catalog, content: content)
         apply(outcome, to: section.id)
+    }
+
+    /// Reloads the rows with `handles` concurrently, e.g. the collections of the story carousel
+    /// after "Erneut versuchen". Handles the layout does not load are ignored.
+    func reload(handles: [String]) async {
+        let sections = handles.compactMap(layout.section)
+        await withTaskGroup(of: Void.self) { group in
+            for section in sections {
+                group.addTask {
+                    await self.reload(section)
+                }
+            }
+        }
     }
 
     // MARK: Private

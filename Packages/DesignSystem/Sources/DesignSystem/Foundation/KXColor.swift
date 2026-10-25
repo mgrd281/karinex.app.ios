@@ -53,6 +53,12 @@ public enum KXColor {
 
     public static let scrim = color(.scrim)
 
+    /// A static color for a computed value, such as a ``DesignTokens/TintToken`` panel derived
+    /// from a product photo. It is the same in light and dark mode.
+    public static func fixed(_ value: RGBAColor) -> Color {
+        Color(uiColor: UIColor(rgba: value))
+    }
+
     /// The dynamic SwiftUI color for a token.
     public static func color(_ token: ColorToken) -> Color {
         Color(uiColor: uiColor(token))

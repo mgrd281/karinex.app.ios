@@ -31,11 +31,21 @@ change.
 - **Opening like a fashion retail app:** the launch screen shows the store logo (`LaunchLogo`)
   and `KXLaunchIntro` zooms into it and reveals the Start tab in under one second (only a fade
   with Reduce Motion, skipped in UI test runs).
-- **Start tab like a campaign page:** the hero shows the photo of the store's top bestseller
-  edge to edge on the photo tile (tap opens the product), then the bold headline and the black
-  "Zum Sortiment" button; the four brand facts are icon rows with hairlines
-  (`KXTrustStrip` arrangement `.list`) instead of tiles. The KARINEX wordmark sits centered
-  above the hero.
+- **Start tab like About You, with our products** (owner request): the KARINEX logo with the
+  Merkliste heart (number of saved products beside it) scrolls away, the search field stays
+  pinned at the top and opens the Suche tab with the cursor in the field (`SearchView`
+  `fieldActivation`, `AppRouter.searchFieldRequests`). Below it a story carousel of featured
+  collections (bestsellers, Windows, Office, Server, Entwicklung): one large rounded panel in
+  which the stories page sideways, each with the photo of the collection's first product, a tag,
+  four product tiles and "Kategorie entdecken", and fixed page dots. The panel takes the color of
+  the photo in view (`TintToken` in DesignTokens, `ProductImageTint` in CommerceUI), always dark
+  enough for the light text (WCAG AA). Then the trust facts as icon rows, "Unsere Kategorien"
+  (category tiles above a dark product panel tinted by the category's photo), the bestsellers,
+  the dark sale panel, "Zuletzt angesehen", "Nach Version finden" (Windows 11, Windows 10,
+  Office 2024, Office 2021), service tiles into the account area (help, licenses, orders), the
+  Ratgeber as tall story tiles and the support card. Chips above the tab bar ("Für Sie" and one
+  per category) switch the page to the products of one category. The modules and their store
+  collections are described by `HomeModules`; the hero with "Zum Sortiment" is gone.
 - **Real payment logos** (owner request): the cart and the product page show the acceptance
   marks of Apple Pay, the card brands and Klarna (the icons of Shopify's MIT-licensed
   `payment_icons` set, as in the web shop footer, PDF assets in CommerceUI) instead of text

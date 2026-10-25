@@ -48,6 +48,22 @@ struct AppRouterTests {
         #expect(router.path(for: .home) == [.product(handle: "windows-11-pro")], "The previous tab keeps its stack")
     }
 
+    @Test("The search field of Start opens Suche at its root and asks for the cursor in the field")
+    func searchFieldRequest() {
+        let router = AppRouter()
+        router.setPath([.search(query: "Office")], for: .search)
+
+        router.open(.search(query: ""), from: .home)
+
+        #expect(router.selectedTab == .search)
+        #expect(router.path(for: .search).isEmpty)
+        #expect(router.searchFieldRequests == 1)
+
+        router.open(.product(handle: "windows-11-pro"), from: .search)
+        router.open(.cart, from: .search)
+        #expect(router.searchFieldRequests == 1, "Only the empty search asks for the field")
+    }
+
     @Test("The navigation stack writes its path back when it pops")
     func setPath() {
         let router = AppRouter()

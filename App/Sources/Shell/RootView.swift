@@ -164,6 +164,7 @@ struct RootView: View {
                 search: container.searchRepository,
                 preferences: container.preferences,
                 catalog: container.catalogRepository,
+                fieldActivation: router.searchFieldRequests,
                 onRoute: { router.open($0, from: .search) }
             )
         case .cart:

@@ -5,17 +5,22 @@ import SwiftUI
 
 // MARK: - HomeView
 
-/// The Start tab, laid out like a fashion retail app: the hero with the photo of the top
-/// bestseller edge to edge and the call to action into the range, the four brand facts as icon
-/// rows (the money-back promise opens its conditions), the live modules of a ``HomeLayout``
-/// (deals, category rows, bestsellers, guides) and the support card.
+/// The Start tab, laid out like a fashion retail app (PROMPT.md section 6.1):
 ///
-/// Every live row loads concurrently with its own skeleton and error state; pull to refresh
+/// - On top the KARINEX logo with the Merkliste heart, which scroll away, and the search field,
+///   which stays pinned and opens the Suche tab.
+/// - "Für Sie": the story carousel of featured collections tinted with the color of their photos,
+///   the trust facts (the money-back promise opens its conditions), the category showcase with
+///   its dark product panel, the bestsellers, the dark sale panel, "Zuletzt angesehen", the
+///   version grid, the service tiles, the Ratgeber stories and the support card.
+/// - Above the tab bar the feed chips: "Für Sie" and one chip per category, which switches the
+///   page to that category's products.
+///
+/// Every collection loads concurrently with its own skeleton and error state; pull to refresh
 /// reloads them all. Product facts come only from the Storefront API.
 ///
-/// Place it inside a `NavigationStack`. The navigation bar is hidden (the wordmark sits in the
-/// middle of the bottom bar); a solid backdrop behind the status bar keeps scrolled content
-/// legible.
+/// Place it inside a `NavigationStack`. The navigation bar is hidden; a solid backdrop behind the
+/// status bar keeps scrolled content legible.
 ///
 /// ```swift
 /// NavigationStack(path: $path) {
@@ -28,66 +33,88 @@ import SwiftUI
 /// }
 /// ```
 public struct HomeView: View {
+    private let modules: HomeModules
     private let onRoute: @MainActor (CommerceRoute) -> Void
     private let onBrowse: @MainActor () -> Void
 
     @State private var model: HomeViewModel
     @State private var isMoneyBackConditionPresented = false
+    /// The handle of the category chosen in the feed bar, `nil` for "Für Sie".
+    @State private var feedSelection: String?
+    /// The height of the logo bar: how far the page scrolls before the search field pins.
+    @State private var brandBarHeight = CGFloat.infinity
+    @State private var isSearchPinned = false
+
+    /// The scroll target at the top of the page.
+    private static let topID = "home.top"
+    /// The coordinate space of the page content.
+    private static let contentSpace = "home.content"
 
     /// Creates the Start screen.
     ///
     /// - Parameters:
-    ///   - catalog: Loads the collection rows.
+    ///   - catalog: Loads the collections.
     ///   - content: Loads the guide articles.
-    ///   - layout: The live modules between the trust strip and the support card.
-    ///   - onRoute: Called with the destination of a tap: a product, a collection ("Alle
-    ///     anzeigen") or an article.
-    ///   - onBrowse: Called when the user asks to see the range ("Zum Sortiment"), typically by
-    ///     switching to the Shop tab.
+    ///   - modules: The modules and the store collections behind them.
+    ///   - onRoute: Called with the destination of a tap: a product, a collection, an article,
+    ///     the search or a screen of the account area.
+    ///   - onBrowse: Called when the user asks to see the whole range ("Alle Kategorien"),
+    ///     typically by switching to the Shop tab.
     public init(
         catalog: any CatalogRepository,
         content: any ContentRepository,
-        layout: HomeLayout = .standard,
+        modules: HomeModules = .standard,
         onRoute: @escaping @MainActor (CommerceRoute) -> Void,
         onBrowse: @escaping @MainActor () -> Void
     ) {
-        _model = State(initialValue: HomeViewModel(catalog: catalog, content: content, layout: layout))
+        _model = State(initialValue: HomeViewModel(catalog: catalog, content: content, layout: modules.layout))
+        self.modules = modules
         self.onRoute = onRoute
         self.onBrowse = onBrowse
     }
 
     public var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: KXSpacing.xxl) {
-                HomeHero(
-                    bestsellers: bestsellerState,
-                    onBrowse: onBrowse,
-                    onSelect: { product in onRoute(.product(handle: product.handle)) }
-                )
-                HomeTrustSection(isConditionPresented: $isMoneyBackConditionPresented)
-                    .padding(.horizontal, KXSpacing.gutter)
-                ForEach(model.layout.sections) { section in
-                    sectionView(section)
-                        .accessibilityElement(children: .contain)
-                        .accessibilityIdentifier(section.accessibilityIdentifier)
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 0, pinnedViews: [.sectionHeaders]) {
+                    HomeBrandBar {
+                        onRoute(.account(.wishlist))
+                    }
+                    .id(Self.topID)
+                    .onGeometryChange(for: CGFloat.self) { geometry in
+                        geometry.size.height
+                    } action: { height in
+                        brandBarHeight = height
+                    }
+                    Section {
+                        // One plain stack, so every module exists as soon as the page loads.
+                        VStack(alignment: .leading, spacing: 0) {
+                            pageContent
+                        }
+                        .padding(.top, KXSpacing.s)
+                        .padding(.bottom, KXSpacing.xl)
+                    } header: {
+                        searchField
+                    }
                 }
-                RecentlyViewedSection { product in
-                    onRoute(.product(handle: product.handle))
-                }
-                HomeSupportSection()
-                    .padding(.horizontal, KXSpacing.gutter)
+                .coordinateSpace(.named(Self.contentSpace))
             }
-            .padding(.bottom, KXSpacing.xl)
-        }
-        .refreshable {
-            await model.reload()
+            .refreshable {
+                await model.reload()
+            }
+            .onChange(of: feedSelection) {
+                proxy.scrollTo(Self.topID, anchor: .top)
+            }
+            .accessibilityIdentifier("screen.home")
         }
         .task {
             await model.loadIfNeeded()
         }
-        .accessibilityIdentifier("screen.home")
         .safeAreaInset(edge: .top, spacing: 0) {
             statusBarBackdrop
+        }
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            HomeFeedBar(categories: modules.feed, selection: $feedSelection)
         }
         .kxScreenBackground()
         .navigationTitle(Text("home.title", bundle: .module))
@@ -97,43 +124,136 @@ public struct HomeView: View {
         }
     }
 
-    // MARK: Sections
+    // MARK: Header
 
-    @ViewBuilder
-    private func sectionView(_ section: HomeSection) -> some View {
-        let title = section.title.resolved
-        switch section.content {
-        case let .collection(handle, _, highlight):
-            ProductCarouselSection(
-                title: title,
-                eyebrow: section.eyebrow?.resolved,
-                state: model.productState(for: section),
-                highlight: highlight,
-                onShowAll: { onRoute(.collection(handle: handle, title: title)) },
-                retry: { await model.reload(section) },
-                onSelect: { product in onRoute(.product(handle: product.handle)) }
-            )
-        case let .blog(handle, _):
-            HomeArticleSection(
-                title: title,
-                eyebrow: section.eyebrow?.resolved,
-                state: model.articleState(for: section),
-                retry: { await model.reload(section) },
-                onSelect: { article in
-                    onRoute(.article(blogHandle: article.blogHandle.isEmpty ? handle : article.blogHandle, articleHandle: article.handle))
-                }
-            )
+    /// The search field, pinned below the status bar once the logo bar has scrolled away.
+    private var searchField: some View {
+        let space = Self.contentSpace
+        let threshold = brandBarHeight
+        return HomeSearchField(isPinned: isSearchPinned) {
+            onRoute(.search(query: ""))
+        }
+        .onGeometryChange(for: Bool.self) { geometry in
+            // A pinned header moves down the content while the page scrolls under it.
+            geometry.frame(in: .named(space)).minY > threshold + 0.5
+        } action: { isPinned in
+            isSearchPinned = isPinned
         }
     }
 
-    /// The load state of the bestseller row, whose first product is the photo of the hero.
-    private var bestsellerState: LoadState<[ProductSummary]> {
-        for section in model.layout.sections {
-            if case let .collection(_, _, highlight) = section.content, highlight == .bestseller {
-                return model.productState(for: section)
-            }
+    // MARK: Content
+
+    /// The products of the feed category, or "Für Sie".
+    @ViewBuilder private var pageContent: some View {
+        if let category = modules.feed.first(where: { $0.handle == feedSelection }) {
+            HomeCategoryFeed(
+                category: category,
+                state: model.productState(for: category.handle),
+                retry: { await model.reload(handles: [category.handle]) },
+                onShowAll: { openCategory(category) },
+                onSelect: openProduct
+            )
+            .id(category.handle)
+        } else {
+            forYou
         }
-        return .empty
+    }
+
+    /// The "Für Sie" page.
+    private var forYou: some View {
+        VStack(alignment: .leading, spacing: KXSpacing.xxl) {
+            HomeStoryCarousel(
+                items: modules.stories.map { HomeStoryItem(story: $0, state: model.productState(for: $0.id)) },
+                retry: { await model.reload(handles: modules.stories.map(\.id)) },
+                onOpen: openCategory,
+                onSelect: openProduct
+            )
+            HomeTrustSection(isConditionPresented: $isMoneyBackConditionPresented)
+                .padding(.horizontal, KXSpacing.gutter)
+            HomeCategoryShowcase(
+                categories: modules.showcase,
+                state: { model.productState(for: $0.handle) },
+                retry: { await model.reload(handles: [$0.handle]) },
+                onOpen: openCategory,
+                onBrowseAll: onBrowse,
+                onSelect: openProduct
+            )
+            bestsellers
+            deals
+            RecentlyViewedSection(onSelect: openProduct)
+            HomeVersionGrid(
+                versions: modules.versions,
+                state: { model.productState(for: $0.handle) },
+                onOpen: openCategory
+            )
+            HomeServiceTiles(onRoute: onRoute)
+            guides
+            HomeSupportSection()
+                .padding(.horizontal, KXSpacing.gutter)
+        }
+    }
+
+    /// The bestsellers as a row of cards with prices.
+    private var bestsellers: some View {
+        let category = modules.bestsellers
+        return ProductCarouselSection(
+            title: category.title.resolved,
+            eyebrow: category.eyebrow?.resolved,
+            state: model.productState(for: category.handle),
+            highlight: category.handle == HomeModules.bestsellerHandle ? .bestseller : .none,
+            onShowAll: { openCategory(category) },
+            retry: { await model.reload(handles: [category.handle]) },
+            onSelect: openProduct
+        )
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("home.row.\(category.handle)")
+    }
+
+    /// The dark sale panel.
+    private var deals: some View {
+        let category = modules.deals
+        return HomeProductPanel(
+            eyebrow: category.eyebrow?.resolved,
+            title: category.title.resolved,
+            isSale: true,
+            state: model.productState(for: category.handle),
+            retry: { await model.reload(handles: [category.handle]) },
+            onShowAll: { openCategory(category) },
+            onSelect: openProduct
+        )
+        .padding(.horizontal, KXSpacing.gutter)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("home.panel.\(category.handle)")
+    }
+
+    /// The Ratgeber stories.
+    @ViewBuilder private var guides: some View {
+        if let section = model.layout.section(modules.guidesBlog) {
+            HomeArticleSection(
+                title: section.title.resolved,
+                eyebrow: section.eyebrow?.resolved,
+                state: model.articleState(for: section),
+                retry: { await model.reload(section) },
+                onSelect: openArticle
+            )
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier(section.accessibilityIdentifier)
+        }
+    }
+
+    // MARK: Routes
+
+    private func openProduct(_ product: ProductSummary) {
+        onRoute(.product(handle: product.handle))
+    }
+
+    private func openCategory(_ category: HomeCategory) {
+        onRoute(.collection(handle: category.handle, title: category.title.resolved))
+    }
+
+    private func openArticle(_ article: ArticleSummary) {
+        let blog = article.blogHandle.isEmpty ? modules.guidesBlog : article.blogHandle
+        onRoute(.article(blogHandle: blog, articleHandle: article.handle))
     }
 
     /// A zero-height view whose page-colored background extends behind the status bar, so that

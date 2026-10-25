@@ -522,6 +522,13 @@ BrandPalette (raw brand hex values)
 - `SpacingToken` (8 pt grid, 16 pt gutter, 44 pt tap target), `RadiusToken` (card 12, product
   photos 0), `BorderToken` and `MotionToken` (springs between 0.25 and 0.35 s) complete the
   set; SwiftUI code uses them through `KXSpacing`, `KXRadius`, `KXBorder` and `KXMotion`.
+- `TintToken` derives the color of a dark panel from the colors of a product photo, the way
+  fashion retail apps tint a campaign card: the saturation-weighted mean hue of the colored
+  samples, the saturation clamped to 0.3 to 0.6, darkened until `textPrimary` and
+  `textSecondary` (dark values) reach 4.5:1 on the panel and on its deepened lower end. A photo
+  with less than 4 % colored samples (white packshots, greys) gives `nil` and the neutral dark
+  panel. `TintTokenTests` checks readability for every hue and saturation on Linux.
+  `KXColor.fixed(_:)` turns such a computed value into a `Color`.
 
 The asset catalog holds only what iOS reads by name before any code runs: `AppIcon` (the white
 store logo on black), `AccentColor` (global tint of system chrome; mirrors `ColorToken.brand`:
@@ -631,6 +638,12 @@ share one cache entry. `ProductImagePrefetcher` prefetches the next row or page 
 requests `ProductImage` will make. Budget: less than 40 KB per product card
 ([PERFORMANCE.md](PERFORMANCE.md)).
 
+`ProductImageTint` (an actor in CommerceUI, one shared instance) gives the tinted panels of the
+Start tab their color: it loads a 120 px version of a photo through the same pipeline at low
+priority, draws it into a 24 by 24 bitmap, hands the pixels to `TintToken` and remembers the
+result per URL for the launch (failed loads are not remembered). `ProductPanelTint` holds the
+top and bottom color of the panel gradient.
+
 ## Commerce layer (Phase 1)
 
 `CommerceUI` (`Packages/Features/Sources/CommerceUI`) holds what several features share, so no
@@ -698,8 +711,26 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
   sticky purchase bar. Sections without data are omitted, never faked.
 - `CatalogFeature`: collection directory, collection screen with sort, filters and cursor
   pagination. `SearchFeature`: predictive suggestions, results with sort and pagination, recent
-  searches. `HomeFeature`: live rows from collections and the guides blog. `CartFeature`: lines,
-  quantity, undo, discount codes with `userErrors`, totals, cross-sell, payment marks, notices.
+  searches; `fieldActivation` (from `AppRouter.searchFieldRequests`, counted for every empty
+  search a screen asks for) puts the cursor into the field when the Start tab's search field
+  opens the tab. `CartFeature`: lines, quantity, undo, discount codes with `userErrors`,
+  totals, cross-sell, payment marks, notices.
+- `HomeFeature`, laid out like the About You app: `HomeModules` names the modules and their
+  store collections (stories, showcase, bestsellers, deals, versions, guides blog, feed chips);
+  its `layout` lists every collection once (8 products for rows, 1 for a version tile, the
+  larger size when both) and `HomeViewModel` loads them concurrently, each with its own
+  `LoadState`, readable and reloadable by handle. `HomeView` is a `LazyVStack` with the logo bar
+  (`HomeBrandBar`, Merkliste heart with the saved count) and one section whose pinned header is
+  the search field (`HomeSearchField`; a hairline appears once it pins, detected from its frame
+  in the content coordinate space); the section body is one plain `VStack`, so every module
+  exists from the start (UI tests reach the trust facts without lazy loading). "Für Sie" holds
+  `HomeStoryCarousel` (a fixed tinted panel, pages with `scrollPosition(id:)`, fixed dots),
+  `HomeTrustSection`, `HomeCategoryShowcase` (tiles and a tinted `HomeProductPanel`), the
+  bestseller row, the sale panel, "Zuletzt angesehen", `HomeVersionGrid`, `HomeServiceTiles`
+  (account routes), `HomeArticleSection` and the support card. `HomeFeedBar` sits in the bottom
+  safe area inset; choosing a category shows `HomeCategoryFeed` (a card grid and "Alle Produkte
+  anzeigen") and scrolls to the top. Empty collections drop their module, failed ones show a
+  compact error with "Erneut versuchen".
 - Payment marks (`CommerceUI/Payments`): `PaymentMethod.methods(for:)` turns Shopify's
   `PaymentSettings` (`shop.paymentSettings`) into the marks to show: Apple Pay only when Shopify
   lists it, the accepted card brands in Shopify's order (a neutral card symbol when Shopify

@@ -20,11 +20,15 @@ import SwiftUI
 /// field.
 public struct SearchView: View {
     private let catalog: (any CatalogRepository)?
+    private let fieldActivation: Int
     private let onRoute: @MainActor (CommerceRoute) -> Void
 
     @State private var model: SearchViewModel
     @State private var categoryImages = SearchCategoryImages()
     @State private var query = ""
+    @State private var isFieldActive = false
+    /// The last `fieldActivation` that put the cursor into the field.
+    @State private var handledFieldActivation = 0
 
     /// Creates the search screen.
     ///
@@ -32,15 +36,19 @@ public struct SearchView: View {
     ///   - search: Runs the predictive search.
     ///   - preferences: Stores the recent searches on the device.
     ///   - catalog: Loads one product photo per category tile; `nil` shows the symbols only.
+    ///   - fieldActivation: Counts the requests to start typing, for example from the search
+    ///     field of the Start tab. Every new value puts the cursor into the search field.
     ///   - onRoute: Called with the destination of a tap or a submitted search.
     public init(
         search: any SearchRepository,
         preferences: any KeyValueStore,
         catalog: (any CatalogRepository)? = nil,
+        fieldActivation: Int = 0,
         onRoute: @escaping @MainActor (CommerceRoute) -> Void
     ) {
         _model = State(initialValue: SearchViewModel(search: search, preferences: preferences))
         self.catalog = catalog
+        self.fieldActivation = fieldActivation
         self.onRoute = onRoute
     }
 
@@ -88,6 +96,7 @@ public struct SearchView: View {
         .navigationBarTitleDisplayMode(.inline)
         .searchable(
             text: $query,
+            isPresented: $isFieldActive,
             placement: .navigationBarDrawer(displayMode: .always),
             prompt: Text("search.prompt", bundle: .module)
         )
@@ -103,6 +112,13 @@ public struct SearchView: View {
             if let catalog {
                 await categoryImages.loadIfNeeded(from: catalog)
             }
+        }
+        .task(id: fieldActivation) {
+            guard fieldActivation != handledFieldActivation else { return }
+            handledFieldActivation = fieldActivation
+            // Let the navigation bar with the field reach the screen first.
+            await Task.yield()
+            isFieldActive = true
         }
     }
 

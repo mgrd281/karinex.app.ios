@@ -137,11 +137,14 @@ Tab bar: the system tab bar **Start · Shop · Suche · Warenkorb · Konto**. Th
 Opening (owner request): the launch screen shows the store logo centered on the page background; the app then zooms into the logo and reveals the Start tab in under one second (only a fade with Reduce Motion).
 
 ### 6.1 Start (Home)
-- Hero like a campaign banner: the photo of the top product of the `bestseller` collection edge to edge on the photo tile, bold headline, black CTA; text from the `app_home` metaobject or fallback content.
+Laid out like the home screen of the About You app (owner request of 2026-10-25), with KARINEX's own products; every product, photo and price comes from Shopify.
+- Top: the logo with the Merkliste heart (number of saved products beside it) scrolls away; the search field stays pinned and opens Suche with the cursor in the field.
+- Story carousel: one large rounded panel tinted with the color of the product photo in view (always dark enough for light text), the stories paging sideways inside it (Bestseller, Windows, Office, Server, Entwicklung), each with the photo of the collection's first product, a tag, four product tiles and "Kategorie entdecken"; fixed page dots.
 - Trust strip: "Lieferung per E-Mail in Minuten" · "Apple Pay, Kreditkarte, Klarna" · "100 Tage Geld-zurück*" (with the condition in a tappable footnote) · "Support Mo. bis So., 06:00 bis 23:00 Uhr".
-- "Blitzangebote" carousel: products from collection `blitzangebote` (create if missing) with a flip-digit countdown from `karinex.deal_ends_at`, compare-at price, savings badge in sale red.
-- Category showcase rows: Windows · Office · Server · Developer, each with 4–6 product cards and "Alle anzeigen".
-- Bestseller row, "Ratgeber" row (blog articles), support card (WhatsApp + email), account teaser.
+- "Unsere Kategorien": category tiles (Windows · Office · Server · Office für Mac · Entwicklung · Microsoft 365 · Alle Kategorien) above a dark panel with the products of the chosen category, tinted by its photo, and "Alle anzeigen".
+- Bestseller row; the dark sale panel with the products of the sale collection (compare-at price, savings badge and the title in sale red).
+- "Zuletzt angesehen", "Nach Version finden" (Windows 11, Windows 10, Office 2024, Office 2021 as photo tiles), service tiles into Konto (Hilfe und Support, Meine Lizenzen, Meine Bestellungen), "Ratgeber" as tall story tiles (blog articles), support card (WhatsApp + email).
+- Chips above the tab bar: "Für Sie" and one per category; a category chip switches the page to that category's products with "Alle Produkte anzeigen".
 
 ### 6.2 Shop (Catalog)
 - Collections grid with imagery; product list with sort (relevance, price, newest) and filters derived from product options/metafields: edition, device count, delivery form (download/USB), platform (Windows/Mac).
@@ -163,6 +166,7 @@ Opening (owner request): the launch screen shows the store logo centered on the 
 
 ### 6.4 Suche (Search)
 - Predictive search as you type (products, collections, articles), recent searches, suggested queries ("Office 2024", "Windows 11 Pro"), empty state with category shortcuts.
+- Opened from the search field of Start, the field is ready for typing.
 
 ### 6.5 Warenkorb (Cart)
 - Line items with quantity stepper, remove with undo, subtotal/discount/total, discount code field, digital-content notice, payment-method acceptance marks (real Apple Pay, card brand and Klarna logos; card brands and Apple Pay as reported by Shopify's `shop.paymentSettings`, Klarna from section 2; never any other method), "Zur Kasse" (Checkout Kit), cross-sell row. The product page shows the same marks below its buy buttons.

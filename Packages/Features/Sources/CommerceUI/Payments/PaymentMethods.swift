@@ -210,7 +210,7 @@ private struct PaymentMark: View {
                 Image(assetName, bundle: .module)
                     .resizable()
                     .interpolation(.high)
-                    .aspectRatio(contentMode: .fit)
+                    .scaledToFit()
             } else {
                 let shape = RoundedRectangle(cornerRadius: height / 8, style: .continuous)
                 shape

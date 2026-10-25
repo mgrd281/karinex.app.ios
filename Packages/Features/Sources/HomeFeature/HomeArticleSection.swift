@@ -5,8 +5,9 @@ import SwiftUI
 
 // MARK: - HomeArticleSection
 
-/// The Ratgeber module of the Start screen: a section header and a horizontal row of guide
-/// articles from the store's blog.
+/// The Ratgeber module of the Start screen: a section header and a row of tall guide tiles from
+/// the store's blog, a little more than two in view, like the inspiration stories of fashion
+/// retail apps.
 ///
 /// Like ``ProductCarouselSection`` it renders its own skeleton while loading, a compact error
 /// with "Erneut versuchen" when the request failed, and nothing at all when the blog is empty.
@@ -17,10 +18,12 @@ struct HomeArticleSection: View {
     let retry: @MainActor () async -> Void
     let onSelect: @MainActor (ArticleSummary) -> Void
 
-    @ScaledMetric(relativeTo: .body) private var scaledCardWidth: CGFloat = 260
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
-    private var cardWidth: CGFloat {
-        min(scaledCardWidth, 340)
+    /// The share of the row's width one tile takes: a little less than half, so the third tile
+    /// peeks in; most of the width at the largest text sizes.
+    private var tileShare: CGFloat {
+        dynamicTypeSize.isAccessibilitySize ? 0.8 : 0.44
     }
 
     var body: some View {
@@ -36,28 +39,32 @@ struct HomeArticleSection: View {
     }
 
     @ViewBuilder private var rowContent: some View {
+        let share = tileShare
         switch state {
         case .idle, .loading:
-            skeletonRow
-        case let .loaded(articles):
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(alignment: .top, spacing: KXSpacing.m) {
-                    ForEach(articles) { article in
-                        Button {
-                            onSelect(article)
-                        } label: {
-                            HomeArticleCard(article: article)
-                                .frame(width: cardWidth)
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityHint(Text("home.article.hint", bundle: .module))
-                        .accessibilityIdentifier("article.card.\(article.handle)")
-                    }
+            scrollingRow {
+                ForEach(0..<3, id: \.self) { _ in
+                    skeletonTile
+                        .containerRelativeFrame(.horizontal) { length, _ in length * share }
                 }
-                .padding(.horizontal, KXSpacing.gutter)
-                .scrollTargetLayout()
             }
-            .scrollTargetBehavior(.viewAligned)
+            .scrollDisabled(true)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text("home.loading", bundle: .module))
+        case let .loaded(articles):
+            scrollingRow {
+                ForEach(articles) { article in
+                    Button {
+                        onSelect(article)
+                    } label: {
+                        HomeArticleCard(article: article)
+                    }
+                    .buttonStyle(.plain)
+                    .containerRelativeFrame(.horizontal) { length, _ in length * share }
+                    .accessibilityHint(Text("home.article.hint", bundle: .module))
+                    .accessibilityIdentifier("article.card.\(article.handle)")
+                }
+            }
         case let .failed(error):
             KXBanner(
                 .error,
@@ -70,59 +77,67 @@ struct HomeArticleSection: View {
         }
     }
 
-    private var skeletonRow: some View {
-        HStack(alignment: .top, spacing: KXSpacing.m) {
-            ForEach(0..<2, id: \.self) { _ in
-                VStack(alignment: .leading, spacing: KXSpacing.xs) {
-                    KXSkeleton(cornerRadius: KXRadius.card)
-                        .aspectRatio(16 / 10, contentMode: .fit)
-                    KXSkeleton()
-                        .frame(height: KXSpacing.m)
-                    KXSkeleton()
-                        .frame(width: cardWidth * 0.6, height: KXSpacing.m)
-                }
-                .frame(width: cardWidth)
+    /// A horizontal row of tiles that snaps to the tiles, aligned with the page margins.
+    private func scrollingRow(@ViewBuilder tiles: () -> some View) -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHStack(alignment: .top, spacing: KXSpacing.s) {
+                tiles()
             }
+            .scrollTargetLayout()
         }
-        .padding(.horizontal, KXSpacing.gutter)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .clipped()
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("home.loading", bundle: .module))
+        .contentMargins(.horizontal, KXSpacing.gutter, for: .scrollContent)
+        .scrollTargetBehavior(.viewAligned)
+    }
+
+    private var skeletonTile: some View {
+        VStack(alignment: .leading, spacing: KXSpacing.xs) {
+            KXSkeleton(cornerRadius: KXRadius.medium)
+                .aspectRatio(HomeArticleCard.imageAspectRatio, contentMode: .fit)
+            KXSkeleton()
+                .frame(height: KXSpacing.m)
+            KXSkeleton()
+                .frame(height: KXSpacing.m)
+                .padding(.trailing, KXSpacing.xl)
+        }
     }
 }
 
 // MARK: - HomeArticleCard
 
-/// One guide article: the article image on a light grey panel, the publication date as eyebrow,
-/// the bold title and the excerpt. VoiceOver reads it as one element.
+/// One guide tile: the article image in a tall rounded frame (a book symbol on the light grey
+/// panel when the article has none), the publication date as small label, the bold title and
+/// the start of the excerpt. VoiceOver reads it as one element.
 struct HomeArticleCard: View {
     let article: ArticleSummary
 
-    @Environment(\.displayScale) private var displayScale
+    /// Width to height of the image: a portrait frame, like a story.
+    static let imageAspectRatio: CGFloat = 3 / 4
 
     var body: some View {
-        let shape = RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous)
-        VStack(alignment: .leading, spacing: 0) {
-            ZStack {
-                KXColor.surfaceElevated
-                if article.image != nil {
-                    ProductImage(article.image, contentMode: .fill, isDecorative: true)
-                } else {
-                    Image(systemName: "book.pages")
-                        .kxFont(.title1)
-                        .foregroundStyle(KXColor.iconSecondary)
-                        .accessibilityHidden(true)
+        let shape = RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous)
+        VStack(alignment: .leading, spacing: KXSpacing.s) {
+            Color.clear
+                .aspectRatio(Self.imageAspectRatio, contentMode: .fit)
+                .overlay {
+                    if article.image != nil {
+                        ProductImage(article.image, contentMode: .fill, isDecorative: true)
+                    } else {
+                        Image(systemName: "book.pages")
+                            .kxFont(.title1)
+                            .foregroundStyle(KXColor.iconSecondary)
+                            .accessibilityHidden(true)
+                    }
                 }
-            }
-            .aspectRatio(16 / 10, contentMode: .fit)
-            .clipped()
-            VStack(alignment: .leading, spacing: KXSpacing.xs) {
+                .background(KXColor.surfaceElevated)
+                .clipShape(shape)
+                .contentShape(shape)
+            VStack(alignment: .leading, spacing: KXSpacing.xxs) {
                 Text(article.publishedAt, format: .dateTime.day().month(.wide).year())
                     .kxFont(.eyebrow)
                     .foregroundStyle(KXColor.textSecondary)
                 Text(article.title)
-                    .kxFont(.title3)
+                    .fontWeight(.semibold)
+                    .kxFont(.headline)
                     .foregroundStyle(KXColor.textPrimary)
                     .lineLimit(3)
                     .multilineTextAlignment(.leading)
@@ -130,20 +145,14 @@ struct HomeArticleCard: View {
                     Text(excerpt)
                         .kxFont(.subheadline)
                         .foregroundStyle(KXColor.textSecondary)
-                        .lineLimit(3)
+                        .lineLimit(2)
                         .multilineTextAlignment(.leading)
                 }
             }
             .fixedSize(horizontal: false, vertical: true)
-            .padding(KXSpacing.m)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .background(KXColor.surface)
-        .clipShape(shape)
-        .overlay {
-            shape.strokeBorder(KXColor.hairline, lineWidth: 1 / max(displayScale, 1))
-        }
-        .contentShape(shape)
+        .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
     }
 }
