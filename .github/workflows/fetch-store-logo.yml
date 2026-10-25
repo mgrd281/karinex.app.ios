@@ -4,7 +4,9 @@
 name: Fetch store logo
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [claude/clean-redesign]
+    paths: [.github/workflows/fetch-store-logo.yml]
 
 permissions:
   contents: write
@@ -22,6 +24,7 @@ jobs:
           file Tools/Brand/store-logo.png
       - name: Commit
         run: |
+          git pull --ff-only origin "${GITHUB_REF_NAME}" 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add Tools/Brand/store-logo.png
