@@ -59,6 +59,13 @@ jobs:
           swift test --package-path Packages/ShopifyKit 2>&1 | tee build/logs/shopifykit-test.log
           scripts/check-warnings.sh build/logs/shopifykit-test.log
 
+      - name: Backend (BackendKit)
+        if: ${{ !cancelled() }}
+        run: |
+          swift build --package-path Packages/Backend -Xswiftc -warnings-as-errors 2>&1 | tee build/logs/backend-build.log
+          swift test --package-path Packages/Backend 2>&1 | tee build/logs/backend-test.log
+          scripts/check-warnings.sh build/logs/backend-test.log
+
       - name: DesignSystem (DesignTokens)
         if: ${{ !cancelled() }}
         run: |

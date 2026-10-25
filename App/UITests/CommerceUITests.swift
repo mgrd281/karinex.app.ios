@@ -61,7 +61,10 @@ final class CommerceUITests: XCTestCase {
         // The cart lists the line.
         cartTab.tap()
         XCTAssertTrue(element("screen.cart", in: app).waitForExistence(timeout: timeout), "The cart did not open")
-        let line = app.descendants(matching: .any).matching(NSPredicate(format: "identifier BEGINSWITH 'cart.line.'")).firstMatch
+        // SwiftUI exposes the lines card (`cart.lines`) but not each row as its own container,
+        // so a line is recognized by its remove button inside the card.
+        let lines = element("cart.lines", in: app)
+        let line = lines.buttons["cart.remove"].firstMatch
         XCTAssertTrue(
             line.waitForExistence(timeout: networkTimeout),
             "The cart shows no line. Hierarchy: \(Self.singleLine(app.debugDescription))"

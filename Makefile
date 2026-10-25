@@ -17,7 +17,7 @@ SCHEME ?= KARINEX
 CONFIGURATION ?= Debug
 DERIVED_DATA ?= build/DerivedData
 RESULTS_DIR ?= build/results
-PACKAGES := Packages/Core Packages/ShopifyKit Packages/DesignSystem
+PACKAGES := Packages/Core Packages/ShopifyKit Packages/Backend Packages/DesignSystem
 FIXTURES_DIR := Packages/ShopifyKit/Tests/ShopifyKitTests/Fixtures
 SNAPSHOTS_DIR := Packages/DesignSystem/Tests/DesignSystemTests/__Snapshots__
 
@@ -111,7 +111,7 @@ test: ## Run all tests (unit, package, snapshot, UI) on an automatically chosen 
 		| tee $(RESULTS_DIR)/test.log | $(XCBEAUTIFY)
 	@scripts/check-warnings.sh $(RESULTS_DIR)/test.log
 
-test-packages: ## swift test in Core, ShopifyKit and DesignSystem (DesignTokens; SwiftUI parts need `make test`)
+test-packages: ## swift test in Core, ShopifyKit, Backend and DesignSystem (DesignTokens; SwiftUI parts need `make test`)
 	@set -eo pipefail; for package in $(PACKAGES); do \
 		echo "==> $$package"; \
 		if [[ "$(UNAME_S)" == "Darwin" && "$$package" == "Packages/DesignSystem" ]]; then \
