@@ -717,8 +717,10 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
   Shop tab, the collection screen and in the search suggestions; clean store titles stay. `SearchFeature`: predictive suggestions, results with sort and pagination, recent
   searches; `fieldActivation` (from `AppRouter.searchFieldRequests`, counted for every empty
   search a screen asks for) puts the cursor into the field when the Start tab's search field
-  opens the tab. `CartFeature`: lines, quantity, undo, discount codes with `userErrors`,
-  totals, cross-sell, payment marks, notices.
+  opens the tab. `CartFeature`: the lines as a list like fashion retail apps (photo with the
+  reduction, vendor, title, price with the former price, an "x" to remove; photo and texts open
+  the product), quantity, undo, discount codes with `userErrors`, totals, cross-sell, payment
+  marks, notices.
 - `HomeFeature`, laid out like the About You app: `HomeModules` names the modules and their
   store collections (stories, showcase, bestsellers, deals, versions, guides blog);
   its `layout` lists every collection once (8 products for rows, 1 for a version tile, the

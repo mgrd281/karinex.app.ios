@@ -46,6 +46,12 @@ change.
   Ratgeber as tall story tiles and the support card. The modules and their store collections are
   described by `HomeModules`; the hero with "Zum Sortiment" is gone, and so is the chip bar
   above the tab bar (owner request).
+- **Cart lines like the lists of About You** (owner request): each line shows the photo on its
+  light tile with the reduction in sale red at its lower edge, the vendor in capitals, the
+  title, the price in sale red with "Ursprünglich" and the former price below it, the quantity
+  control and an "x" at the top right that removes the line (with undo). The lines form a list
+  with hairlines instead of a grey card. The photo, the title and the price now all open the
+  product (before, only the title did).
 - **Product page bar like About You** (owner request): the share arrow and a shopping bag with
   the number of items (it opens the cart, `CartBagIcon` in CommerceUI) sit in the navigation
   bar as plain symbols; on iOS 26 without the glass circle (`ProductToolbar`,

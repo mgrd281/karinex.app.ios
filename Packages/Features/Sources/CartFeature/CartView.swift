@@ -203,8 +203,9 @@ private struct CartSkeleton: View {
         VStack(alignment: .leading, spacing: KXSpacing.l) {
             ForEach(0..<3, id: \.self) { _ in
                 HStack(alignment: .top, spacing: KXSpacing.m) {
-                    KXSkeleton(cornerRadius: KXRadius.medium)
-                        .frame(width: CartLineRow.imageSize, height: CartLineRow.imageSize)
+                    KXSkeleton(cornerRadius: KXRadius.small)
+                        .aspectRatio(CartLineRow.photoAspectRatio, contentMode: .fit)
+                        .frame(width: KXSpacing.xxxl * 2)
                     VStack(alignment: .leading, spacing: KXSpacing.xs) {
                         KXSkeleton()
                             .frame(height: KXSpacing.m)

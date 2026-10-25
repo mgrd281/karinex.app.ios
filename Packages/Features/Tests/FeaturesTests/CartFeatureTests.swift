@@ -338,7 +338,7 @@ struct CartScreenStringTests {
         "cart.loading",
         "cart.crosssell.title",
         "cart.line.unavailable",
-        "cart.line.remove",
+        "cart.line.open.hint",
         "cart.line.decrease",
         "cart.line.increase",
         "cart.discount.title",
@@ -360,6 +360,7 @@ struct CartScreenStringTests {
         let german = try LocalizedStrings(language: "de", in: CartResources.bundle)
         #expect(german("cart.checkout") == "Zur Kasse")
         #expect(german("cart.undo.action") == "Rückgängig")
+        #expect(german("cart.line.original %@") == "Ursprünglich: %@")
     }
 
     @Test("Every new cart text exists in German and English without dashes", arguments: ["de", "en"])
