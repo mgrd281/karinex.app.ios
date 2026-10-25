@@ -10,6 +10,18 @@ change.
 
 ## [Unreleased]
 
+### Fixed
+
+- The TestFlight export step no longer fails with `option '-authenticationKeyPath' may only be
+  provided once`: fastlane already adds the App Store Connect key flags to the export, so the
+  lane stops passing them a second time (`export_xcargs`).
+- TestFlight builds now carry `App/KARINEX.entitlements` (Push Notifications and Associated
+  Domains for Universal Links): the `beta` lane sets `KX_CODE_SIGN_ENTITLEMENTS` itself and
+  `scripts/write-secrets-xcconfig.sh` accepts exactly that value or an empty one. Unsigned CI and
+  simulator builds are unchanged.
+- `ASC_KEY_CONTENT` accepts the text of the `.p8` file pasted as is (no Terminal needed); the
+  base64 form still works. A wrong value fails with a message that does not contain the key.
+
 Phase 3: delight and launch preparation. Written and checked by compilation and unit tests in
 CI; push, the widget and the Live Activity need a device, the owner's Apple Team ID and APNs on
 the BFF for an end-to-end test.

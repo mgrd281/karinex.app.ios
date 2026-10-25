@@ -924,7 +924,7 @@ DesignTokens tests run through `xcodebuild` because the package declares only iO
   `KX_APPLE_TEAM_ID` (all optional for CI; empty values keep the tokenless fallback), validating
   each value so it cannot break the xcconfig syntax.
 - **TestFlight lane.** `fastlane beta` requires `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_CONTENT`
-  (base64 of the .p8) and `KX_APPLE_TEAM_ID`; it validates the key, checks the project sync,
+  (the .p8 text or its base64) and `KX_APPLE_TEAM_ID`; it validates the key, checks the project sync,
   writes the secrets file, sets the build number to the latest TestFlight build plus one, builds
   a Release archive with automatic signing through the App Store Connect API key and uploads it
   without waiting for processing. `fastlane tests` runs the full suite locally.

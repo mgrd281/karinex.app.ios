@@ -7,10 +7,13 @@
 #
 # `beta` needs these environment variables (GitHub secrets in .github/workflows/testflight.yml):
 #   ASC_KEY_ID, ASC_ISSUER_ID     App Store Connect API key (Users and Access > Integrations)
-#   ASC_KEY_CONTENT               the .p8 key file, base64 encoded (`base64 -i AuthKey_XXXX.p8`)
+#   ASC_KEY_CONTENT               the .p8 key file as text (open it in a text editor and paste
+#                                 everything), or base64 of the file (`base64 -i AuthKey_XXXX.p8`)
 #   KX_APPLE_TEAM_ID              Apple Developer team ID
 # and optionally KX_STOREFRONT_ACCESS_TOKEN and KX_CUSTOMER_ACCOUNT_CLIENT_ID, which are
 # written into Config/Secrets.xcconfig (empty values keep the app's tokenless fallback).
+# A signed `beta` build always carries App/KARINEX.entitlements (Push Notifications and
+# Associated Domains for Universal Links); the lane sets KX_CODE_SIGN_ENTITLEMENTS itself.
 #
 # Paths: actions resolve paths from the repository root, while Ruby code and `sh` run inside
 # ./fastlane, so everything below uses absolute paths built from REPO_ROOT.
@@ -31,6 +34,7 @@ DERIVED_DATA = File.join(REPO_ROOT, "build", "DerivedData")
 RESULTS_DIR = File.join(REPO_ROOT, "build", "results")
 SOURCE_PACKAGES = File.join(REPO_ROOT, ".spm")
 BETA_REQUIRED_ENV = %w[ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_CONTENT KX_APPLE_TEAM_ID].freeze
+BETA_ENTITLEMENTS = "App/KARINEX.entitlements"
 
 # Fails the lane with one message naming every missing variable (never their values).
 def require_environment!(names)
@@ -40,7 +44,7 @@ def require_environment!(names)
   UI.user_error!(
     "Missing environment variable(s): #{missing.join(', ')}. " \
     "Set them as repository secrets (see .github/workflows/testflight.yml) or export them locally. " \
-    "ASC_KEY_CONTENT is the base64-encoded App Store Connect API key (.p8)."
+    "ASC_KEY_CONTENT is the App Store Connect API key (.p8) as text or base64."
   )
 end
 
@@ -66,14 +70,24 @@ def verify_generated_project
   UI.user_error!("KARINEX.xcodeproj is out of date with project.yml. Run `make project` and commit.\n#{changes}")
 end
 
-# Decodes ASC_KEY_CONTENT (base64 of the .p8 file) into a private temporary file for
-# xcodebuild's -authenticationKeyPath and returns its path. The caller deletes it.
-def write_authentication_key(key_id, base64_content)
-  pem = Base64.decode64(base64_content)
-  unless pem.include?("BEGIN PRIVATE KEY")
-    UI.user_error!("ASC_KEY_CONTENT is not a base64-encoded .p8 key. Encode it with `base64 -i AuthKey_#{key_id}.p8`.")
+# Returns the PEM text of the .p8 key from ASC_KEY_CONTENT, which is either the file's text
+# pasted as is (the usual way: open the file in a text editor and copy everything) or its
+# base64 encoding. Fails with a message that never contains the key.
+def key_pem(key_id, content)
+  text = content.strip
+  pem = text.include?("BEGIN PRIVATE KEY") ? text : Base64.decode64(text)
+  unless pem.include?("BEGIN PRIVATE KEY") && pem.include?("END PRIVATE KEY")
+    UI.user_error!(
+      "ASC_KEY_CONTENT is not the text of AuthKey_#{key_id}.p8 (nor its base64). " \
+      "Paste the whole file, from -----BEGIN PRIVATE KEY----- to -----END PRIVATE KEY-----."
+    )
   end
+  pem.strip + "\n"
+end
 
+# Writes the PEM into a private temporary file for xcodebuild's -authenticationKeyPath and
+# returns its path. The caller deletes it.
+def write_authentication_key(key_id, pem)
   directory = Dir.mktmpdir("kx-asc-key")
   path = File.join(directory, "AuthKey_#{key_id}.p8")
   File.write(path, pem, perm: 0o600)
@@ -104,21 +118,24 @@ platform :ios do
     key_id = ENV.fetch("ASC_KEY_ID").strip
     issuer_id = ENV.fetch("ASC_ISSUER_ID").strip
     team_id = ENV.fetch("KX_APPLE_TEAM_ID").strip
-    key_content = ENV.fetch("ASC_KEY_CONTENT").strip
     # Validates the key before anything talks to Apple, and gives xcodebuild a key file.
-    key_path = write_authentication_key(key_id, key_content)
+    pem = key_pem(key_id, ENV.fetch("ASC_KEY_CONTENT"))
+    key_path = write_authentication_key(key_id, pem)
 
     begin
       setup_ci
       api_key = app_store_connect_api_key(
         key_id: key_id,
         issuer_id: issuer_id,
-        key_content: key_content,
-        is_key_content_base64: true,
+        key_content: pem,
+        is_key_content_base64: false,
         in_house: false
       )
 
       verify_generated_project
+      # The beta build is signed with the team, so it carries the entitlements file; unsigned
+      # CI and simulator builds leave the variable empty (Config/Base.xcconfig).
+      ENV["KX_CODE_SIGN_ENTITLEMENTS"] = BETA_ENTITLEMENTS
       sh(File.join(REPO_ROOT, "scripts", "write-secrets-xcconfig.sh").shellescape)
 
       latest = latest_testflight_build_number(
@@ -135,6 +152,9 @@ platform :ios do
       # highest precedence, so the archive carries it even without Apple Generic Versioning.
       increment_build_number(xcodeproj: PROJECT, build_number: build_number, skip_info_plist: true)
 
+      # gym adds the same -allowProvisioningUpdates and -authenticationKey* flags to the export
+      # step itself (from the api_key above); passing them again through export_xcargs makes
+      # xcodebuild fail with "option '-authenticationKeyPath' may only be provided once".
       authentication = [
         "-allowProvisioningUpdates",
         "-authenticationKeyPath #{key_path.shellescape}",
@@ -154,7 +174,6 @@ platform :ios do
           uploadSymbols: true,
         },
         xcargs: "#{authentication} CURRENT_PROJECT_VERSION=#{build_number} DEVELOPMENT_TEAM=#{team_id.shellescape}",
-        export_xcargs: authentication,
         derived_data_path: DERIVED_DATA,
         cloned_source_packages_path: SOURCE_PACKAGES,
         output_directory: File.join(RESULTS_DIR, "beta"),
