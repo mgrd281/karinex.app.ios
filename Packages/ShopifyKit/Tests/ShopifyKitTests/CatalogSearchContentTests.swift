@@ -102,7 +102,7 @@ struct CatalogSearchContentTests {
 
     @Test("Each listed collection carries the photo of its first product")
     func collectionPreviewImages() async throws {
-        let stub = try StubHTTPClient([
+        let stub = StubHTTPClient([
             .json(#"""
                 {"data":{"collections":{"nodes":[
                   {"id":"gid://shopify/Collection/1","handle":"windows","title":"Windows","description":"","image":null,

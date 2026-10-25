@@ -389,7 +389,7 @@ public enum FixturePlan {
                 expectedOutcome: .success
             ) { data, _ in
                 try require(
-                    data.collections.nodes.contains { $0.handle == collectionHandle },
+                    data.collections.nodes.contains { $0.collection.handle == collectionHandle },
                     "collections_DE_DE.json",
                     "bestseller missing"
                 )
