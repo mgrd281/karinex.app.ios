@@ -486,6 +486,13 @@ fashion retail apps; native iOS chrome. The owner chose this direction on 2026-1
 first TestFlight build; it replaces the earlier green, cream and gold "Editorial Luxe" look
 (see PROMPT.md section 7).
 
+The app shell follows the same direction: `RootView` hides the system tab bar
+(`.toolbar(.hidden, for: .tabBar)` on every root and pushed screen) and puts `AppTabBar` into a
+bottom safe-area inset of every tab's `NavigationStack`, so screen bars such as the product
+purchase bar sit on top of it. The bar shows icons only (`AppTab.systemImage`), the KARINEX
+wordmark for Start in the middle, the cart count, and an ink line under the selected item; the
+tab titles are the VoiceOver labels and the identifiers are `tab.bar` and `tab.<name>`.
+
 ### Tokens in code, verified by tests
 
 ```

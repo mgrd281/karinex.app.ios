@@ -62,11 +62,11 @@ final class ShellUITests: XCTestCase {
     func testTabBarShowsFiveTabs() {
         let app = launchApp()
 
-        XCTAssertTrue(app.tabBars.firstMatch.waitForExistence(timeout: timeout), "The tab bar did not appear")
+        XCTAssertTrue(tabBar(in: app).waitForExistence(timeout: timeout), "The tab bar did not appear")
         for tab in Tab.allCases {
             XCTAssertTrue(tabButton(tab, in: app).waitForExistence(timeout: timeout), "Missing tab bar button \(tab.identifier)")
         }
-        XCTAssertEqual(app.tabBars.firstMatch.buttons.count, Tab.allCases.count)
+        XCTAssertEqual(tabBar(in: app).buttons.count, Tab.allCases.count)
         XCTAssertFalse(offlineBanner(in: app).exists, "The offline banner is shown although the device is online")
     }
 
@@ -159,13 +159,18 @@ final class ShellUITests: XCTestCase {
         return app
     }
 
-    /// The tab bar button of `tab`, found by its accessibility identifier. The German title is
-    /// accepted as well, because SwiftUI does not guarantee that the identifier of a `tabItem`
-    /// label reaches the tab bar button on every iOS release.
+    /// The app's bottom bar (`AppTabBar`, identifier `tab.bar`), which replaces the system tab bar.
+    @MainActor
+    private func tabBar(in app: XCUIApplication) -> XCUIElement {
+        app.descendants(matching: .any).matching(identifier: "tab.bar").firstMatch
+    }
+
+    /// The bar button of `tab`, found by its accessibility identifier or its German title (the
+    /// VoiceOver label of the icon-only button).
     @MainActor
     private func tabButton(_ tab: Tab, in app: XCUIApplication) -> XCUIElement {
         let predicate = NSPredicate(format: "identifier == %@ OR label == %@", tab.identifier, tab.germanTitle)
-        return app.tabBars.firstMatch.buttons.matching(predicate).firstMatch
+        return tabBar(in: app).buttons.matching(predicate).firstMatch
     }
 
     /// The root screen of `tab`, found by its accessibility identifier.

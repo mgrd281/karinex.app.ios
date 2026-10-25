@@ -100,12 +100,12 @@ public enum ColorToken: String, CaseIterable, Sendable {
         case .background: BrandPalette.darkBackground
         case .surface: BrandPalette.darkPanel
         case .surfaceElevated: BrandPalette.darkElevated
-        case .skeleton: RGBAColor(hex: 0x2A2A2C)
+        case .skeleton: RGBAColor(hex: 0x2A2A2A)
         case .imageBackground: RGBAColor(hex: 0xE6E6E6)
         case .imageIcon: RGBAColor(hex: 0x7C7C7C)
         case .textPrimary: BrandPalette.darkText
-        case .textSecondary: RGBAColor(hex: 0xB8B8BD)
-        case .textTertiary: RGBAColor(hex: 0x9E9EA3)
+        case .textSecondary: RGBAColor(hex: 0xB8B8B8)
+        case .textTertiary: RGBAColor(hex: 0x9E9E9E)
         case .brand: BrandPalette.white
         case .brandPressed: BrandPalette.silver
         case .brandSoft: BrandPalette.darkDivider
@@ -119,14 +119,14 @@ public enum ColorToken: String, CaseIterable, Sendable {
         case .textOnUrgency: BrandPalette.white
         case .hairline: BrandPalette.darkElevated
         case .divider: BrandPalette.darkDivider
-        case .iconSecondary: RGBAColor(hex: 0x8E8E93)
+        case .iconSecondary: RGBAColor(hex: 0x8E8E8E)
         case .success: RGBAColor(hex: 0x5FC58A)
         case .warning: RGBAColor(hex: 0xE7B85C)
         case .error: RGBAColor(hex: 0xF2877E)
         case .info: RGBAColor(hex: 0x86B8E6)
         case .keyCardBackground: BrandPalette.darkPanel
         case .keyCardText: BrandPalette.white
-        case .keyCardMuted: RGBAColor(hex: 0xA3A3A8)
+        case .keyCardMuted: RGBAColor(hex: 0xA3A3A3)
         case .scrim: RGBAColor(hex: 0x000000, alpha: 0.6)
         }
     }

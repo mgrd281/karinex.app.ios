@@ -27,7 +27,7 @@ public struct KXPriceTag: View {
     public enum Size: String, CaseIterable, Sendable {
         /// Large price for product detail and cart totals.
         case regular
-        /// Smaller price for product cards and list rows.
+        /// Price in the regular weight of the card title, for product cards and list rows.
         case compact
     }
 
@@ -99,7 +99,7 @@ public struct KXPriceTag: View {
     private var priceText: some View {
         Text(price)
             .monospacedDigit()
-            .kxFont(size == .regular ? .price : .headline)
+            .kxFont(size == .regular ? .price : .subheadline)
             .foregroundStyle(KXColor.textPrimary)
             .contentTransition(.numericText())
     }

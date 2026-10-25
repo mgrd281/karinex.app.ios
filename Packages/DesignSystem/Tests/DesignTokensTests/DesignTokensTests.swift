@@ -53,9 +53,9 @@ struct ColorTokenTests {
         #expect(BrandPalette.white.hexString == "#FFFFFF")
         #expect(BrandPalette.sale.hexString == "#C20E2B")
         #expect(BrandPalette.darkBackground.hexString == "#000000")
-        #expect(BrandPalette.darkPanel.hexString == "#1C1C1E")
-        #expect(BrandPalette.darkElevated.hexString == "#2C2C2E")
-        #expect(BrandPalette.darkDivider.hexString == "#3A3A3C")
+        #expect(BrandPalette.darkPanel.hexString == "#1C1C1C")
+        #expect(BrandPalette.darkElevated.hexString == "#2C2C2C")
+        #expect(BrandPalette.darkDivider.hexString == "#3A3A3A")
         #expect(BrandPalette.darkText.hexString == "#F5F5F5")
     }
 

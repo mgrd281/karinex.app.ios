@@ -34,11 +34,11 @@ public enum BrandPalette {
     /// Dark-mode page background.
     public static let darkBackground = RGBAColor(hex: 0x000000)
     /// Dark-mode panels and cards.
-    public static let darkPanel = RGBAColor(hex: 0x1C1C1E)
+    public static let darkPanel = RGBAColor(hex: 0x1C1C1C)
     /// Dark-mode elevated panels (bars, nested cards).
-    public static let darkElevated = RGBAColor(hex: 0x2C2C2E)
+    public static let darkElevated = RGBAColor(hex: 0x2C2C2C)
     /// Dark-mode dividers.
-    public static let darkDivider = RGBAColor(hex: 0x3A3A3C)
+    public static let darkDivider = RGBAColor(hex: 0x3A3A3A)
     /// Dark-mode primary text.
     public static let darkText = RGBAColor(hex: 0xF5F5F5)
 }

@@ -24,6 +24,13 @@ change.
   title, availability and delivery as icon rows, ink pills for variants, "Jetzt kaufen" as an
   outlined button below them, "So läuft es ab" and the activation instructions as collapsible
   rows, and a calm bottom bar with the price and one black "In den Warenkorb" button.
+- **Bottom bar like fashion retail apps:** the system tab bar is replaced by `AppTabBar`, an
+  icon-only bar (Shop, Suche, the KARINEX wordmark for Start in the middle, Warenkorb with the
+  item count, Konto) with a short ink line under the selected item. It hides while the keyboard
+  is up; tapping the selected item again shows the tab's root screen. UI tests find it as
+  `tab.bar`.
+- Product card prices use the regular weight of the card title.
+- Dark-mode greys are exactly neutral (`#1C1C1C`, `#2C2C2C`, `#3A3A3A`).
 - Components: chevron accordion, step timeline with ink discs, section headers without the gold
   rule, black license key card, empty states and icons without gold rings, tighter product grids.
 - `DesignTokensTests` now also fails when a token other than the status colors and the sale red

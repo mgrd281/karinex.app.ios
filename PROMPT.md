@@ -132,7 +132,7 @@ Target outcome: an App Store–approved app that measurably increases repeat pur
 
 ## 6. FEATURE SPEC BY SCREEN
 
-Tab bar: **Start · Shop · Suche · Warenkorb · Konto** (badge on cart).
+Tab bar (owner decision of 2026-10-25, in the style of fashion retail apps): icon-only bar **Shop · Suche · KARINEX wordmark (Start) · Warenkorb · Konto** with an ink line under the selected item and a badge on the cart; it replaces the system tab bar.
 
 ### 6.1 Start (Home)
 - Hero (flat light grey panel, bold headline, black CTA) fed by `app_home` metaobject or fallback content.
@@ -198,7 +198,7 @@ Tab bar: **Start · Shop · Suche · Warenkorb · Konto** (badge on cart).
 - `kx.white` #FFFFFF (page background), `kx.fog` #F5F5F5 (panels, purchase bar), `kx.cloud` #F3F3F3 (behind product photos), `kx.mist` #E8E8E8 (hairlines), `kx.silver` #D9D9D9 (dividers, inactive page dots)
 - `kx.sale` #C20E2B (savings and sale badges, countdown; sparingly). No other hue apart from the status colors.
 - Semantic: success, warning, error, info with accessible contrast.
-- Dark mode: background #000000, panels #1C1C1E and #2C2C2E, text #F5F5F5, white buttons with black labels, dividers #3A3A3C; the photo tile stays light. Test every screen in both modes.
+- Dark mode: background #000000, panels #1C1C1C and #2C2C2C, text #F5F5F5, white buttons with black labels, dividers #3A3A3A; the photo tile stays light. Test every screen in both modes.
 
 **Typography:**
 - All text in SF Pro via Dynamic Type text styles: bold, slightly tighter tracked headlines (display 34, title 28, section title 22), regular body text. License keys: SF Mono.

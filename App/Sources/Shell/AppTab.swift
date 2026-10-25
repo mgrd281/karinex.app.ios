@@ -2,18 +2,19 @@ import Foundation
 
 // MARK: - AppTab
 
-/// The tabs of the root tab bar, in display order: Start, Shop, Suche, Warenkorb, Konto
-/// (PROMPT.md section 6).
+/// The tabs of the root tab bar, in display order: Shop, Suche, Start (the KARINEX wordmark in
+/// the middle), Warenkorb, Konto (PROMPT.md section 6). The bar shows icons only, in the style
+/// of fashion retail apps; the titles are the VoiceOver labels.
 ///
 /// The selection is state of the root view, so screens can switch tabs through closures they
 /// receive, for example the hero call to action and the empty cart open ``shop``.
 enum AppTab: String, CaseIterable, Hashable, Identifiable, Sendable {
-    /// Start: the editorial home screen.
-    case home
     /// Shop: the catalog.
     case shop
     /// Suche: search.
     case search
+    /// Start: the home screen, shown as the wordmark in the middle of the bar.
+    case home
     /// Warenkorb: the cart.
     case cart
     /// Konto: the account.
@@ -24,14 +25,15 @@ enum AppTab: String, CaseIterable, Hashable, Identifiable, Sendable {
         rawValue
     }
 
-    /// SF Symbol of the tab bar item.
+    /// SF Symbol of the tab bar item, a thin line icon. Start shows the wordmark instead; its
+    /// symbol is used where a symbol is needed (for example in previews of the bar).
     var systemImage: String {
         switch self {
-        case .home: "house"
-        case .shop: "square.grid.2x2"
+        case .shop: "line.3.horizontal"
         case .search: "magnifyingglass"
-        case .cart: "bag"
-        case .account: "person.crop.circle"
+        case .home: "house"
+        case .cart: "basket"
+        case .account: "person"
         }
     }
 
