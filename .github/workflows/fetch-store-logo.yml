@@ -1,0 +1,29 @@
+# One-off helper: downloads the store logo from the KARINEX web shop into the repository, so
+# it can be added to the app's assets. Removed again once the logo is in place.
+
+name: Fetch store logo
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Download
+        run: |
+          mkdir -p Tools/Brand
+          curl -fsSL -o Tools/Brand/store-logo.png \
+            'https://www.karinex.de/cdn/shop/files/Kein_Titel_500_x_280_px_0465bc69-e493-413c-a59a-868f261e1c6b.png?v=1789417298'
+          file Tools/Brand/store-logo.png
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Tools/Brand/store-logo.png
+          git commit -m "chore: download the store logo"
+          git push origin "HEAD:refs/heads/${GITHUB_REF_NAME}"
