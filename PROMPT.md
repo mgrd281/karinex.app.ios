@@ -155,7 +155,7 @@ Laid out like the home screen of the About You app (owner request of 2026-10-25)
 - **Sale look** (owner request, reference: the About You app): a reduced price is sale red next to the struck-through compare-at price, the reduction badge ("-80 %") sits above it, and the store's lowest price of the last 30 days (`karinex.lowest_price_30d`) follows below when Shopify provides it. Product cards show the reduction badge and the red price.
 - **Linked products** (owner request): the products the owner linked in the web shop (list metafield `custom.siblings`) as photo thumbnails below the price, the current one outlined; tapping another opens it. A "Passend dazu" row shows Shopify's `COMPLEMENTARY` recommendations (set up in Search & Discovery).
 - Variant selector (segmented or chips) with live price update.
-- **Key facts** table with dot-leader rows (label ...... value) from `karinex.*` metafields: Lizenztyp, Architektur, Geräteanzahl, Lieferform, Aktivierungsart, Sprachen, Support-Status, MPN.
+- **Key facts** table with label and value rows (value at the trailing edge, no dotted leader) from `karinex.*` metafields: Lizenztyp, Architektur, Geräteanzahl, Lieferform, Aktivierungsart, Sprachen, Support-Status, MPN.
 - **"So läuft es ab"** 3-step timeline: Bestellen → Bezahlen → Schlüssel per E-Mail (Minuten). For physical variants: shipping timeline instead.
 - Description (`descriptionHtml`) rendered natively with brand typography; tables must render as real tables. It is the first collapsible row ("Beschreibung", as "Produktdetails" in fashion retail apps); an opened row shows the full text.
 - **Activation** section from `custom.details_content` or linked blog guide.
@@ -212,7 +212,7 @@ Laid out like the home screen of the About You app (owner request of 2026-10-25)
 - All text in SF Pro via Dynamic Type text styles: bold, slightly tighter tracked headlines (display 34, title 28, section title 22), regular body text. License keys: SF Mono.
 - Minimum contrast 4.5:1 for text.
 
-**Components (each with previews and snapshot tests):** `KXButton` (capsules: primary black, secondary thin ink outline, tertiary text), `KXCard` (flat light grey panel, radius 12; outlined variant for the money-back promise), `KXBadge`, `KXPriceTag`, `KXSpecRow` (dot leaders), `KXStepTimeline`, `KXAccordion` (chevrons), `KXCountdown` (flip digits), `KXTrustStrip`, `KXProductCard` (square photo tile without card or border), `KXKeyCard` (black card), `KXSkeleton`, `KXEmptyState`, `KXBanner` (offline/error), `KXSectionHeader` (bold title, optional eyebrow).
+**Components (each with previews and snapshot tests):** `KXButton` (capsules: primary black, secondary thin ink outline, tertiary text), `KXCard` (flat light grey panel, radius 12; outlined variant for the money-back promise), `KXBadge`, `KXPriceTag`, `KXSpecRow` (label and value, no dotted leader), `KXList` (iOS-style grouped rows with an ink icon tile, value, accessory or switch; settings and the shop country sheet), `KXStepTimeline`, `KXAccordion` (chevrons), `KXCountdown` (flip digits), `KXTrustStrip`, `KXProductCard` (square photo tile without card or border), `KXKeyCard` (black card), `KXSkeleton`, `KXEmptyState`, `KXBanner` (offline/error), `KXSectionHeader` (bold title, optional eyebrow).
 
 **Motion and feel:** springs 0.25–0.35s, matched geometry for product card → detail, haptics for add-to-cart / copy key / successful checkout. Respect Reduce Motion and Reduce Transparency.
 

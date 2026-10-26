@@ -566,7 +566,8 @@ light, dark and an accessibility text size, and snapshot tests:
 | `KXBadge` | Accent (ink), urgency (sale red), neutral and success capsules |
 | `KXPriceTag` | Price (sale red when reduced), struck-through compare-at price, savings badge (above the price in the regular size), optional tax note and lowest price of 30 days, combined accessibility label |
 | `KXSectionHeader` | Bold title, optional eyebrow, optional trailing action |
-| `KXSpecRow` | Label and value with a dot leader; stacks at large text sizes |
+| `KXSpecRow` | Label and value with open space between them (no dot leader); stacks at large text sizes |
+| `KXList` | iOS-style grouped rows: `KXListGroup` (header, panel, footer), `KXListRow` (icon tile, title, detail, value, accessory), `KXListToggleRow`, `KXListDivider` |
 | `KXStepTimeline` | Vertical or horizontal steps with white numerals on ink discs (done, current, upcoming) |
 | `KXAccordion`, `KXAccordionItem` | Expandable rows with a chevron that turns upward, each followed by a hairline |
 | `KXCountdown`, `KXCountdownComponents` | Flip-digit countdown to a date, days from 24 h, `onExpire`, no flip with Reduce Motion |
@@ -1224,9 +1225,10 @@ Customer Account client ID and BFF host for an end-to-end test on a device.
   together. Orders are photo cards (`OrderCard`, first five line items of the list query) and
   the detail offers "Erneut kaufen" (`OrderReorder.lines`, each line's `variantID` and quantity
   into `CartStore`).
-- **SettingsFeature:** "Einstellungen" as grouped iOS-style panels (`SettingsGroup`) of rows
-  with an ink icon tile (`SettingsRow` with a value and a chevron, external or checkmark
-  accessory, `SettingsToggleRow` for the consents, notifications and the license lock).
+- **SettingsFeature:** "Einstellungen" as grouped iOS-style panels of `KXList` rows (design
+  system: `KXListGroup`, `KXListRow` with a value and a chevron, external, checkmark or menu
+  accessory, `KXListToggleRow` for the consents, notifications and the license lock). The shop
+  country sheet (`MarketConfirmationSheet`) uses the same rows with menus.
 - **ShopifyKit:** a Customer Account API client on `GraphQLClient` with a bearer token
   `authorization` supplier, endpoint discovery from `customerAccountDiscoveryURL`.
 - **Backend:** a BFF client and a mock server, `BFF_CONTRACT.md` and `openapi.yaml`; feature

@@ -3,11 +3,11 @@ import SwiftUI
 import Testing
 
 extension DesignSystemSnapshotTests {
-    /// `KXSpecRow` with dotted leaders, including a row that stacks because it does not fit.
+    /// `KXSpecRow` without leaders, including a row that stacks because it does not fit.
     @MainActor
     @Suite("KXSpecRow")
     struct KXSpecRowSnapshotTests {
-        @Test("Leaders and stacking", arguments: SnapshotVariant.matrix)
+        @Test("Open space and stacking", arguments: SnapshotVariant.matrix)
         func variants(_ variant: SnapshotVariant) {
             let copy = SnapshotCopy.forLanguage(variant.language)
             assertComponentSnapshot(variant: variant) {

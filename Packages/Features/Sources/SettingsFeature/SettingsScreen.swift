@@ -82,14 +82,14 @@ public struct SettingsScreen: View {
     // MARK: Market
 
     private var marketSection: some View {
-        SettingsGroup(Text("settings.market.title", bundle: .module)) {
+        KXListGroup(Text("settings.market.title", bundle: .module)) {
             marketRow(
                 systemImage: "globe.europe.africa",
                 title: Text("settings.market.country", bundle: .module),
                 value: countryName,
                 identifier: "settings.market.change"
             )
-            SettingsRowDivider()
+            KXListDivider()
             marketRow(
                 systemImage: "text.bubble",
                 title: Text("settings.market.language", bundle: .module),
@@ -103,7 +103,7 @@ public struct SettingsScreen: View {
         Button {
             isMarketSheetPresented = true
         } label: {
-            SettingsRow(systemImage: systemImage, title: title, value: value, accessory: .chevron)
+            KXListRow(systemImage: systemImage, title: title, value: value, accessory: .chevron)
         }
         .buttonStyle(.plain)
         .accessibilityHint(Text("settings.market.change", bundle: .module))
@@ -123,13 +123,13 @@ public struct SettingsScreen: View {
     // MARK: App language
 
     private var languageSection: some View {
-        SettingsGroup {
+        KXListGroup {
             Button {
                 if let url = URL(string: UIApplication.openSettingsURLString) {
                     openURL(url)
                 }
             } label: {
-                SettingsRow(
+                KXListRow(
                     systemImage: "character.bubble",
                     title: Text("settings.language.title", bundle: .module),
                     value: appLanguageName,
@@ -155,16 +155,16 @@ public struct SettingsScreen: View {
     // MARK: Appearance
 
     private var appearanceSection: some View {
-        SettingsGroup(Text("settings.appearance.title", bundle: .module)) {
+        KXListGroup(Text("settings.appearance.title", bundle: .module)) {
             ForEach(Array(AppSettingsStore.Appearance.allCases.enumerated()), id: \.element) { index, appearance in
                 if index > 0 {
-                    SettingsRowDivider()
+                    KXListDivider()
                 }
                 let isSelected = settings.appearance == appearance
                 Button {
                     settings.appearance = appearance
                 } label: {
-                    SettingsRow(
+                    KXListRow(
                         systemImage: Self.systemImage(of: appearance),
                         title: Text(Self.title(of: appearance)),
                         accessory: isSelected ? .checkmark : .none
@@ -197,16 +197,16 @@ public struct SettingsScreen: View {
     // MARK: Privacy
 
     private var privacySection: some View {
-        SettingsGroup(Text("settings.privacy.title", bundle: .module)) {
-            SettingsToggleRow(
+        KXListGroup(Text("settings.privacy.title", bundle: .module)) {
+            KXListToggleRow(
                 systemImage: "chart.bar.xaxis",
                 title: Text("settings.privacy.analytics", bundle: .module),
                 detail: Text("settings.privacy.analytics.detail", bundle: .module),
                 isOn: consentBinding(\.analytics)
             )
             .accessibilityIdentifier("settings.privacy.analytics")
-            SettingsRowDivider()
-            SettingsToggleRow(
+            KXListDivider()
+            KXListToggleRow(
                 systemImage: "exclamationmark.bubble",
                 title: Text("settings.privacy.crash", bundle: .module),
                 detail: Text("settings.privacy.crash.detail", bundle: .module),
@@ -242,16 +242,16 @@ public struct SettingsScreen: View {
     // MARK: Notifications
 
     private var notificationsSection: some View {
-        SettingsGroup(Text("settings.notifications.title", bundle: .module)) {
-            SettingsToggleRow(
+        KXListGroup(Text("settings.notifications.title", bundle: .module)) {
+            KXListToggleRow(
                 systemImage: "shippingbox",
                 title: Text("settings.notifications.orders", bundle: .module),
                 detail: Text("settings.notifications.orders.detail", bundle: .module),
                 isOn: consentBinding(\.orderUpdateNotifications)
             )
             .accessibilityIdentifier("settings.notifications.orders")
-            SettingsRowDivider()
-            SettingsToggleRow(
+            KXListDivider()
+            KXListToggleRow(
                 systemImage: "tag",
                 title: Text("settings.notifications.deals", bundle: .module),
                 detail: Text("settings.notifications.deals.detail", bundle: .module),
@@ -276,8 +276,8 @@ public struct SettingsScreen: View {
     // MARK: Licenses
 
     private var licensesSection: some View {
-        SettingsGroup(Text("settings.licenses.title", bundle: .module)) {
-            SettingsToggleRow(
+        KXListGroup(Text("settings.licenses.title", bundle: .module)) {
+            KXListToggleRow(
                 systemImage: "faceid",
                 title: Text("settings.licenses.lock", bundle: .module),
                 detail: Text("settings.licenses.lock.detail", bundle: .module),
@@ -290,11 +290,11 @@ public struct SettingsScreen: View {
     // MARK: Legal and about
 
     private var legalAndAboutSection: some View {
-        SettingsGroup(Text("settings.about.title", bundle: .module)) {
+        KXListGroup(Text("settings.about.title", bundle: .module)) {
             Button {
                 onRoute(.account(.legal))
             } label: {
-                SettingsRow(
+                KXListRow(
                     systemImage: "doc.text",
                     title: Text("settings.legal", bundle: .module),
                     accessory: .chevron
@@ -302,8 +302,8 @@ public struct SettingsScreen: View {
             }
             .buttonStyle(.plain)
             .accessibilityIdentifier("settings.legal")
-            SettingsRowDivider()
-            SettingsRow(
+            KXListDivider()
+            KXListRow(
                 systemImage: "info.circle",
                 title: Text("settings.about.version", bundle: .module),
                 value: appVersion

@@ -64,6 +64,13 @@ change.
   drops a preloaded guest checkout (`ShopifyCheckoutSheetKit.invalidate()`); after a sign-out the
   lines and discount codes move to a new cart without the token, so the next checkout on the
   device never shows the previous customer's details.
+- **No dotted leaders, modern shop country sheet** (owner request): `KXSpecRow` shows label and
+  value with open space between them instead of a dotted leader, everywhere (product facts,
+  orders, order success, support, settings). The settings rows became the design-system
+  component `KXList` (`KXListGroup`, `KXListRow` with chevron, external, checkmark or menu
+  accessory, `KXListToggleRow`, gallery page and snapshot test). "Ihr Shop-Land" is rebuilt with
+  it: a globe disc above the title, Land with its flag and Sprache der Inhalte as menu rows,
+  Währung as a plain row, the note as the group footer and "Weiter" pinned at the bottom.
 - **Keys, invoices and account deletion in the app** (owner request): `KX_BACKEND_HOST` is now
   `www.softwarefach.de`, the SOFTWAREFACH app that already delivers the keys and invoices. Its new
   `/v1/app` routes (repo `mgrd281/invoice`, PR 1040) check the Customer Account API token with

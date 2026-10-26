@@ -450,7 +450,7 @@ struct KXDesignSystemGalleryTests {
     func coversComponents() {
         let titles = Set(KXGalleryTopic.components.map(\.title))
         let expected: Set = [
-            "KXButton", "KXCard", "KXBadge", "KXPriceTag", "KXSectionHeader", "KXSpecRow", "KXDivider",
+            "KXButton", "KXCard", "KXBadge", "KXPriceTag", "KXSectionHeader", "KXSpecRow", "KXList", "KXDivider",
             "KXWordmark", "KXSkeleton", "KXEmptyState", "KXBanner", "KXStepTimeline", "KXAccordion",
             "KXCountdown", "KXTrustStrip", "KXProductCard", "KXKeyCard",
         ]
