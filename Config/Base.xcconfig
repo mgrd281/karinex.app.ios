@@ -19,9 +19,13 @@ KX_STOREFRONT_API_VERSION = 2026-10
 KX_CUSTOMER_ACCOUNT_API_VERSION = 2026-10
 
 // MARK: Secret defaults (overridden by Secrets.xcconfig)
-// An empty Storefront token runs the app in Shopify's tokenless mode: catalog, search and
-// cart work, metafields (specs, FAQ) are unavailable until a token is configured.
-KX_STOREFRONT_ACCESS_TOKEN =
+// The public Storefront token of the "Karinex Headless" channel (owner, 2026-10-26). Storefront
+// access tokens are public by design: Shopify intends them for client code, and they only read
+// what the store publishes. It is not the private `shpat_` Admin token, which never belongs in
+// the app or this repository. Without a token (clear it here) the app runs in Shopify's
+// tokenless mode: catalog, search and cart work, metafields (specs, FAQ, linked products) are
+// unavailable.
+KX_STOREFRONT_ACCESS_TOKEN = 476c1aa039600e01ee1a1b80572c2197
 KX_CUSTOMER_ACCOUNT_CLIENT_ID =
 KX_APPLE_TEAM_ID =
 // Host name of the KARINEX backend (BFF) on Railway, without scheme. Empty until the backend

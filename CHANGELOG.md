@@ -59,6 +59,10 @@ change.
   the number of items (it opens the cart, `CartBagIcon` in CommerceUI) sit in the navigation
   bar as plain symbols; on iOS 26 without the glass circle (`ProductToolbar`,
   `sharedBackgroundVisibility(.hidden)`).
+- **Storefront token configured** (owner, 2026-10-26): the public token of the "Karinex Headless"
+  channel is the default of `KX_STOREFRONT_ACCESS_TOKEN`, so the app now reads the metafields
+  (product specs, FAQ, linked products). An empty CI secret no longer overwrites it
+  (`write-secrets-xcconfig.sh` writes no line for empty values).
 - **Konto tab without grey boxes** (owner request): the promise and the benefits stand on the
   page with their symbols on light grey discs, the menu is a plain list with hairlines and thin
   symbols, and the version moves from the dotted "Über die App" row to a small centered line

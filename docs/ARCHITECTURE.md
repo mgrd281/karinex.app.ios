@@ -1009,8 +1009,11 @@ DesignTokens tests run through `xcodebuild` because the package declares only iO
   the same before archiving.
 - **Secrets.** `scripts/write-secrets-xcconfig.sh` writes `Config/Secrets.xcconfig` from the
   repository secrets `KX_STOREFRONT_ACCESS_TOKEN`, `KX_CUSTOMER_ACCOUNT_CLIENT_ID` and
-  `KX_APPLE_TEAM_ID` (all optional for CI; empty values keep the tokenless fallback), validating
-  each value so it cannot break the xcconfig syntax.
+  `KX_APPLE_TEAM_ID` (all optional for CI; an empty value writes no line, so the default of
+  `Config/Base.xcconfig` stays), validating each value so it cannot break the xcconfig syntax.
+  The public Storefront token of the "Karinex Headless" channel is that default, so every build
+  loads metafields (specs, FAQ, linked products) without a CI secret. Only the private `shpat_`
+  Admin token must never enter the app or the repository.
 - **TestFlight lane.** `fastlane beta` requires `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_CONTENT`
   (the .p8 text or its base64) and `KX_APPLE_TEAM_ID`; it validates the key, checks the project sync,
   writes the secrets file, sets the build number to the latest TestFlight build plus one, builds
