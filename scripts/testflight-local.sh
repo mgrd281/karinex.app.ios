@@ -31,13 +31,15 @@ command -v brew >/dev/null 2>&1 || fail "Homebrew is required (https://brew.sh).
 
 # MARK: Tools
 
-for formula in xcodegen ruby; do
-    brew list --formula "$formula" >/dev/null 2>&1 || brew install "$formula"
-done
+brew list --formula ruby >/dev/null 2>&1 || brew install ruby
 # Homebrew's Ruby, because the Ruby of macOS is too old for fastlane.
 export PATH="$(brew --prefix ruby)/bin:$PATH"
 
 cd "$repo_root"
+# The pinned XcodeGen of CI: another version writes a different project file, and the lane
+# stops when KARINEX.xcodeproj differs from what project.yml generates.
+tools_path="$(scripts/install-tools.sh --dir "$HOME/.cache/karinex-tools" xcodegen | tail -n 1)"
+export PATH="$tools_path:$PATH"
 bundle config set --local path vendor/bundle >/dev/null
 bundle install --quiet
 
