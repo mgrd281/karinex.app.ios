@@ -71,7 +71,9 @@ change.
   too, never in a browser (`InvoicePDF`). `KXKeyCard` has a key icon tile beside the product
   name and the key on an inset field: hidden, it shows blurred stand-in letters
   (`KXLicenseKeyFormatting.veiled`, the real key is never drawn) under "Zum Anzeigen tippen",
-  and a tap on the field shows the key, instead of rows of bullets.
+  and a tap on the field shows the key, instead of rows of bullets. The key stays on one line,
+  and the actions are simpler: "Kopieren" across the card with a round eye button beside it,
+  "Anleitung" and "Support zu dieser Lizenz" as quiet links below.
 - **No dotted leaders, modern shop country sheet** (owner request): `KXSpecRow` shows label and
   value with open space between them instead of a dotted leader, everywhere (product facts,
   orders, order success, support, settings). The settings rows became the design-system
