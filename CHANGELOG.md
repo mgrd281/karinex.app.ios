@@ -64,6 +64,11 @@ change.
   drops a preloaded guest checkout (`ShopifyCheckoutSheetKit.invalidate()`); after a sign-out the
   lines and discount codes move to a new cart without the token, so the next checkout on the
   device never shows the previous customer's details.
+- **Keys, invoices and account deletion in the app** (owner request): `KX_BACKEND_HOST` is now
+  `www.softwarefach.de`, the SOFTWAREFACH app that already delivers the keys and invoices. Its new
+  `/v1/app` routes (repo `mgrd281/invoice`, PR 1040) check the Customer Account API token with
+  Shopify, answer only for the customer's own orders and give the keys of an order, a 10 minute
+  invoice PDF link and the deletion request (a support ticket with an e-mail confirmation).
 - **Calmer banners** (owner feedback): `KXBanner` drops the colored leading stripe, the border
   and the shadow and sits flat on the light grey panel like the rest of the app; only the
   symbol carries the color (error red, success green, info and offline in ink). The snapshot
