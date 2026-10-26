@@ -215,6 +215,7 @@ private struct ProductDetailBody: View {
                             linkedProducts: model.linkedProducts,
                             onSelectLinkedProduct: { onRoute(.product(handle: $0.handle)) },
                             fulfillment: model.fulfillment,
+                            recentSales: model.recentSales,
                             showsVariantPicker: model.showsVariantPicker,
                             selectedVariantID: model.selectedVariantID,
                             onSelectVariant: { model.selectVariant($0) },

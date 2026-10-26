@@ -79,8 +79,26 @@ fixed section order with the live handles above.
 | `karinex.deal_ends_at` | **missing**; `custom.angebotsende` (date_time, storefront PUBLIC_READ) exists but every value is in July 2026, so all deals have expired | `custom.angebotsende`: yes |
 | Reviews | `karinex.review_rating`, `karinex.review_count`, `reviews.rating_count`, `custom.card_rating*`, plus data from several review apps (`alireviews`, `vstar`, `ddreviews`, eBay import) | partly |
 | Price history | `karinex.lowest_price_30d` (integer, minor units, EUR only) and `karinex.price_history` (JSON) | no (no definition) |
-| Social proof | `custom.units_sold`, `custom.recently_sold_count`, `custom.recently_sold_city`, `custom.recently_sold_hours` | the app **never** displays these (PROMPT.md section 2: no "sold X times") |
+| Social proof | `custom.units_sold`, `custom.recently_sold_count`, `custom.recently_sold_city`, `custom.recently_sold_hours` | `recently_sold_count` and `recently_sold_hours` are shown once they carry real numbers and have Storefront access (see below); the others never |
 | Comparison | `custom.siblings` (list of product references) on 2 products, `custom.wird_oft_zusammen_gekauft`, `custom.frequently_bought`, Shopify `related_products` | partly |
+
+## Recently sold numbers
+
+The store's Google Apps Script "Verkäufe in den letzten 30 Tagen" writes
+`custom.recently_sold_count` (units sold in the last 30 days), `custom.recently_sold_hours`
+(720) and `custom.recently_sold_city` after each paid order. Up to v4 it multiplied the real
+quantity by about 10.5 and added a stable pseudo-random offset before writing it (owner's code,
+reviewed on 2026-10-26), so those values are not real store data in the sense of PROMPT.md
+section 2. `Tools/AppsScript/RecentlySold.gs` (v5) writes the real quantity of orders that were
+not cancelled, reads the Admin token from the script properties instead of the code, and
+deletes the three metafields of products without a sale in the window, so no old multiplied
+value stays.
+
+The app reads `custom.recently_sold_count` and `custom.recently_sold_hours`
+(`ProductMetafields.recentSales`) and shows "In den letzten 30 Tagen 109-mal verkauft" on the
+product page from 5 units on. The definitions get Storefront access only after v5 has run once;
+until then the Storefront API does not return them and the row stays hidden. The city is never
+read by the app.
 
 ## Product content conflicts with the hard rules
 

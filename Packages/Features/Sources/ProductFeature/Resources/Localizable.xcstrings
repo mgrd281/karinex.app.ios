@@ -3169,6 +3169,78 @@
         }
       }
     },
+    "product.recent_sales %lld %lld" : {
+      "comment" : "Product page row under availability: how often the product sold recently, as the store reports it. First number: units sold (always 5 or more), second: length of the window in days (always 2 or more).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In den letzten %2$lld Tagen %1$lld-mal verkauft"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sold %1$lld times in the last %2$lld days"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprzedano %1$lld razy w ciągu ostatnich %2$lld dni"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld keer verkocht in de afgelopen %2$lld dagen"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vendido %1$lld vezes nos últimos %2$lld dias"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sålt %1$lld gånger de senaste %2$lld dagarna"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solgt %1$lld gange de seneste %2$lld dage"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vendido %1$lld veces en los últimos %2$lld días"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vendu %1$lld fois au cours des %2$lld derniers jours"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Venduto %1$lld volte negli ultimi %2$lld giorni"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Myyty %1$lld kertaa viimeisten %2$lld päivän aikana"
+          }
+        }
+      }
+    },
     "product.refund.scope" : {
       "comment" : "Condition 1 of the money-back promise, shown right below it. Must state that it applies only to activated licence keys and physical goods.",
       "extractionState" : "manual",

@@ -115,6 +115,11 @@ final class ProductDetailViewModel {
         return product.productMetafields.lowestPrice30Days(currency: variant.price.currencyCode)
     }
 
+    /// The units the store reports as sold in the last days, or `nil` to hide the row.
+    var recentSales: RecentSales? {
+        product?.productMetafields.recentSales
+    }
+
     // MARK: Loading
 
     /// Loads the product and then both recommendation rows. Keeps shown content while

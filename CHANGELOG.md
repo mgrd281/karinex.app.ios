@@ -10,6 +10,15 @@ change.
 
 ## [Unreleased]
 
+### Added
+
+- **Recently sold on the product page:** "In den letzten 30 Tagen 109-mal verkauft" as an icon
+  row below availability and delivery, from the store's `custom.recently_sold_count` and
+  `custom.recently_sold_hours` (`ProductMetafields.recentSales`), from 5 units on, in all 11
+  languages. `Tools/AppsScript/RecentlySold.gs` is the corrected store script: real quantities
+  instead of the former ×10.5 display multiplier, the Admin token in the script properties, and
+  stale values deleted. The row appears once the definitions get Storefront access.
+
 ### Changed
 
 - **New look, "KARINEX Clean"** (owner decision after the first TestFlight build): the green,

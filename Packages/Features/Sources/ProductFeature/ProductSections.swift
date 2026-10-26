@@ -7,7 +7,8 @@ import SwiftUI
 
 /// The top of the product: the bold title, the price of the selected variant with the market's
 /// tax note, compare-at price and the store's lowest price of the last 30 days, the thumbnails
-/// of the linked products, availability and the delivery form as icon rows, and the variant
+/// of the linked products, availability, the delivery form and the recent sales as icon rows,
+/// and the variant
 /// pills when there is more than one variant.
 struct ProductSummarySection: View {
     let product: Product
@@ -19,6 +20,8 @@ struct ProductSummarySection: View {
     /// Opens a linked product.
     let onSelectLinkedProduct: @MainActor (ProductSummary) -> Void
     let fulfillment: ProductFulfillment
+    /// The units the store reports as sold in the last days; `nil` hides the row.
+    let recentSales: RecentSales?
     let showsVariantPicker: Bool
     let selectedVariantID: ShopifyID?
     let onSelectVariant: @MainActor (ShopifyID) -> Void
@@ -51,7 +54,11 @@ struct ProductSummarySection: View {
             if !linkedProducts.isEmpty {
                 ProductLinkedProductsRow(products: linkedProducts, currentID: product.id, onSelect: onSelectLinkedProduct)
             }
-            ProductAvailabilityRow(isAvailable: variant?.availableForSale ?? product.availableForSale, fulfillment: fulfillment)
+            ProductAvailabilityRow(
+                isAvailable: variant?.availableForSale ?? product.availableForSale,
+                fulfillment: fulfillment,
+                recentSales: recentSales
+            )
             if showsVariantPicker {
                 ProductVariantPicker(
                     variants: product.variants,
@@ -66,12 +73,13 @@ struct ProductSummarySection: View {
 
 // MARK: - ProductAvailabilityRow
 
-/// Availability of the selected variant ("Verfügbar" or "Derzeit nicht verfügbar") and how it is
-/// delivered (by e-mail or shipped), as two rows with a line icon each, read by VoiceOver as one
-/// element.
+/// Availability of the selected variant ("Verfügbar" or "Derzeit nicht verfügbar"), how it is
+/// delivered (by e-mail or shipped) and, when the store reports it, how often it sold in the
+/// last days, as rows with a line icon each, read by VoiceOver as one element.
 struct ProductAvailabilityRow: View {
     let isAvailable: Bool
     let fulfillment: ProductFulfillment
+    var recentSales: RecentSales?
 
     @ScaledMetric(relativeTo: .callout) private var iconWidth: CGFloat = 28
 
@@ -83,6 +91,13 @@ struct ProductAvailabilityRow: View {
                 text: Text(isAvailable ? "product.availability.available" : "product.availability.unavailable", bundle: .module)
             )
             row(systemImage: fulfillment.systemImage, iconColor: KXColor.textPrimary, text: Text(fulfillment.deliveryNote))
+            if let recentSales {
+                row(
+                    systemImage: "chart.line.uptrend.xyaxis",
+                    iconColor: KXColor.textPrimary,
+                    text: Text("product.recent_sales \(recentSales.count) \(recentSales.days)", bundle: .module)
+                )
+            }
         }
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("product.availability")

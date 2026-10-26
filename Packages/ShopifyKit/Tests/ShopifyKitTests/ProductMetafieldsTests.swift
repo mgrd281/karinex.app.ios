@@ -17,7 +17,8 @@ struct ProductMetafieldsTests {
             "karinex.faq", "karinex.lizenztyp", "karinex.architektur", "karinex.geraeteanzahl", "karinex.lieferform",
             "karinex.aktivierungsart", "karinex.sprachen", "karinex.support_status", "custom.details_content",
             "custom.shipping_content", "custom.warranty_content", "custom.mpn", "karinex.deal_ends_at",
-            "custom.angebotsende", "mm-google-shopping.mpn", "karinex.lowest_price_30d",
+            "custom.angebotsende", "mm-google-shopping.mpn", "karinex.lowest_price_30d", "custom.recently_sold_count",
+            "custom.recently_sold_hours",
         ])
         #expect(ProductMetafields.allIdentifiers.count == names.count)
     }
@@ -183,6 +184,24 @@ struct ProductMetafieldsTests {
         #expect(cents.lowestPrice30Days(currency: .chf) == nil)
         #expect(metafields([(ID.lowestPrice30Days, "number_integer", "0")]).lowestPrice30Days(currency: .eur) == nil)
         #expect(metafields([(ID.lowestPrice30Days, "number_integer", "24.90")]).lowestPrice30Days(currency: .eur) == nil)
+    }
+
+    @Test("Recent sales need a count of at least five and a window of whole days")
+    func recentSales() {
+        func sales(count: String, hours: String?) -> RecentSales? {
+            var fields = [(ID.recentlySoldCount, "number_integer", count)]
+            if let hours {
+                fields.append((ID.recentlySoldHours, "number_integer", hours))
+            }
+            return metafields(fields).recentSales
+        }
+        #expect(sales(count: "109", hours: "720") == RecentSales(count: 109, days: 30))
+        #expect(sales(count: "5", hours: "168") == RecentSales(count: 5, days: 7))
+        #expect(sales(count: "4", hours: "720") == nil)
+        #expect(sales(count: "109", hours: nil) == nil)
+        #expect(sales(count: "109", hours: "24") == nil)
+        #expect(sales(count: "109", hours: "100") == nil)
+        #expect(sales(count: "viele", hours: "720") == nil)
     }
 
     @Test("Products decode metafields from a nullable array and drop nulls")

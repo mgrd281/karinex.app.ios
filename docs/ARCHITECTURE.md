@@ -432,7 +432,10 @@ store's existing keys (`ProductMetafields.Identifier`): `faq` (`karinex.faq` par
 back to `mm-google-shopping.mpn`), `dealEndsAt` (falls back to `custom.angebotsende`) and
 `lowestPrice30Days(currency:)`. Every accessor returns `nil` for missing or malformed values and
 never crashes; in tokenless mode all of them are `nil`, so product screens must treat every
-metafield module as optional.
+metafield module as optional. `recentSales` (`custom.recently_sold_count` with the window of
+`custom.recently_sold_hours`) is `nil` below 5 units or without a whole-day window of at least
+two days; the product page shows it as an icon row below availability and delivery
+(docs/STORE_AUDIT.md, "Recently sold numbers").
 
 Switching to token mode is configuration only: put the token into `Config/Secrets.xcconfig` and
 the CI secret. Values also need metafield definitions with Storefront read access, which the

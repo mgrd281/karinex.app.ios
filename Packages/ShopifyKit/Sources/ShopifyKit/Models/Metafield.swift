@@ -52,6 +52,25 @@ public struct MetafieldIdentifier: Sendable, Hashable, Codable, CustomStringConv
     }
 }
 
+// MARK: - RecentSales
+
+/// How many units of a product sold in the last days, as the store reports it.
+public struct RecentSales: Sendable, Hashable {
+    /// The smallest count worth showing; fewer sales are not shown at all.
+    public static let minimumCount = 5
+
+    /// The units sold.
+    public let count: Int
+    /// The length of the window in days.
+    public let days: Int
+
+    /// Creates a value.
+    public init(count: Int, days: Int) {
+        self.count = count
+        self.days = days
+    }
+}
+
 // MARK: - FAQEntry
 
 /// One question and answer of the `karinex.faq` metafield.
@@ -246,6 +265,11 @@ public struct ProductMetafields: Sendable, Hashable {
         public static let googleShoppingMPN = MetafieldIdentifier(namespace: "mm-google-shopping", key: "mpn")
         /// `karinex.lowest_price_30d`: existing store key, lowest price of the last 30 days.
         public static let lowestPrice30Days = MetafieldIdentifier(namespace: "karinex", key: "lowest_price_30d")
+        /// `custom.recently_sold_count`: existing store key, units sold in the window of
+        /// `custom.recently_sold_hours`, written by the store's sales script.
+        public static let recentlySoldCount = MetafieldIdentifier(namespace: "custom", key: "recently_sold_count")
+        /// `custom.recently_sold_hours`: existing store key, the length of that window in hours.
+        public static let recentlySoldHours = MetafieldIdentifier(namespace: "custom", key: "recently_sold_hours")
     }
 
     /// Every identifier the product query requests when a token is configured.
@@ -266,6 +290,8 @@ public struct ProductMetafields: Sendable, Hashable {
         Identifier.offerEndsAt,
         Identifier.googleShoppingMPN,
         Identifier.lowestPrice30Days,
+        Identifier.recentlySoldCount,
+        Identifier.recentlySoldHours,
     ]
 
     // MARK: Storage
@@ -382,6 +408,19 @@ public struct ProductMetafields: Sendable, Hashable {
             return nil
         }
         return MoneyV2(amount: Decimal(cents) / 100, currencyCode: .eur)
+    }
+
+    /// The units sold recently from `custom.recently_sold_count` and `custom.recently_sold_hours`;
+    /// `nil` unless both are integers, the window is whole days of at least two, and the count
+    /// reaches ``RecentSales/minimumCount``.
+    public var recentSales: RecentSales? {
+        guard let count = integer(Identifier.recentlySoldCount),
+              let hours = integer(Identifier.recentlySoldHours),
+              count >= RecentSales.minimumCount,
+              hours >= 2 * 24,
+              hours.isMultiple(of: 24)
+        else { return nil }
+        return RecentSales(count: count, days: hours / 24)
     }
 
     // MARK: Generic accessors

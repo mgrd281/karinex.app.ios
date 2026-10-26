@@ -41,7 +41,7 @@ Target outcome: an App Store–approved app that measurably increases repeat pur
 **Known content risks (must be respected in app copy):**
 - Never claim that the license chain / license origin was "verified" or "documented".
 - Never write "100% legal", "Original-Lizenz", "geprüfte Lizenzen" or similar strong claims in app-authored copy. Product marketing text is rendered from Shopify as-is; the app adds no claims of its own.
-- Never invent ratings, review counts or "sold X times" numbers. Social-proof values may only be displayed when they come from real, verified store data.
+- Never invent ratings, review counts or "sold X times" numbers. Social-proof values may only be displayed when they come from real, verified store data. The product page shows "In den letzten 30 Tagen X-mal verkauft" from `custom.recently_sold_count` only from 5 units on, and only once the store's sales script writes real quantities (docs/STORE_AUDIT.md, "Recently sold numbers").
 
 **Benchmarks (for UX research only, never copy):** systeme-software24.com, lizenzstar.de, lizenzguru.de, softwareindustrie24.de, ekeys.it, voelkner.de (deal carousel pattern).
 
