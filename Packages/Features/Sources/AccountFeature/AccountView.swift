@@ -48,16 +48,16 @@ public struct AccountView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: KXSpacing.xl) {
                 if sessionStore.isSignedIn {
-                    profileCard
+                    profileHeader
                     menu(AccountMenuItem.signedIn)
                 } else {
-                    benefitsCard
+                    benefits
                 }
                 menu(AccountMenuItem.general)
                 if sessionStore.isSignedIn {
                     signedInActions
                 }
-                aboutSection
+                versionFooter
             }
             .padding(.horizontal, KXSpacing.gutter)
             .padding(.vertical, KXSpacing.m)
@@ -105,25 +105,28 @@ public struct AccountView: View {
 
     // MARK: Signed out
 
-    private var benefitsCard: some View {
-        KXCard {
+    /// The signed-out header: the promise, the benefits with their symbols on light grey discs,
+    /// then "Anmelden" or the note that login is not available yet. No card, as on the account
+    /// tab of fashion retail apps.
+    private var benefits: some View {
+        VStack(alignment: .leading, spacing: KXSpacing.l) {
+            VStack(alignment: .leading, spacing: KXSpacing.xs) {
+                Text("account.intro.eyebrow", bundle: .module)
+                    .kxFont(.eyebrow)
+                    .foregroundStyle(KXColor.textSecondary)
+                Text("account.intro.title", bundle: .module)
+                    .kxFont(.title1)
+                    .foregroundStyle(KXColor.textPrimary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityAddTraits(.isHeader)
+            }
             VStack(alignment: .leading, spacing: KXSpacing.m) {
-                VStack(alignment: .leading, spacing: KXSpacing.xs) {
-                    Text("account.intro.eyebrow", bundle: .module)
-                        .kxFont(.eyebrow)
-                        .foregroundStyle(KXColor.textSecondary)
-                    Text("account.intro.title", bundle: .module)
-                        .kxFont(.title2)
-                        .foregroundStyle(KXColor.textPrimary)
-                        .accessibilityAddTraits(.isHeader)
+                ForEach(AccountBenefit.allCases) { benefit in
+                    AccountBenefitRow(benefit: benefit)
                 }
+            }
+            if sessionStore.isAvailable {
                 VStack(alignment: .leading, spacing: KXSpacing.s) {
-                    ForEach(AccountBenefit.allCases) { benefit in
-                        AccountBenefitRow(benefit: benefit)
-                    }
-                }
-                KXDivider()
-                if sessionStore.isAvailable {
                     KXButton(
                         String(localized: "account.signin", bundle: .module),
                         systemImage: "person.crop.circle",
@@ -137,17 +140,25 @@ public struct AccountView: View {
                         .kxFont(.footnote)
                         .foregroundStyle(KXColor.textSecondary)
                         .fixedSize(horizontal: false, vertical: true)
-                } else {
-                    Text("account.signin.note", bundle: .module)
-                        .kxFont(.footnote)
-                        .foregroundStyle(KXColor.textSecondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .accessibilityIdentifier("account.signin.unavailable")
                 }
+            } else {
+                Label {
+                    Text("account.signin.note", bundle: .module)
+                        .fixedSize(horizontal: false, vertical: true)
+                } icon: {
+                    Image(systemName: "clock")
+                        .accessibilityHidden(true)
+                }
+                .kxFont(.footnote)
+                .foregroundStyle(KXColor.textSecondary)
+                .padding(KXSpacing.s)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(KXColor.surface, in: RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous))
+                .accessibilityIdentifier("account.signin.unavailable")
             }
-            .fixedSize(horizontal: false, vertical: true)
-            .padding(KXSpacing.xs)
         }
+        .padding(.top, KXSpacing.xs)
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("account.benefits")
     }
 
@@ -164,9 +175,16 @@ public struct AccountView: View {
 
     // MARK: Signed in
 
-    private var profileCard: some View {
-        KXCard {
-            VStack(alignment: .leading, spacing: KXSpacing.xs) {
+    /// The signed-in header: a disc with the person symbol, the name and the e-mail address.
+    private var profileHeader: some View {
+        HStack(spacing: KXSpacing.m) {
+            Image(systemName: "person.fill")
+                .kxFont(.title2)
+                .foregroundStyle(KXColor.textSecondary)
+                .frame(width: KXSpacing.xxxl, height: KXSpacing.xxxl)
+                .background(KXColor.surface, in: Circle())
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: KXSpacing.xxs) {
                 Text("account.profile.eyebrow", bundle: .module)
                     .kxFont(.eyebrow)
                     .foregroundStyle(KXColor.textSecondary)
@@ -188,8 +206,9 @@ public struct AccountView: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(KXSpacing.xs)
         }
+        .padding(.top, KXSpacing.xs)
+        .accessibilityElement(children: .combine)
         .accessibilityIdentifier("account.profile")
     }
 
@@ -224,35 +243,39 @@ public struct AccountView: View {
 
     // MARK: Menu
 
+    /// A list of rows on the page, with hairlines between them and above and below the list.
     private func menu(_ items: [AccountMenuItem]) -> some View {
-        KXCard(padding: 0) {
-            VStack(alignment: .leading, spacing: 0) {
-                ForEach(items) { item in
-                    Button {
-                        onRoute(.account(item.destination))
-                    } label: {
-                        AccountMenuRow(item: item)
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("account.menu.\(item.rawValue)")
-                    if item != items.last {
-                        KXDivider()
-                            .padding(.leading, KXSpacing.m)
-                    }
+        VStack(alignment: .leading, spacing: 0) {
+            KXDivider()
+            ForEach(items) { item in
+                Button {
+                    onRoute(.account(item.destination))
+                } label: {
+                    AccountMenuRow(item: item)
                 }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("account.menu.\(item.rawValue)")
+                KXDivider()
             }
         }
     }
 
     // MARK: About
 
-    private var aboutSection: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.m) {
-            KXSectionHeader(String(localized: "account.about.title", bundle: .module))
+    /// The store logo and the version, small and centered at the end of the page.
+    private var versionFooter: some View {
+        VStack(spacing: KXSpacing.xs) {
+            KXWordmark(size: .small, color: KXColor.textTertiary)
+                .accessibilityHidden(true)
             if !appInfo.summary.isEmpty {
-                KXCard {
-                    KXSpecRow(String(localized: "account.about.version", bundle: .module), value: appInfo.summary)
+                HStack(spacing: KXSpacing.xxs) {
+                    Text("account.about.version", bundle: .module)
+                    Text(verbatim: appInfo.summary)
+                        .monospacedDigit()
                 }
+                .kxFont(.caption)
+                .foregroundStyle(KXColor.textSecondary)
+                .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("account.about")
             }
             #if DEBUG
@@ -267,9 +290,12 @@ public struct AccountView: View {
                 }
             }
             .buttonStyle(.kx(.secondary, isFullWidth: true))
+            .padding(.top, KXSpacing.m)
             .accessibilityIdentifier("account.designSystem")
             #endif
         }
+        .frame(maxWidth: .infinity)
+        .padding(.top, KXSpacing.m)
     }
 }
 
@@ -350,8 +376,9 @@ private struct AccountMenuRow: View {
     var body: some View {
         HStack(spacing: KXSpacing.m) {
             Image(systemName: item.systemImage)
-                .kxFont(.body)
-                .foregroundStyle(KXColor.brand)
+                .fontWeight(.light)
+                .kxFont(.title3)
+                .foregroundStyle(KXColor.textPrimary)
                 .frame(width: iconWidth)
                 .accessibilityHidden(true)
             Text(item.title)
@@ -359,12 +386,13 @@ private struct AccountMenuRow: View {
                 .foregroundStyle(KXColor.textPrimary)
                 .frame(maxWidth: .infinity, alignment: .leading)
             Image(systemName: "chevron.right")
+                .fontWeight(.medium)
                 .kxFont(.footnote)
                 .foregroundStyle(KXColor.iconSecondary)
                 .accessibilityHidden(true)
         }
-        .padding(.horizontal, KXSpacing.m)
-        .frame(minHeight: KXSpacing.minimumTapTarget + KXSpacing.s)
+        .padding(.vertical, KXSpacing.s)
+        .frame(minHeight: KXSpacing.minimumTapTarget + KXSpacing.m)
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isButton)
@@ -376,15 +404,16 @@ private struct AccountMenuRow: View {
 private struct AccountBenefitRow: View {
     let benefit: AccountBenefit
 
-    @ScaledMetric(relativeTo: .body) private var iconWidth: CGFloat = 28
+    @ScaledMetric(relativeTo: .body) private var discSide: CGFloat = 44
 
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: KXSpacing.s) {
+        HStack(spacing: KXSpacing.m) {
             Image(systemName: benefit.systemImage)
-                .fontWeight(.medium)
-                .kxFont(.body)
-                .foregroundStyle(KXColor.brand)
-                .frame(width: iconWidth)
+                .fontWeight(.light)
+                .kxFont(.title3)
+                .foregroundStyle(KXColor.textPrimary)
+                .frame(width: discSide, height: discSide)
+                .background(KXColor.surface, in: Circle())
                 .accessibilityHidden(true)
             Text(benefit.text)
                 .kxFont(.body)

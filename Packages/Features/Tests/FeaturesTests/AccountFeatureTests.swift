@@ -74,7 +74,6 @@ struct AccountStringTests {
             "account.benefit.keys",
             "account.benefit.checkout",
             "account.signin.note",
-            "account.about.title",
             "account.about.version",
         ]
 

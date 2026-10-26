@@ -59,6 +59,10 @@ change.
   the number of items (it opens the cart, `CartBagIcon` in CommerceUI) sit in the navigation
   bar as plain symbols; on iOS 26 without the glass circle (`ProductToolbar`,
   `sharedBackgroundVisibility(.hidden)`).
+- **Konto tab without grey boxes** (owner request): the promise and the benefits stand on the
+  page with their symbols on light grey discs, the menu is a plain list with hairlines and thin
+  symbols, and the version moves from the dotted "Über die App" row to a small centered line
+  with the store logo at the end of the page.
 - **All payment methods of the web shop, centered** (owner request): the product page and the
   cart now show UnionPay and Google Pay (Shopify's MIT-licensed marks, Google Pay only when Shopify
   lists the wallet) and plain marks with the names "Rechnung"

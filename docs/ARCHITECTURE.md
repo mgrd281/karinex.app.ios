@@ -599,7 +599,8 @@ motion, and one page per component with its variants and states (for example
 `KXGalleryFoundationPages.swift`, `KXGalleryCommercePages.swift`, `KXGalleryContentPages.swift`,
 `KXGalleryFeedbackPages.swift` and `KXGallerySupport.swift`. Its preview settings override
 appearance and Dynamic Type size for the pages it opens. `AccountView` links to it in DEBUG
-builds, so it is one tap away on the Konto tab.
+builds, below the version line at the end of the Konto tab (which shows the benefits or the
+profile, then plain menu lists with hairlines, no cards).
 
 ### Snapshot tests
 
