@@ -36,6 +36,9 @@ brew list --formula ruby >/dev/null 2>&1 || brew install ruby
 export PATH="$(brew --prefix ruby)/bin:$PATH"
 
 cd "$repo_root"
+# An earlier run leaves its build number (agvtool) and the resolved packages in the generated
+# project; the lane needs the committed project, so start from it again.
+git checkout -- KARINEX.xcodeproj
 # The pinned XcodeGen of CI: another version writes a different project file, and the lane
 # stops when KARINEX.xcodeproj differs from what project.yml generates.
 tools_path="$(scripts/install-tools.sh --dir "$HOME/.cache/karinex-tools" xcodegen | tail -n 1)"
