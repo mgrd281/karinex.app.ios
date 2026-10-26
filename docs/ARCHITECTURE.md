@@ -731,7 +731,11 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
   search a screen asks for) puts the cursor into the field when the Start tab's search field
   opens the tab. `CartFeature`: the lines as a list like fashion retail apps (photo with the
   reduction, vendor, title, price with the former price, an "x" to remove; photo and texts open
-  the product), quantity, undo, discount codes with `userErrors`, totals, cross-sell, payment
+  the product), quantity, removal (a swipe to the left uncovers a red "Entfernen"; a long swipe,
+  that action or the "x" calls `CartViewModel.requestRemoval(of:after:)`, which marks the line
+  in `removingLineIDs` and removes it after 3 seconds (10 with VoiceOver) unless
+  `cancelRemoval(of:)` keeps it; `CartLineRemovalPanel` shows "Produkt wird entfernt…" with
+  "Abbrechen", and `CartSwipe` holds the swipe threshold), discount codes with `userErrors`, totals, cross-sell, payment
   marks, notices.
 - `HomeFeature`, laid out like the About You app: `HomeModules` names the modules and their
   store collections (stories, showcase, bestsellers, deals, versions, guides blog);

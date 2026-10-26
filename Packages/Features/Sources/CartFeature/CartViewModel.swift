@@ -32,8 +32,9 @@ enum CartDiscountFeedback: Sendable, Hashable {
 ///
 /// - The screen state follows the store: a skeleton while a stored cart loads for the first
 ///   time, the error when that load failed, the empty state without lines, otherwise the cart.
-/// - Quantities stay within ``quantityRange`` (1 to 10); a line leaves the cart only through
-///   ``remove(_:)``, which offers an undo.
+/// - Quantities stay within ``quantityRange`` (1 to 10); a line leaves the cart through
+///   ``requestRemoval(of:after:)``: its row shows "Produkt wird entfernt" with "Abbrechen"
+///   until the delay has passed, as in the About You app.
 /// - The discount code field applies and removes codes and shows Shopify's message when a code
 ///   does not apply.
 /// - The cross-sell row shows Shopify's `COMPLEMENTARY` recommendations for the first line's
@@ -142,24 +143,50 @@ final class CartViewModel {
 
     // MARK: Removal
 
-    /// Removes `line`; the undo bar offers to restore it.
+    /// How long a line shows "Produkt wird entfernt" before it leaves the cart.
+    static let removalDelay: TimeInterval = 3
+    /// The same with VoiceOver, so there is time to reach "Abbrechen".
+    static let accessibleRemovalDelay: TimeInterval = 10
+
+    /// The lines on their way out of the cart.
+    private(set) var removingLineIDs: Set<ShopifyID> = []
+    @ObservationIgnored private var removalTasks: [ShopifyID: Task<Void, Never>] = [:]
+
+    /// Whether `line` shows "Produkt wird entfernt".
+    func isRemoving(_ line: CartLine) -> Bool {
+        removingLineIDs.contains(line.id)
+    }
+
+    /// Starts removing `line`: after `delay` seconds it leaves the cart, unless
+    /// ``cancelRemoval(of:)`` keeps it. A second request for the same line changes nothing.
+    func requestRemoval(of line: CartLine, after delay: TimeInterval) {
+        guard !removingLineIDs.contains(line.id) else { return }
+        removingLineIDs.insert(line.id)
+        removalTasks[line.id] = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(delay))
+            guard !Task.isCancelled else { return }
+            await self?.remove(line)
+        }
+    }
+
+    /// Keeps `line` in the cart ("Abbrechen").
+    func cancelRemoval(of line: CartLine) {
+        removalTasks.removeValue(forKey: line.id)?.cancel()
+        removingLineIDs.remove(line.id)
+    }
+
+    /// The running removal of `line`, `nil` when there is none.
+    func removal(of line: CartLine) -> Task<Void, Never>? {
+        removalTasks[line.id]
+    }
+
+    /// Removes `line` now. The row already offered "Abbrechen", so no undo is kept. When the
+    /// request fails, the line stays and the error banner explains why.
     func remove(_ line: CartLine) async {
         await cartStore.remove(lineID: line.id)
-    }
-
-    /// The line the undo bar offers to restore, `nil` when there is none.
-    var removedLine: CartLine? {
-        cartStore.lastRemovedLine
-    }
-
-    /// Restores the last removed line.
-    func undoRemove() async {
-        await cartStore.undoRemove()
-    }
-
-    /// Hides the undo bar without restoring the line.
-    func discardUndo() {
         cartStore.discardUndo()
+        removalTasks[line.id] = nil
+        removingLineIDs.remove(line.id)
     }
 
     // MARK: Discount codes

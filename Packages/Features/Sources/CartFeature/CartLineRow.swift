@@ -31,8 +31,13 @@ struct CartLinesSection: View {
 /// One line, laid out like the product lists of fashion retail apps: the photo on its light
 /// tile with the reduction ("-80 %") in sale red at its lower edge; beside it the vendor in
 /// capitals, the product title, the variant, the price (sale red when reduced) with the former
-/// price below it and the line total for more than one unit, and the quantity control; an "x"
-/// at the top right removes the line. The photo and the texts open the product.
+/// price below it and the line total for more than one unit, and the quantity control. The
+/// photo and the texts open the product.
+///
+/// Removing works like the About You app: swiping the row to the left uncovers a red
+/// "Entfernen" behind it; a long swipe, a tap on "Entfernen" or on the "x" at the top right
+/// turns the row red with "Produkt wird entfernt" and "Abbrechen", whose fill runs down until
+/// the line leaves the cart (``CartViewModel/requestRemoval(of:after:)``).
 struct CartLineRow: View {
     /// Width to height of the photo: a little taller than wide.
     static let photoAspectRatio: CGFloat = 5 / 6
@@ -44,7 +49,18 @@ struct CartLineRow: View {
     @Environment(\.locale) private var locale
     @Environment(\.commerceCountry) private var country
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityVoiceOverEnabled) private var isVoiceOverEnabled
     @ScaledMetric(relativeTo: .body) private var scaledPhotoWidth: CGFloat = 112
+    @ScaledMetric(relativeTo: .footnote) private var actionWidth: CGFloat = 96
+
+    /// How far the row is pushed to the left by the finger or while "Entfernen" stays open.
+    @State private var swipeOffset: CGFloat = 0
+    /// Whether "Entfernen" stays uncovered after the finger let go.
+    @State private var isActionOpen = false
+    /// The direction of the current drag, decided by its first movement.
+    @State private var dragAxis: Axis?
+    @State private var rowWidth: CGFloat = 0
 
     private var photoWidth: CGFloat {
         min(scaledPhotoWidth, 160)
@@ -58,6 +74,7 @@ struct CartLineRow: View {
             requiresShipping: line.merchandise.requiresShipping,
             locale: locale
         )
+        let isRemoving = model.isRemoving(line)
         HStack(alignment: .top, spacing: KXSpacing.m) {
             if !dynamicTypeSize.isAccessibilitySize {
                 photo(savings: display.savingsText)
@@ -70,8 +87,114 @@ struct CartLineRow: View {
                 CartQuantityControl(line: line, model: model)
             }
         }
+        .background(KXColor.background)
+        .offset(x: isRemoving ? 0 : swipeOffset)
+        .accessibilityHidden(isRemoving)
+        .background(alignment: .trailing) {
+            if !isRemoving {
+                swipeAction
+            }
+        }
+        .overlay {
+            if isRemoving {
+                CartLineRemovalPanel(duration: removalDelay) {
+                    model.cancelRemoval(of: line)
+                }
+                .padding(.horizontal, -KXSpacing.gutter)
+                .padding(.vertical, -KXSpacing.xs)
+                .transition(.opacity)
+            }
+        }
+        .onGeometryChange(for: CGFloat.self) { proxy in
+            proxy.size.width
+        } action: { width in
+            rowWidth = width
+        }
+        .simultaneousGesture(swipe)
+        .animation(KXMotion.animation(.snappy, reduceMotion: reduceMotion), value: isRemoving)
+        .sensoryFeedback(.impact(weight: .medium), trigger: isRemoving) { _, startsRemoving in startsRemoving }
         .accessibilityElement(children: .contain)
+        .accessibilityAction(named: Text("cart.line.swipe.remove", bundle: .module)) {
+            requestRemoval()
+        }
         .accessibilityIdentifier("cart.line.\(line.merchandise.product.handle)")
+    }
+
+    // MARK: Removal
+
+    /// How long the row stays red before the line leaves the cart.
+    private var removalDelay: TimeInterval {
+        isVoiceOverEnabled ? CartViewModel.accessibleRemovalDelay : CartViewModel.removalDelay
+    }
+
+    private func requestRemoval() {
+        isActionOpen = false
+        swipeOffset = 0
+        model.requestRemoval(of: line, after: removalDelay)
+    }
+
+    /// The red "Entfernen" that the row uncovers when it moves to the left, reaching to the
+    /// screen edge. While it is narrower than the symbol and the word, their leading part is
+    /// cut off. A tap removes the line like a long swipe.
+    private var swipeAction: some View {
+        let width = max(-swipeOffset, 0)
+        let redWidth = width + KXSpacing.gutter
+        return Button {
+            requestRemoval()
+        } label: {
+            VStack(spacing: KXSpacing.xxs) {
+                Image(systemName: "xmark")
+                    .kxFont(.title3)
+                Text("cart.line.swipe.remove", bundle: .module)
+                    .kxFont(.caption)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
+            .foregroundStyle(KXColor.textOnUrgency)
+            .frame(width: max(redWidth, actionWidth))
+            .frame(width: redWidth, alignment: .trailing)
+            .frame(maxHeight: .infinity)
+            .clipped()
+            .background(KXColor.urgency)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .padding(.trailing, -KXSpacing.gutter)
+        .padding(.vertical, -KXSpacing.xs)
+        .opacity(width > 0 ? 1 : 0)
+        .accessibilityHidden(true)
+    }
+
+    /// Moves the row with a horizontal drag to the left and decides on release: far enough
+    /// removes the line, half of "Entfernen" keeps it open, less closes it again. Vertical drags
+    /// are left to the scroll view.
+    private var swipe: some Gesture {
+        DragGesture(minimumDistance: KXSpacing.m)
+            .onChanged { value in
+                if dragAxis == nil {
+                    dragAxis = abs(value.translation.width) > abs(value.translation.height) ? .horizontal : .vertical
+                }
+                guard dragAxis == .horizontal, !model.isRemoving(line) else { return }
+                let start = isActionOpen ? -actionWidth : 0
+                swipeOffset = min(0, start + value.translation.width)
+            }
+            .onEnded { value in
+                defer { dragAxis = nil }
+                guard dragAxis == .horizontal, !model.isRemoving(line) else { return }
+                let start = isActionOpen ? -actionWidth : 0
+                let travel = -(start + value.predictedEndTranslation.width)
+                withAnimation(KXMotion.animation(.snappy, reduceMotion: reduceMotion)) {
+                    if CartSwipe.removes(offset: swipeOffset, predictedTravel: travel, rowWidth: rowWidth) {
+                        requestRemoval()
+                    } else if -swipeOffset > actionWidth / 2 {
+                        isActionOpen = true
+                        swipeOffset = -actionWidth
+                    } else {
+                        isActionOpen = false
+                        swipeOffset = 0
+                    }
+                }
+            }
     }
 
     // MARK: Parts
@@ -167,10 +290,12 @@ struct CartLineRow: View {
         }
     }
 
-    /// The "x" at the top right that removes the line (with undo).
+    /// The "x" at the top right that removes the line like a long swipe.
     private var removeButton: some View {
         Button {
-            Task { await model.remove(line) }
+            withAnimation(KXMotion.animation(.snappy, reduceMotion: reduceMotion)) {
+                requestRemoval()
+            }
         } label: {
             Image(systemName: "xmark")
                 .kxFont(.body)
@@ -188,6 +313,81 @@ struct CartLineRow: View {
 
     private func openProduct() {
         onRoute(.product(handle: line.merchandise.product.handle))
+    }
+}
+
+// MARK: - CartSwipe
+
+/// When a swipe to the left removes a line.
+enum CartSwipe {
+    /// The share of the row a finger has to cover, or a flick is predicted to cover, to remove
+    /// the line.
+    static let removalShare: CGFloat = 0.55
+
+    /// Whether a swipe that moved the row to `offset` (negative to the left) and would travel
+    /// `predictedTravel` points with its momentum removes the line.
+    static func removes(offset: CGFloat, predictedTravel: CGFloat, rowWidth: CGFloat) -> Bool {
+        guard rowWidth > 0 else { return false }
+        return -offset > rowWidth * removalShare || predictedTravel > rowWidth
+    }
+}
+
+// MARK: - CartLineRemovalPanel
+
+/// The red panel over a line that is about to leave the cart: "Produkt wird entfernt" and an
+/// outlined "Abbrechen" whose lighter fill runs across it in `duration` seconds, until the line
+/// is gone.
+struct CartLineRemovalPanel: View {
+    let duration: TimeInterval
+    let onCancel: @MainActor () -> Void
+
+    @State private var progress: CGFloat = 0
+
+    var body: some View {
+        VStack(spacing: KXSpacing.s) {
+            Text("cart.line.removing", bundle: .module)
+                .fontWeight(.semibold)
+                .kxFont(.subheadline)
+                .multilineTextAlignment(.center)
+            Button {
+                onCancel()
+            } label: {
+                Label {
+                    Text("cart.line.removing.cancel", bundle: .module)
+                } icon: {
+                    Image(systemName: "arrow.counterclockwise")
+                }
+                .kxFont(.subheadline)
+                .padding(.horizontal, KXSpacing.l)
+                .padding(.vertical, KXSpacing.xs)
+                .frame(minHeight: KXSpacing.minimumTapTarget)
+                .background(alignment: .leading) {
+                    Rectangle()
+                        .fill(KXColor.textOnUrgency.opacity(0.22))
+                        .scaleEffect(x: progress, y: 1, anchor: .leading)
+                }
+                .background(KXColor.textOnUrgency.opacity(0.12))
+                .overlay {
+                    RoundedRectangle(cornerRadius: KXRadius.small, style: .continuous)
+                        .strokeBorder(KXColor.textOnUrgency, lineWidth: KXBorder.regular)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: KXRadius.small, style: .continuous))
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("cart.removal.cancel")
+        }
+        .foregroundStyle(KXColor.textOnUrgency)
+        .padding(KXSpacing.m)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(KXColor.urgency)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("cart.removal")
+        .onAppear {
+            withAnimation(.linear(duration: duration)) {
+                progress = 1
+            }
+        }
     }
 }
 

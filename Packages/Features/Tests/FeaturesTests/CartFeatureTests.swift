@@ -118,7 +118,7 @@ struct CartViewModelTests {
         try await model.remove(firstLine(model))
 
         #expect(model.state == .loaded(.empty))
-        #expect(model.removedLine?.merchandise.id == CartTestFixtures.variant("windows-11-pro"))
+        #expect(model.cartStore.lastRemovedLine == nil)
     }
 
     @Test("Quantities stay between 1 and 10")
@@ -154,33 +154,49 @@ struct CartViewModelTests {
         #expect(CartViewModel.clampedQuantity(11) == 10)
     }
 
-    @Test("Remove offers undo, undo restores the line with its quantity")
-    func removeAndUndo() async throws {
+    @Test("A removal waits for its delay; Abbrechen keeps the line with its quantity")
+    func removalCancelled() async throws {
         let model = makeModel()
         await model.cartStore.add(variantID: CartTestFixtures.variant("office-2024"), quantity: 3)
-        await model.cartStore.add(variantID: CartTestFixtures.variant("windows-11-pro"))
+        let line = try firstLine(model)
 
-        try await model.remove(firstLine(model))
-        #expect(model.removedLine?.quantity == 3)
+        model.requestRemoval(of: line, after: 60)
+        #expect(model.isRemoving(line))
+        #expect(model.removal(of: line) != nil)
         #expect(model.cart?.lines.count == 1)
 
-        await model.undoRemove()
+        model.cancelRemoval(of: line)
 
-        #expect(model.removedLine == nil)
-        let restored = model.cart?.lines.first { $0.merchandise.id == CartTestFixtures.variant("office-2024") }
-        #expect(restored?.quantity == 3)
+        #expect(!model.isRemoving(line))
+        #expect(model.removal(of: line) == nil)
+        #expect(try firstLine(model).quantity == 3)
     }
 
-    @Test("Discarding the undo bar keeps the line removed")
-    func discardUndo() async throws {
+    @Test("After the delay the line leaves the cart, once, without an undo")
+    func removalCompletes() async throws {
         let model = makeModel()
         await model.cartStore.add(variantID: CartTestFixtures.variant("office-2024"))
-        try await model.remove(firstLine(model))
+        await model.cartStore.add(variantID: CartTestFixtures.variant("windows-11-pro"))
+        let line = try firstLine(model)
 
-        model.discardUndo()
+        model.requestRemoval(of: line, after: 0.01)
+        let removal = try #require(model.removal(of: line))
+        model.requestRemoval(of: line, after: 60)
+        #expect(model.removal(of: line) == removal)
+        await removal.value
 
-        #expect(model.removedLine == nil)
-        #expect(model.cart == nil)
+        #expect(!model.isRemoving(line))
+        #expect(model.cart?.lines.count == 1)
+        #expect(model.cart?.lines.contains { $0.id == line.id } == false)
+        #expect(model.cartStore.lastRemovedLine == nil)
+    }
+
+    @Test("A long swipe or a flick across the row removes, a short one does not")
+    func swipeThreshold() {
+        #expect(CartSwipe.removes(offset: -200, predictedTravel: 200, rowWidth: 340))
+        #expect(CartSwipe.removes(offset: -60, predictedTravel: 400, rowWidth: 340))
+        #expect(!CartSwipe.removes(offset: -90, predictedTravel: 150, rowWidth: 340))
+        #expect(!CartSwipe.removes(offset: -300, predictedTravel: 400, rowWidth: 0))
     }
 
     @Test("An applied discount code clears the field and confirms the code")
@@ -350,16 +366,19 @@ struct CartScreenStringTests {
         "cart.summary.subtotal",
         "cart.summary.discount",
         "cart.summary.total",
-        "cart.undo.action",
-        "cart.undo.dismiss",
+        "cart.line.removing",
+        "cart.line.removing.cancel",
+        "cart.line.swipe.remove",
         "cart.checkout",
     ]
 
-    @Test("The German checkout button reads \"Zur Kasse\"")
+    @Test("The German checkout button reads \"Zur Kasse\", removing a line \"Produkt wird entfernt\"")
     func checkoutButton() throws {
         let german = try LocalizedStrings(language: "de", in: CartResources.bundle)
         #expect(german("cart.checkout") == "Zur Kasse")
-        #expect(german("cart.undo.action") == "Rückgängig")
+        #expect(german("cart.line.removing") == "Produkt wird entfernt…")
+        #expect(german("cart.line.removing.cancel") == "Abbrechen")
+        #expect(german("cart.line.swipe.remove") == "Entfernen")
         #expect(german("cart.line.original %@") == "Ursprünglich: %@")
     }
 

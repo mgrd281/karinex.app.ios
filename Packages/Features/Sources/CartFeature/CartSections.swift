@@ -282,52 +282,6 @@ struct CartDigitalNotice: View {
     }
 }
 
-// MARK: - CartUndoBar
-
-/// The bar after removing a line: "<Produkt> wurde entfernt." with "Rückgängig".
-struct CartUndoBar: View {
-    let title: String
-    let onUndo: @MainActor () -> Void
-    let onDismiss: @MainActor () -> Void
-
-    var body: some View {
-        HStack(spacing: KXSpacing.s) {
-            Text("cart.undo.message \(title)", bundle: .module)
-                .kxFont(.subheadline)
-                .foregroundStyle(KXColor.textPrimary)
-                .lineLimit(3)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            KXButton(String(localized: "cart.undo.action", bundle: .module), style: .tertiary, size: .compact) {
-                onUndo()
-            }
-            .accessibilityIdentifier("cart.undo")
-            Button {
-                onDismiss()
-            } label: {
-                Image(systemName: "xmark")
-                    .fontWeight(.semibold)
-                    .kxFont(.footnote)
-                    .foregroundStyle(KXColor.textSecondary)
-                    .frame(width: KXSpacing.minimumTapTarget, height: KXSpacing.minimumTapTarget)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(Text("cart.undo.dismiss", bundle: .module))
-        }
-        .padding(.leading, KXSpacing.m)
-        .padding(.vertical, KXSpacing.xxs)
-        .background {
-            RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous)
-                .fill(KXColor.surfaceElevated)
-                .shadow(color: KXColor.scrim.opacity(0.16), radius: KXSpacing.s, x: 0, y: 2)
-        }
-        .padding(.horizontal, KXSpacing.gutter)
-        .padding(.bottom, KXSpacing.s)
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("cart.undoBar")
-    }
-}
-
 // MARK: - CartCheckoutBar
 
 /// The sticky bar at the bottom: the total from Shopify and "Zur Kasse".

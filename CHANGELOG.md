@@ -55,6 +55,11 @@ change.
   Ratgeber as tall story tiles and the support card. The modules and their store collections are
   described by `HomeModules`; the hero with "Zum Sortiment" is gone, and so is the chip bar
   above the tab bar (owner request).
+- **Removing a cart line like About You** (owner request): swiping a line to the left uncovers
+  a red "Entfernen"; a long swipe, a tap on it or on the "x" turns the line red with "Produkt
+  wird entfernt…" and an outlined "Abbrechen" whose fill runs down for 3 seconds (10 with
+  VoiceOver) before the line leaves the cart. This replaces the undo bar at the bottom; the
+  line also offers "Entfernen" as a VoiceOver action.
 - **Office für Mac in the story carousel** (owner request): the Start tab's story panel pages
   through Bestseller, Windows, Office, Office für Mac (`microsoft-office-fur-mac`), Server and
   Entwicklung.
