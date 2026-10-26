@@ -64,6 +64,14 @@ change.
   drops a preloaded guest checkout (`ShopifyCheckoutSheetKit.invalidate()`); after a sign-out the
   lines and discount codes move to a new cart without the token, so the next checkout on the
   device never shows the previous customer's details.
+- **Rechnungen and a modern license card** (owner request): the Konto tab has "Rechnungen"
+  (`InvoicesScreen`): every order with an invoice from the SOFTWAREFACH backend as a `KXList` row
+  with order number, date and total; a tap loads the PDF from the short-lived link and opens it
+  in Quick Look (share, print, save to Files). "Rechnung (PDF)" on an order opens in Quick Look
+  too, never in a browser (`InvoicePDF`). `KXKeyCard` has a key icon tile beside the product
+  name and the key on an inset field: hidden, it shows blurred stand-in letters
+  (`KXLicenseKeyFormatting.veiled`, the real key is never drawn) under "Zum Anzeigen tippen",
+  and a tap on the field shows the key, instead of rows of bullets.
 - **No dotted leaders, modern shop country sheet** (owner request): `KXSpecRow` shows label and
   value with open space between them instead of a dotted leader, everywhere (product facts,
   orders, order success, support, settings). The settings rows became the design-system

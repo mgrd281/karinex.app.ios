@@ -167,7 +167,7 @@ struct OrderDetailViewModelTests {
         let model = OrderDetailViewModel(orderID: "gid://shopify/Order/1042", repository: repository, backend: StubBackend())
 
         await model.load()
-        let url = await model.invoiceURL()
+        let url = await model.invoiceFile()
 
         #expect(url == nil)
         #expect(model.invoiceState == .byEmail)
@@ -631,5 +631,70 @@ struct AccountServicesStringTests {
         for bundle in [LicensesResources.bundle, SupportResources.bundle, LegalResources.bundle, SettingsResources.bundle] {
             _ = try LocalizedStrings(language: language, in: bundle)
         }
+    }
+}
+
+@Suite("Invoices")
+@MainActor
+struct InvoicesViewModelTests {
+    @Test("Lists only the orders the backend has an invoice for, in Shopify's order")
+    func listsInvoices() async {
+        let repository = StubCustomerRepository()
+        await repository.setPage(
+            CustomerOrderPage(
+                orders: [AccountFixtures.order(1043), AccountFixtures.order(1042), AccountFixtures.order(1041)],
+                nextCursor: nil
+            ),
+            after: nil
+        )
+        let backend = StubBackend()
+        await backend.setOrders(.success([
+            BackendOrderStatus(orderID: "1042", name: "#1042", deliveryStatus: .delivered, hasLicenses: true, hasInvoice: true),
+            BackendOrderStatus(orderID: "1043", name: "#1043", deliveryStatus: .pending, hasLicenses: false, hasInvoice: false),
+            BackendOrderStatus(orderID: "1041", name: "#1041", deliveryStatus: .delivered, hasLicenses: true, hasInvoice: true),
+        ]))
+        let model = InvoicesViewModel(repository: repository, backend: backend)
+
+        await model.load()
+
+        #expect(model.state.value?.map(\.order.name) == ["#1042", "#1041"])
+    }
+
+    @Test("Without a backend there is no invoice to list")
+    func withoutBackend() async {
+        let repository = StubCustomerRepository()
+        await repository.setPage(CustomerOrderPage(orders: [AccountFixtures.order(1042)], nextCursor: nil), after: nil)
+        let backend = StubBackend()
+        await backend.setOrders(.failure(.notConfigured))
+        let model = InvoicesViewModel(repository: repository, backend: backend)
+
+        await model.load()
+
+        #expect(model.state == .empty)
+    }
+
+    @Test("A failed PDF download shows an error and no preview")
+    func openFailure() async {
+        let repository = StubCustomerRepository()
+        await repository.setPage(CustomerOrderPage(orders: [AccountFixtures.order(1042)], nextCursor: nil), after: nil)
+        let backend = StubBackend()
+        let status = BackendOrderStatus(orderID: "1042", name: "#1042", deliveryStatus: .delivered, hasLicenses: true, hasInvoice: true)
+        await backend.setOrders(.success([status]))
+        let model = InvoicesViewModel(repository: repository, backend: backend)
+        await model.load()
+
+        if let item = model.state.value?.first {
+            await model.open(item)
+        }
+
+        #expect(model.preview == nil)
+        #expect(model.openError != nil)
+        #expect(model.openingID == nil)
+    }
+
+    @Test("The PDF file name carries the order number")
+    func fileName() {
+        #expect(InvoicePDF.fileName(orderName: "#3689") == "Rechnung-3689.pdf")
+        #expect(InvoicePDF.fileName(orderName: "#") == "Rechnung-KARINEX.pdf")
     }
 }

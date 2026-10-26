@@ -2576,7 +2576,7 @@
       }
     },
     "kx.keycard.hide" : {
-      "comment" : "Button on the licence card that masks the visible licence key with dots again. Replaces \"kx.keycard.reveal\" in place and shares a row with the copy button: verb, one word, max ~12 characters.",
+      "comment" : "Button on the licence card that hides the visible licence key again (it is shown blurred). Replaces \"kx.keycard.reveal\" in place and shares a row with the copy button: verb, one word, max ~12 characters.",
       "extractionState" : "manual",
       "localizations" : {
         "da" : {
@@ -2787,6 +2787,78 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Support för denna licens"
+          }
+        }
+      }
+    },
+    "kx.keycard.tap_to_reveal" : {
+      "comment" : "Small capsule over the blurred licence key on the licence card, and the VoiceOver hint of the key field: a tap shows the key. Max ~25 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zum Anzeigen tippen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to show"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dotknij, aby pokazać"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tik om te tonen"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toque para mostrar"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tryck för att visa"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tryk for at vise"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toca para mostrar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touchez pour afficher"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tocca per mostrare"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Näytä napauttamalla"
           }
         }
       }

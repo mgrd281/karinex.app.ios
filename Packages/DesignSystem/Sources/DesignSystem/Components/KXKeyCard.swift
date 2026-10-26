@@ -81,6 +81,19 @@ public enum KXLicenseKeyFormatting {
         String(key.map { $0 == "-" || $0.isWhitespace ? $0 : maskCharacter })
     }
 
+    /// Stand-in letters for a hidden key: the same grouping, but fixed characters that say
+    /// nothing about the real key. ``KXKeyCard`` shows them blurred while the key is hidden, so
+    /// the real key is never on screen, not even blurred.
+    public static func veiled(_ key: String) -> String {
+        let letters = Array("K7Q2MX9B4TR8VN3H")
+        var index = 0
+        return String(key.map { character in
+            guard character != "-", !character.isWhitespace else { return character }
+            defer { index += 1 }
+            return letters[index % letters.count]
+        })
+    }
+
     /// The separator used to join groups when displaying `key`.
     static func separator(of key: String) -> String {
         if key.contains("-") {
@@ -102,8 +115,9 @@ public enum KXLicenseKeyFormatting {
 /// - "Kopieren" copies the key with ``KXClipboard/copySensitive(_:expiresAfter:)`` (local to
 ///   this device, removed after two minutes), plays the success haptic, announces "Lizenzschlüssel
 ///   kopiert" to VoiceOver and shows "Kopiert" for two seconds.
-/// - "Anzeigen" / "Verbergen" toggles `isRevealed`. While hidden the key is masked with bullets
-///   (copying still works).
+/// - "Anzeigen" / "Verbergen", or a tap on the key field, toggles `isRevealed`. While hidden the
+///   field shows blurred stand-in letters with "Zum Anzeigen tippen" (``KXLicenseKeyFormatting/veiled(_:)``;
+///   the real key is never drawn) and copying still works.
 /// - "Anleitung" and "Support zu dieser Lizenz" appear only when their closures are passed.
 ///
 /// VoiceOver reads the revealed key character by character (`speechSpellsOutCharacters`), and
@@ -140,6 +154,7 @@ public struct KXKeyCard: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.displayScale) private var displayScale
+    @ScaledMetric(relativeTo: .headline) private var iconSide: CGFloat = 36
 
     /// Creates a license key card.
     ///
@@ -203,17 +218,25 @@ public struct KXKeyCard: View {
     // MARK: Sections
 
     private var header: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.xs) {
-            Text(productName)
-                .kxFont(.title3)
-                .foregroundStyle(KXColor.keyCardText)
-                .fixedSize(horizontal: false, vertical: true)
-                .accessibilityAddTraits(.isHeader)
-            if let subtitle, !subtitle.isEmpty {
-                Text(subtitle)
-                    .kxFont(.footnote)
-                    .foregroundStyle(KXColor.keyCardMuted)
+        HStack(alignment: .top, spacing: KXSpacing.m) {
+            Image(systemName: "key.fill")
+                .kxFont(.headline)
+                .foregroundStyle(KXColor.keyCardBackground)
+                .frame(width: iconSide, height: iconSide)
+                .background(KXColor.keyCardText, in: RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous))
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+                Text(productName)
+                    .kxFont(.headline)
+                    .foregroundStyle(KXColor.keyCardText)
                     .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityAddTraits(.isHeader)
+                if let subtitle, !subtitle.isEmpty {
+                    Text(subtitle)
+                        .kxFont(.footnote)
+                        .foregroundStyle(KXColor.keyCardMuted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
         }
     }
@@ -223,15 +246,56 @@ public struct KXKeyCard: View {
             Text("kx.keycard.eyebrow", bundle: .module)
                 .kxFont(.eyebrow)
                 .foregroundStyle(KXColor.keyCardMuted)
-            KXLicenseKeyText(key: isRevealed ? licenseKey : KXLicenseKeyFormatting.masked(licenseKey))
+            Button {
+                withAnimation(KXMotion.animation(.fade, reduceMotion: reduceMotion)) {
+                    isRevealed.toggle()
+                }
+            } label: {
+                keyField
+            }
+            .buttonStyle(.plain)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(keyAccessibilityLabel)
+            .accessibilityHint(isRevealed ? Text("kx.keycard.hide", bundle: .module) : Text("kx.keycard.tap_to_reveal", bundle: .module))
+            .privacySensitive()
+        }
+    }
+
+    /// The key on a slightly lighter inset field: clear text when revealed, otherwise blurred
+    /// stand-in letters under "Zum Anzeigen tippen".
+    private var keyField: some View {
+        let shape = RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous)
+        return ZStack {
+            KXLicenseKeyText(key: isRevealed ? licenseKey : KXLicenseKeyFormatting.veiled(licenseKey))
                 .kxFont(.licenseKey)
                 .foregroundStyle(KXColor.keyCardText)
-                .contentTransition(.opacity)
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel(keyAccessibilityLabel)
+                .blur(radius: isRevealed ? 0 : KXKeyCardMetrics.veilBlur)
+                .opacity(isRevealed ? 1 : 0.55)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .speechSpellsOutCharacters(isRevealed)
-                .privacySensitive()
+            if !isRevealed {
+                HStack(spacing: KXSpacing.xs) {
+                    Image(systemName: "eye")
+                        .accessibilityHidden(true)
+                    Text("kx.keycard.tap_to_reveal", bundle: .module)
+                }
+                .kxFont(.footnote)
+                .fontWeight(.semibold)
+                .foregroundStyle(KXColor.keyCardBackground)
+                .padding(.horizontal, KXSpacing.m)
+                .padding(.vertical, KXSpacing.xs)
+                .background(KXColor.keyCardText, in: Capsule())
+                .transition(.opacity)
+            }
         }
+        .padding(KXSpacing.m)
+        .background(KXColor.keyCardText.opacity(0.08), in: shape)
+        .overlay {
+            shape
+                .strokeBorder(KXColor.keyCardMuted.opacity(0.35), lineWidth: hairlineWidth)
+                .accessibilityHidden(true)
+        }
+        .contentShape(shape)
     }
 
     private var primaryActions: some View {
@@ -376,6 +440,15 @@ public struct KXKeyCard: View {
     private var hairlineWidth: CGFloat {
         1 / max(displayScale, 1)
     }
+}
+
+// MARK: - Metrics
+
+/// Fixed metrics of ``KXKeyCard`` that have no general design token.
+private enum KXKeyCardMetrics {
+    /// Blur of the stand-in letters while the key is hidden: the grouping stays visible, the
+    /// letters do not.
+    static let veilBlur: CGFloat = 6
 }
 
 // MARK: - Key text

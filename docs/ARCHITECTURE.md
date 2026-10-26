@@ -1225,6 +1225,10 @@ Customer Account client ID and BFF host for an end-to-end test on a device.
   together. Orders are photo cards (`OrderCard`, first five line items of the list query) and
   the detail offers "Erneut kaufen" (`OrderReorder.lines`, each line's `variantID` and quantity
   into `CartStore`).
+  "Rechnungen" (`InvoicesScreen`, `InvoicesViewModel`) joins the Customer Account orders with
+  the backend's `hasInvoice`; `InvoicePDF` downloads the signed PDF link into the temporary
+  folder (complete file protection) and both the list and the order detail show it with
+  `.quickLookPreview`, so no invoice opens in a browser.
 - **SettingsFeature:** "Einstellungen" as grouped iOS-style panels of `KXList` rows (design
   system: `KXListGroup`, `KXListRow` with a value and a chevron, external, checkmark or menu
   accessory, `KXListToggleRow` for the consents, notifications and the license lock). The shop

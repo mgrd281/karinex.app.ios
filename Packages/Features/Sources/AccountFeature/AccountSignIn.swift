@@ -201,6 +201,8 @@ public enum AccountSignInReason: Sendable {
     case orders
     /// One order.
     case order
+    /// "Rechnungen".
+    case invoices
     /// "Persönliche Daten": the name and the addresses.
     case profile
 }
@@ -211,6 +213,7 @@ extension AccountSignInReason {
         switch self {
         case .orders: Text("account.orders.title", bundle: .module)
         case .order: Text("account.order.title", bundle: .module)
+        case .invoices: Text("account.invoices.title", bundle: .module)
         case .profile: Text("account.profile.screen.title", bundle: .module)
         }
     }
@@ -219,6 +222,7 @@ extension AccountSignInReason {
     var message: Text {
         switch self {
         case .orders, .order: Text("account.gate.orders.message", bundle: .module)
+        case .invoices: Text("account.gate.invoices.message", bundle: .module)
         case .profile: Text("account.gate.profile.message", bundle: .module)
         }
     }
@@ -227,6 +231,7 @@ extension AccountSignInReason {
     var systemImage: String {
         switch self {
         case .orders, .order: AccountMenuItem.orders.systemImage
+        case .invoices: AccountMenuItem.invoices.systemImage
         case .profile: AccountMenuItem.profile.systemImage
         }
     }

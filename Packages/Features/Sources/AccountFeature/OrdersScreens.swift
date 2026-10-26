@@ -3,6 +3,7 @@ import CommerceUI
 import DesignSystem
 import Foundation
 import Observation
+import QuickLook
 import ShopifyKit
 import SwiftUI
 
@@ -297,14 +298,16 @@ final class OrderDetailViewModel {
         }
     }
 
-    /// Requests a short-lived invoice link; `nil` when there is none to open.
-    func invoiceURL() async -> URL? {
-        guard let numericID = state.value?.numericID else { return nil }
+    /// Requests the short-lived invoice link and downloads the PDF for Quick Look; `nil` when
+    /// there is none to open.
+    func invoiceFile() async -> URL? {
+        guard let order = state.value, let numericID = order.numericID else { return nil }
         invoiceState = .loading
         do {
             let link = try await backend.invoice(orderID: numericID)
+            let file = try await InvoicePDF.download(link.url, orderName: order.name)
             invoiceState = .idle
-            return link.url
+            return file
         } catch BackendError.notConfigured {
             invoiceState = .byEmail
         } catch BackendError.notFound {
@@ -329,7 +332,7 @@ public struct OrderDetailScreen: View {
     @State private var isReordering = false
 
     @Environment(\.locale) private var locale
-    @Environment(\.openURL) private var openURL
+    @State private var invoicePreview: URL?
 
     /// Creates the screen.
     public init(
@@ -373,6 +376,7 @@ public struct OrderDetailScreen: View {
                 await model.load()
             }
         }
+        .quickLookPreview($invoicePreview)
     }
 
     private func content(_ order: CustomerOrder) -> some View {
@@ -491,9 +495,7 @@ public struct OrderDetailScreen: View {
                 isLoading: model.invoiceState == .loading
             ) {
                 Task {
-                    if let url = await model.invoiceURL() {
-                        openURL(url)
-                    }
+                    invoicePreview = await model.invoiceFile()
                 }
             }
             .accessibilityIdentifier("account.order.invoice")

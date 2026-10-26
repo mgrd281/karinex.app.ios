@@ -302,6 +302,7 @@ public struct AccountView: View {
 /// The rows of the Konto tab.
 enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
     case orders
+    case invoices
     case licenses
     case profile
     case wishlist
@@ -310,7 +311,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
     case legal
 
     /// The rows only a signed-in customer sees.
-    static let signedIn: [AccountMenuItem] = [.orders, .licenses, .profile]
+    static let signedIn: [AccountMenuItem] = [.orders, .invoices, .licenses, .profile]
     /// The rows that lead into the login when nobody is signed in.
     static let signedOut: [AccountMenuItem] = [.orders]
     /// The rows everyone sees.
@@ -319,7 +320,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
     /// Whether the row's screen needs a signed-in customer.
     var requiresSignIn: Bool {
         switch self {
-        case .orders, .licenses, .profile: true
+        case .orders, .invoices, .licenses, .profile: true
         case .wishlist, .settings, .support, .legal: false
         }
     }
@@ -331,6 +332,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
     var destination: AccountDestination {
         switch self {
         case .orders: .orders
+        case .invoices: .invoices
         case .licenses: .licenses(orderID: nil)
         case .profile: .profile
         case .wishlist: .wishlist
@@ -343,6 +345,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
     var systemImage: String {
         switch self {
         case .orders: "shippingbox"
+        case .invoices: "doc.richtext"
         case .licenses: "key"
         case .profile: "person.text.rectangle"
         case .wishlist: "heart"
@@ -355,6 +358,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
     var title: String {
         switch self {
         case .orders: String(localized: "account.menu.orders", bundle: .module)
+        case .invoices: String(localized: "account.menu.invoices", bundle: .module)
         case .licenses: String(localized: "account.menu.licenses", bundle: .module)
         case .profile: String(localized: "account.menu.profile", bundle: .module)
         case .wishlist: String(localized: "account.menu.wishlist", bundle: .module)
@@ -368,6 +372,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
     var subtitle: String {
         switch self {
         case .orders: String(localized: "account.menu.orders.subtitle", bundle: .module)
+        case .invoices: String(localized: "account.menu.invoices.subtitle", bundle: .module)
         case .licenses: String(localized: "account.menu.licenses.subtitle", bundle: .module)
         case .profile: String(localized: "account.menu.profile.subtitle", bundle: .module)
         case .wishlist: String(localized: "account.menu.wishlist.subtitle", bundle: .module)
