@@ -262,12 +262,15 @@ struct HomeLayoutTests {
             categories.map { $0.title.resolved(in: german.bundle) }
         }
 
-        #expect(names(modules.stories.map(\.category)) == ["Bestseller", "Windows", "Office", "Server", "Entwicklung"])
+        #expect(names(modules.stories.map(\.category)) == [
+            "Bestseller", "Windows", "Office", "Office für Mac", "Server", "Entwicklung",
+        ])
         #expect(names(modules.showcase) == ["Windows", "Office", "Server", "Office für Mac", "Entwicklung", "Microsoft 365"])
         #expect(names([modules.bestsellers, modules.deals]) == ["Bestseller", "Angebote"])
         #expect(names(modules.versions) == ["Windows 11", "Windows 10", "Office 2024", "Office 2021"])
         #expect(modules.stories.map { $0.tag.resolved(in: german.bundle) } == [
-            "Unsere Bestseller", "Aus unserem Sortiment", "Aus unserem Sortiment", "Aus unserem Sortiment", "Aus unserem Sortiment",
+            "Unsere Bestseller", "Aus unserem Sortiment", "Aus unserem Sortiment", "Aus unserem Sortiment",
+            "Aus unserem Sortiment", "Aus unserem Sortiment",
         ])
     }
 

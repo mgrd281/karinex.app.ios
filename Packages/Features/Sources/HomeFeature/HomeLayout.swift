@@ -279,6 +279,7 @@ public struct HomeModules: Sendable, Hashable {
             HomeStory(category: .bestseller, tag: .localized("home.story.tag.bestseller")),
             HomeStory(category: .windows, tag: .localized("home.story.tag.range")),
             HomeStory(category: .office, tag: .localized("home.story.tag.range")),
+            HomeStory(category: .mac, tag: .localized("home.story.tag.range")),
             HomeStory(category: .server, tag: .localized("home.story.tag.range")),
             HomeStory(category: .development, tag: .localized("home.story.tag.range")),
         ],

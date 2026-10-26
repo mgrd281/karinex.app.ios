@@ -55,6 +55,9 @@ change.
   Ratgeber as tall story tiles and the support card. The modules and their store collections are
   described by `HomeModules`; the hero with "Zum Sortiment" is gone, and so is the chip bar
   above the tab bar (owner request).
+- **Office für Mac in the story carousel** (owner request): the Start tab's story panel pages
+  through Bestseller, Windows, Office, Office für Mac (`microsoft-office-fur-mac`), Server and
+  Entwicklung.
 - **Saving with the heart like About You** (owner request): the heart on the product photo
   sits on a white disc; saving fills it from the center, springs it a little larger and lets
   four small hearts burst to the upper left and lower right (`ProductWishlistButton`,
