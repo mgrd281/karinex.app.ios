@@ -5,7 +5,7 @@ import SwiftUI
 /// One fact in a ``KXTrustStrip``: an SF Symbol and a short, already-localized text such as
 /// "Lieferung per E-Mail in Minuten".
 ///
-/// Items with a condition (for example "100 Tage Geld-zurück") carry a footnote marker and an
+/// Items with a condition (for example "14 Tage Geld-zurück") carry a footnote marker and an
 /// `onTap` action that presents the condition, so that it is always one tap away.
 public struct KXTrustItem: Identifiable {
     /// Stable identity. Defaults to the text; must be unique within one strip.
@@ -304,7 +304,7 @@ private struct KXTrustStripPreviewGallery: View {
     private let items: [KXTrustItem] = [
         KXTrustItem(systemImage: "envelope", text: "Lieferung per E-Mail in Minuten"),
         KXTrustItem(systemImage: "creditcard", text: "Apple Pay, Kreditkarte, Klarna"),
-        KXTrustItem(systemImage: "arrow.uturn.backward", text: "100 Tage Geld-zurück", footnoteMarker: "*") {},
+        KXTrustItem(systemImage: "arrow.uturn.backward", text: "14 Tage Geld-zurück", footnoteMarker: "*") {},
         KXTrustItem(systemImage: "bubble.left.and.bubble.right", text: "Support Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit"),
     ]
 

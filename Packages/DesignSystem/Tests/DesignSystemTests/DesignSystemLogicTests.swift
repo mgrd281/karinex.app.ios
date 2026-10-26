@@ -286,14 +286,14 @@ struct ComponentModelTests {
 
         let marked = KXTrustItem(
             systemImage: "arrow.uturn.backward",
-            text: "100 Tage Geld-zurück",
+            text: "14 Tage Geld-zurück",
             footnoteMarker: "*",
             id: "refund",
             onTap: {}
         )
         #expect(marked.id == "refund")
-        #expect(marked.text == "100 Tage Geld-zurück")
-        #expect(marked.displayText == "100 Tage Geld-zurück*")
+        #expect(marked.text == "14 Tage Geld-zurück")
+        #expect(marked.displayText == "14 Tage Geld-zurück*")
         let markedIsInteractive = marked.onTap != nil
         #expect(markedIsInteractive)
 

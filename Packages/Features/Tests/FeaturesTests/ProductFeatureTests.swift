@@ -536,7 +536,7 @@ struct ProductStringTests {
         let german = try LocalizedStrings(language: "de", in: ProductFeatureResources.bundle)
         let clauses = ProductRefundClause.allCases.map { $0.text(in: german.bundle) }
 
-        #expect(german("product.refund.title") == "100 Tage Geld-zurück")
+        #expect(german("product.refund.title") == "14 Tage Geld-zurück")
         #expect(clauses[0].contains("nur für aktivierte Lizenzschlüssel und für physische Ware"))
         #expect(clauses[1].contains("nicht aktivierte Lizenzschlüssel werden nicht freiwillig erstattet"))
         #expect(clauses[2].contains("gesetzlichen Gewährleistungsrechte"))

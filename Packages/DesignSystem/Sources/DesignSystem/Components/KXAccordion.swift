@@ -280,7 +280,7 @@ private struct KXAccordionPreviewGallery: View {
                     initiallyExpanded: ["Wie erhalte ich meinen Lizenzschlüssel?"]
                 )
                 KXAccordion(items: [
-                    KXAccordionItem(title: "100 Tage Geld-zurück") {
+                    KXAccordionItem(title: "14 Tage Geld-zurück") {
                         VStack(alignment: .leading, spacing: KXSpacing.xs) {
                             Text(verbatim: "Gilt nur für aktivierte Lizenzschlüssel und physische Ware.")
                             Text(verbatim: "Zugestellte, nicht aktivierte Schlüssel werden nicht freiwillig erstattet.")

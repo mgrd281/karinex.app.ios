@@ -32,7 +32,7 @@ struct HomeTrustFactTests {
         #expect(HomeTrustFact.allCases.map { $0.text(in: german.bundle) } == [
             "Lieferung per E-Mail in Minuten",
             "Apple Pay, Kreditkarte, Klarna",
-            "100 Tage Geld-zurück",
+            "14 Tage Geld-zurück",
             "Support Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit",
         ])
     }
@@ -42,7 +42,7 @@ struct HomeTrustFactTests {
         let english = try LocalizedStrings(language: "en", in: HomeResources.bundle)
 
         #expect(HomeTrustFact.paymentMethods.text(in: english.bundle) == "Apple Pay, credit card, Klarna")
-        #expect(HomeTrustFact.moneyBack.text(in: english.bundle) == "100-day money-back")
+        #expect(HomeTrustFact.moneyBack.text(in: english.bundle) == "14-day money-back")
     }
 
     @Test("Texts resolve in the current language")

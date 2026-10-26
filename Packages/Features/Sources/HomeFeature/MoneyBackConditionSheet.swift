@@ -3,7 +3,7 @@ import SwiftUI
 
 // MARK: - MoneyBackConditionSheet
 
-/// The conditions of the "100 Tage Geld-zurück" promise, presented as a sheet from the trust
+/// The conditions of the "14 Tage Geld-zurück" promise, presented as a sheet from the trust
 /// strip and from its footnote.
 ///
 /// The clauses come from ``MoneyBackClause`` and state exactly the business rule of PROMPT.md

@@ -59,6 +59,9 @@ change.
   the number of items (it opens the cart, `CartBagIcon` in CommerceUI) sit in the navigation
   bar as plain symbols; on iOS 26 without the glass circle (`ProductToolbar`,
   `sharedBackgroundVisibility(.hidden)`).
+- **Return period is 14 days, not 100** (owner correction): the trust fact on the Start tab, the
+  money-back sheet and the product page now say "14 Tage Geld-zurück" in all 11 languages; the
+  conditions are unchanged.
 - **"Unsere Kategorien" moves on by itself, like the brand strip of About You** (owner
   request): the chosen tile fills with a lighter store color for five seconds
   (`MotionToken.cycleDwellDuration`, `KXColor.storePanelLifted`), then the next category takes
@@ -245,7 +248,7 @@ simulator yet (see Known limitations). Design and decisions: [docs/ARCHITECTURE.
 
 - `ProductFeature`: gallery with zoom viewer, variants, price with market tax note, key facts
   and activation from metafields, "So läuft es ab", native description, related products, FAQ,
-  100-day promise with its condition, withdrawal notice for digital goods, sticky purchase bar
+  14-day promise with its condition, withdrawal notice for digital goods, sticky purchase bar
   (add to cart, buy now), share. Sections without store data are omitted.
 - `CatalogFeature`: collection directory, collection screen with sort, filters and infinite
   scroll. `SearchFeature`: predictive results, recent and suggested searches, category shortcuts,

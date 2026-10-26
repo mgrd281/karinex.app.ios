@@ -705,7 +705,7 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
   buy buttons, key facts from metafields, the collapsible rows "Beschreibung" (the full
   description), "So läuft es ab" and "Aktivierung", the "Passend dazu" row (Shopify's `COMPLEMENTARY`
   recommendations, loaded in parallel with the comparison row of `RELATED` recommendations),
-  FAQ, the 100-day promise with its condition, the withdrawal notice for digital goods, and a
+  FAQ, the 14-day promise with its condition, the withdrawal notice for digital goods, and a
   sticky purchase bar. Sections without data are omitted, never faked. `ProductToolbar` puts the
   share arrow and the shopping bag with the cart's item count (`CartBagIcon`, opens the cart)
   into the navigation bar as plain symbols (no glass circle on iOS 26).

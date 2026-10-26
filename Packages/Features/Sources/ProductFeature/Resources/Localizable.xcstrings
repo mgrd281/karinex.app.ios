@@ -3314,73 +3314,73 @@
       }
     },
     "product.refund.title" : {
-      "comment" : "Title of the money-back block on the product screen. Use the glossary term for '100 Tage Geld-zurück'.",
+      "comment" : "Title of the money-back block on the product screen. Use the glossary term for '14 Tage Geld-zurück'.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 Tage Geld-zurück"
+            "value" : "14 Tage Geld-zurück"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100-day money-back"
+            "value" : "14-day money-back"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 dni na zwrot pieniędzy"
+            "value" : "14 dni na zwrot pieniędzy"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 dagen geld terug"
+            "value" : "14 dagen geld terug"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 dias de reembolso"
+            "value" : "14 dias de reembolso"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pengarna tillbaka i 100 dagar"
+            "value" : "Pengarna tillbaka i 14 dagar"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pengene tilbage i 100 dage"
+            "value" : "Pengene tilbage i 14 dage"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reembolso en 100 días"
+            "value" : "Reembolso en 14 días"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remboursement sous 100 jours"
+            "value" : "Remboursement sous 14 jours"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rimborso entro 100 giorni"
+            "value" : "Rimborso entro 14 giorni"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 päivän rahat takaisin"
+            "value" : "14 päivän rahat takaisin"
           }
         }
       }

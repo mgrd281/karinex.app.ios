@@ -262,7 +262,7 @@ enum ProductProcessStep: String, CaseIterable, Sendable {
 
 // MARK: - ProductRefundClause
 
-/// The conditions of the "100 Tage Geld-zurück" promise, with the same meaning as on the Start
+/// The conditions of the "14 Tage Geld-zurück" promise, with the same meaning as on the Start
 /// tab (PROMPT.md section 2): only activated license keys and physical goods; delivered but not
 /// activated keys are not refunded voluntarily; statutory warranty rights remain untouched.
 enum ProductRefundClause: String, CaseIterable, Identifiable, Sendable {

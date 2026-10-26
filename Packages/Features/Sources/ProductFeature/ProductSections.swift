@@ -347,7 +347,7 @@ struct ProductFAQSection: View {
 
 // MARK: - ProductRefundSection
 
-/// The "100 Tage Geld-zurück" promise with its conditions right next to it (PROMPT.md section 2).
+/// The "14 Tage Geld-zurück" promise with its conditions right next to it (PROMPT.md section 2).
 struct ProductRefundSection: View {
     var body: some View {
         KXCard(padding: KXSpacing.l, isOutlined: true) {

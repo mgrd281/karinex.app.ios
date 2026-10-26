@@ -30,7 +30,7 @@ Target outcome: an App Store–approved app that measurably increases repeat pur
 
 **Support channels:** WhatsApp, email (`kundenservice@karinex.de`), live chat. Hours: **Monday to Sunday, 06:00–23:00 Europe/Berlin**. **Phone support does not exist. Never show a phone number, "Hotline", call button or `tel:` link.**
 
-**Refund policy (exact wording logic):** "100 Tage Geld-zurück" applies only to **activated** license keys and to physical goods. Delivered but **not activated** keys are not refunded voluntarily (the key could be used later). Statutory warranty rights for defective keys remain untouched. Wherever the app shows the 100-day promise, the condition must be visible next to it.
+**Refund policy (exact wording logic):** "14 Tage Geld-zurück" applies only to **activated** license keys and to physical goods. Delivered but **not activated** keys are not refunded voluntarily (the key could be used later). Statutory warranty rights for defective keys remain untouched. Wherever the app shows the 100-day promise, the condition must be visible next to it.
 
 **Right of withdrawal:** For digital content the right of withdrawal expires once delivery begins with the customer's express consent (§ 356 Abs. 5 BGB). Shopify checkout collects that consent; the app shows the notice on product pages and in the cart.
 
@@ -140,7 +140,7 @@ Opening (owner request): the launch screen shows the store logo centered on the 
 Laid out like the home screen of the About You app (owner request of 2026-10-25), with KARINEX's own products; every product, photo and price comes from Shopify.
 - Top: the logo with the Merkliste heart (number of saved products beside it) scrolls away; the search field stays pinned and opens Suche with the cursor in the field.
 - Story carousel: one large rounded panel in the store color `#0E4343`, the stories paging sideways inside it (Bestseller, Windows, Office, Server, Entwicklung), each with the photo of the collection's first product, a tag, four product tiles and "Kategorie entdecken"; fixed page dots.
-- Trust strip: "Lieferung per E-Mail in Minuten" · "Apple Pay, Kreditkarte, Klarna" · "100 Tage Geld-zurück*" (with the condition in a tappable footnote) · "Support Mo. bis So., 06:00 bis 23:00 Uhr".
+- Trust strip: "Lieferung per E-Mail in Minuten" · "Apple Pay, Kreditkarte, Klarna" · "14 Tage Geld-zurück*" (with the condition in a tappable footnote) · "Support Mo. bis So., 06:00 bis 23:00 Uhr".
 - "Unsere Kategorien": category tiles (Windows · Office · Server · Office für Mac · Entwicklung · Microsoft 365 · Alle Kategorien) above a store color panel with the products of the chosen category in large portrait cards and "Alle anzeigen". Like the brand strip of About You (owner request of 2026-10-26) the showcase moves on by itself: the chosen tile fills with a lighter store color for five seconds, then the next category follows with a soft cross-fade. It holds still off screen, with VoiceOver, Switch Control or Reduce Motion, and once the customer taps a tile or scrolls; the panel keeps one height for every category.
 - Bestseller row; the dark sale panel with the products of the sale collection (compare-at price, savings badge and the title in sale red).
 - "Zuletzt angesehen", "Nach Version finden" (Windows 11, Windows 10, Office 2024, Office 2021 as photo tiles), service tiles into Konto (Hilfe und Support, Meine Lizenzen, Meine Bestellungen), "Ratgeber" as tall story tiles (blog articles), support card (WhatsApp + email).

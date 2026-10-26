@@ -57,7 +57,7 @@ catalog value and on forbidden words.
    are shown as they are; the app adds nothing to them.
 4. Payment methods are exactly Apple Pay, credit card, Klarna. Support channels are exactly
    WhatsApp, e-mail and live chat. Never mention other payment methods or phone support.
-5. The 100-day money-back promise always carries its condition: it applies only to activated
+5. The 14-day money-back promise always carries its condition: it applies only to activated
    licence keys and physical goods; delivered but unactivated keys are not refunded
    voluntarily; statutory warranty rights remain unaffected.
 6. Legal references (§ 356 Abs. 5 BGB) appear in German. Other languages describe the same
@@ -86,7 +86,7 @@ catalog value and on forbidden words.
 | Anmelden | Sign in | Se connecter | Accedi | Iniciar sesión | Inloggen | Zaloguj się | Iniciar sessão | Logga in | Log ind | Kirjaudu |
 | Sortiment | range | catalogue | catalogo | catálogo | assortiment | oferta | catálogo | sortiment | sortiment | valikoima |
 | Blitzangebote | Flash deals | Ventes flash | Offerte lampo | Ofertas flash | Flitsaanbiedingen | Błyskawiczne okazje | Ofertas relâmpago | Blixtrea | Lyntilbud | Salamatarjoukset |
-| 100 Tage Geld-zurück | 100-day money-back | Remboursement sous 100 jours | Rimborso entro 100 giorni | Reembolso en 100 días | 100 dagen geld terug | 100 dni na zwrot pieniędzy | 100 dias de reembolso | Pengarna tillbaka i 100 dagar | Pengene tilbage i 100 dage | 100 päivän rahat takaisin |
+| 14 Tage Geld-zurück | 14-day money-back | Remboursement sous 14 jours | Rimborso entro 14 giorni | Reembolso en 14 días | 14 dagen geld terug | 14 dni na zwrot pieniędzy | 14 dias de reembolso | Pengarna tillbaka i 14 dagar | Pengene tilbage i 14 dage | 14 päivän rahat takaisin |
 | Lieferung per E-Mail | delivery by e-mail | livraison par e-mail | consegna via e-mail | entrega por correo electrónico | levering per e-mail | dostawa e-mailem | entrega por e-mail | leverans via e-post | levering via e-mail | toimitus sähköpostitse |
 | Kreditkarte | credit card | carte bancaire | carta di credito | tarjeta de crédito | creditcard | karta kredytowa | cartão de crédito | kreditkort | kreditkort | luottokortti |
 | Widerrufsrecht | right of withdrawal | droit de rétractation | diritto di recesso | derecho de desistimiento | herroepingsrecht | prawo odstąpienia od umowy | direito de livre resolução | ångerrätt | fortrydelsesret | peruuttamisoikeus |

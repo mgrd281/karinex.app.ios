@@ -434,7 +434,7 @@
       }
     },
     "home.moneyback.clause.scope" : {
-      "comment" : "First of three conditions in the money-back sheet (\"100 Tage Geld-zurück\"): the promise applies only to activated licence keys and to physical goods (USB sticks, discs). Keep the legal meaning exactly; do not soften \"only\". Wraps, no length limit.",
+      "comment" : "First of three conditions in the money-back sheet (\"14 Tage Geld-zurück\"): the promise applies only to activated licence keys and to physical goods (USB sticks, discs). Keep the legal meaning exactly; do not soften \"only\". Wraps, no length limit.",
       "extractionState" : "manual",
       "localizations" : {
         "da" : {
@@ -794,73 +794,73 @@
       }
     },
     "home.moneyback.title" : {
-      "comment" : "Navigation title of the money-back conditions sheet, one line, max ~25 characters. Same wording as the trust fact \"home.trust.moneyback\". Glossary: 100 Tage Geld-zurück (EN 100-day money-back); never add \"guarantee\" or a similar word.",
+      "comment" : "Navigation title of the money-back conditions sheet, one line, max ~25 characters. Same wording as the trust fact \"home.trust.moneyback\". Glossary: 14 Tage Geld-zurück (EN 14-day money-back); never add \"guarantee\" or a similar word.",
       "extractionState" : "manual",
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pengene tilbage i 100 dage"
+            "value" : "Pengene tilbage i 14 dage"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 Tage Geld-zurück"
+            "value" : "14 Tage Geld-zurück"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100-day money-back"
+            "value" : "14-day money-back"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reembolso en 100 días"
+            "value" : "Reembolso en 14 días"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 päivän rahat takaisin"
+            "value" : "14 päivän rahat takaisin"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remboursement sous 100 jours"
+            "value" : "Remboursement sous 14 jours"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rimborso entro 100 giorni"
+            "value" : "Rimborso entro 14 giorni"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 dagen geld terug"
+            "value" : "14 dagen geld terug"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 dni na zwrot pieniędzy"
+            "value" : "14 dni na zwrot pieniędzy"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 dias de reembolso"
+            "value" : "14 dias de reembolso"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pengarna tillbaka i 100 dagar"
+            "value" : "Pengarna tillbaka i 14 dagar"
           }
         }
       }
@@ -3890,73 +3890,73 @@
       }
     },
     "home.trust.moneyback" : {
-      "comment" : "Trust fact on the Start tab, in a half-width tile with a return arrow icon: the 100-day money-back promise. The app appends the marker * and a tap opens the conditions. Max ~30 characters. Glossary: 100 Tage Geld-zurück (EN 100-day money-back); never add \"guarantee\" or a similar word.",
+      "comment" : "Trust fact on the Start tab, in a half-width tile with a return arrow icon: the 14-day money-back promise. The app appends the marker * and a tap opens the conditions. Max ~30 characters. Glossary: 14 Tage Geld-zurück (EN 14-day money-back); never add \"guarantee\" or a similar word.",
       "extractionState" : "manual",
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pengene tilbage i 100 dage"
+            "value" : "Pengene tilbage i 14 dage"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 Tage Geld-zurück"
+            "value" : "14 Tage Geld-zurück"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100-day money-back"
+            "value" : "14-day money-back"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reembolso en 100 días"
+            "value" : "Reembolso en 14 días"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 päivän rahat takaisin"
+            "value" : "14 päivän rahat takaisin"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remboursement sous 100 jours"
+            "value" : "Remboursement sous 14 jours"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rimborso entro 100 giorni"
+            "value" : "Rimborso entro 14 giorni"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 dagen geld terug"
+            "value" : "14 dagen geld terug"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 dni na zwrot pieniędzy"
+            "value" : "14 dni na zwrot pieniędzy"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 dias de reembolso"
+            "value" : "14 dias de reembolso"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pengarna tillbaka i 100 dagar"
+            "value" : "Pengarna tillbaka i 14 dagar"
           }
         }
       }
