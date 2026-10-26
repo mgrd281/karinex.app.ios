@@ -8,9 +8,9 @@ store were filled in; everything else is still open. Secrets never go into git: 
 | --- | --- | --- | --- |
 | `{{SHOP}}`, `{{SHOP_ID}}` | Done (verified) | `45dv93-bk.myshopify.com`, `91753283851` in `Config/Base.xcconfig` | Phase 0 |
 | `{{STOREFRONT_VERSION}}`, `{{CUSTOMER_ACCOUNT_VERSION}}` | Done (verified) | `2026-10` / `2026-10`, see [API_VERSIONS.md](API_VERSIONS.md) | Phase 0 |
-| `{{STOREFRONT_PUBLIC_TOKEN}}` | **Open** | `KX_STOREFRONT_ACCESS_TOKEN` in `Config/Secrets.xcconfig` + CI secret. The app runs tokenless until then (no metafields). | Phase 1 (product specs, FAQ) |
-| `{{CUSTOMER_ACCOUNT_CLIENT_ID}}` | **Open** | `KX_CUSTOMER_ACCOUNT_CLIENT_ID` in `Config/Secrets.xcconfig` + CI secret | Phase 2 |
-| `{{CUSTOMER_ACCOUNT_REDIRECT_URI}}` | Decided, **owner registers it** | `shop.91753283851.app://callback`, the format Shopify requires for mobile clients (derived from `KX_SHOP_ID`). Register it in Headless (or the Customer Account API app) > Callback URIs, together with the client type "Public". | Phase 2 |
+| `{{STOREFRONT_PUBLIC_TOKEN}}` | Done (2026-10-26) | The public token of the "Karinex Headless" channel is the default of `KX_STOREFRONT_ACCESS_TOKEN` in `Config/Base.xcconfig` (public by design; a `Secrets.xcconfig` or CI secret value overrides it). The private `shpat_` Admin token must never be added. | Phase 1 (product specs, FAQ) |
+| `{{CUSTOMER_ACCOUNT_CLIENT_ID}}` | Done (2026-10-26) | `0436c17f-4bb4-43a0-a95f-b7170d6e078d`, the default of `KX_CUSTOMER_ACCOUNT_CLIENT_ID` in `Config/Base.xcconfig`. Set by the owner in Shopify admin > Vertriebskanäle > Headless > "Karinex Headless" > Customer Account API: client type "Öffentlich" (mobile app). A public client has no secret; the ID is public like the Storefront token. | Phase 2 |
+| `{{CUSTOMER_ACCOUNT_REDIRECT_URI}}` | Done (registered 2026-10-26) | `shop.91753283851.app://callback`, the format Shopify requires for mobile clients (derived from `KX_SHOP_ID`). Register it in Headless (or the Customer Account API app) > Callback URIs, together with the client type "Public". | Phase 2 |
 | `{{WHATSAPP_NUMBER}}` | **Open** | Served by the BFF `/v1/app/config` so it can change without an app release. Shown only as a WhatsApp action, never as a phone number. | Phase 2 |
 | `{{LIVE_CHAT_URL}}` | **Open** (a `live-chat` page exists on the store) | BFF `/v1/app/config` | Phase 2 |
 | `{{BFF_BASE_URL}}` | **Open** | Host name only (HTTPS, no path) as `KX_BACKEND_HOST` in `Config/Base.xcconfig` or `Secrets.xcconfig`. The service must implement [BFF_CONTRACT.md](BFF_CONTRACT.md); until then the app uses its e-mail fallbacks. | Phase 2 |
@@ -21,7 +21,7 @@ store were filled in; everything else is still open. Secrets never go into git: 
 | Collection handles | Verified, differ from PROMPT.md | See [STORE_AUDIT.md](STORE_AUDIT.md): `microsoft-office`, `windows-server`, no `blitzangebote` | Phase 1 |
 | Impressum page handle | Assumed, **please confirm** | The app shows the page `rechtliche-hinweise` as Impressum and `widerrufsrecht` as Widerrufsbelehrung (refund policy as fallback) | Phase 2 |
 | Blog handle | Verified | `news` and `guides` | Phase 1 |
-| Metafield definitions | **Open** | See [STORE_AUDIT.md](STORE_AUDIT.md), owner actions 2 and 3 | Phase 1 |
-| Logo | Interim | Typographic wordmark "KARINEX" (`KXWordmark`) | |
-| App icon | Concept delivered for approval | `App/Resources/Assets.xcassets/AppIcon.appiconset`: gold serif "K" monogram with a double gold ring on forest green | Phase 1 |
+| Metafield definitions | **Open** | See [STORE_AUDIT.md](STORE_AUDIT.md), owner actions 2 and 3. For the linked products row also `custom.siblings` (list of products) and for the price note `karinex.lowest_price_30d`, each with Storefront access "Read" | Phase 1 |
+| Logo | Done | The store logo of www.karinex.de (`Tools/Brand/store-logo.png`), shown by `KXWordmark` | |
+| App icon | Done, replace if a dedicated icon arrives | `App/Resources/Assets.xcassets/AppIcon.appiconset`: the white store logo on black (1024 x 1024 PNG, no alpha) | Phase 1 |
 | Reviewer account, test product, 100 % discount code | **Open** | Needed for App Review | Phase 3 |

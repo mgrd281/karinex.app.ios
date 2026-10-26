@@ -69,22 +69,18 @@ public struct OrderSuccessScreen: View {
         }
     }
 
-    /// The checkmark in a gold ring, scaling in once (a fade with Reduce Motion). Ring and
+    /// The checkmark on a light grey disc, scaling in once (a fade with Reduce Motion). Disc and
     /// symbol grow with Dynamic Type up to 120 pt and 48 pt.
     private var seal: some View {
         let symbol = min(symbolSize, 48)
         let diameter = min(symbolSize * 2.2, 120)
         return Image(systemName: "checkmark")
             .font(.system(size: symbol, weight: .semibold))
-            .foregroundStyle(KXColor.brand)
+            .foregroundStyle(KXColor.textPrimary)
             .frame(width: diameter, height: diameter)
             .background {
                 Circle()
                     .fill(KXColor.surface)
-            }
-            .overlay {
-                Circle()
-                    .strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
             }
             .scaleEffect(isShown || reduceMotion ? 1 : 0.8)
             .opacity(isShown ? 1 : 0)

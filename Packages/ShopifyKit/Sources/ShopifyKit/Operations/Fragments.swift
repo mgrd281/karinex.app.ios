@@ -87,8 +87,10 @@ public enum StorefrontFragments {
 
     /// `ProductDetail` on `Product`: everything the product screen needs. Metafields are
     /// only selected when `$includeMetafields` is true, because tokenless requests are denied
-    /// access to them. Uses `ImageFields` and `MoneyFields` and the operation variables
-    /// `$includeMetafields` and `$metafieldIdentifiers`.
+    /// access to them. That includes `linkedProducts`, the products the merchant linked in the
+    /// list metafield `custom.siblings`. Uses `ProductSummaryFields`, `ImageFields` and
+    /// `MoneyFields` and the operation variables `$includeMetafields` and
+    /// `$metafieldIdentifiers`.
     public static let productDetail = """
         fragment ProductDetail on Product {
           id
@@ -170,6 +172,15 @@ public enum StorefrontFragments {
             key
             type
             value
+          }
+          linkedProducts: metafield(namespace: "custom", key: "siblings") @include(if: $includeMetafields) {
+            references(first: 12) {
+              nodes {
+                ... on Product {
+                  ...ProductSummaryFields
+                }
+              }
+            }
           }
         }
         """

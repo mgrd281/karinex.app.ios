@@ -10,6 +10,194 @@ change.
 
 ## [Unreleased]
 
+### Added
+
+- **Recently sold on the product page:** "In den letzten 30 Tagen 109-mal verkauft" as an icon
+  row below availability and delivery, from the store's `custom.recently_sold_count` and
+  `custom.recently_sold_hours` (`ProductMetafields.recentSales`), from 5 units on, in all 11
+  languages. `Tools/AppsScript/RecentlySold.gs` is the corrected store script: real quantities
+  instead of the former ×10.5 display multiplier, the Admin token in the script properties, and
+  stale values deleted. The row appears once the definitions get Storefront access.
+
+### Changed
+
+- **New look, "KARINEX Clean"** (owner decision after the first TestFlight build): the green,
+  cream and gold "Editorial Luxe" design is replaced by a monochrome, photo-first design in the
+  style of fashion retail apps. White pages, black type and capsule buttons, flat light grey
+  panels, one sale red for savings and deals, every text in SF Pro (no serif). Dark mode is black
+  with white buttons. App icon: the white KARINEX store logo on black.
+- **Product photos edge to edge:** `.kxPhotoTile()` shows a photo on a light grey tile with a
+  multiply blend, so white studio backgrounds disappear into the tile. Product cards are square
+  photo tiles without card, border or shadow, with a regular two-line title.
+- **Product page:** full-width gallery with page dots and the wishlist heart on the photo, bold
+  title, availability and delivery as icon rows, ink pills for variants, "Jetzt kaufen" as an
+  outlined button below them, "So läuft es ab" and the activation instructions as collapsible
+  rows, and a calm bottom bar with the price and one black "In den Warenkorb" button.
+- The tab bar keeps the system design with its titles (Start, Shop, Suche, Warenkorb, Konto),
+  now tinted black. The Warenkorb tab shows a shopping bag with the number of items as a small
+  figure beside it, in the tab's color, instead of a red badge (`CartTabIcon`, owner request,
+  as in the About You app); VoiceOver still reads the number as the tab's value.
+- **Opening like a fashion retail app:** the launch screen shows the store logo (`LaunchLogo`)
+  and `KXLaunchIntro` zooms into it and reveals the Start tab in under one second (only a fade
+  with Reduce Motion, skipped in UI test runs).
+- **Start tab like About You, with our products** (owner request): the KARINEX logo with the
+  Merkliste heart (number of saved products beside it) scrolls away, the search field stays
+  pinned at the top and opens the Suche tab with the cursor in the field (`SearchView`
+  `fieldActivation`, `AppRouter.searchFieldRequests`). Below it a story carousel of featured
+  collections (bestsellers, Windows, Office, Server, Entwicklung): one large rounded panel in
+  which the stories page sideways, each with the photo of the collection's first product, a tag,
+  four product tiles and "Kategorie entdecken", and fixed page dots. The panel is the KARINEX store
+  color `#0E4343` (`TintToken.store`, `KXColor.storePanel`, owner request), with light text
+  that meets WCAG AA. Then the trust facts as icon rows, "Unsere Kategorien"
+  (category tiles above a product panel in the store color), the bestsellers,
+  the sale panel in the store color, "Zuletzt angesehen", "Nach Version finden" (Windows 11, Windows 10,
+  Office 2024, Office 2021), service tiles into the account area (help, licenses, orders), the
+  Ratgeber as tall story tiles and the support card. The modules and their store collections are
+  described by `HomeModules`; the hero with "Zum Sortiment" is gone, and so is the chip bar
+  above the tab bar (owner request).
+- **Signed-in checkout** (owner request): when a customer is signed in, "Zur Kasse" opens
+  Shopify checkout signed in, with their e-mail address, addresses and saved payment methods
+  filled in, and the order lands in "Meine Bestellungen". `CartStore.checkoutURL()` puts the
+  Customer Account API token on the cart right before checkout (`cartBuyerIdentityUpdate`) and
+  drops a preloaded guest checkout (`ShopifyCheckoutSheetKit.invalidate()`); after a sign-out the
+  lines and discount codes move to a new cart without the token, so the next checkout on the
+  device never shows the previous customer's details.
+- **Persönliche Daten instead of Adressen** (owner request, to go beyond the About You app):
+  one screen with the customer card (monogram, name, e-mail address, the customer number with
+  copy), "Name ändern" (`customerUpdate`, first and last name; the e-mail address stays the
+  login), a note that the login needs no password, the addresses as swipeable cards with
+  "Als Standard festlegen", edit and delete, a card to add one, and the account section with
+  "Konto und Daten löschen" and "Abmelden". The signed-in card at the top of the Konto tab opens
+  it. `ProfileScreen` and `ProfileViewModel` replace `AddressesScreen`.
+- **Bestellungen as photo cards and "Erneut kaufen"** (owner request): each order is a card
+  with the status, the date, up to four product photos, the first product and the total (the
+  list query now reads the first five line items). The order detail has "Erneut kaufen", which
+  puts the same products with the same quantities into the cart and opens it
+  (`OrderLineItem.variantID`, `OrderReorder.lines`).
+- **Meine Bestellungen with a one-tap login** (owner request, reference: the About You app):
+  the Konto tab lists "Meine Bestellungen" first, also when nobody is signed in; a tap opens
+  Shopify's passwordless login (e-mail code, no extra iOS prompt) and, once signed in, the orders
+  right away. Every menu row now has a short line under its title. Bestellungen, an order and
+  Adressen are wrapped in `AccountSignInGate`, so every way into them (Konto, the service tiles
+  of Start, "Bestellungen ansehen" after a purchase, links) offers "Anmelden" in place instead
+  of an error, and shows the content once signed in. The Customer Account API client ID of the
+  "Karinex Headless" channel (public client, mobile, callback `shop.91753283851.app://callback`)
+  is now the default in `Config/Base.xcconfig`, so login is switched on.
+- **Removing a cart line like About You** (owner request): swiping a line to the left uncovers
+  a red "Entfernen"; a long swipe, a tap on it or on the "x" turns the line red with "Produkt
+  wird entfernt…" and an outlined "Abbrechen" whose fill runs down for 3 seconds (10 with
+  VoiceOver) before the line leaves the cart. This replaces the undo bar at the bottom; the
+  line also offers "Entfernen" as a VoiceOver action.
+- **Office für Mac in the story carousel** (owner request): the Start tab's story panel pages
+  through Bestseller, Windows, Office, Office für Mac (`microsoft-office-fur-mac`), Server and
+  Entwicklung.
+- **Saving with the heart like About You** (owner request): the heart on the product photo
+  sits on a white disc; saving fills it from the center, springs it a little larger and lets
+  four small hearts burst to the upper left and lower right (`ProductWishlistButton`,
+  `ProductHeartBurst`, timings in `MotionToken.heart*`). With Reduce Motion it only switches.
+- **Cart bag like About You** (owner request): the Warenkorb tab and the product page bar show
+  the outline tote of the About You cart, a straight top edge, sides that widen slightly toward
+  the rounded bottom and a tall round handle in one even 1.67 pt line, 22 points high
+  (`CartBagShape`, its proportions measured from the About You app), with the number of items
+  beside it in the new `figure` type style (11 pt semibold, tabular digits; `CartBagIcon` in
+  CommerceUI, used by the tab icon); the other tab symbols stay as they are.
+- **Cart lines like the lists of About You** (owner request): each line shows the photo on its
+  light tile with the reduction in sale red at its lower edge, the vendor in capitals, the
+  title, the price in sale red with "Ursprünglich" and the former price below it, the quantity
+  control and an "x" at the top right that removes the line (with undo). The lines form a list
+  with hairlines instead of a grey card. The photo, the title and the price now all open the
+  product (before, only the title did).
+- **Product page bar like About You** (owner request): the share arrow and a shopping bag with
+  the number of items (it opens the cart, `CartBagIcon` in CommerceUI) sit in the navigation
+  bar as plain symbols; on iOS 26 without the glass circle (`ProductToolbar`,
+  `sharedBackgroundVisibility(.hidden)`).
+- **Storefront token configured** (owner, 2026-10-26): the public token of the "Karinex Headless"
+  channel is the default of `KX_STOREFRONT_ACCESS_TOKEN`, so the app now reads the metafields
+  (product specs, FAQ, linked products). An empty CI secret no longer overwrites it
+  (`write-secrets-xcconfig.sh` writes no line for empty values).
+- **Konto tab without grey boxes** (owner request): the promise and the benefits stand on the
+  page with their symbols on light grey discs, the menu is a plain list with hairlines and thin
+  symbols, and the version moves from the dotted "Über die App" row to a small centered line
+  with the store logo at the end of the page.
+- **All payment methods of the web shop, centered** (owner request): the product page and the
+  cart now show UnionPay and Google Pay (Shopify's MIT-licensed marks, Google Pay only when Shopify
+  lists the wallet) and plain marks with the names "Rechnung"
+  and "Vorkasse" (localized in all 11 languages) next to Apple Pay, the card brands and Klarna.
+  The title and the marks are centered in rows that wrap, as below the buy button of the web
+  shop (`KXFlowLayout`), instead of sitting at the left edge. PROMPT.md section 2 lists the new
+  methods; PayPal stays excluded.
+- **Own category icons** (owner request): the tiles of "Unsere Kategorien" show KARINEX icons
+  drawn for the app as SVG instead of system symbols: a display with a snap layout (Windows), a
+  page with a bar chart (Office), rack units (Server), a notebook (Office für Mac), an editor
+  with the code sign (Entwicklung), a cloud with renewal arrows (Microsoft 365) and tiles with a
+  disc (Alle Kategorien), plus a medal (Bestseller) and a price tag (Sale). One style for all:
+  24 point grid, 1.5 point lines with round ends and one soft 20 % fill, tinted like text, so
+  they turn white on the chosen tile and in dark mode. No third-party logos.
+- **Return period is 14 days, not 100** (owner correction): the trust fact on the Start tab, the
+  money-back sheet and the product page now say "14 Tage Geld-zurück" in all 11 languages; the
+  conditions are unchanged.
+- **"Unsere Kategorien" moves on by itself, like the brand strip of About You** (owner
+  request): the chosen tile fills with a lighter store color for five seconds
+  (`MotionToken.cycleDwellDuration`, `KXColor.storePanelLifted`), then the next category takes
+  over with a soft, blurred cross-fade (`KXMotion.Curve.swap`) and the row of tiles glides
+  along; after the last category the first one follows. The showcase holds still while it is
+  off screen or the app is not active, with VoiceOver, Switch Control or Reduce Motion, in UI
+  test runs, and as soon as the customer taps a tile or scrolls the tiles or the products; once
+  it has been off screen it moves on again. The panel is about a fifth taller: large cards 184
+  points wide with portrait photos (3:4, `ProductRowCardSize.large`) instead of 164 point
+  squares. The panels of all categories lie on top of each other, so the height never jumps
+  from category to category and every switch shows photos that are already loaded. Row
+  skeletons now have the exact shape of the cards (`KXProductCardSkeleton`,
+  `ProductRowSkeleton`), so rows keep their height when the products arrive.
+- **Shop tab like a top retail app** (owner request): the bestsellers and the sale open the
+  tab as two large cards (ink and sale red) with a product photo, the product families follow
+  as rows with a short line and the photo of their first product, the single versions as a shelf
+  of square photo cards with the short version name ("Office 2024", "Windows Server 2025"),
+  every other collection as a list. All photos arrive in the one collections request
+  (`CollectionsQuery` now asks each collection for its first three products and keeps the first
+  image, `CollectionSummary.previewImage`); a collection without any shows a neutral box. Short names (`CollectionNames`) replace the store's search
+  engine titles on the Shop tab, the collection screen and in the search suggestions ("Sale"
+  instead of "SALE – Stark reduzierte Angebote", "Visual Studio" instead of "Visual Studio –
+  Entwicklungstools"). Cards and rows shrink a little while pressed
+  (`.buttonStyle(.kxPress)`, a dim with Reduce Motion).
+- **Real payment logos** (owner request): the cart and the product page show the acceptance
+  marks of Apple Pay, the card brands and Klarna (the icons of Shopify's MIT-licensed
+  `payment_icons` set, as in the web shop footer, PDF assets in CommerceUI) instead of text
+  badges. Which ones appear comes from Shopify (`shop.paymentSettings`: accepted card brands and
+  Apple Pay as a supported wallet, new `PaymentSettingsQuery` and
+  `CatalogRepository.paymentSettings()`), loaded once per launch by `PaymentMethodsStore`;
+  until Shopify answers the business facts show (Apple Pay, a neutral card symbol, Klarna).
+- **Product details like About You:** the full description from the store is now the first
+  collapsible row ("Beschreibung") next to "So läuft es ab" and "Aktivierung", and an opened row
+  shows the whole text. Product cards show up to three lines of the product name with the
+  space reserved, so names are no longer cut after two lines. The bottom bar of the product
+  page shows a small photo of the product next to the price. The tab bar uses outline symbols,
+  matching the shopping bag.
+- **Sale look like About You** (owner request): reduced prices are sale red next to the
+  struck-through former price; product cards show the reduction ("-80 %") as their badge
+  instead of "Angebot"; on the product page the reduction badge sits above the price and the
+  store's lowest price of the last 30 days (`karinex.lowest_price_30d`, euro cents) follows
+  below when Shopify provides it. The sale collection is sale red in the Shop tab.
+- **Linked products on the product page** (owner request): the products linked in the web shop
+  (list metafield `custom.siblings`, new `Product.linkedProducts`) appear as photo thumbnails
+  below the price, the current one outlined in ink; a new "Passend dazu" row shows Shopify's
+  `COMPLEMENTARY` recommendations next to "Ähnliche Produkte". Linked products need the
+  Storefront token and Storefront access for the metafield (see docs/OWNER_INPUTS.md).
+- **Store logo:** `KXWordmark` now draws the KARINEX logo of the web shop (template asset
+  `KarinexLogo` in the DesignSystem resources, tinted like text, scaled with Dynamic Type) instead
+  of typeset letters. The source file is kept in `Tools/Brand/store-logo.png`, and the app icon
+  uses the same logo in white on black.
+- **Suche like a fashion retail app:** recent searches as removable grey chips in a scrolling
+  row, suggestions as chips, and the categories as grey tiles with the bold name and a real
+  product photo of the collection (the first product, loaded from Shopify), with light grey
+  bands between the sections and an inline title above the search field.
+- Product card prices use the regular weight of the card title.
+- Dark-mode greys are exactly neutral (`#1C1C1C`, `#2C2C2C`, `#3A3A3A`).
+- Components: chevron accordion, step timeline with ink discs, section headers without the gold
+  rule, black license key card, empty states and icons without gold rings, tighter product grids.
+- `DesignTokensTests` now also fails when a token other than the status colors and the sale red
+  gets a hue. The unused `keyCardAccent` and hero parallax tokens are gone.
+
 ### Fixed
 
 - The TestFlight export step no longer fails with `option '-authenticationKeyPath' may only be
@@ -134,7 +322,7 @@ simulator yet (see Known limitations). Design and decisions: [docs/ARCHITECTURE.
 
 - `ProductFeature`: gallery with zoom viewer, variants, price with market tax note, key facts
   and activation from metafields, "So läuft es ab", native description, related products, FAQ,
-  100-day promise with its condition, withdrawal notice for digital goods, sticky purchase bar
+  14-day promise with its condition, withdrawal notice for digital goods, sticky purchase bar
   (add to cart, buy now), share. Sections without store data are omitted.
 - `CatalogFeature`: collection directory, collection screen with sort, filters and infinite
   scroll. `SearchFeature`: predictive results, recent and suggested searches, category shortcuts,

@@ -74,8 +74,29 @@ struct AccountStringTests {
             "account.benefit.keys",
             "account.benefit.checkout",
             "account.signin.note",
-            "account.about.title",
             "account.about.version",
+            "account.menu.orders",
+            "account.menu.orders.subtitle",
+            "account.menu.licenses.subtitle",
+            "account.menu.profile",
+            "account.menu.profile.subtitle",
+            "account.profile.screen.title",
+            "account.profile.open",
+            "account.profile.name.edit",
+            "account.profile.name.note",
+            "account.profile.login.title",
+            "account.profile.login.message",
+            "account.profile.delete.title",
+            "account.profile.delete.subtitle",
+            "account.addresses.make_default",
+            "account.order.reorder",
+            "account.menu.wishlist.subtitle",
+            "account.menu.settings.subtitle",
+            "account.menu.support.subtitle",
+            "account.menu.legal.subtitle",
+            "account.gate.title",
+            "account.gate.orders.message",
+            "account.gate.profile.message",
         ]
 
         for key in keys {
@@ -83,5 +104,42 @@ struct AccountStringTests {
             #expect(text != key, "\(key) has no \(language) value")
             #expect(!containsForbiddenDash(text), "Dash in \(key)")
         }
+    }
+}
+
+// MARK: - Menu
+
+@Suite("Account menu")
+struct AccountMenuTests {
+    @Test("Meine Bestellungen leads the list for everyone; only the account rows need a login")
+    func rows() {
+        #expect(AccountMenuItem.signedOut == [.orders])
+        #expect(AccountMenuItem.signedIn == [.orders, .licenses, .profile])
+        #expect(AccountMenuItem.general == [.wishlist, .settings, .support, .legal])
+        #expect(AccountMenuItem.allCases.filter(\.requiresSignIn) == [.orders, .licenses, .profile])
+    }
+
+    @Test("German titles and the short lines under them")
+    func germanTexts() throws {
+        let german = try LocalizedStrings(language: "de", in: AccountResources.bundle)
+
+        #expect(german("account.menu.orders") == "Meine Bestellungen")
+        #expect(german("account.menu.orders.subtitle") == "Status verfolgen und Rechnungen abrufen")
+        #expect(german("account.gate.title") == "Bitte melden Sie sich an")
+    }
+
+    @Test("Every row has a title and a short line in the current language")
+    func currentLanguage() {
+        for item in AccountMenuItem.allCases {
+            #expect(!item.title.hasPrefix("account."), "Unresolved title for \(item)")
+            #expect(!item.subtitle.hasPrefix("account."), "Unresolved subtitle for \(item)")
+        }
+    }
+
+    @Test("The login page opens in the app's language, Portuguese as pt-PT")
+    func loginLocale() {
+        #expect(AccountLoginLocale.code(for: Locale(identifier: "de_DE")) == "de")
+        #expect(AccountLoginLocale.code(for: Locale(identifier: "pt_PT")) == "pt-PT")
+        #expect(AccountLoginLocale.code(for: Locale(identifier: "fi")) == "fi")
     }
 }

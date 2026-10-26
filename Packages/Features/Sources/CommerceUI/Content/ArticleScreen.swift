@@ -56,7 +56,7 @@ final class ArticleViewModel {
 
 // MARK: - ArticleScreen
 
-/// A blog article (Ratgeber, News): image, serif title, publication date and author, and the
+/// A blog article (Ratgeber, News): image, bold title, publication date and author, and the
 /// content rendered natively by ``RichTextView``. Shares the store link of the article.
 ///
 /// Push it from a ``CommerceRoute/article(blogHandle:articleHandle:)`` route.

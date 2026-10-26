@@ -2,6 +2,7 @@
 import DesignTokens
 import Foundation
 import ShopifyKit
+import SwiftUI
 import Testing
 
 @Suite("CommerceUI helpers")
@@ -100,5 +101,65 @@ struct CommerceHelpersTests {
         #expect(RichTextStyle.headingStyle(level: 1) == .title2)
         #expect(RichTextStyle.headingStyle(level: 3) == .title3)
         #expect(RichTextStyle.headingStyle(level: 5) == .headline)
+    }
+}
+
+// MARK: - Cart bag
+
+@Suite("Cart bag icon")
+struct CartBagIconTests {
+    @Test("The figure beside the bag is the count up to 99, then 99+, and nothing for an empty cart")
+    func figure() {
+        #expect(CartBagIcon.figure(for: 0).isEmpty)
+        #expect(CartBagIcon.figure(for: -1).isEmpty)
+        #expect(CartBagIcon.figure(for: 1) == "1")
+        #expect(CartBagIcon.figure(for: 99) == "99")
+        #expect(CartBagIcon.figure(for: 100) == "99+")
+    }
+
+    @MainActor
+    @Test("The bag's outline fills its grid and keeps its proportions in any rect")
+    func shape() {
+        let size = CartBagShape.designSize
+        let fitted = CartBagShape().path(in: CGRect(origin: .zero, size: size)).boundingRect
+        #expect(abs(fitted.minX) < 0.05)
+        #expect(abs(fitted.minY) < 0.05)
+        #expect(abs(fitted.maxX - size.width) < 0.05)
+        #expect(abs(fitted.maxY - size.height) < 0.05)
+
+        let wide = CartBagShape().path(in: CGRect(x: 0, y: 0, width: 60, height: 44)).boundingRect
+        #expect(abs(wide.height - 44) < 0.1)
+        #expect(abs(wide.width - 44 * CartBagShape.aspectRatio) < 0.1)
+        #expect(abs(wide.midX - 30) < 0.1)
+    }
+}
+
+// MARK: - Product row cards
+
+@Suite("Product row card sizes")
+struct ProductRowCardSizeTests {
+    @Test("Regular cards are 164 points wide with square photos, large ones 184 with portrait photos")
+    func sizes() {
+        #expect(ProductRowCardSize.regular.width(textScale: 1) == 164)
+        #expect(ProductRowCardSize.regular.imageAspectRatio == 1)
+        #expect(ProductRowCardSize.large.width(textScale: 1) == 184)
+        #expect(ProductRowCardSize.large.imageAspectRatio == 0.75)
+    }
+
+    @Test("A large card's photo is half again as tall as a regular one")
+    func largePhotoHeight() {
+        let regular = ProductRowCardSize.regular.width(textScale: 1) / ProductRowCardSize.regular.imageAspectRatio
+        let large = ProductRowCardSize.large.width(textScale: 1) / ProductRowCardSize.large.imageAspectRatio
+        #expect(regular == 164)
+        #expect((245...246).contains(large))
+    }
+
+    @Test("Cards grow with the text size up to their widest")
+    func dynamicType() {
+        for size in ProductRowCardSize.allCases {
+            #expect(size.width(textScale: 1.2) > size.width(textScale: 1))
+            #expect(size.width(textScale: 10) == size.maximumWidth)
+        }
+        #expect(ProductRowCardSize.large.maximumWidth > ProductRowCardSize.regular.maximumWidth)
     }
 }

@@ -73,7 +73,7 @@ struct KXGalleryButtonPage: View {
 
 // MARK: - KXCard
 
-/// Card styles, the inset ring and full-bleed content.
+/// Card styles, the outline and full-bleed content.
 struct KXGalleryCardPage: View {
     var body: some View {
         KXGalleryPage(topic: .card) {
@@ -91,8 +91,8 @@ struct KXGalleryCardPage: View {
                     }
                 }
             }
-            KXGalleryDemo("showsInsetRing: true") {
-                KXCard(showsInsetRing: true) {
+            KXGalleryDemo("isOutlined: true") {
+                KXCard(isOutlined: true) {
                     VStack(alignment: .leading, spacing: KXSpacing.s) {
                         Text(verbatim: "Support")
                             .kxFont(.title3)
@@ -152,7 +152,7 @@ struct KXGalleryBadgePage: View {
 
     private static func text(for style: KXBadge.Style) -> String {
         switch style {
-        case .gold: "Bestseller"
+        case .accent: "Bestseller"
         case .urgency: "Sale"
         case .neutral: "Digital"
         case .success: "Zugestellt"
@@ -161,7 +161,7 @@ struct KXGalleryBadgePage: View {
 
     private static func symbol(for style: KXBadge.Style) -> String {
         switch style {
-        case .gold: "star"
+        case .accent: "star"
         case .urgency: "flame"
         case .neutral: "envelope"
         case .success: "checkmark"

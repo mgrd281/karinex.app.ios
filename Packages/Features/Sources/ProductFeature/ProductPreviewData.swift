@@ -144,6 +144,10 @@ struct PreviewCartRepository: CartRepository {
         result
     }
 
+    func updateBuyerIdentity(cartID _: ShopifyID, customerAccessToken _: String) async throws -> CartMutationResult {
+        result
+    }
+
     func updateAttributes(cartID _: ShopifyID, attributes _: [AttributeInput]) async throws -> CartMutationResult {
         result
     }
@@ -193,8 +197,13 @@ struct PreviewCartRepository: CartRepository {
 #Preview("Sections") {
     ScrollView {
         VStack(alignment: .leading, spacing: KXSpacing.xl) {
-            ProductProcessSection(fulfillment: .digital)
-            ProductProcessSection(fulfillment: .physical)
+            ProductMoreInformationSection(
+                description: HTMLDocument(html: ProductPreviewData.product.descriptionHtml),
+                fulfillment: .digital,
+                activation: nil
+            )
+            ProductMoreInformationSection(description: HTMLDocument(blocks: []), fulfillment: .physical, activation: nil)
+            ProductPaymentMethods()
             ProductRefundSection()
             ProductDigitalNoticeSection()
         }

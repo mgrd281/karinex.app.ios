@@ -4,10 +4,10 @@ import SwiftUI
 
 /// The KARINEX call-to-action button.
 ///
-/// Three styles share one shape, type style and sizing system:
-/// - ``Style/primary``: brand fill with a `textOnBrand` label. In light mode this is forest
-///   green with a cream label; in dark mode the tokens invert to gold with an ink label.
-/// - ``Style/secondary``: transparent with a gold outline and a `textPrimary` label.
+/// Three styles share one capsule shape, type style and sizing system:
+/// - ``Style/primary``: brand fill with a `textOnBrand` label. In light mode this is black
+///   with a white label; in dark mode the tokens invert to white with a black label.
+/// - ``Style/secondary``: transparent with a thin `textPrimary` outline and label.
 /// - ``Style/tertiary``: text only, in `accentText`.
 ///
 /// While `isLoading` is `true` the label is replaced by a spinner (the button keeps its size)
@@ -27,7 +27,7 @@ public struct KXButton: View {
     public enum Style: String, CaseIterable, Sendable {
         /// Filled with the brand color. One per screen area, for the main action.
         case primary
-        /// Gold outline on a transparent background, for alternative actions.
+        /// Thin outline on a transparent background, for alternative actions.
         case secondary
         /// Text only, for low-emphasis actions such as "Alle anzeigen".
         case tertiary
@@ -35,7 +35,7 @@ public struct KXButton: View {
 
     /// Height class of a ``KXButton``.
     public enum Size: String, CaseIterable, Sendable {
-        /// Minimum height 50 pt, for prominent calls to action.
+        /// Minimum height 52 pt, for prominent calls to action.
         case regular
         /// Minimum height 44 pt, for inline, banner and section header actions.
         case compact
@@ -109,8 +109,8 @@ public struct KXButton: View {
 ///     .buttonStyle(.kx(.secondary, isFullWidth: true))
 /// ```
 ///
-/// The pressed state darkens the primary fill to `brandPressed`, tints the secondary
-/// background with gold and fades the tertiary label. Presses scale the button slightly
+/// The pressed state lightens the primary fill to `brandPressed`, fills the secondary
+/// background with `surface` and fades the tertiary label. Presses scale the button slightly
 /// unless Reduce Motion is on.
 ///
 /// When you pass `isLoading: true` to a custom label, give the control an explicit
@@ -186,7 +186,7 @@ private struct KXButtonStyleBody: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        let shape = RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous)
+        let shape = Capsule(style: .continuous)
         label
             .kxFont(.headline)
             .multilineTextAlignment(.center)
@@ -211,7 +211,7 @@ private struct KXButtonStyleBody: View {
             .background(backgroundColor, in: shape)
             .overlay {
                 if style == .secondary {
-                    shape.strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
+                    shape.strokeBorder(KXColor.textPrimary, lineWidth: KXBorder.regular)
                 }
             }
             .contentShape(shape)
@@ -233,7 +233,7 @@ private struct KXButtonStyleBody: View {
     private var backgroundColor: Color {
         switch style {
         case .primary: isPressed ? KXColor.brandPressed : KXColor.brand
-        case .secondary: isPressed ? KXColor.accent.opacity(0.16) : Color.clear
+        case .secondary: isPressed ? KXColor.surface : Color.clear
         case .tertiary: Color.clear
         }
     }
@@ -252,7 +252,7 @@ private struct KXButtonStyleBody: View {
 
     private var minimumHeight: CGFloat {
         switch size {
-        case .regular: 50
+        case .regular: 52
         case .compact: KXSpacing.minimumTapTarget
         }
     }

@@ -101,9 +101,10 @@ final class CollectionViewModel {
         self.catalog = catalog
     }
 
-    /// The collection title: Shopify's once loaded, the given one before.
+    /// The collection title: the name of the loaded collection (``CollectionNames``, a short
+    /// name instead of a search engine title), the given one before.
     var title: String? {
-        state.value?.collection.title ?? initialTitle
+        state.value.map { CollectionNames.title(for: $0.collection) } ?? initialTitle
     }
 
     // MARK: Loading

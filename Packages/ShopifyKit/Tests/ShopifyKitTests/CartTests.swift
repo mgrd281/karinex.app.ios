@@ -254,6 +254,19 @@ struct CartTests {
         #expect(bodies[2].variables["attributes"] == .array([.object(["key": .string("app_platform"), "value": .string("ios")])]))
     }
 
+    @Test("A signed-in customer's token goes into the buyer identity alone, without the country")
+    func customerAccessToken() async throws {
+        let stub = try StubHTTPClient([Fixture.cartPayloadReply(field: "cartBuyerIdentityUpdate")])
+        let repository = repository(stub)
+
+        let result = try await repository.updateBuyerIdentity(cartID: Self.redactedCartID, customerAccessToken: "shcat_fixture")
+
+        #expect(result.cart.totalQuantity == 2)
+        let body = try #require(try stub.requests.map(SentGraphQLBody.init).first)
+        #expect(body.operationName == "CartBuyerIdentityUpdate")
+        #expect(body.variables["buyerIdentity"] == .object(["customerAccessToken": .string("shcat_fixture")]))
+    }
+
     @Test("User errors throw ShopifyError.userErrors; a missing payload or cart is a decoding error")
     func failures() async throws {
         let userErrors = #"{"data":{"cartLinesUpdate":{"cart":null,"userErrors":[{"field":["lines","0","quantity"],"#

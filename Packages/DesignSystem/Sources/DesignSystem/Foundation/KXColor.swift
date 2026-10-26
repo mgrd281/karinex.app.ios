@@ -12,6 +12,11 @@ public enum KXColor {
     public static let surface = color(.surface)
     public static let surfaceElevated = color(.surfaceElevated)
     public static let skeleton = color(.skeleton)
+    /// The light grey behind product photos, light in both appearances. Prefer
+    /// `.kxPhotoTile()`, which also blends the photo onto it.
+    public static let imageBackground = color(.imageBackground)
+    /// The placeholder symbol on `imageBackground`.
+    public static let imageIcon = color(.imageIcon)
 
     public static let textPrimary = color(.textPrimary)
     public static let textSecondary = color(.textSecondary)
@@ -25,7 +30,8 @@ public enum KXColor {
     public static let accent = color(.accent)
     public static let accentDeep = color(.accentDeep)
     public static let accentText = color(.accentText)
-    /// Ink text on gold (`accent`) fills such as badges and numerals, in both appearances.
+    /// Text on `accent` fills such as badges and step numerals: white on ink, ink on white in
+    /// dark mode.
     public static let textOnAccent = color(.textOnAccent)
 
     public static let urgency = color(.urgency)
@@ -44,9 +50,22 @@ public enum KXColor {
     public static let keyCardBackground = color(.keyCardBackground)
     public static let keyCardText = color(.keyCardText)
     public static let keyCardMuted = color(.keyCardMuted)
-    public static let keyCardAccent = color(.keyCardAccent)
 
     public static let scrim = color(.scrim)
+
+    /// The KARINEX store color `#0E4343` of the large dark panels (``DesignTokens/TintToken``),
+    /// the same in light and dark mode.
+    public static let storePanel = fixed(TintToken.store)
+    /// The deepened lower end of a store color panel gradient.
+    public static let storePanelDeep = fixed(TintToken.deepened(TintToken.store))
+    /// The lifted store color that fills the chosen category tile while the showcase of the
+    /// Start tab waits to move on.
+    public static let storePanelLifted = fixed(TintToken.lifted(TintToken.store))
+
+    /// A static color for a computed value. It is the same in light and dark mode.
+    public static func fixed(_ value: RGBAColor) -> Color {
+        Color(uiColor: UIColor(rgba: value))
+    }
 
     /// The dynamic SwiftUI color for a token.
     public static func color(_ token: ColorToken) -> Color {

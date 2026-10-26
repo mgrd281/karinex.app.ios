@@ -17,7 +17,8 @@ struct ProductMetafieldsTests {
             "karinex.faq", "karinex.lizenztyp", "karinex.architektur", "karinex.geraeteanzahl", "karinex.lieferform",
             "karinex.aktivierungsart", "karinex.sprachen", "karinex.support_status", "custom.details_content",
             "custom.shipping_content", "custom.warranty_content", "custom.mpn", "karinex.deal_ends_at",
-            "custom.angebotsende", "mm-google-shopping.mpn", "karinex.lowest_price_30d",
+            "custom.angebotsende", "mm-google-shopping.mpn", "karinex.lowest_price_30d", "custom.recently_sold_count",
+            "custom.recently_sold_hours",
         ])
         #expect(ProductMetafields.allIdentifiers.count == names.count)
     }
@@ -38,6 +39,18 @@ struct ProductMetafieldsTests {
             FAQEntry(question: "Wie schnell kommt der Key?", answer: "In wenigen Minuten per E-Mail."),
         ])
         #expect(entries?.first?.id == "Wie aktiviere ich?")
+    }
+
+    @Test("The web shop's short FAQ keys q and a are read too")
+    func shortFAQKeys() {
+        let json = """
+            [{"q": "Was ist Windows 11 Pro als Dauerlizenz?", "a": "Windows 11 Pro ist die Version für Unternehmen."},
+             {"q": "Wie schnell erhalte ich meinen Lizenzschlüssel?", "a": "In wenigen Minuten per E-Mail."}]
+            """
+        #expect(metafields([(ID.faq, "json", json)]).faq == [
+            FAQEntry(question: "Was ist Windows 11 Pro als Dauerlizenz?", answer: "Windows 11 Pro ist die Version für Unternehmen."),
+            FAQEntry(question: "Wie schnell erhalte ich meinen Lizenzschlüssel?", answer: "In wenigen Minuten per E-Mail."),
+        ])
     }
 
     @Test("Invalid FAQ values are nil, an empty array is empty", arguments: ["", "not json", "{\"question\": \"q\"}", "[1, 2"])
@@ -155,7 +168,7 @@ struct ProductMetafieldsTests {
         #expect(metafields([(ID.detailsContent, "rich_text_field", "kaputt")]).detailsContent == nil)
     }
 
-    @Test("Lowest price of 30 days as money JSON or plain decimal")
+    @Test("Lowest price of 30 days as money JSON, plain decimal or euro cents")
     func lowestPrice() {
         let money = metafields([(ID.lowestPrice30Days, "money", #"{"amount":"24.90","currency_code":"EUR"}"#)])
         #expect(money.lowestPrice30Days(currency: .chf) == MoneyV2(amount: decimal("24.9"), currencyCode: .eur))
@@ -165,6 +178,30 @@ struct ProductMetafieldsTests {
 
         #expect(metafields([(ID.lowestPrice30Days, "money", "{}")]).lowestPrice30Days(currency: .eur) == nil)
         #expect(metafields([(ID.lowestPrice30Days, "number_decimal", "24,90")]).lowestPrice30Days(currency: .eur) == nil)
+
+        let cents = metafields([(ID.lowestPrice30Days, "number_integer", "2490")])
+        #expect(cents.lowestPrice30Days(currency: .eur) == MoneyV2(amount: decimal("24.9"), currencyCode: .eur))
+        #expect(cents.lowestPrice30Days(currency: .chf) == nil)
+        #expect(metafields([(ID.lowestPrice30Days, "number_integer", "0")]).lowestPrice30Days(currency: .eur) == nil)
+        #expect(metafields([(ID.lowestPrice30Days, "number_integer", "24.90")]).lowestPrice30Days(currency: .eur) == nil)
+    }
+
+    @Test("Recent sales need a count of at least five and a window of whole days")
+    func recentSales() {
+        func sales(count: String, hours: String?) -> RecentSales? {
+            var fields = [(ID.recentlySoldCount, "number_integer", count)]
+            if let hours {
+                fields.append((ID.recentlySoldHours, "number_integer", hours))
+            }
+            return metafields(fields).recentSales
+        }
+        #expect(sales(count: "109", hours: "720") == RecentSales(count: 109, days: 30))
+        #expect(sales(count: "5", hours: "168") == RecentSales(count: 5, days: 7))
+        #expect(sales(count: "4", hours: "720") == nil)
+        #expect(sales(count: "109", hours: nil) == nil)
+        #expect(sales(count: "109", hours: "24") == nil)
+        #expect(sales(count: "109", hours: "100") == nil)
+        #expect(sales(count: "viele", hours: "720") == nil)
     }
 
     @Test("Products decode metafields from a nullable array and drop nulls")

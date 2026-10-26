@@ -8,7 +8,8 @@ import SwiftUI
 /// The Warenkorb tab (PROMPT.md section 6.5).
 ///
 /// With lines: each line with image, title, variant, price and a quantity control (1 to 10),
-/// a remove button with an undo bar, the discount code field (Shopify's message when a code
+/// removal by swiping it to the left or with its "x" (the row turns red with "Produkt wird
+/// entfernt" and "Abbrechen" for a moment, as in the About You app), the discount code field (Shopify's message when a code
 /// does not apply), subtotal, discount and total from Shopify's cart cost with the market's tax
 /// note, the payment methods (Apple Pay, Kreditkarte, Klarna), the right of withdrawal notice
 /// for digital content, a cross-sell row and a sticky "Zur Kasse" bar.
@@ -34,8 +35,6 @@ public struct CartView: View {
     private let onRoute: @MainActor (CommerceRoute) -> Void
     private let onBrowse: @MainActor () -> Void
     private let onCheckout: @MainActor () -> Void
-
-    @Environment(\.accessibilityVoiceOverEnabled) private var isVoiceOverEnabled
 
     /// Creates the cart screen.
     ///
@@ -95,36 +94,14 @@ public struct CartView: View {
         .task(id: model.crossSellKey) {
             await model.loadCrossSell()
         }
-        .task(id: model.removedLine?.id) {
-            await discardUndoLater()
-        }
     }
 
     // MARK: Bottom bars
 
-    private var bottomBars: some View {
-        VStack(spacing: 0) {
-            if let removed = model.removedLine {
-                CartUndoBar(
-                    title: removed.merchandise.product.title,
-                    onUndo: { Task { await model.undoRemove() } },
-                    onDismiss: { model.discardUndo() }
-                )
-                .transition(.move(edge: .bottom).combined(with: .opacity))
-            }
-            if let cart = model.cart {
-                CartCheckoutBar(cart: cart, onCheckout: onCheckout)
-            }
+    @ViewBuilder private var bottomBars: some View {
+        if let cart = model.cart {
+            CartCheckoutBar(cart: cart, onCheckout: onCheckout)
         }
-        .kxAnimation(.standard, value: model.removedLine?.id)
-    }
-
-    /// Hides the undo bar after a while; VoiceOver users get more time to reach "Rückgängig".
-    private func discardUndoLater() async {
-        guard let id = model.removedLine?.id else { return }
-        try? await Task.sleep(for: .seconds(isVoiceOverEnabled ? 12 : 6))
-        guard !Task.isCancelled, model.removedLine?.id == id else { return }
-        model.discardUndo()
     }
 }
 
@@ -203,8 +180,9 @@ private struct CartSkeleton: View {
         VStack(alignment: .leading, spacing: KXSpacing.l) {
             ForEach(0..<3, id: \.self) { _ in
                 HStack(alignment: .top, spacing: KXSpacing.m) {
-                    KXSkeleton(cornerRadius: KXRadius.medium)
-                        .frame(width: CartLineRow.imageSize, height: CartLineRow.imageSize)
+                    KXSkeleton(cornerRadius: KXRadius.small)
+                        .aspectRatio(CartLineRow.photoAspectRatio, contentMode: .fit)
+                        .frame(width: KXSpacing.xxxl * 2)
                     VStack(alignment: .leading, spacing: KXSpacing.xs) {
                         KXSkeleton()
                             .frame(height: KXSpacing.m)

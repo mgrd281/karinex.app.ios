@@ -11,8 +11,10 @@ import LicensesFeature
 import ProductFeature
 import SearchFeature
 import SettingsFeature
+import ShopifyKit
 import SupportFeature
 import SwiftUI
+import UIKit
 
 // MARK: - RootView
 
@@ -29,9 +31,12 @@ import SwiftUI
 /// - Launch: the market is resolved and the stored cart re-read; the cart is read again
 ///   whenever the app returns from the background. The one-time market confirmation sheet
 ///   appears after the first resolution (not in UI test runs, see `MarketConfirmationPolicy`).
-/// - The Warenkorb tab shows the number of items as a badge.
+/// - Opening: ``KXLaunchIntro`` zooms into the logo of the launch screen and reveals the app
+///   (not in UI test runs).
+/// - The Warenkorb tab shows a shopping bag with the number of items beside it (``CartTabIcon``)
+///   instead of a red badge; VoiceOver reads the number as the tab's value.
 ///
-/// The tint is left to the `AccentColor` asset (forest green in light mode, gold in dark mode).
+/// The tint is left to the `AccentColor` asset (black in light mode, white in dark mode).
 /// A color scheme forced with `-kx.appearance light|dark` overrides the system appearance.
 ///
 /// Each tab item carries the identifier `tab.<name>`. SwiftUI does not forward an identifier set
@@ -40,12 +45,14 @@ import SwiftUI
 struct RootView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.displayScale) private var displayScale
 
     @State private var router = AppRouter()
     @State private var isCheckoutPresented = false
     @State private var isMarketSheetPresented = false
     @State private var hasStarted = false
     @State private var wasInBackground = false
+    @State private var showsLaunchIntro = true
 
     var body: some View {
         TabView(selection: $router.selectedTab) {
@@ -57,15 +64,17 @@ struct RootView: View {
                         }
                 }
                 .tabItem {
+                    // Outline symbols everywhere, matching the shopping bag of the Warenkorb tab.
                     tabLabel(for: tab)
+                        .environment(\.symbolVariants, .none)
                 }
-                .badge(tab == .cart ? container.cartStore.itemCount : 0)
                 .tag(tab)
             }
         }
         .offlineBanner(monitor: container.networkMonitor)
         .commerceCountry(container.marketStore.selection.country)
         .environment(container.savedProductsStore)
+        .environment(container.paymentMethodsStore)
         .environment(\.productLookup, container.productLookup)
         .kxCheckout(isPresented: $isCheckoutPresented, cartStore: container.cartStore) { order in
             container.liveActivities.startDelivery(orderReference: order.id)
@@ -93,9 +102,20 @@ struct RootView: View {
         .onChange(of: scenePhase) { _, phase in
             handle(phase)
         }
+        .task(id: container.cartStore.itemCount) {
+            await Task.yield()
+            TabBarItemAccessibility.setValue(AppTab.cartBadgeAccessibilityValue(count: container.cartStore.itemCount), for: .cart)
+        }
         .overlay {
             if scenePhase != .active {
                 PrivacyCover()
+            }
+        }
+        .overlay {
+            if showsLaunchIntro, !container.launchEnvironment.isUITesting {
+                KXLaunchIntro(logo: Image("LaunchLogo")) {
+                    showsLaunchIntro = false
+                }
             }
         }
         .preferredColorScheme(container.launchEnvironment.forcedAppearance?.colorScheme ?? container.settingsStore.appearance.colorScheme)
@@ -103,10 +123,21 @@ struct RootView: View {
 
     // MARK: Tabs
 
+    @ViewBuilder
     private func tabLabel(for tab: AppTab) -> some View {
-        Label(tab.title, systemImage: tab.systemImage)
+        let count = container.cartStore.itemCount
+        if tab == .cart, let icon = CartTabIcon.image(count: count, scale: displayScale) {
+            Label {
+                Text(tab.title)
+            } icon: {
+                Image(uiImage: icon)
+            }
             .accessibilityIdentifier(tab.accessibilityIdentifier)
-            .accessibilityValue(tab == .cart ? AppTab.cartBadgeAccessibilityValue(count: container.cartStore.itemCount) : "")
+            .accessibilityValue(AppTab.cartBadgeAccessibilityValue(count: count))
+        } else {
+            Label(tab.title, systemImage: tab.systemImage)
+                .accessibilityIdentifier(tab.accessibilityIdentifier)
+        }
     }
 
     private func path(for tab: AppTab) -> Binding<[CommerceRoute]> {
@@ -124,6 +155,7 @@ struct RootView: View {
             HomeView(
                 catalog: container.catalogRepository,
                 content: container.contentRepository,
+                cyclesShowcase: !container.launchEnvironment.isUITesting,
                 onRoute: { router.open($0, from: .home) },
                 onBrowse: { router.select(.shop) }
             )
@@ -133,6 +165,8 @@ struct RootView: View {
             SearchView(
                 search: container.searchRepository,
                 preferences: container.preferences,
+                catalog: container.catalogRepository,
+                fieldActivation: router.searchFieldRequests,
                 onRoute: { router.open($0, from: .search) }
             )
         case .cart:
@@ -191,9 +225,27 @@ struct RootView: View {
         case .overview:
             accountOverview(in: tab)
         case .orders:
-            OrdersScreen(repository: container.customerRepository, backend: container.backendClient, onRoute: onRoute)
+            AccountSignInGate(sessionStore: container.sessionStore, reason: .orders) {
+                OrdersScreen(repository: container.customerRepository, backend: container.backendClient, onRoute: onRoute)
+            }
         case let .order(id):
-            OrderDetailScreen(orderID: id, repository: container.customerRepository, backend: container.backendClient, onRoute: onRoute)
+            AccountSignInGate(sessionStore: container.sessionStore, reason: .order) {
+                OrderDetailScreen(
+                    orderID: id,
+                    repository: container.customerRepository,
+                    backend: container.backendClient,
+                    onRoute: onRoute,
+                    onReorder: { lines in
+                        // "Erneut kaufen": the same products and quantities, then the cart.
+                        for line in lines {
+                            if let variantID = line.variantID {
+                                _ = await container.cartStore.add(variantID: variantID, quantity: line.quantity)
+                            }
+                        }
+                        router.select(.cart)
+                    }
+                )
+            }
         case let .licenses(orderID):
             LicenseVaultScreen(
                 orderID: orderID,
@@ -202,8 +254,15 @@ struct RootView: View {
                 locksVault: container.settingsStore.locksLicenses,
                 onRoute: onRoute
             )
-        case .addresses:
-            AddressesScreen(repository: container.customerRepository, countries: addressCountries)
+        case .profile:
+            AccountSignInGate(sessionStore: container.sessionStore, reason: .profile) {
+                ProfileScreen(
+                    repository: container.customerRepository,
+                    countries: addressCountries,
+                    sessionStore: container.sessionStore,
+                    onRoute: onRoute
+                )
+            }
         case .wishlist:
             WishlistScreen(savedProducts: container.savedProductsStore, onRoute: onRoute)
         case let .support(orderName):
@@ -302,4 +361,69 @@ struct RootView: View {
     RootView()
         .environment(AppContainer.preview())
         .dynamicTypeSize(.accessibility2)
+}
+
+// MARK: - CartTabIcon
+
+/// The Warenkorb tab icon in the style of fashion retail apps: ``CartBagIcon``, the outline tote
+/// with its tall handle and the number of items beside it, in the tab's color, instead of a red
+/// badge.
+///
+/// A tab bar item takes only an image and a title, so the icon is rendered into a template image
+/// that the tab bar tints like its other symbols. An invisible copy of the figure on the leading
+/// side keeps the bag centered above the title. The icon keeps one size at every text size, like
+/// the system tab symbols.
+struct CartTabIcon: View {
+    /// The number of items in the cart.
+    let count: Int
+
+    var body: some View {
+        CartBagIcon(count: count, isCentered: true)
+            .dynamicTypeSize(.large)
+    }
+
+    /// The icon for `count` items as a template image at `scale`, or `nil` if rendering fails.
+    @MainActor
+    static func image(count: Int, scale: CGFloat) -> UIImage? {
+        let renderer = ImageRenderer(content: CartTabIcon(count: count))
+        renderer.scale = scale
+        return renderer.uiImage?.withRenderingMode(.alwaysTemplate)
+    }
+}
+
+// MARK: - TabBarItemAccessibility
+
+/// Gives a tab its VoiceOver value, such as "2 Artikel" for the Warenkorb tab. The cart count is
+/// drawn into the icon instead of a badge, and SwiftUI does not forward accessibility modifiers
+/// of a `tabItem` label, so the value goes onto the `UITabBarItem` of the tab bar that SwiftUI
+/// creates.
+@MainActor
+enum TabBarItemAccessibility {
+    /// Sets `value` (empty clears it) on the item of `tab` in every window's tab bar.
+    static func setValue(_ value: String, for tab: AppTab) {
+        guard let index = AppTab.allCases.firstIndex(of: tab) else { return }
+        let windows = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap(\.windows)
+        for window in windows {
+            guard let items = tabBarController(in: window.rootViewController)?.tabBar.items,
+                  items.indices.contains(index)
+            else { continue }
+            items[index].accessibilityValue = value.isEmpty ? nil : value
+        }
+    }
+
+    /// The first tab bar controller in the hierarchy below `controller`.
+    private static func tabBarController(in controller: UIViewController?) -> UITabBarController? {
+        guard let controller else { return nil }
+        if let tabBarController = controller as? UITabBarController {
+            return tabBarController
+        }
+        for child in controller.children {
+            if let found = tabBarController(in: child) {
+                return found
+            }
+        }
+        return nil
+    }
 }

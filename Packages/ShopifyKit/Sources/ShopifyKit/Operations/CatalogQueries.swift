@@ -2,7 +2,11 @@ import Foundation
 
 // MARK: - CollectionsQuery
 
-/// Lists the store's collections by title (Storefront `collections`), for the catalog grid.
+/// Lists the store's collections by title (Storefront `collections`), for the Shop tab, each
+/// with the image of its first product that has one as ``CollectionSummary/previewImage``.
+///
+/// The requested cost is about 6 per collection (the image and the connection of three products
+/// with their images), so 100 collections stay below the tokenless limit of 1000.
 public struct CollectionsQuery: GraphQLOperation {
     /// The largest page size the Storefront API accepts.
     public static let maximumPageSize = 250
@@ -16,8 +20,41 @@ public struct CollectionsQuery: GraphQLOperation {
     /// The `data` of the response.
     public struct ResponseData: Decodable, Sendable, Equatable {
         /// The collections connection.
-        public let collections: Connection<CollectionSummary>
+        public let collections: Connection<Node>
     }
+
+    /// One collection of the response: the summary fields and the images of its first products.
+    public struct Node: Decodable, Sendable, Equatable {
+        /// The collection, with ``CollectionSummary/previewImage`` taken from its first product
+        /// that has an image.
+        public let collection: CollectionSummary
+
+        private enum CodingKeys: String, CodingKey {
+            case products
+        }
+
+        /// The one field of a product the query asks for.
+        private struct FirstProduct: Decodable {
+            let featuredImage: ShopifyImage?
+        }
+
+        public init(from decoder: any Decoder) throws {
+            let summary = try CollectionSummary(from: decoder)
+            let products = try decoder.container(keyedBy: CodingKeys.self)
+                .decodeIfPresent(Connection<FirstProduct>.self, forKey: .products)
+            collection = CollectionSummary(
+                id: summary.id,
+                handle: summary.handle,
+                title: summary.title,
+                description: summary.description,
+                image: summary.image,
+                previewImage: products?.nodes.lazy.compactMap(\.featuredImage).first ?? summary.previewImage
+            )
+        }
+    }
+
+    /// The number of products per collection whose images are candidates for the preview.
+    public static let previewProductCount = 3
 
     /// `Collections`.
     public static let operationName = "Collections"
@@ -30,6 +67,13 @@ public struct CollectionsQuery: GraphQLOperation {
           collections(first: $first, sortKey: TITLE) {
             nodes {
               ...CollectionSummaryFields
+              products(first: \(previewProductCount)) {
+                nodes {
+                  featuredImage {
+                    ...ImageFields
+                  }
+                }
+              }
             }
           }
         }

@@ -3,6 +3,7 @@ import Foundation
 @testable import HomeFeature
 import ShopifyKit
 import Testing
+import UIKit
 
 // MARK: - Trust facts
 
@@ -32,7 +33,7 @@ struct HomeTrustFactTests {
         #expect(HomeTrustFact.allCases.map { $0.text(in: german.bundle) } == [
             "Lieferung per E-Mail in Minuten",
             "Apple Pay, Kreditkarte, Klarna",
-            "100 Tage Geld-zurück",
+            "14 Tage Geld-zurück",
             "Support Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit",
         ])
     }
@@ -42,7 +43,7 @@ struct HomeTrustFactTests {
         let english = try LocalizedStrings(language: "en", in: HomeResources.bundle)
 
         #expect(HomeTrustFact.paymentMethods.text(in: english.bundle) == "Apple Pay, credit card, Klarna")
-        #expect(HomeTrustFact.moneyBack.text(in: english.bundle) == "100-day money-back")
+        #expect(HomeTrustFact.moneyBack.text(in: english.bundle) == "14-day money-back")
     }
 
     @Test("Texts resolve in the current language")
@@ -155,10 +156,19 @@ struct HomeStringTests {
         let strings = try LocalizedStrings(language: language, in: HomeResources.bundle)
         let keys = [
             "home.title",
-            "home.hero.eyebrow",
-            "home.hero.title",
-            "home.hero.body",
-            "home.hero.cta",
+            "home.brand.wishlist",
+            "home.search.prompt",
+            "home.search.hint",
+            "home.story.action",
+            "home.story.hint",
+            "home.showcase.eyebrow",
+            "home.showcase.title",
+            "home.showcase.all",
+            "home.panel.show_all",
+            "home.versions.eyebrow",
+            "home.versions.title",
+            "home.service.eyebrow",
+            "home.service.title",
             "home.trust.eyebrow",
             "home.trust.title",
             "home.trust.moneyback.hint",
@@ -186,43 +196,120 @@ struct HomeStringTests {
 
 @Suite("Home layout")
 struct HomeLayoutTests {
-    @Test("The standard layout lists the live rows in order with the store handles")
+    private let modules = HomeModules.standard
+
+    @Test("The standard modules load every collection once, in the order of the page, then the guides")
     func standardOrder() {
-        let sections = HomeLayout.standard.sections
-        #expect(sections.map(\.id) == [
-            "sale",
+        #expect(modules.layout.sections.map(\.id) == [
+            "bestseller",
             "windows",
             "microsoft-office",
+            "microsoft-office-fur-mac",
             "windows-server",
             "visual-studio-entwicklungstools",
-            "bestseller",
+            "microsoft-365-abonnement",
+            "sale",
+            "windows-11",
+            "windows-10",
+            "microsoft-office-2024",
+            "microsoft-office-2021",
             "guides",
         ])
-        #expect(sections.map(\.accessibilityIdentifier).first == "home.row.sale")
-        #expect(sections.map(\.accessibilityIdentifier).last == "home.row.guides")
+        #expect(modules.layout.sections.map(\.accessibilityIdentifier).last == "home.row.guides")
     }
 
-    @Test("Only the bestseller row carries the bestseller badge, the guides row loads 6 articles")
+    @Test("Rows load 8 products, version tiles one photo, guides 6 articles; only bestsellers carry the badge")
     func contentDetails() {
-        for section in HomeLayout.standard.sections {
+        let tiles = Set(modules.versions.map(\.handle))
+        for section in modules.layout.sections {
             switch section.content {
             case let .collection(handle, limit, highlight):
                 #expect(highlight == (handle == "bestseller" ? .bestseller : ProductCardHighlight.none), "\(handle)")
-                #expect(limit == HomeLayout.productsPerRow)
+                #expect(limit == (tiles.contains(handle) ? HomeLayout.productsPerTile : HomeLayout.productsPerRow), "\(handle)")
             case let .blog(handle, limit):
                 #expect(handle == "guides")
+                #expect(limit == HomeLayout.articlesPerRow)
                 #expect(limit == 6)
             }
         }
     }
 
-    @Test("The German row titles are the categories of the Start tab")
-    func germanTitles() throws {
-        let german = try LocalizedStrings(language: "de", in: HomeResources.bundle)
+    @Test("A collection that is a row and a version tile loads the products of the row")
+    func rowWinsOverTile() {
+        let windows = HomeCategory.windows
+        let custom = HomeModules(
+            stories: [HomeStory(category: windows, tag: .verbatim("Neu"))],
+            showcase: [],
+            bestsellers: .bestseller,
+            deals: .deals,
+            versions: [windows, HomeCategory(handle: "windows-11", title: .verbatim("Windows 11"), icon: .windows)],
+            guidesBlog: "news"
+        )
 
-        #expect(HomeLayout.standard.sections.map { $0.title.resolved(in: german.bundle) } == [
-            "Angebote", "Windows", "Office", "Server", "Entwicklung", "Bestseller", "Ratgeber",
+        #expect(custom.layout.sections.map(\.id) == ["windows", "bestseller", "sale", "windows-11", "news"])
+        typealias Content = HomeSection.Content
+        let none = ProductCardHighlight.none
+        #expect(custom.layout.section("windows")?.content == Content.collection(handle: "windows", limit: 8, highlight: none))
+        #expect(custom.layout.section("windows-11")?.content == Content.collection(handle: "windows-11", limit: 1, highlight: none))
+        #expect(custom.layout.section("news")?.content == Content.blog(handle: "news", limit: 6))
+        #expect(custom.layout.section("missing") == nil)
+    }
+
+    @Test("The German names of the modules are the short category names")
+    func germanNames() throws {
+        let german = try LocalizedStrings(language: "de", in: HomeResources.bundle)
+        func names(_ categories: [HomeCategory]) -> [String] {
+            categories.map { $0.title.resolved(in: german.bundle) }
+        }
+
+        #expect(names(modules.stories.map(\.category)) == [
+            "Bestseller", "Windows", "Office", "Office für Mac", "Server", "Entwicklung",
         ])
+        #expect(names(modules.showcase) == ["Windows", "Office", "Server", "Office für Mac", "Entwicklung", "Microsoft 365"])
+        #expect(names([modules.bestsellers, modules.deals]) == ["Bestseller", "Angebote"])
+        #expect(names(modules.versions) == ["Windows 11", "Windows 10", "Office 2024", "Office 2021"])
+        #expect(modules.stories.map { $0.tag.resolved(in: german.bundle) } == [
+            "Unsere Bestseller", "Aus unserem Sortiment", "Aus unserem Sortiment", "Aus unserem Sortiment",
+            "Aus unserem Sortiment", "Aus unserem Sortiment",
+        ])
+    }
+
+    @Test("Every module text resolves without dashes", arguments: appLanguages)
+    func moduleTexts(language: String) throws {
+        let strings = try LocalizedStrings(language: language, in: HomeResources.bundle)
+        let groups = [
+            modules.stories.map(\.category),
+            modules.showcase,
+            [modules.bestsellers, modules.deals],
+            modules.versions,
+        ]
+        let titles = groups.joined().flatMap { category in [category.title, category.eyebrow].compactMap(\.self) }
+        let texts = titles + modules.stories.map(\.tag)
+
+        for text in texts {
+            let resolved = text.resolved(in: strings.bundle)
+            #expect(!resolved.isEmpty)
+            #expect(!resolved.hasPrefix("home."), "Unresolved key \(resolved) in \(language)")
+            #expect(!containsForbiddenDash(resolved), "Dash in \(resolved)")
+        }
+    }
+
+    @Test("Category handles are unique within each module")
+    func uniqueCategories() {
+        for categories in [modules.stories.map(\.category), modules.showcase, modules.versions] {
+            #expect(Set(categories.map(\.handle)).count == categories.count)
+        }
+    }
+
+    @Test("The service tiles open help, the license keys and the orders")
+    func serviceTiles() {
+        #expect(HomeServiceLink.allCases == [.support, .licenses, .orders])
+        #expect(HomeServiceLink.support.route == .account(.support(orderName: nil)))
+        #expect(HomeServiceLink.licenses.route == .account(.licenses(orderID: nil)))
+        #expect(HomeServiceLink.orders.route == .account(.orders))
+        for link in HomeServiceLink.allCases {
+            #expect(!link.title.hasPrefix("home."), "Unresolved key for \(link)")
+        }
     }
 
     @Test("A layout keeps the first section of a repeated handle")
@@ -339,6 +426,32 @@ struct HomeViewModelTests {
         #expect(model.articleState(for: layout.sections[2]).value?.map(\.handle) == ["kept"])
     }
 
+    @Test("Rows are read and reloaded by handle; unknown handles stay idle")
+    func handles() async {
+        let catalog = BrowseStubCatalogRepository { request in
+            if request.handle == "windows" {
+                throw ShopifyError.network(.offline)
+            }
+            return BrowseFixtures.page(request.handle, products: [BrowseFixtures.product("deal")])
+        }
+        let model = HomeViewModel(catalog: catalog, content: BrowseStubContentRepository(), layout: layout)
+        await model.reload()
+
+        #expect(model.productState(for: "sale").value?.count == 1)
+        #expect(model.productState(for: "windows").error == UserFacingError(kind: .offline))
+        #expect(model.productState(for: "unknown") == .idle)
+
+        await catalog.setCollectionHandler { request in
+            BrowseFixtures.page(request.handle, products: [BrowseFixtures.product("win")])
+        }
+        await model.reload(handles: ["windows", "unknown"])
+
+        #expect(model.productState(for: "windows").value?.map(\.handle) == ["win"])
+        #expect(await catalog.requestedHandles.filter { $0 == "windows" }.count == 2)
+        #expect(await catalog.requestedHandles.filter { $0 == "sale" }.count == 1)
+        #expect(await !catalog.requestedHandles.contains("unknown"))
+    }
+
     @Test("Rows start idle before the first load")
     func idleBeforeLoad() {
         let model = HomeViewModel(catalog: BrowseStubCatalogRepository(), content: BrowseStubContentRepository(), layout: layout)
@@ -363,6 +476,9 @@ struct HomeLiveRowStringTests {
             "home.section.development.title", "home.section.development.eyebrow",
             "home.section.bestseller.title", "home.section.bestseller.eyebrow",
             "home.section.guides.title", "home.section.guides.eyebrow",
+            "home.story.tag.bestseller", "home.story.tag.range",
+            "home.category.mac.title", "home.category.mac.eyebrow", "home.category.microsoft365.eyebrow",
+            "home.service.support", "home.service.licenses", "home.service.orders",
             "home.article.hint", "home.loading",
         ]
 
@@ -371,5 +487,97 @@ struct HomeLiveRowStringTests {
             #expect(text != key, "\(key) has no \(language) value")
             #expect(!containsForbiddenDash(text), "Dash in \(key)")
         }
+    }
+}
+
+// MARK: - Category showcase
+
+@Suite("Home category showcase")
+struct HomeShowcaseCycleTests {
+    /// The conditions under which the showcase moves on by itself.
+    private let moving = HomeShowcaseCycle.Conditions(
+        isEnabled: true,
+        categoryCount: HomeModules.standard.showcase.count,
+        isVisible: true,
+        isHeldByCustomer: false,
+        prefersStillContent: false
+    )
+
+    @Test("Each category stays five seconds")
+    func dwell() {
+        #expect(HomeShowcaseCycle.dwell == .seconds(5))
+    }
+
+    @Test("The showcase moves on to the next category, and from the last one back to the first")
+    func order() {
+        let handles = HomeModules.standard.showcase.map(\.handle)
+        #expect(handles.count > 1)
+        for (index, handle) in handles.enumerated() {
+            #expect(HomeShowcaseCycle.handle(after: handle, in: handles) == handles[(index + 1) % handles.count])
+        }
+        #expect(HomeShowcaseCycle.handle(after: handles[handles.count - 1], in: handles) == handles[0])
+        #expect(HomeShowcaseCycle.handle(after: "unknown", in: handles) == handles[0])
+        #expect(HomeShowcaseCycle.handle(after: "windows", in: []) == nil)
+    }
+
+    @Test("It moves on only on screen in the active app, untouched, with more than one category")
+    func movesOnlyWhenWatched() {
+        #expect(moving.cycles)
+
+        var conditions = moving
+        conditions.isVisible = false
+        #expect(!conditions.cycles)
+
+        conditions = moving
+        conditions.isHeldByCustomer = true
+        #expect(!conditions.cycles)
+
+        conditions = moving
+        conditions.categoryCount = 1
+        #expect(!conditions.cycles)
+
+        conditions = moving
+        conditions.isEnabled = false
+        #expect(!conditions.cycles)
+    }
+
+    @Test("VoiceOver, Switch Control and Reduce Motion keep it still")
+    func accessibility() {
+        var conditions = moving
+        conditions.prefersStillContent = true
+        #expect(!conditions.cycles)
+    }
+
+    @Test("A new category or a change of the conditions starts a new wait")
+    func steps() {
+        let step = HomeShowcaseCycle.Step(handle: "windows", isCycling: true)
+        #expect(step != HomeShowcaseCycle.Step(handle: "microsoft-office", isCycling: true))
+        #expect(step != HomeShowcaseCycle.Step(handle: "windows", isCycling: false))
+        #expect(step == HomeShowcaseCycle.Step(handle: "windows", isCycling: true))
+    }
+}
+
+// MARK: - Category icons
+
+@Suite("Home category icons")
+struct HomeCategoryIconTests {
+    @Test("Every category icon is a template image in the module's asset catalog", arguments: HomeCategoryIcon.allCases)
+    func iconLoads(icon: HomeCategoryIcon) throws {
+        let image = try #require(UIImage(named: icon.assetName, in: HomeResources.bundle, with: nil))
+        #expect(image.renderingMode == .alwaysTemplate)
+        #expect(image.size == CGSize(width: 24, height: 24))
+    }
+
+    @Test("Each tile of the showcase has its own icon, and none is the icon of all categories")
+    func distinctIcons() {
+        let icons = HomeModules.standard.showcase.map(\.icon)
+        #expect(Set(icons).count == icons.count)
+        #expect(!icons.contains(.allCategories))
+    }
+
+    @Test("The bestsellers and the sale have their own icons")
+    func highlightIcons() {
+        #expect(HomeCategory.bestseller.icon == .bestseller)
+        #expect(HomeCategory.deals.icon == .sale)
     }
 }

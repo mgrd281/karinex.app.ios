@@ -104,7 +104,7 @@ that launches in light and dark mode.
 | `BackendKit` | `Packages/Backend` | `Core` | yes | `BackendClient` (`HTTPBackendClient`, `UnavailableBackendClient`), contract models (`RemoteAppConfig`, `SupportHours`, `BackendOrderStatus`, `LicenseKey`, `InvoiceLink`, `DeviceRegistration`), `LicenseKeyCache`. See [BFF_CONTRACT.md](BFF_CONTRACT.md) |
 | `DesignTokens` | `Packages/DesignSystem` | Foundation | yes | `BrandPalette`, `ColorToken`, `ContrastRequirement`, `TypographyToken`, spacing, radius, border and motion tokens, `RGBAColor` with WCAG math |
 | `DesignSystem` | `Packages/DesignSystem` | `DesignTokens` | no (SwiftUI) | `KXColor`, `.kxFont(_:)`, layout and motion helpers, the `KX*` components, `KXDesignSystemGallery` |
-| `CommerceUI` | `Packages/Features` | `Core`, `DesignSystem`, `DesignTokens`, `ShopifyKit`, Nuke | no (SwiftUI) | Not a feature: the state and UI that several features share. `CartStore`, `MarketStore`, `CommerceEnvironment` and `PriceDisplay`, `CommerceRoute` and `DeepLinkParser`, `ProductCardView` and `ProductCarouselSection`, `KXImagePipeline` and `ProductImage`, `RichTextView`, `LoadState`, `AsyncContentView` and `UserFacingError`, `ArticleScreen`, `MarketConfirmationSheet`. See [Commerce layer](#commerce-layer-phase-1) |
+| `CommerceUI` | `Packages/Features` | `Core`, `DesignSystem`, `DesignTokens`, `ShopifyKit`, Nuke | no (SwiftUI) | Not a feature: the state and UI that several features share. `CartStore`, `MarketStore`, `CommerceEnvironment` and `PriceDisplay`, `CommerceRoute` and `DeepLinkParser`, `ProductCardView`, `ProductRow` (card sizes `ProductRowCardSize.regular` and `.large`), `ProductRowSkeleton` and `ProductCarouselSection`, `KXImagePipeline` and `ProductImage`, `RichTextView`, `LoadState`, `AsyncContentView` and `UserFacingError`, `ArticleScreen`, `MarketConfirmationSheet`. See [Commerce layer](#commerce-layer-phase-1) |
 | `HomeFeature`, `CatalogFeature`, `SearchFeature`, `CartFeature`, `AccountFeature`, `ProductFeature`, `CheckoutFeature`, `LicensesFeature`, `SupportFeature`, `LegalFeature`, `SettingsFeature` | `Packages/Features` | `Core`, `DesignSystem`, `ShopifyKit`, `BackendKit`, `CommerceUI` (`CheckoutFeature` also Checkout Kit) | no (SwiftUI) | One feature each, with its own String Catalog. `CheckoutFeature` is the only module that imports Checkout Kit |
 | `KARINEX` (App target) | `project.yml` | everything above | no | Composition root, tab shell, app resources |
 | `FixtureRecording`, `fixture-recorder` | `Tools/FixtureRecorder` | `Core`, `ShopifyKit` | yes | Records the ShopifyKit fixtures from the live store |
@@ -418,7 +418,10 @@ tokenless mode:
   `ACCESS_DENIED` (`requiredAccess: unauthenticated_read_metafields`, recorded in
   `product_metafields_access_denied_DE_DE.json`). The `ProductDetail` fragment therefore selects
   `metafields(identifiers: $metafieldIdentifiers) @include(if: $includeMetafields)`, and
-  `StorefrontCatalogRepository` passes `includeMetafields: !client.isTokenless`.
+  `StorefrontCatalogRepository` passes `includeMetafields: !client.isTokenless`. The linked
+  products (`Product.linkedProducts`, the product references of the list metafield
+  `custom.siblings`, selected as `linkedProducts: metafield(...) { references { ... on Product } }`)
+  sit behind the same `@include`; references that are not products are dropped.
 - Tokenless requests are capped at a query cost of 1000; the Phase 0 queries cost 5 to 14.
 
 `ProductMetafields` gives typed, failure-tolerant access to the keys of PROMPT.md 5.1 and the
@@ -429,7 +432,10 @@ store's existing keys (`ProductMetafields.Identifier`): `faq` (`karinex.faq` par
 back to `mm-google-shopping.mpn`), `dealEndsAt` (falls back to `custom.angebotsende`) and
 `lowestPrice30Days(currency:)`. Every accessor returns `nil` for missing or malformed values and
 never crashes; in tokenless mode all of them are `nil`, so product screens must treat every
-metafield module as optional.
+metafield module as optional. `recentSales` (`custom.recently_sold_count` with the window of
+`custom.recently_sold_hours`) is `nil` below 5 units or without a whole-day window of at least
+two days; the product page shows it as an icon row below availability and delivery
+(docs/STORE_AUDIT.md, "Recently sold numbers").
 
 Switching to token mode is configuration only: put the token into `Config/Secrets.xcconfig` and
 the CI secret. Values also need metafield definitions with Storefront read access, which the
@@ -480,8 +486,11 @@ setting for the UI language.
 
 ## Design system
 
-"KARINEX Editorial Luxe for iOS": cream panels, deep forest green, restrained champagne gold,
-serif display type, native iOS chrome.
+"KARINEX Clean": black, white and neutral greys with one sale red, bold sans serif type, product
+photos edge to edge on a light grey tile, flat panels and capsule buttons, in the style of modern
+fashion retail apps; native iOS chrome. The owner chose this direction on 2026-10-25 after the
+first TestFlight build; it replaces the earlier green, cream and gold "Editorial Luxe" look
+(see PROMPT.md section 7).
 
 ### Tokens in code, verified by tests
 
@@ -492,50 +501,58 @@ BrandPalette (raw brand hex values)
     -> KXColor (dynamic UIColor/Color per trait collection)     DesignSystem, SwiftUI
 ```
 
-- `ColorToken` defines every semantic color (`background`, `surface`, `textPrimary`, `brand`,
-  `textOnBrand`, `accent`, `accentText`, `urgency`, `keyCardBackground`, ...) with a light and a
-  dark value. In dark mode `brand` becomes gold and `textOnBrand` ink, so primary buttons invert
-  automatically.
+- `ColorToken` defines every semantic color (`background`, `surface`, `imageBackground`,
+  `textPrimary`, `brand`, `textOnBrand`, `accent`, `accentText`, `urgency`,
+  `keyCardBackground`, ...) with a light and a dark value. Light mode is a white page with
+  `#F5F5F5` panels and `#111111` ink; dark mode is black with graphite panels. `brand` and
+  `accent` are ink in light mode and white in dark mode, so primary buttons, selected pills and
+  page dots invert automatically. `urgency` (`#C20E2B`) is the only hue apart from the status
+  colors: savings badges, sale badges and the deal countdown.
+- `imageBackground` (`#F3F3F3`, `#E6E6E6` in dark mode) stays light in both appearances,
+  because the store's photos are shot on white. `.kxPhotoTile()` puts a photo on it with a
+  multiply blend, so the white studio background takes the tile color and the product sits in
+  the tile without a white box. Image views inside a tile read `kxIsInPhotoTile` and show only
+  the tile while loading.
 - `ContrastRequirement.all` lists the only pairs components may use for text (WCAG AA 4.5:1)
-  and non-text UI (3:1). `DesignTokensTests` checks every pair in both appearances and that
-  gold is never a text color on light surfaces (it is decorative; readable gold text uses
-  `accentText`). Changing a value that breaks contrast fails CI.
+  and non-text UI (3:1). `DesignTokensTests` checks every pair in both appearances, that every
+  token except the status colors and the sale red is a neutral grey, and that the photo tile
+  stays light. Changing a value that breaks contrast or adds a hue fails CI.
 - `TypographyToken` (display, title1 to title3, headline, body, callout, subheadline, footnote,
-  caption, eyebrow, price, numeral, licenseKey) defines design (serif, sans, monospaced), weight,
-  base size, the Dynamic Type text style it scales with, tracking and digit style.
-- `SpacingToken` (8 pt grid, 16 pt gutter, 44 pt tap target), `RadiusToken` (card 18),
-  `BorderToken` and `MotionToken` (springs between 0.25 and 0.35 s) complete the set; SwiftUI
-  code uses them through `KXSpacing`, `KXRadius`, `KXBorder` and `KXMotion`.
+  caption, figure, eyebrow, price, numeral, licenseKey) defines design (sans or monospaced), weight,
+  base size, the Dynamic Type text style it scales with, tracking and digit style. Every style
+  is SF Pro except the monospaced license keys; headlines are bold or semibold and slightly
+  tighter tracked.
+- `SpacingToken` (8 pt grid, 16 pt gutter, 44 pt tap target), `RadiusToken` (card 12, product
+  photos 0), `BorderToken` and `MotionToken` (springs between 0.25 and 0.35 s, the 0.45 s
+  swap cross-fade with its blur, the 5 s dwell of a cycling showcase) complete the set;
+  SwiftUI code uses them through `KXSpacing`, `KXRadius`, `KXBorder` and `KXMotion`.
+- `TintToken.store` is the KARINEX store color `#0E4343` of the large panels of the Start tab
+  (stories, category showcase, sale), with a deepened lower end for the gradient and a lifted
+  tone (20 % white) for the progress of the chosen category tile; `TintTokenTests` checks that
+  `textPrimary` and `textSecondary` (dark values) reach 4.5:1 on both ends of the panel and
+  `textPrimary` on the lifted tone. SwiftUI uses them through `KXColor.storePanel`,
+  `KXColor.storePanelDeep` and `KXColor.storePanelLifted`.
 
-The asset catalog holds only what iOS reads by name before any code runs: `AppIcon`,
-`AccentColor` (global tint of system chrome; mirrors `ColorToken.brand`: forest in light, gold
-in dark) and `LaunchBackground` (the launch screen; mirrors `ColorToken.background`). Keep those
-two in sync by hand when the tokens change.
+The asset catalog holds only what iOS reads by name before any code runs: `AppIcon` (the white
+store logo on black), `AccentColor` (global tint of system chrome; mirrors `ColorToken.brand`:
+black in light, white in dark), `LaunchBackground` (the launch screen; mirrors
+`ColorToken.background`) and `LaunchLogo` (the store logo of the launch screen, black and white
+for dark mode, only a @3x image so it is 167 pt wide on every device). Keep the colors in sync by
+hand when the tokens change. `RootView` hands `LaunchLogo` to `KXLaunchIntro`, which takes over
+from the launch screen without a jump (same logo, same size, centered on the whole screen), holds
+it for `MotionToken.launchHoldDuration`, zooms it by `launchZoomScale` while fading out and
+reveals the app; with Reduce Motion it only fades, and UI test runs skip it.
 
-### Typography: system serif (New York) for now
+### Typography: SF Pro
 
 `.kxFont(_:)` applies a token through `KXFontModifier`, which scales size and tracking with
 `@ScaledMetric` relative to the token's text style, and `KXFont.font(_:size:)`, which returns
-`Font.system(size:weight:design:)`. For serif tokens the design is `.serif`, which iOS renders
-in **New York**, Apple's system serif with optical sizes, all weights and full Dynamic Type
-support. Cormorant Garamond (the web headline face) is not bundled yet (see the decision below).
-
-To switch the headlines to Cormorant Garamond later:
-
-1. Add the OFL font files (the weights used by serif tokens: medium and semibold) and the
-   license text under `Packages/DesignSystem/Sources/DesignSystem/Resources/Fonts/`; the
-   target already processes `Resources`.
-2. Register them once at launch from the package bundle with
-   `CTFontManagerRegisterFontsForURL` (package resources are not covered by the app's
-   `UIAppFonts`), called from `KarinexApp.init`.
-3. In `KXFont.font(_:size:)`, return `Font.custom(<PostScript name for the weight>, fixedSize:
-   size)` when `style.design == .serif`. Use `fixedSize:` because `KXFontModifier` has already
-   scaled the size; `Font.custom(_:size:)` would scale it a second time.
-4. Review `baseSize` and `tracking` of the serif tokens in `TypographyToken` (Cormorant has a
-   small x-height and thin strokes), check the `numeral` digits of `KXCountdown`, then re-record
-   the snapshots and review them in light, dark and the accessibility sizes.
-
-Nothing else changes, because every component uses `.kxFont(_:)`.
+`Font.system(size:weight:design:)` with the default (SF Pro) or monospaced design. No font is
+bundled. To use a brand face later, add the font files under
+`Packages/DesignSystem/Sources/DesignSystem/Resources/Fonts/`, register them at launch with
+`CTFontManagerRegisterFontsForURL`, return `Font.custom(_:fixedSize:)` from
+`KXFont.font(_:size:)` (fixed size, because `KXFontModifier` has already scaled it) and
+re-record the snapshots. Nothing else changes, because every component uses `.kxFont(_:)`.
 
 ### Components
 
@@ -544,29 +561,33 @@ light, dark and an accessibility text size, and snapshot tests:
 
 | Component | Purpose |
 | --- | --- |
-| `KXButton`, `KXButtonStyle` (`.kx(...)`) | Primary (brand fill), secondary (gold hairline outline), tertiary; regular and compact; loading, disabled, full width |
-| `KXCard`, `KXCardStyle` | Cream panel (standard or elevated), radius 18, hairline border, optional gold inset ring |
-| `KXBadge` | Gold, urgency, neutral and success capsules |
-| `KXPriceTag` | Price, struck-through compare-at price, savings badge, optional tax note, combined accessibility label |
-| `KXSectionHeader` | Serif title, eyebrow, short gold rule, optional trailing action |
+| `KXButton`, `KXButtonStyle` (`.kx(...)`) | Capsules: primary (black fill), secondary (thin ink outline), tertiary; regular and compact; loading, disabled, full width |
+| `KXCard`, `KXCardStyle` | Flat light grey panel (standard or elevated), radius 12, no border; `isOutlined` draws it white with a thin ink outline for the money-back promise |
+| `KXBadge` | Accent (ink), urgency (sale red), neutral and success capsules |
+| `KXPriceTag` | Price (sale red when reduced), struck-through compare-at price, savings badge (above the price in the regular size), optional tax note and lowest price of 30 days, combined accessibility label |
+| `KXSectionHeader` | Bold title, optional eyebrow, optional trailing action |
 | `KXSpecRow` | Label and value with a dot leader; stacks at large text sizes |
-| `KXStepTimeline` | Vertical or horizontal steps with gold numerals (done, current, upcoming) |
-| `KXAccordion`, `KXAccordionItem` | Expandable rows with a gold plus that turns into a cross |
+| `KXStepTimeline` | Vertical or horizontal steps with white numerals on ink discs (done, current, upcoming) |
+| `KXAccordion`, `KXAccordionItem` | Expandable rows with a chevron that turns upward, each followed by a hairline |
 | `KXCountdown`, `KXCountdownComponents` | Flip-digit countdown to a date, days from 24 h, `onExpire`, no flip with Reduce Motion |
 | `KXTrustStrip`, `KXTrustItem` | Grid or carousel of trust facts, optional footnote marker and tap action |
-| `KXProductCard`, `KXProductCardModel`, `KXProductImage` | Product tile with image, badge, serif title and compact price tag |
-| `KXKeyCard`, `KXLicenseKeyFormatting` | Certificate-style license key card with masking, grouping and copy |
+| `KXProductCard`, `KXProductCardModel`, `KXProductImage` | Product tile: square (or, with `imageAspectRatio`, portrait) photo tile without card or border, badge, regular title of up to three lines (space reserved) and compact price tag |
+| `KXProductCardSkeleton` | The loading placeholder of a product card in its exact size: skeleton photo tile and lines over invisible text in the card's styles |
+| `KXKeyCard`, `KXLicenseKeyFormatting` | Black license key card with masking, grouping and copy |
 | `KXClipboard` | `copySensitive(_:expiresAfter:)`: local-only pasteboard item that expires after 120 s |
 | `KXSkeleton`, `.kxSkeleton(isActive:)` | Placeholder with shimmer (none with Reduce Motion) |
-| `KXEmptyState` | SF Symbol in a gold ring, serif title, message, optional action |
+| `KXEmptyState` | SF Symbol on a light grey disc, bold title, message, optional action |
 | `KXBanner`, `.kxBanner(isPresented:placement:banner:)` | Offline, error, info and success banners with VoiceOver announcements; `overlay` or `inset` placement |
-| `KXWordmark` | The interim typographic "KARINEX" logo |
-| `KXDivider` | Hairline divider, standard or gold accent, horizontal or vertical |
+| `KXWordmark` | The KARINEX store logo (template asset `KarinexLogo`, tinted, scales with Dynamic Type) |
+| `KXDivider` | Hairline divider, standard or ink accent, horizontal or vertical |
 
 Foundation helpers in `Foundation/`: `KXColor`, `KXTypography` (`.kxFont(_:)`, `KXFont`),
 `KXLayout` (`KXSpacing`, `KXRadius`, `KXBorder`, `.kxScreenBackground()`, `.kxGutter()`),
-`KXMotion` (`.standard`, `.snappy`, `.gentle`, `.fade`, all Reduce Motion aware) and
-`KXHaptics`.
+`KXPhotoTile` (`.kxPhotoTile()`, `kxIsInPhotoTile`), `KXMotion` (`.standard`, `.snappy`,
+`.gentle`, `.fade`, `.swap`, all Reduce Motion aware, plus `cycleDwell`, `cycleProgress` and
+`swapBlurRadius` for cycling showcases), `KXPressStyle` (`.buttonStyle(.kxPress)`: cards
+and tiles shrink to `MotionToken.pressedScale` while pressed, or dim with Reduce Motion),
+`KXLaunchIntro` (the zoom into the logo at app launch) and `KXHaptics`.
 
 Components take already-localized strings from the caller. Strings that belong to a component
 itself (for example "Kopieren" on the key card or the default offline message) live in the
@@ -581,7 +602,8 @@ motion, and one page per component with its variants and states (for example
 `KXGalleryFoundationPages.swift`, `KXGalleryCommercePages.swift`, `KXGalleryContentPages.swift`,
 `KXGalleryFeedbackPages.swift` and `KXGallerySupport.swift`. Its preview settings override
 appearance and Dynamic Type size for the pages it opens. `AccountView` links to it in DEBUG
-builds, so it is one tap away on the Konto tab.
+builds, below the version line at the end of the Konto tab (which shows the benefits or the
+profile, then plain menu lists with hairlines, no cards).
 
 ### Snapshot tests
 
@@ -623,6 +645,7 @@ share one cache entry. `ProductImagePrefetcher` prefetches the next row or page 
 requests `ProductImage` will make. Budget: less than 40 KB per product card
 ([PERFORMANCE.md](PERFORMANCE.md)).
 
+
 ## Commerce layer (Phase 1)
 
 `CommerceUI` (`Packages/Features/Sources/CommerceUI`) holds what several features share, so no
@@ -644,7 +667,20 @@ feature imports another.
 - After every change `checkoutPreloader` is called with the new checkout URL, debounced by
   `preloadDelay`. The App sets it to `CheckoutConfiguration.preloader`, so CommerceUI does not
   import Checkout Kit.
-- Cart, line and checkout identifiers are never logged.
+- Signed-in checkout (Shopify's "Authenticate checkouts" for Checkout Kit): the App sets
+  `customerAccessToken` to `CustomerSessionStore.checkoutAccessToken()`. While a customer is
+  signed in, `checkoutURL()` puts their Customer Account API token on the cart
+  (`cartBuyerIdentityUpdate` with `customerAccessToken`, refreshed for every checkout because
+  signed-in checkout URLs expire), marks the cart under `signedInCartIDKey` before the request,
+  and calls `checkoutInvalidator` (`CheckoutConfiguration.invalidator`, Checkout Kit's
+  `invalidate()`), so a preloaded guest checkout never appears. Checkout then opens with the
+  customer's e-mail address, addresses and saved payment methods, and the order belongs to the
+  account. A marked cart is not preloaded. A refused token opens a guest checkout.
+- After a sign-out (`CustomerSessionStore.onSignedOut`) `signOutCustomer()` replaces a marked
+  cart with a new cart holding the same lines and discount codes and drops Checkout Kit's cache;
+  if that fails, the cart is forgotten. `checkoutURL()` does the same for a marked cart when
+  nobody is signed in, so another person never sees the previous customer's checkout.
+- Cart, line and checkout identifiers and the customer token are never logged.
 
 **MarketStore.** Resolves, persists and applies the market, as described in
 [Markets and languages](#markets-and-languages).
@@ -680,14 +716,89 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
 (PROMPT.md 3.4).
 
 **Features built on it.**
-- `ProductFeature`: gallery with full-screen zoom, variant selector, price, key facts from
-  metafields, "So läuft es ab", description, comparison row (Shopify's `RELATED`
-  recommendations), FAQ, the 100-day promise with its condition, the withdrawal notice for
-  digital goods, and a sticky purchase bar. Sections without data are omitted, never faked.
-- `CatalogFeature`: collection directory, collection screen with sort, filters and cursor
-  pagination. `SearchFeature`: predictive suggestions, results with sort and pagination, recent
-  searches. `HomeFeature`: live rows from collections and the guides blog. `CartFeature`: lines,
-  quantity, undo, discount codes with `userErrors`, totals, cross-sell, notices.
+- `ProductFeature`: gallery with full-screen zoom, variant selector, price in the sale look
+  (with the store's lowest price of 30 days for single-variant products), the linked products
+  row (`ProductLinkedProductsRow`, from `Product.linkedProducts`), the payment marks below the
+  buy buttons, key facts from metafields, the collapsible rows "Beschreibung" (the full
+  description), "So läuft es ab" and "Aktivierung", the "Passend dazu" row (Shopify's `COMPLEMENTARY`
+  recommendations, loaded in parallel with the comparison row of `RELATED` recommendations),
+  FAQ, the 14-day promise with its condition, the withdrawal notice for digital goods, and a
+  sticky purchase bar. Sections without data are omitted, never faked. `ProductToolbar` puts the
+  share arrow and the shopping bag with the cart's item count (`CartBagIcon`, opens the cart)
+  into the navigation bar as plain symbols (no glass circle on iOS 26). The bag is
+  `CartBagShape` in CommerceUI, the same as in the Warenkorb tab: a filled outline drawn on an
+  18.46 by 22 point grid that scales to its frame, so it takes the foreground style like a symbol
+  and renders into the tab's template image.
+- `CatalogFeature`: the Shop tab laid out like the category pages of fashion retail apps
+  (`CatalogDirectory` decides the sections: the bestseller and sale collections as two large
+  cards, ink and sale red; the product families as rows with a short line and a photo; the
+  single versions as a shelf of photo cards; every other collection as a list), and the collection
+  screen with sort, filters and cursor pagination. The photos come from one request:
+  `CollectionsQuery` asks every collection for its first three products and keeps the first
+  image (`CollectionSummary.previewImage`, about 6 query cost per collection, so the 60
+  requested stay well below the tokenless limit of 1000); `CatalogPhoto` shows a neutral box
+  for a collection without any. `CollectionNames` (CommerceUI) replaces the
+  store's search engine titles ("SALE – Stark reduzierte Angebote") with short names on the
+  Shop tab, the collection screen and in the search suggestions; clean store titles stay. `SearchFeature`: predictive suggestions, results with sort and pagination, recent
+  searches; `fieldActivation` (from `AppRouter.searchFieldRequests`, counted for every empty
+  search a screen asks for) puts the cursor into the field when the Start tab's search field
+  opens the tab. `CartFeature`: the lines as a list like fashion retail apps (photo with the
+  reduction, vendor, title, price with the former price, an "x" to remove; photo and texts open
+  the product), quantity, removal (a swipe to the left uncovers a red "Entfernen"; a long swipe,
+  that action or the "x" calls `CartViewModel.requestRemoval(of:after:)`, which marks the line
+  in `removingLineIDs` and removes it after 3 seconds (10 with VoiceOver) unless
+  `cancelRemoval(of:)` keeps it; `CartLineRemovalPanel` shows "Produkt wird entfernt…" with
+  "Abbrechen", and `CartSwipe` holds the swipe threshold), discount codes with `userErrors`, totals, cross-sell, payment
+  marks, notices.
+- `HomeFeature`, laid out like the About You app: `HomeModules` names the modules and their
+  store collections (stories, showcase, bestsellers, deals, versions, guides blog);
+  its `layout` lists every collection once (8 products for rows, 1 for a version tile, the
+  larger size when both) and `HomeViewModel` loads them concurrently, each with its own
+  `LoadState`, readable and reloadable by handle. `HomeView` is a `LazyVStack` with the logo bar
+  (`HomeBrandBar`, Merkliste heart with the saved count) and one section whose pinned header is
+  the search field (`HomeSearchField`; a hairline appears once it pins, detected from its frame
+  in the content coordinate space); the section body is one plain `VStack`, so every module
+  exists from the start (UI tests reach the trust facts without lazy loading). "Für Sie" holds
+  `HomeStoryCarousel` (a fixed panel in the store color, pages with `scrollPosition(id:)`, fixed dots),
+  `HomeTrustSection`, `HomeCategoryShowcase` (see below), the bestseller row, the sale panel
+  (`HomeProductPanel`), "Zuletzt angesehen", `HomeVersionGrid`, `HomeServiceTiles`
+  (account routes), `HomeArticleSection` and the support card. Empty collections drop their module, failed ones show a
+  compact error with "Erneut versuchen".
+- Category icons: `HomeCategory.icon` is a `HomeCategoryIcon`, an image set of
+  `HomeFeature/Resources/CategoryIcons.xcassets`. The icons are hand-drawn SVG (24 point
+  viewBox, 1.5 point strokes with round caps and joins, one shape filled at 20 % opacity, solid
+  dots as circles, every element with its own presentation attributes and no CSS), kept as
+  vectors (`preserves-vector-representation`) and rendered as templates, so `HomeCategoryTile`
+  tints them with the text color and scales them with Dynamic Type (26 points at the default
+  size). `HomeCategoryIconTests` loads every one from the module bundle.
+- `HomeCategoryShowcase` cycles like the brand strip of About You. A `.task(id:)` keyed by
+  `HomeShowcaseCycle.Step` (the category shown and whether it cycles) waits
+  `HomeShowcaseCycle.dwell`, then selects the next category inside a `.swap` animation; the
+  chosen `HomeCategoryTile` shows `HomeShowcaseProgress`, a new view per wait that slides the
+  lifted store color in with `KXMotion.cycleProgress`, so tile and timer start together.
+  `HomeShowcaseCycle.Conditions` decides whether it cycles: enabled (`HomeView`
+  `cyclesShowcase`, off when `RootView` runs under UI tests), more than one category, on
+  screen (`onAppear`/`onDisappear`, and from iOS 18 `onScrollVisibilityChange` at half the
+  showcase) in the active scene, no VoiceOver, Switch Control or Reduce Motion, and not held
+  by the customer (a tap on a tile, or from iOS 18 `onScrollPhaseChange` `.interacting` on
+  the tiles or the products, before that a sideways drag); the hold ends when the showcase
+  leaves the screen. The panels of all categories (`HomePanelContent` with
+  `ProductRowCardSize.large`) lie in one `ZStack`, all but the chosen one transparent,
+  blurred, without hit testing and hidden from VoiceOver, so the panel height is the largest
+  of them and a switch never relayouts the page or reloads photos. The row of tiles follows
+  the selection with `ScrollViewReader.scrollTo(_:anchor: .center)`.
+- Payment marks (`CommerceUI/Payments`): `PaymentMethod.methods(for:)` turns Shopify's
+  `PaymentSettings` (`shop.paymentSettings`) into the marks to show: Apple Pay only when Shopify
+  lists it, the accepted card brands in Shopify's order (a neutral card symbol when Shopify
+  names none), UnionPay (no `CardBrand` of Storefront API 2026-10), Google Pay only when Shopify
+  lists it, then Klarna, Rechnung and Vorkasse, which Shopify's settings do not cover (PROMPT.md
+  section 2). `PaymentMethodsStore` (in `AppContainer`, injected into the environment by
+  `RootView`) loads them once per launch and keeps the business facts on failure;
+  `PaymentMethodsRow` centers the title and the marks in rows that wrap (`KXFlowLayout`, a
+  `Layout` in DesignSystem whose row breaking `KXFlowLayoutTests` checks) and draws the PDF marks
+  of `PaymentMethods.xcassets` (sources and MIT license in `Tools/Brand/payment-icons`). Rechnung
+  and Vorkasse have no brand mark: a plain white card with an SF Symbol and the localized name
+  in capitals, light in dark mode too, like the PDF marks.
 - `CheckoutFeature`: see below.
 
 **Checkout.** `CheckoutCoordinator` is the state machine, free of Checkout Kit so it is testable:
@@ -766,6 +877,11 @@ through `ProductLookupRepository` (`ProductsByIDQuery`, one Storefront `nodes` c
 products dropped) in the current market. The App puts the store and the lookup into the SwiftUI
 environment (`.environment(savedProductsStore)`, `\.productLookup`); the product page reads
 them optionally, so previews and tests without them simply show no heart and no history.
+The product photo's heart (`ProductWishlistButton`) sits on a white disc and animates a save
+with one `KeyframeAnimator` (fill from the center, pop, burst of four small hearts in
+`ProductHeartBurst`), triggered from the tap so the first frame already starts empty; the
+timings are `MotionToken.heartFillDuration`, `heartPopDuration`, `heartPopScale` and
+`heartBurstDuration`, and Reduce Motion skips the animation.
 
 ### Push notifications
 
@@ -921,8 +1037,11 @@ DesignTokens tests run through `xcodebuild` because the package declares only iO
   the same before archiving.
 - **Secrets.** `scripts/write-secrets-xcconfig.sh` writes `Config/Secrets.xcconfig` from the
   repository secrets `KX_STOREFRONT_ACCESS_TOKEN`, `KX_CUSTOMER_ACCOUNT_CLIENT_ID` and
-  `KX_APPLE_TEAM_ID` (all optional for CI; empty values keep the tokenless fallback), validating
-  each value so it cannot break the xcconfig syntax.
+  `KX_APPLE_TEAM_ID` (all optional for CI; an empty value writes no line, so the default of
+  `Config/Base.xcconfig` stays), validating each value so it cannot break the xcconfig syntax.
+  The public Storefront token of the "Karinex Headless" channel is that default, so every build
+  loads metafields (specs, FAQ, linked products) without a CI secret. Only the private `shpat_`
+  Admin token must never enter the app or the repository.
 - **TestFlight lane.** `fastlane beta` requires `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_CONTENT`
   (the .p8 text or its base64) and `KX_APPLE_TEAM_ID`; it validates the key, checks the project sync,
   writes the secrets file, sets the build number to the latest TestFlight build plus one, builds
@@ -968,13 +1087,11 @@ and `LaunchBackground`, which iOS reads by name before code runs; they mirror `b
 
 ### ADR 4: System serif (New York) instead of bundling Cormorant Garamond for now
 
+Superseded by ADR 11 on 2026-10-25: the app no longer uses a serif face.
+
 The brand uses Cormorant Garamond on the web, but the logo and brand redesign is still pending.
-The system serif gives optical sizes, every weight, complete glyph coverage for all 11 languages
-and first-class Dynamic Type at no binary, licensing or registration cost, and stays legible at
-small and accessibility sizes where a thin-stroked display face struggles. All serif text goes
-through `TypographyToken.design == .serif` and `KXFont.font(_:size:)`, so switching later is a
-local change (steps in [Typography](#typography-system-serif-new-york-for-now)) followed by
-re-recorded snapshots.
+The system serif gave optical sizes, every weight, complete glyph coverage for all 11 languages
+and first-class Dynamic Type at no binary, licensing or registration cost.
 
 ### ADR 5: `ProductCollection` instead of `Collection`
 
@@ -1035,6 +1152,19 @@ mutations, de-duplication and redacted logging, and runs on Linux. Every operati
 validated against the live API when fixtures are recorded, and decoding tests fail loudly on
 schema changes. Revisit if the operation count grows to where generated types pay off.
 
+### ADR 11: A monochrome, photo-first design ("KARINEX Clean")
+
+After using the first TestFlight build, the owner rejected the green, cream and gold
+"Editorial Luxe" look and asked for the clarity of fashion retail apps: big photos, black and
+white, modern type. The interface is therefore black, white and neutral grey with one sale red,
+all text is SF Pro, buttons are capsules, panels are flat and product photos are square and edge
+to edge on a light grey tile (`.kxPhotoTile()`). The product screen follows the same pattern:
+photos first, then title, price and icon rows, collapsible details, and a bar with the price and
+one black "In den Warenkorb" button; "Jetzt kaufen" stays as a secondary button below the
+variants. The change lives almost entirely in `DesignTokens` and the `KX*` components, so the
+feature screens kept their structure. `DesignTokensTests` now fails when a token other than the
+status colors and the sale red gets a hue, so the direction cannot drift back by accident.
+
 ## Roadmap
 
 Delivery phases from PROMPT.md 14. Feature names follow `Packages/Features/Package.swift`.
@@ -1083,7 +1213,17 @@ Customer Account client ID and BFF host for an end-to-end test on a device.
   appearance, notifications, privacy consents, Face ID, about).
 - **AccountFeature:** Customer Account API login (OAuth 2.0 with PKCE through
   `ASWebAuthenticationSession`), orders with timeline, addresses, invoices, account deletion,
-  logout.
+  logout. `AccountLogin.signIn` runs the login (ephemeral session, the app's language) for the
+  Konto tab and `AccountSignInGate`, which wraps Bestellungen, an order and Persönliche Daten in the App's
+  routing: signed out it shows the reason and "Anmelden" in place, signed in the screen itself.
+  The Konto rows carry a short line under the title; "Meine Bestellungen" is listed signed out
+  too and runs the login before it opens the orders. `accountSignInErrorAlert` presents a failed
+  login only on the screen that is on screen. `ProfileScreen` ("Persönliche Daten") holds the
+  customer card, "Name ändern" (`customerUpdate`), the addresses as horizontal cards, "Konto und
+  Daten löschen" and "Abmelden"; `ProfileViewModel` loads the customer and the address book
+  together. Orders are photo cards (`OrderCard`, first five line items of the list query) and
+  the detail offers "Erneut kaufen" (`OrderReorder.lines`, each line's `variantID` and quantity
+  into `CartStore`).
 - **ShopifyKit:** a Customer Account API client on `GraphQLClient` with a bearer token
   `authorization` supplier, endpoint discovery from `customerAccountDiscoveryURL`.
 - **Backend:** a BFF client and a mock server, `BFF_CONTRACT.md` and `openapi.yaml`; feature

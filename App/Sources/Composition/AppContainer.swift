@@ -106,6 +106,9 @@ final class AppContainer {
     let settingsStore: AppSettingsStore
     /// The wishlist and the recently viewed products, on this device only.
     let savedProductsStore: SavedProductsStore
+    /// The accepted payment methods (Shopify's payment settings plus Klarna), shown with their
+    /// acceptance marks in the cart and on the product page.
+    let paymentMethodsStore: PaymentMethodsStore
     /// Push registration, only after consent.
     let pushCoordinator: PushRegistrationCoordinator
     /// The license delivery Live Activity.
@@ -176,6 +179,7 @@ final class AppContainer {
             appVersion: resolution.configuration.appVersion
         )
         cartStore.checkoutPreloader = CheckoutConfiguration.preloader
+        cartStore.checkoutInvalidator = CheckoutConfiguration.invalidator
         let marketStore = MarketStore(
             localizationRepository: localizationRepository,
             contextProvider: contextProvider,
@@ -204,12 +208,18 @@ final class AppContainer {
             callbackScheme: resolution.configuration.customerAccountCallbackScheme,
             hasStoredTokens: account.hasStoredTokens
         )
-        sessionStore.onSignedOut = { [licenseCache] in
+        sessionStore.onSignedOut = { [licenseCache, cartStore] in
             licenseCache.removeAll()
+            Task { await cartStore.signOutCustomer() }
+        }
+        // Signed-in checkouts: the cart carries the customer's token right before checkout.
+        cartStore.customerAccessToken = { [weak sessionStore] in
+            await sessionStore?.checkoutAccessToken()
         }
         self.sessionStore = sessionStore
         settingsStore = AppSettingsStore(store: services.preferences)
         savedProductsStore = SavedProductsStore(store: services.preferences)
+        paymentMethodsStore = PaymentMethodsStore(catalog: catalogRepository)
         let pushCoordinator = PushRegistrationCoordinator(
             system: SystemRemoteNotifications(),
             backend: account.backend,

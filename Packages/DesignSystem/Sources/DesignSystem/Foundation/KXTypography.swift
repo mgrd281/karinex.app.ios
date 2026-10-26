@@ -51,7 +51,6 @@ public enum KXFont {
 extension TypographyToken.Design {
     var swiftUI: Font.Design {
         switch self {
-        case .serif: .serif
         case .sans: .default
         case .monospaced: .monospaced
         }

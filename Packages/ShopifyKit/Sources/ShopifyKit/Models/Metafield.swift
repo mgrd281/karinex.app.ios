@@ -52,6 +52,25 @@ public struct MetafieldIdentifier: Sendable, Hashable, Codable, CustomStringConv
     }
 }
 
+// MARK: - RecentSales
+
+/// How many units of a product sold in the last days, as the store reports it.
+public struct RecentSales: Sendable, Hashable {
+    /// The smallest count worth showing; fewer sales are not shown at all.
+    public static let minimumCount = 5
+
+    /// The units sold.
+    public let count: Int
+    /// The length of the window in days.
+    public let days: Int
+
+    /// Creates a value.
+    public init(count: Int, days: Int) {
+        self.count = count
+        self.days = days
+    }
+}
+
 // MARK: - FAQEntry
 
 /// One question and answer of the `karinex.faq` metafield.
@@ -246,6 +265,11 @@ public struct ProductMetafields: Sendable, Hashable {
         public static let googleShoppingMPN = MetafieldIdentifier(namespace: "mm-google-shopping", key: "mpn")
         /// `karinex.lowest_price_30d`: existing store key, lowest price of the last 30 days.
         public static let lowestPrice30Days = MetafieldIdentifier(namespace: "karinex", key: "lowest_price_30d")
+        /// `custom.recently_sold_count`: existing store key, units sold in the window of
+        /// `custom.recently_sold_hours`, written by the store's sales script.
+        public static let recentlySoldCount = MetafieldIdentifier(namespace: "custom", key: "recently_sold_count")
+        /// `custom.recently_sold_hours`: existing store key, the length of that window in hours.
+        public static let recentlySoldHours = MetafieldIdentifier(namespace: "custom", key: "recently_sold_hours")
     }
 
     /// Every identifier the product query requests when a token is configured.
@@ -266,6 +290,8 @@ public struct ProductMetafields: Sendable, Hashable {
         Identifier.offerEndsAt,
         Identifier.googleShoppingMPN,
         Identifier.lowestPrice30Days,
+        Identifier.recentlySoldCount,
+        Identifier.recentlySoldHours,
     ]
 
     // MARK: Storage
@@ -290,8 +316,8 @@ public struct ProductMetafields: Sendable, Hashable {
     // MARK: Typed accessors
 
     /// The FAQ entries of `karinex.faq`; `nil` when missing or not a JSON array of
-    /// `{question, answer}` objects. Entries with an empty question or answer and repeated
-    /// questions are dropped.
+    /// `{question, answer}` objects. The short keys `{q, a}` of the web shop's FAQ JSON are read
+    /// too. Entries with an empty question or answer and repeated questions are dropped.
     public var faq: [FAQEntry]? {
         guard let metafield = metafield(Identifier.faq),
               let array = Self.jsonArray(metafield.value)
@@ -300,8 +326,8 @@ public struct ProductMetafields: Sendable, Hashable {
         var entries: [FAQEntry] = []
         for element in array {
             guard let object = element as? [String: Any],
-                  let question = (object["question"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines),
-                  let answer = (object["answer"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  let question = ((object["question"] ?? object["q"]) as? String)?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  let answer = ((object["answer"] ?? object["a"]) as? String)?.trimmingCharacters(in: .whitespacesAndNewlines),
                   !question.isEmpty, !answer.isEmpty,
                   seenQuestions.insert(question).inserted
             else { continue }
@@ -370,10 +396,31 @@ public struct ProductMetafields: Sendable, Hashable {
         date(Identifier.dealEndsAt) ?? date(Identifier.offerEndsAt)
     }
 
-    /// `karinex.lowest_price_30d`: a `money` metafield keeps its own currency; a plain number
-    /// is interpreted in `currency` (pass the currency of the current market's prices).
+    /// `karinex.lowest_price_30d`: a `money` metafield keeps its own currency; a decimal number
+    /// is interpreted in `currency` (pass the currency of the current market's prices). The
+    /// store's existing `number_integer` values are euro cents (docs/STORE_AUDIT.md), so they
+    /// count only when `currency` is EUR.
     public func lowestPrice30Days(currency: CurrencyCode) -> MoneyV2? {
-        money(Identifier.lowestPrice30Days, defaultCurrency: currency)
+        guard let metafield = metafield(Identifier.lowestPrice30Days), metafield.type == "number_integer" else {
+            return money(Identifier.lowestPrice30Days, defaultCurrency: currency)
+        }
+        guard currency == .eur, let cents = Self.nonBlank(metafield.value).flatMap({ Int($0) }), cents > 0 else {
+            return nil
+        }
+        return MoneyV2(amount: Decimal(cents) / 100, currencyCode: .eur)
+    }
+
+    /// The units sold recently from `custom.recently_sold_count` and `custom.recently_sold_hours`;
+    /// `nil` unless both are integers, the window is whole days of at least two, and the count
+    /// reaches ``RecentSales/minimumCount``.
+    public var recentSales: RecentSales? {
+        guard let count = integer(Identifier.recentlySoldCount),
+              let hours = integer(Identifier.recentlySoldHours),
+              count >= RecentSales.minimumCount,
+              hours >= 2 * 24,
+              hours.isMultiple(of: 24)
+        else { return nil }
+        return RecentSales(count: count, days: hours / 24)
     }
 
     // MARK: Generic accessors

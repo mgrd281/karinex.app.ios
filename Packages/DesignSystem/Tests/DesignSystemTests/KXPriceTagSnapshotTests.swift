@@ -3,7 +3,8 @@ import SwiftUI
 import Testing
 
 extension DesignSystemSnapshotTests {
-    /// `KXPriceTag` with every optional part, in both sizes, and without a tax note.
+    /// `KXPriceTag` with every optional part (sale red price, savings badge above it, lowest price
+    /// of 30 days), in both sizes, and without a tax note.
     @MainActor
     @Suite("KXPriceTag")
     struct KXPriceTagSnapshotTests {
@@ -16,7 +17,8 @@ extension DesignSystemSnapshotTests {
                         price: SnapshotStoreData.windowsProPrice,
                         compareAtPrice: SnapshotStoreData.windowsProCompareAtPrice,
                         savings: copy.windowsProSavings,
-                        taxNote: copy.taxNote
+                        taxNote: copy.taxNote,
+                        lowestPrice: SnapshotStoreData.windowsProPrice
                     )
                     KXPriceTag(
                         price: SnapshotStoreData.officeProPlusPrice,

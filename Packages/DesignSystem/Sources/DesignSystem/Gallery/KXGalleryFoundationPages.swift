@@ -14,16 +14,19 @@ struct KXGalleryColorGroup: Identifiable, Sendable {
 
     /// Every token grouped by role, in the order of `ColorToken`. Each token appears exactly once.
     static let all: [KXGalleryColorGroup] = [
-        KXGalleryColorGroup(title: "Surfaces", tokens: [.background, .surface, .surfaceElevated, .skeleton]),
+        KXGalleryColorGroup(
+            title: "Surfaces",
+            tokens: [.background, .surface, .surfaceElevated, .skeleton, .imageBackground, .imageIcon]
+        ),
         KXGalleryColorGroup(title: "Text", tokens: [.textPrimary, .textSecondary, .textTertiary]),
         KXGalleryColorGroup(title: "Brand and actions", tokens: [.brand, .brandPressed, .brandSoft, .textOnBrand]),
         KXGalleryColorGroup(title: "Accent", tokens: [.accent, .accentDeep, .accentText, .textOnAccent]),
-        KXGalleryColorGroup(title: "Urgency", tokens: [.urgency, .urgencyText, .textOnUrgency]),
+        KXGalleryColorGroup(title: "Sale and urgency", tokens: [.urgency, .urgencyText, .textOnUrgency]),
         KXGalleryColorGroup(title: "Lines and icons", tokens: [.hairline, .divider, .iconSecondary]),
         KXGalleryColorGroup(title: "Status", tokens: [.success, .warning, .error, .info]),
         KXGalleryColorGroup(
             title: "License key card",
-            tokens: [.keyCardBackground, .keyCardText, .keyCardMuted, .keyCardAccent]
+            tokens: [.keyCardBackground, .keyCardText, .keyCardMuted]
         ),
         KXGalleryColorGroup(title: "Overlays", tokens: [.scrim]),
     ]
@@ -180,13 +183,14 @@ struct KXGalleryTypographyPage: View {
         case .headline, .body, .callout, .subheadline: KXGallerySamples.supportChannels
         case .footnote, .caption: KXGallerySamples.taxNote
         case .eyebrow: "Lizenzschlüssel"
+        case .figure: "3"
         case .price: KXGallerySamples.officeProPlusPrice
         case .numeral: "02 03 04"
         case .licenseKey: KXGallerySamples.placeholderLicenseKey
         }
     }
 
-    /// "title2: 24 pt, serif, medium, relative to title2, tracking -0.2".
+    /// "title2: 22 pt, sans, semibold, relative to title2, tracking -0.2".
     private static func metrics(of token: TypographyToken) -> String {
         var parts = [
             "\(token.rawValue): \(token.baseSize.formatted()) pt",
@@ -247,7 +251,7 @@ struct KXGalleryLayoutPage: View {
 
     var body: some View {
         KXGalleryPage(topic: .layout) {
-            KXGalleryDemo("Spacing", note: "KXSpacing on the 8 pt grid, drawn as gold bars.") {
+            KXGalleryDemo("Spacing", note: "KXSpacing on the 8 pt grid, drawn as ink bars.") {
                 VStack(alignment: .leading, spacing: KXSpacing.xs) {
                     ForEach(spacing) { metric in
                         HStack(spacing: KXSpacing.s) {
@@ -304,7 +308,7 @@ struct KXGalleryLayoutPage: View {
     }
 }
 
-/// The four brand curves side by side: each row moves a gold dot across its track.
+/// The brand curves side by side: each row moves an ink dot across its track.
 private struct KXGalleryMotionDemo: View {
     /// A motion curve with its developer label.
     private struct MotionSample: Identifiable {
@@ -319,6 +323,7 @@ private struct KXGalleryMotionDemo: View {
         MotionSample(name: "snappy", curve: .snappy),
         MotionSample(name: "gentle", curve: .gentle),
         MotionSample(name: "fade", curve: .fade),
+        MotionSample(name: "swap", curve: .swap),
     ]
 
     @State private var isAtEnd = false
@@ -334,7 +339,7 @@ private struct KXGalleryMotionDemo: View {
                     Circle()
                         .fill(KXColor.accent)
                         .frame(width: KXSpacing.l, height: KXSpacing.l)
-                        .opacity(item.curve == .fade && isAtEnd ? 0.35 : 1)
+                        .opacity([.fade, .swap].contains(item.curve) && isAtEnd ? 0.35 : 1)
                         .frame(maxWidth: .infinity, alignment: isAtEnd ? .trailing : .leading)
                         .padding(KXSpacing.xxs)
                         .background(KXColor.surface, in: Capsule(style: .continuous))

@@ -19,14 +19,16 @@ public enum ProductCardHighlight: Sendable, Hashable {
 /// A ``KXProductCard`` for a Shopify ``ShopifyKit/ProductSummary``: title, price, compare-at
 /// price and the market's tax note from ``PriceDisplay``, the image through ``ProductImage``.
 ///
-/// Badges: "Angebot" when the product is reduced (compare-at price above the price); otherwise
-/// the caller's ``ProductCardHighlight``. No ratings, review counts or invented claims. A
-/// product that cannot be bought shows "Derzeit nicht verfügbar".
+/// Badges: when the product is reduced (compare-at price above the price) a red badge with the
+/// reduction ("-80 %"), or "Angebot" when it is below 1 %, and the price in sale red; otherwise
+/// the caller's ``ProductCardHighlight`` in ink. No ratings, review counts or invented claims.
+/// A product that cannot be bought shows "Derzeit nicht verfügbar".
 ///
 /// The card is not a button; wrap it in a `Button` or `NavigationLink`.
 public struct ProductCardView: View {
     private let product: ProductSummary
     private let highlight: ProductCardHighlight
+    private let imageAspectRatio: CGFloat
 
     @Environment(\.locale) private var locale
     @Environment(\.commerceCountry) private var country
@@ -36,14 +38,17 @@ public struct ProductCardView: View {
     /// - Parameters:
     ///   - product: The product from Shopify.
     ///   - highlight: The editorial badge decided by the caller. Defaults to none.
-    public init(_ product: ProductSummary, highlight: ProductCardHighlight = .none) {
+    ///   - imageAspectRatio: The width of the photo tile divided by its height (1, square, by
+    ///     default).
+    public init(_ product: ProductSummary, highlight: ProductCardHighlight = .none, imageAspectRatio: CGFloat = 1) {
         self.product = product
         self.highlight = highlight
+        self.imageAspectRatio = imageAspectRatio
     }
 
     public var body: some View {
         let model = Self.model(for: product, highlight: highlight, country: country, locale: locale)
-        KXProductCard(model) {
+        KXProductCard(model, imageAspectRatio: imageAspectRatio) {
             ProductImage(product.featuredImage, isDecorative: true)
         }
     }
@@ -57,7 +62,7 @@ public struct ProductCardView: View {
     ) -> KXProductCardModel {
         let display = PriceDisplay(product: product, country: country, locale: locale)
         let badge: String? = if display.compareAtPrice != nil {
-            String(localized: "commerce.product.badge.sale", bundle: .module)
+            display.savingsText ?? String(localized: "commerce.product.badge.sale", bundle: .module)
         } else if highlight == .bestseller {
             String(localized: "commerce.product.badge.bestseller", bundle: .module)
         } else {
@@ -70,7 +75,7 @@ public struct ProductCardView: View {
             compareAtPrice: display.compareAtPrice,
             taxNote: display.taxNoteText,
             badge: badge,
-            badgeTone: .gold,
+            badgeTone: display.compareAtPrice != nil ? .urgency : .accent,
             imageURL: product.featuredImage?.url,
             availabilityNote: product.availableForSale
                 ? nil

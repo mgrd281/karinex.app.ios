@@ -2,8 +2,9 @@ import SwiftUI
 
 // MARK: - KXSectionHeader
 
-/// The editorial section header: an optional gold eyebrow, a serif title and a short gold rule
-/// (32 x 2 pt) below it, with an optional trailing text action such as "Alle anzeigen".
+/// The section header: an optional small eyebrow, a bold sans serif title and an optional
+/// trailing text action such as "Alle anzeigen". No rules or ornaments; the type carries the
+/// hierarchy.
 ///
 /// The title carries the header trait for VoiceOver rotor navigation; the eyebrow is read
 /// together with the title. At accessibility text sizes the action moves below the title so
@@ -45,13 +46,12 @@ public struct KXSectionHeader: View {
             if let eyebrow {
                 Text(eyebrow)
                     .kxFont(.eyebrow)
-                    .foregroundStyle(KXColor.accentText)
+                    .foregroundStyle(KXColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityHidden(true)
             }
             if dynamicTypeSize.isAccessibilitySize {
                 titleText
-                goldRule
                 actionButton
             } else {
                 HStack(alignment: .firstTextBaseline, spacing: KXSpacing.m) {
@@ -59,7 +59,6 @@ public struct KXSectionHeader: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     actionButton
                 }
-                goldRule
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -74,13 +73,6 @@ public struct KXSectionHeader: View {
             .fixedSize(horizontal: false, vertical: true)
             .accessibilityLabel(accessibilityTitle)
             .accessibilityAddTraits(.isHeader)
-    }
-
-    private var goldRule: some View {
-        Rectangle()
-            .fill(KXColor.accent)
-            .frame(width: 32, height: KXBorder.emphasis)
-            .accessibilityHidden(true)
     }
 
     @ViewBuilder private var actionButton: some View {

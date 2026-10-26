@@ -3,8 +3,8 @@ import XCTest
 // MARK: - CommerceUITests
 
 /// Critical-path UI tests of the commerce core against the live store (tokenless Storefront
-/// API): products on Start, product detail, adding to the cart, the cart badge, the cart and
-/// Shopify checkout, search and deep links.
+/// API): products on Start, the Shop tab, product detail, adding to the cart, the cart badge,
+/// the cart and Shopify checkout, search and deep links.
 ///
 /// The app runs with `-kx.uitesting` (fixed online network status, no market sheet),
 /// `-kx.reset` (empty cart, no state from earlier runs) and German language and region. The
@@ -104,6 +104,24 @@ final class CommerceUITests: XCTestCase {
         field.typeText("\n")
         XCTAssertTrue(element("screen.searchResults", in: app).waitForExistence(timeout: networkTimeout), "The results did not open")
         XCTAssertTrue(productCard(in: app).waitForExistence(timeout: networkTimeout), "The results show no products")
+    }
+
+    @MainActor
+    func testShopOpensCategoriesUnderTheirShortNames() {
+        let app = launchApp()
+
+        let shopTab = tabButton(identifier: "tab.shop", germanTitle: "Shop", in: app)
+        XCTAssertTrue(shopTab.waitForExistence(timeout: timeout))
+        shopTab.tap()
+        XCTAssertTrue(element("screen.catalog", in: app).waitForExistence(timeout: timeout))
+
+        // The sale card opens the sale collection under its short name, not the store's title.
+        let sale = app.buttons["catalog.collection.sale"]
+        XCTAssertTrue(sale.waitForExistence(timeout: networkTimeout), "The sale card is missing")
+        sale.tap()
+        XCTAssertTrue(element("screen.collection", in: app).waitForExistence(timeout: networkTimeout), "The sale did not open")
+        XCTAssertTrue(app.staticTexts["Sale"].firstMatch.waitForExistence(timeout: networkTimeout), "The sale is not titled \"Sale\"")
+        XCTAssertTrue(productCard(in: app).waitForExistence(timeout: networkTimeout), "The sale shows no products")
     }
 
     @MainActor

@@ -9,10 +9,13 @@ import SwiftUI
 /// The Konto tab (PROMPT.md 6.7).
 ///
 /// - Signed out: the benefits and "Anmelden" (Shopify's passwordless login in
-///   `ASWebAuthenticationSession`, ephemeral, so no cookies are shared with Safari). Builds
-///   without a Customer Account client ID say that login is not available yet.
-/// - Signed in: the name and e-mail address, Bestellungen, Meine Lizenzen, Adressen, then
-///   Einstellungen, Hilfe und Support, Rechtliches, "Abmelden" and "Konto löschen".
+///   `ASWebAuthenticationSession`, ephemeral, so no cookies are shared with Safari), then
+///   "Meine Bestellungen": a tap opens the login and, once signed in, the orders right away.
+///   Builds without a Customer Account client ID say that login is not available yet.
+/// - Signed in: the monogram, name and e-mail address as a card into "Persönliche Daten" (name,
+///   addresses, "Konto und Daten löschen"), Meine Bestellungen, Meine Lizenzen, Persönliche
+///   Daten, then Merkliste, Einstellungen, Hilfe und Support, Rechtliches and "Abmelden".
+/// - Every row has a short line under its title, like the account tab of fashion retail apps.
 /// - Support, legal texts and settings are reachable in both states, so the Impressum and the
 ///   privacy policy are always within two taps.
 public struct AccountView: View {
@@ -48,16 +51,17 @@ public struct AccountView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: KXSpacing.xl) {
                 if sessionStore.isSignedIn {
-                    profileCard
+                    profileHeader
                     menu(AccountMenuItem.signedIn)
+                    menu(AccountMenuItem.general)
                 } else {
-                    benefitsCard
+                    benefits
+                    menu((sessionStore.isAvailable ? AccountMenuItem.signedOut : []) + AccountMenuItem.general)
                 }
-                menu(AccountMenuItem.general)
                 if sessionStore.isSignedIn {
                     signedInActions
                 }
-                aboutSection
+                versionFooter
             }
             .padding(.horizontal, KXSpacing.gutter)
             .padding(.vertical, KXSpacing.m)
@@ -74,22 +78,7 @@ public struct AccountView: View {
                 await sessionStore.loadCustomer()
             }
         }
-        .alert(
-            Text("account.signin.error.title", bundle: .module),
-            isPresented: Binding(
-                get: { sessionStore.signInError != nil },
-                set: { if !$0 { sessionStore.dismissSignInError() } }
-            ),
-            presenting: sessionStore.signInError
-        ) { _ in
-            Button(role: .cancel) {
-                sessionStore.dismissSignInError()
-            } label: {
-                Text("account.signin.error.close", bundle: .module)
-            }
-        } message: { error in
-            Text(error.message)
-        }
+        .accountSignInErrorAlert(sessionStore)
         .confirmationDialog(
             Text("account.signout.confirm.title", bundle: .module),
             isPresented: $isSignOutConfirmationPresented,
@@ -105,25 +94,28 @@ public struct AccountView: View {
 
     // MARK: Signed out
 
-    private var benefitsCard: some View {
-        KXCard(showsInsetRing: true) {
+    /// The signed-out header: the promise, the benefits with their symbols on light grey discs,
+    /// then "Anmelden" or the note that login is not available yet. No card, as on the account
+    /// tab of fashion retail apps.
+    private var benefits: some View {
+        VStack(alignment: .leading, spacing: KXSpacing.l) {
+            VStack(alignment: .leading, spacing: KXSpacing.xs) {
+                Text("account.intro.eyebrow", bundle: .module)
+                    .kxFont(.eyebrow)
+                    .foregroundStyle(KXColor.textSecondary)
+                Text("account.intro.title", bundle: .module)
+                    .kxFont(.title1)
+                    .foregroundStyle(KXColor.textPrimary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityAddTraits(.isHeader)
+            }
             VStack(alignment: .leading, spacing: KXSpacing.m) {
-                VStack(alignment: .leading, spacing: KXSpacing.xs) {
-                    Text("account.intro.eyebrow", bundle: .module)
-                        .kxFont(.eyebrow)
-                        .foregroundStyle(KXColor.accentText)
-                    Text("account.intro.title", bundle: .module)
-                        .kxFont(.title2)
-                        .foregroundStyle(KXColor.textPrimary)
-                        .accessibilityAddTraits(.isHeader)
+                ForEach(AccountBenefit.allCases) { benefit in
+                    AccountBenefitRow(benefit: benefit)
                 }
+            }
+            if sessionStore.isAvailable {
                 VStack(alignment: .leading, spacing: KXSpacing.s) {
-                    ForEach(AccountBenefit.allCases) { benefit in
-                        AccountBenefitRow(benefit: benefit)
-                    }
-                }
-                KXDivider()
-                if sessionStore.isAvailable {
                     KXButton(
                         String(localized: "account.signin", bundle: .module),
                         systemImage: "person.crop.circle",
@@ -137,122 +129,151 @@ public struct AccountView: View {
                         .kxFont(.footnote)
                         .foregroundStyle(KXColor.textSecondary)
                         .fixedSize(horizontal: false, vertical: true)
-                } else {
-                    Text("account.signin.note", bundle: .module)
-                        .kxFont(.footnote)
-                        .foregroundStyle(KXColor.textSecondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .accessibilityIdentifier("account.signin.unavailable")
                 }
+            } else {
+                Label {
+                    Text("account.signin.note", bundle: .module)
+                        .fixedSize(horizontal: false, vertical: true)
+                } icon: {
+                    Image(systemName: "clock")
+                        .accessibilityHidden(true)
+                }
+                .kxFont(.footnote)
+                .foregroundStyle(KXColor.textSecondary)
+                .padding(KXSpacing.s)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(KXColor.surface, in: RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous))
+                .accessibilityIdentifier("account.signin.unavailable")
             }
-            .fixedSize(horizontal: false, vertical: true)
-            .padding(KXSpacing.xs)
         }
+        .padding(.top, KXSpacing.xs)
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("account.benefits")
     }
 
     private func signIn() async {
-        let session = webAuthenticationSession
-        await sessionStore.signIn(locale: AccountLoginLocale.code(for: locale)) { url, scheme in
-            do {
-                return try await session.authenticate(using: url, callbackURLScheme: scheme, preferredBrowserSession: .ephemeral)
-            } catch let error as ASWebAuthenticationSessionError where error.code == .canceledLogin {
-                throw CustomerAccountAuthError.cancelled
-            }
-        }
+        await AccountLogin.signIn(with: sessionStore, using: webAuthenticationSession, locale: locale)
     }
 
     // MARK: Signed in
 
-    private var profileCard: some View {
-        KXCard(showsInsetRing: true) {
-            VStack(alignment: .leading, spacing: KXSpacing.xs) {
-                Text("account.profile.eyebrow", bundle: .module)
-                    .kxFont(.eyebrow)
-                    .foregroundStyle(KXColor.accentText)
-                if let customer = sessionStore.customer {
-                    Text(customer.displayName)
-                        .kxFont(.title2)
-                        .foregroundStyle(KXColor.textPrimary)
-                        .accessibilityAddTraits(.isHeader)
-                    if let email = customer.emailAddress, email != customer.displayName {
-                        Text(email)
+    /// The signed-in header: the monogram, the name and the e-mail address as one card that
+    /// opens "Persönliche Daten".
+    private var profileHeader: some View {
+        Button {
+            onRoute(.account(.profile))
+        } label: {
+            HStack(spacing: KXSpacing.m) {
+                ProfileMonogram(initials: ProfileName.initials(of: sessionStore.customer))
+                VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+                    Group {
+                        if let name = ProfileName.displayName(of: sessionStore.customer) {
+                            Text(verbatim: name)
+                        } else {
+                            Text("account.profile.title", bundle: .module)
+                        }
+                    }
+                    .kxFont(.title2)
+                    .foregroundStyle(KXColor.textPrimary)
+                    .accessibilityAddTraits(.isHeader)
+                    if let email = sessionStore.customer?.emailAddress {
+                        Text(verbatim: email)
                             .kxFont(.subheadline)
                             .foregroundStyle(KXColor.textSecondary)
                     }
-                } else {
-                    Text("account.profile.title", bundle: .module)
-                        .kxFont(.title2)
+                    Text("account.profile.open", bundle: .module)
+                        .fontWeight(.semibold)
+                        .kxFont(.footnote)
                         .foregroundStyle(KXColor.textPrimary)
-                        .accessibilityAddTraits(.isHeader)
+                        .padding(.top, KXSpacing.xxs)
                 }
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                Image(systemName: "chevron.right")
+                    .fontWeight(.medium)
+                    .kxFont(.footnote)
+                    .foregroundStyle(KXColor.iconSecondary)
+                    .accessibilityHidden(true)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(KXSpacing.xs)
+            .padding(KXSpacing.m)
+            .background(KXColor.surface, in: RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous))
+            .contentShape(RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous))
         }
+        .buttonStyle(.plain)
+        .padding(.top, KXSpacing.xs)
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isButton)
         .accessibilityIdentifier("account.profile")
     }
 
+    /// "Abmelden". "Konto löschen" lives in "Persönliche Daten", next to the personal details.
     private var signedInActions: some View {
-        VStack(spacing: KXSpacing.s) {
-            KXButton(
-                String(localized: "account.signout", bundle: .module),
-                systemImage: "rectangle.portrait.and.arrow.right",
-                style: .secondary,
-                isFullWidth: true
-            ) {
-                isSignOutConfirmationPresented = true
-            }
-            .accessibilityIdentifier("account.signout")
-            KXButton(
-                String(localized: "account.delete", bundle: .module),
-                style: .tertiary,
-                isFullWidth: true
-            ) {
-                onRoute(.account(.deleteAccount))
-            }
-            .accessibilityIdentifier("account.delete")
+        KXButton(
+            String(localized: "account.signout", bundle: .module),
+            systemImage: "rectangle.portrait.and.arrow.right",
+            style: .secondary,
+            isFullWidth: true
+        ) {
+            isSignOutConfirmationPresented = true
         }
+        .accessibilityIdentifier("account.signout")
     }
 
     private func signOut() async {
-        guard let endSession = await sessionStore.signOut() else { return }
-        // Ends the Shopify session in the background; the local logout is already complete.
-        let request = URLRequest(url: endSession)
-        _ = try? await URLSession.shared.data(for: request)
+        await AccountLogin.signOut(sessionStore)
     }
 
     // MARK: Menu
 
+    /// A list of rows on the page, with hairlines between them and above and below the list.
     private func menu(_ items: [AccountMenuItem]) -> some View {
-        KXCard(padding: 0) {
-            VStack(alignment: .leading, spacing: 0) {
-                ForEach(items) { item in
-                    Button {
-                        onRoute(.account(item.destination))
-                    } label: {
-                        AccountMenuRow(item: item)
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("account.menu.\(item.rawValue)")
-                    if item != items.last {
-                        KXDivider()
-                            .padding(.leading, KXSpacing.m)
-                    }
+        VStack(alignment: .leading, spacing: 0) {
+            KXDivider()
+            ForEach(items) { item in
+                Button {
+                    open(item)
+                } label: {
+                    AccountMenuRow(item: item)
                 }
+                .buttonStyle(.plain)
+                .disabled(sessionStore.status == .signingIn)
+                .accessibilityIdentifier("account.menu.\(item.rawValue)")
+                KXDivider()
+            }
+        }
+    }
+
+    /// Opens the screen of `item`. A row that needs the account first runs the login and then
+    /// opens its screen, so "Meine Bestellungen" takes one tap and the e-mail code.
+    private func open(_ item: AccountMenuItem) {
+        guard item.requiresSignIn, !sessionStore.isSignedIn else {
+            onRoute(.account(item.destination))
+            return
+        }
+        Task {
+            await signIn()
+            if sessionStore.isSignedIn {
+                onRoute(.account(item.destination))
             }
         }
     }
 
     // MARK: About
 
-    private var aboutSection: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.m) {
-            KXSectionHeader(String(localized: "account.about.title", bundle: .module))
+    /// The store logo and the version, small and centered at the end of the page.
+    private var versionFooter: some View {
+        VStack(spacing: KXSpacing.xs) {
+            KXWordmark(size: .small, color: KXColor.textTertiary)
+                .accessibilityHidden(true)
             if !appInfo.summary.isEmpty {
-                KXCard {
-                    KXSpecRow(String(localized: "account.about.version", bundle: .module), value: appInfo.summary)
+                HStack(spacing: KXSpacing.xxs) {
+                    Text("account.about.version", bundle: .module)
+                    Text(verbatim: appInfo.summary)
+                        .monospacedDigit()
                 }
+                .kxFont(.caption)
+                .foregroundStyle(KXColor.textSecondary)
+                .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("account.about")
             }
             #if DEBUG
@@ -267,19 +288,12 @@ public struct AccountView: View {
                 }
             }
             .buttonStyle(.kx(.secondary, isFullWidth: true))
+            .padding(.top, KXSpacing.m)
             .accessibilityIdentifier("account.designSystem")
             #endif
         }
-    }
-}
-
-// MARK: - AccountLoginLocale
-
-/// The `locale` parameter of the login page: the app's language code, `pt-PT` for Portuguese.
-enum AccountLoginLocale {
-    static func code(for locale: Locale) -> String? {
-        guard let language = locale.language.languageCode?.identifier else { return nil }
-        return language == "pt" ? "pt-PT" : language
+        .frame(maxWidth: .infinity)
+        .padding(.top, KXSpacing.m)
     }
 }
 
@@ -289,16 +303,26 @@ enum AccountLoginLocale {
 enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
     case orders
     case licenses
-    case addresses
+    case profile
     case wishlist
     case settings
     case support
     case legal
 
     /// The rows only a signed-in customer sees.
-    static let signedIn: [AccountMenuItem] = [.orders, .licenses, .addresses]
+    static let signedIn: [AccountMenuItem] = [.orders, .licenses, .profile]
+    /// The rows that lead into the login when nobody is signed in.
+    static let signedOut: [AccountMenuItem] = [.orders]
     /// The rows everyone sees.
     static let general: [AccountMenuItem] = [.wishlist, .settings, .support, .legal]
+
+    /// Whether the row's screen needs a signed-in customer.
+    var requiresSignIn: Bool {
+        switch self {
+        case .orders, .licenses, .profile: true
+        case .wishlist, .settings, .support, .legal: false
+        }
+    }
 
     var id: String {
         rawValue
@@ -308,7 +332,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
         switch self {
         case .orders: .orders
         case .licenses: .licenses(orderID: nil)
-        case .addresses: .addresses
+        case .profile: .profile
         case .wishlist: .wishlist
         case .settings: .settings
         case .support: .support(orderName: nil)
@@ -320,7 +344,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
         switch self {
         case .orders: "shippingbox"
         case .licenses: "key"
-        case .addresses: "house"
+        case .profile: "person.text.rectangle"
         case .wishlist: "heart"
         case .settings: "gearshape"
         case .support: "questionmark.bubble"
@@ -332,16 +356,29 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
         switch self {
         case .orders: String(localized: "account.menu.orders", bundle: .module)
         case .licenses: String(localized: "account.menu.licenses", bundle: .module)
-        case .addresses: String(localized: "account.menu.addresses", bundle: .module)
+        case .profile: String(localized: "account.menu.profile", bundle: .module)
         case .wishlist: String(localized: "account.menu.wishlist", bundle: .module)
         case .settings: String(localized: "account.menu.settings", bundle: .module)
         case .support: String(localized: "account.menu.support", bundle: .module)
         case .legal: String(localized: "account.menu.legal", bundle: .module)
         }
     }
+
+    /// The short line under the title.
+    var subtitle: String {
+        switch self {
+        case .orders: String(localized: "account.menu.orders.subtitle", bundle: .module)
+        case .licenses: String(localized: "account.menu.licenses.subtitle", bundle: .module)
+        case .profile: String(localized: "account.menu.profile.subtitle", bundle: .module)
+        case .wishlist: String(localized: "account.menu.wishlist.subtitle", bundle: .module)
+        case .settings: String(localized: "account.menu.settings.subtitle", bundle: .module)
+        case .support: String(localized: "account.menu.support.subtitle", bundle: .module)
+        case .legal: String(localized: "account.menu.legal.subtitle", bundle: .module)
+        }
+    }
 }
 
-/// One row of the menu.
+/// One row of the menu: the symbol, the title with its short line below, and the chevron.
 private struct AccountMenuRow: View {
     let item: AccountMenuItem
 
@@ -350,21 +387,29 @@ private struct AccountMenuRow: View {
     var body: some View {
         HStack(spacing: KXSpacing.m) {
             Image(systemName: item.systemImage)
-                .kxFont(.body)
-                .foregroundStyle(KXColor.brand)
+                .fontWeight(.light)
+                .kxFont(.title3)
+                .foregroundStyle(KXColor.textPrimary)
                 .frame(width: iconWidth)
                 .accessibilityHidden(true)
-            Text(item.title)
-                .kxFont(.body)
-                .foregroundStyle(KXColor.textPrimary)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+                Text(item.title)
+                    .kxFont(.headline)
+                    .foregroundStyle(KXColor.textPrimary)
+                Text(item.subtitle)
+                    .kxFont(.subheadline)
+                    .foregroundStyle(KXColor.textSecondary)
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
             Image(systemName: "chevron.right")
+                .fontWeight(.medium)
                 .kxFont(.footnote)
                 .foregroundStyle(KXColor.iconSecondary)
                 .accessibilityHidden(true)
         }
-        .padding(.horizontal, KXSpacing.m)
-        .frame(minHeight: KXSpacing.minimumTapTarget + KXSpacing.s)
+        .padding(.vertical, KXSpacing.m)
+        .frame(minHeight: KXSpacing.minimumTapTarget + KXSpacing.m)
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isButton)
@@ -376,15 +421,16 @@ private struct AccountMenuRow: View {
 private struct AccountBenefitRow: View {
     let benefit: AccountBenefit
 
-    @ScaledMetric(relativeTo: .body) private var iconWidth: CGFloat = 28
+    @ScaledMetric(relativeTo: .body) private var discSide: CGFloat = 44
 
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: KXSpacing.s) {
+        HStack(spacing: KXSpacing.m) {
             Image(systemName: benefit.systemImage)
-                .fontWeight(.medium)
-                .kxFont(.body)
-                .foregroundStyle(KXColor.brand)
-                .frame(width: iconWidth)
+                .fontWeight(.light)
+                .kxFont(.title3)
+                .foregroundStyle(KXColor.textPrimary)
+                .frame(width: discSide, height: discSide)
+                .background(KXColor.surface, in: Circle())
                 .accessibilityHidden(true)
             Text(benefit.text)
                 .kxFont(.body)

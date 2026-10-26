@@ -21,6 +21,7 @@ public enum KXRadius {
     public static let medium = CGFloat(RadiusToken.medium)
     public static let card = CGFloat(RadiusToken.card)
     public static let large = CGFloat(RadiusToken.large)
+    public static let image = CGFloat(RadiusToken.image)
 }
 
 /// Stroke widths. Mirrors `BorderToken` as `CGFloat`.

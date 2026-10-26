@@ -2,8 +2,8 @@ import XCTest
 
 // MARK: - ShellUITests
 
-/// Critical-path UI tests of the Phase 0 shell: the five tabs, their root screens, the hero call
-/// to action and the money-back conditions.
+/// Critical-path UI tests of the Phase 0 shell: the five tabs, their root screens, the search
+/// field of the Start tab and the money-back conditions.
 ///
 /// The app runs with `-kx.uitesting` (fixed online network status, or offline with
 /// `-kx.offline`), `-kx.reset` (no state from earlier runs) and German language and region, so
@@ -85,16 +85,16 @@ final class ShellUITests: XCTestCase {
     }
 
     @MainActor
-    func testHeroCallToActionOpensShop() {
+    func testSearchFieldOpensSearch() {
         let app = launchApp()
         XCTAssertTrue(screen(.home, in: app).waitForExistence(timeout: timeout))
 
-        let callToAction = app.buttons["home.hero.cta"]
-        XCTAssertTrue(callToAction.waitForExistence(timeout: timeout), "The hero call to action is missing")
-        callToAction.tap()
+        let searchField = app.buttons["home.search"]
+        XCTAssertTrue(searchField.waitForExistence(timeout: timeout), "The search field of the Start tab is missing")
+        searchField.tap()
 
-        XCTAssertTrue(screen(.shop, in: app).waitForExistence(timeout: timeout), "The Shop screen did not appear")
-        XCTAssertTrue(tabButton(.shop, in: app).isSelected, "The Shop tab is not selected")
+        XCTAssertTrue(screen(.search, in: app).waitForExistence(timeout: timeout), "The search screen did not appear")
+        XCTAssertTrue(tabButton(.search, in: app).isSelected, "The Suche tab is not selected")
     }
 
     @MainActor
@@ -171,7 +171,13 @@ final class ShellUITests: XCTestCase {
     /// The root screen of `tab`, found by its accessibility identifier.
     @MainActor
     private func screen(_ tab: Tab, in app: XCUIApplication) -> XCUIElement {
-        app.descendants(matching: .any).matching(identifier: tab.screenIdentifier).firstMatch
+        element(tab.screenIdentifier, in: app)
+    }
+
+    /// Any element with the accessibility identifier `identifier`.
+    @MainActor
+    private func element(_ identifier: String, in app: XCUIApplication) -> XCUIElement {
+        app.descendants(matching: .any).matching(identifier: identifier).firstMatch
     }
 
     /// The offline banner, found by its accessibility identifier or, as a fallback, by its German
@@ -182,12 +188,20 @@ final class ShellUITests: XCTestCase {
         return app.descendants(matching: .any).matching(predicate).firstMatch
     }
 
-    /// Swipes up until `element` can be tapped, for content below the fold on small devices.
+    /// Drags the page up in short steps until `element` can be tapped above the chips and the tab
+    /// bar at the bottom. Short drags without momentum never carry it under the pinned search
+    /// field at the top.
     @MainActor
-    private func scrollIntoView(_ element: XCUIElement, in app: XCUIApplication) {
+    private func scrollIntoView(_ target: XCUIElement, in app: XCUIApplication) {
         var attempts = 0
-        while !element.isHittable, attempts < 6 {
-            app.swipeUp()
+        while attempts < 12 {
+            let bottom = app.tabBars.firstMatch.frame.minY
+            if target.isHittable, target.frame.maxY <= bottom {
+                return
+            }
+            let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.7))
+            let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.45))
+            start.press(forDuration: 0.05, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.1)
             attempts += 1
         }
     }

@@ -3,11 +3,11 @@ import SwiftUI
 import Testing
 
 extension DesignSystemSnapshotTests {
-    /// `KXCard` in both styles, with the gold inset ring and with full-bleed content.
+    /// `KXCard` in both styles, outlined and with full-bleed content.
     @MainActor
     @Suite("KXCard")
     struct KXCardSnapshotTests {
-        @Test("Styles, inset ring and full-bleed content", arguments: SnapshotVariant.matrix)
+        @Test("Styles, outline and full-bleed content", arguments: SnapshotVariant.matrix)
         func variants(_ variant: SnapshotVariant) {
             let copy = SnapshotCopy.forLanguage(variant.language)
             assertComponentSnapshot(variant: variant) {
@@ -24,7 +24,7 @@ extension DesignSystemSnapshotTests {
                             )
                         }
                     }
-                    KXCard(showsInsetRing: true) {
+                    KXCard(isOutlined: true) {
                         VStack(alignment: .leading, spacing: KXSpacing.s) {
                             Text(verbatim: copy.supportTitle)
                                 .kxFont(.title3)

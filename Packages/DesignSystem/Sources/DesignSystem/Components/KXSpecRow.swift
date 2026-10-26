@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - KXSpecRow
 
 /// A specification line in the style of a printed spec sheet: the label on the leading side,
-/// the value on the trailing side and a dotted gold leader filling the gap between them,
+/// the value on the trailing side and a light grey dotted leader filling the gap between them,
 /// sitting on the text baseline.
 ///
 /// When label and value do not fit on one line (long values, long translations, large text
@@ -39,7 +39,7 @@ public struct KXSpecRow: View {
                     .lineLimit(1)
                 KXDotLeader()
                     .stroke(
-                        KXColor.accentDeep,
+                        KXColor.iconSecondary,
                         style: StrokeStyle(lineWidth: 1.5, lineCap: .round, dash: [0.1, 5])
                     )
                     .frame(height: KXBorder.emphasis)

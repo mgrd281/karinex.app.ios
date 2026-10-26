@@ -3,7 +3,7 @@ import SwiftUI
 import Testing
 
 extension DesignSystemSnapshotTests {
-    /// `KXWordmark` in every size and on the brand and key card panels. The wordmark is never
+    /// `KXWordmark` (the store logo) in every size and on the brand and key card panels. The wordmark is never
     /// translated; the Finnish variants only change the text size.
     @MainActor
     @Suite("KXWordmark")

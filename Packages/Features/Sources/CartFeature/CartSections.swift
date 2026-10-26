@@ -244,33 +244,20 @@ struct CartSummaryCard: View {
 
 // MARK: - CartPaymentMethods
 
-/// The store's payment methods as text badges: Apple Pay, Kreditkarte, Klarna.
+/// The store's payment methods with their real acceptance marks (the wallets and card brands
+/// Shopify reports, then UnionPay, Klarna, Rechnung and Vorkasse), from the app's
+/// ``PaymentMethodsStore``; the business facts while it loads and in previews.
 struct CartPaymentMethods: View {
-    var body: some View {
-        let list = String(localized: "cart.payment.methods", bundle: .module)
-        VStack(alignment: .leading, spacing: KXSpacing.xs) {
-            Text("cart.payment.title", bundle: .module)
-                .kxFont(.eyebrow)
-                .foregroundStyle(KXColor.accentText)
-            ViewThatFits(in: .horizontal) {
-                HStack(spacing: KXSpacing.xs) {
-                    badges(list)
-                }
-                VStack(alignment: .leading, spacing: KXSpacing.xs) {
-                    badges(list)
-                }
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("cart.payment.title", bundle: .module))
-        .accessibilityValue(Text(verbatim: list))
-        .accessibilityIdentifier("cart.payment")
-    }
+    @Environment(PaymentMethodsStore.self) private var paymentMethods: PaymentMethodsStore?
 
-    private func badges(_ list: String) -> some View {
-        ForEach(CartViewModel.paymentMethods(from: list), id: \.self) { method in
-            KXBadge(method, style: .neutral)
+    var body: some View {
+        PaymentMethodsRow(
+            methods: paymentMethods?.methods ?? PaymentMethod.fallback,
+            title: String(localized: "cart.payment.title", bundle: .module)
+        )
+        .accessibilityIdentifier("cart.payment")
+        .task {
+            await paymentMethods?.loadIfNeeded()
         }
     }
 }
@@ -292,52 +279,6 @@ struct CartDigitalNotice: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("cart.notice.digital")
-    }
-}
-
-// MARK: - CartUndoBar
-
-/// The bar after removing a line: "<Produkt> wurde entfernt." with "Rückgängig".
-struct CartUndoBar: View {
-    let title: String
-    let onUndo: @MainActor () -> Void
-    let onDismiss: @MainActor () -> Void
-
-    var body: some View {
-        HStack(spacing: KXSpacing.s) {
-            Text("cart.undo.message \(title)", bundle: .module)
-                .kxFont(.subheadline)
-                .foregroundStyle(KXColor.textPrimary)
-                .lineLimit(3)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            KXButton(String(localized: "cart.undo.action", bundle: .module), style: .tertiary, size: .compact) {
-                onUndo()
-            }
-            .accessibilityIdentifier("cart.undo")
-            Button {
-                onDismiss()
-            } label: {
-                Image(systemName: "xmark")
-                    .fontWeight(.semibold)
-                    .kxFont(.footnote)
-                    .foregroundStyle(KXColor.textSecondary)
-                    .frame(width: KXSpacing.minimumTapTarget, height: KXSpacing.minimumTapTarget)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(Text("cart.undo.dismiss", bundle: .module))
-        }
-        .padding(.leading, KXSpacing.m)
-        .padding(.vertical, KXSpacing.xxs)
-        .background {
-            RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous)
-                .fill(KXColor.surfaceElevated)
-                .shadow(color: KXColor.scrim.opacity(0.16), radius: KXSpacing.s, x: 0, y: 2)
-        }
-        .padding(.horizontal, KXSpacing.gutter)
-        .padding(.bottom, KXSpacing.s)
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("cart.undoBar")
     }
 }
 

@@ -5,9 +5,11 @@ import SwiftUI
 
 // MARK: - CatalogView
 
-/// The Shop tab: the store's collections, the curated categories (Windows, Office, Server,
-/// Entwicklung, Bestseller, Angebote and more) as large tiles first, every other collection as
-/// a list below. A tap asks for ``CommerceRoute/collection(handle:title:)``.
+/// The Shop tab, laid out like the category pages of fashion retail apps: the bestsellers and
+/// the sale as two large cards, the product families as rows with the photo of their first
+/// product, the single versions as a shelf of photo cards and every other collection as a list
+/// (``CatalogDirectory``). The names come from ``CollectionNames``, so the store's search engine
+/// titles never show. A tap asks for ``CommerceRoute/collection(handle:title:)``.
 ///
 /// Place it inside a `NavigationStack`; it uses a large title.
 ///
@@ -68,7 +70,7 @@ public struct CatalogView: View {
 
 // MARK: - Content
 
-/// The loaded Shop tab: the curated tiles and the list of further collections.
+/// The loaded Shop tab, section by section.
 private struct CatalogDirectoryContent: View {
     let sections: CatalogSections
     let onRoute: @MainActor (CommerceRoute) -> Void
@@ -77,51 +79,56 @@ private struct CatalogDirectoryContent: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: KXSpacing.xxl) {
-            if !sections.featured.isEmpty {
+            if !sections.highlights.isEmpty {
+                // Side by side with equal heights; stacked at the largest text sizes.
+                highlightLayout {
+                    ForEach(sections.highlights) { collection in
+                        collectionButton(collection) {
+                            CatalogHighlightCard(collection: collection)
+                        }
+                    }
+                }
+                .fixedSize(horizontal: false, vertical: true)
+            }
+            if !sections.categories.isEmpty {
                 VStack(alignment: .leading, spacing: KXSpacing.m) {
                     KXSectionHeader(
                         String(localized: "catalog.featured.title", bundle: .module),
                         eyebrow: String(localized: "catalog.featured.eyebrow", bundle: .module)
                     )
-                    LazyVGrid(columns: columns, alignment: .leading, spacing: KXSpacing.m) {
-                        ForEach(sections.featured) { collection in
-                            Button {
-                                open(collection)
-                            } label: {
-                                CatalogCollectionTile(collection: collection)
+                    VStack(spacing: KXSpacing.xs) {
+                        ForEach(sections.categories) { collection in
+                            collectionButton(collection) {
+                                CatalogCategoryRow(collection: collection)
                             }
-                            .buttonStyle(.plain)
-                            .accessibilityHint(Text("catalog.collection.hint", bundle: .module))
-                            .accessibilityIdentifier("catalog.collection.\(collection.handle)")
                         }
                     }
                 }
             }
-            if !sections.more.isEmpty {
+            if !sections.versions.isEmpty {
                 VStack(alignment: .leading, spacing: KXSpacing.m) {
                     KXSectionHeader(
-                        String(localized: "catalog.more.title", bundle: .module),
-                        eyebrow: String(localized: "catalog.more.eyebrow", bundle: .module)
+                        String(localized: "catalog.versions.title", bundle: .module),
+                        eyebrow: String(localized: "catalog.versions.eyebrow", bundle: .module)
                     )
-                    KXCard(padding: 0) {
-                        VStack(alignment: .leading, spacing: 0) {
-                            ForEach(sections.more) { collection in
-                                Button {
-                                    open(collection)
-                                } label: {
-                                    CatalogCollectionRow(collection: collection)
-                                }
-                                .buttonStyle(.plain)
-                                .accessibilityHint(Text("catalog.collection.hint", bundle: .module))
-                                .accessibilityIdentifier("catalog.collection.\(collection.handle)")
-                                if collection.id != sections.more.last?.id {
-                                    KXDivider()
-                                        .padding(.leading, KXSpacing.m)
+                    // A shelf from edge to edge, aligned with the page margins.
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        LazyHStack(alignment: .top, spacing: KXSpacing.s) {
+                            ForEach(sections.versions) { collection in
+                                collectionButton(collection) {
+                                    CatalogVersionCard(collection: collection)
                                 }
                             }
                         }
+                        .scrollTargetLayout()
                     }
+                    .contentMargins(.horizontal, KXSpacing.gutter, for: .scrollContent)
+                    .scrollTargetBehavior(.viewAligned)
+                    .padding(.horizontal, -KXSpacing.gutter)
                 }
+            }
+            if !sections.more.isEmpty {
+                moreCollections
             }
         }
         .padding(.horizontal, KXSpacing.gutter)
@@ -129,79 +136,219 @@ private struct CatalogDirectoryContent: View {
         .padding(.bottom, KXSpacing.xl)
     }
 
-    private var columns: [GridItem] {
-        let count = dynamicTypeSize.isAccessibilitySize ? 1 : 2
-        return Array(repeating: GridItem(.flexible(), spacing: KXSpacing.m, alignment: .top), count: count)
+    /// Every other collection as a list in one card.
+    private var moreCollections: some View {
+        VStack(alignment: .leading, spacing: KXSpacing.m) {
+            KXSectionHeader(
+                String(localized: "catalog.more.title", bundle: .module),
+                eyebrow: String(localized: "catalog.more.eyebrow", bundle: .module)
+            )
+            KXCard(padding: 0) {
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(sections.more) { collection in
+                        Button {
+                            open(collection)
+                        } label: {
+                            CatalogCollectionRow(collection: collection)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityHint(Text("catalog.collection.hint", bundle: .module))
+                        .accessibilityIdentifier("catalog.collection.\(collection.handle)")
+                        if collection.id != sections.more.last?.id {
+                            KXDivider()
+                                .padding(.leading, KXSpacing.m)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private var highlightLayout: AnyLayout {
+        dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: KXSpacing.s))
+            : AnyLayout(HStackLayout(alignment: .top, spacing: KXSpacing.s))
+    }
+
+    /// A card, row or chip that opens `collection` and shrinks a little while pressed.
+    private func collectionButton(_ collection: CollectionSummary, @ViewBuilder label: () -> some View) -> some View {
+        Button {
+            open(collection)
+        } label: {
+            label()
+        }
+        .buttonStyle(.kxPress)
+        .accessibilityHint(Text("catalog.collection.hint", bundle: .module))
+        .accessibilityIdentifier("catalog.collection.\(collection.handle)")
     }
 
     private func open(_ collection: CollectionSummary) {
-        onRoute(.collection(handle: collection.handle, title: collection.title))
+        onRoute(.collection(handle: collection.handle, title: CollectionNames.title(for: collection)))
     }
 }
 
-// MARK: - Tile
+// MARK: - Highlight card
 
-/// A curated collection: the collection image or a symbol in a gold ring, and the serif title,
-/// on a cream panel with the gold inset ring.
-private struct CatalogCollectionTile: View {
+/// A large card on top of the Shop tab: the photo of the collection's first product on its light
+/// tile, the name and an invitation ("Jetzt entdecken") with an arrow. The bestsellers card is
+/// ink, the sale card sale red with its name in capitals.
+private struct CatalogHighlightCard: View {
     let collection: CollectionSummary
 
-    @ScaledMetric(relativeTo: .title) private var ringDiameter: CGFloat = 48
-    @ScaledMetric(relativeTo: .body) private var minimumHeight: CGFloat = 150
+    private var isSale: Bool {
+        CatalogDirectory.isSale(collection.handle)
+    }
 
     var body: some View {
-        KXCard(showsInsetRing: true) {
-            VStack(alignment: .leading, spacing: KXSpacing.m) {
-                if let image = collection.image {
-                    ProductImage(image, contentMode: .fill, isDecorative: true)
-                        .aspectRatio(16 / 10, contentMode: .fit)
-                        .clipShape(RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous))
-                } else {
-                    Image(systemName: CatalogDirectory.systemImage(for: collection.handle))
-                        .kxFont(.title3)
-                        .foregroundStyle(KXColor.brand)
-                        .frame(width: ringDiameter, height: ringDiameter)
-                        .overlay {
-                            Circle().strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
-                        }
-                        .accessibilityHidden(true)
-                }
-                Spacer(minLength: 0)
-                HStack(alignment: .lastTextBaseline, spacing: KXSpacing.xs) {
-                    Text(collection.title)
-                        .kxFont(.title3)
-                        .foregroundStyle(KXColor.textPrimary)
-                        .multilineTextAlignment(.leading)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Image(systemName: "arrow.right")
-                        .kxFont(.footnote)
-                        .foregroundStyle(KXColor.accentText)
-                        .accessibilityHidden(true)
+        let shape = RoundedRectangle(cornerRadius: KXRadius.large, style: .continuous)
+        VStack(alignment: .leading, spacing: KXSpacing.s) {
+            CatalogPhoto(image: collection.displayImage, padding: KXSpacing.m)
+                .aspectRatio(1, contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous))
+            VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+                Text(CollectionNames.title(for: collection))
+                    // Before kxFont, whose own text case would otherwise win.
+                    .textCase(isSale ? .uppercase : nil)
+                    .kxFont(.title2)
+                    .lineLimit(2)
+                if let action = CatalogDirectory.highlightAction(for: collection.handle) {
+                    HStack(spacing: KXSpacing.xxs) {
+                        Text(action)
+                        Image(systemName: "arrow.right")
+                            .accessibilityHidden(true)
+                    }
+                    .fontWeight(.medium)
+                    .kxFont(.subheadline)
                 }
             }
-            .padding(KXSpacing.xxs)
-            .frame(maxWidth: .infinity, minHeight: minimumHeight, alignment: .topLeading)
+            .foregroundStyle(isSale ? KXColor.textOnUrgency : KXColor.textOnAccent)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, KXSpacing.xxs)
+            .padding(.bottom, KXSpacing.xxs)
         }
-        .contentShape(RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous))
+        .padding(KXSpacing.s)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .background(isSale ? KXColor.urgency : KXColor.accent, in: shape)
+        .contentShape(shape)
         .accessibilityElement(children: .combine)
+    }
+}
+
+// MARK: - Category row
+
+/// A product family: the bold name with its short line on the left, the photo of the
+/// collection's first product on the right, on a light grey panel.
+private struct CatalogCategoryRow: View {
+    let collection: CollectionSummary
+
+    @ScaledMetric(relativeTo: .title3) private var scaledPhotoSide: CGFloat = 76
+
+    private var photoSide: CGFloat {
+        min(scaledPhotoSide, 120)
+    }
+
+    var body: some View {
+        let shape = RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous)
+        HStack(spacing: KXSpacing.m) {
+            VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+                Text(CollectionNames.title(for: collection))
+                    .kxFont(.title3)
+                    .foregroundStyle(KXColor.textPrimary)
+                if let detail = CatalogDirectory.detail(for: collection.handle) {
+                    Text(detail)
+                        .kxFont(.subheadline)
+                        .foregroundStyle(KXColor.textSecondary)
+                }
+            }
+            .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            CatalogPhoto(image: collection.displayImage, padding: KXSpacing.xs)
+                .frame(width: photoSide, height: photoSide)
+                .clipShape(RoundedRectangle(cornerRadius: KXRadius.small, style: .continuous))
+        }
+        .padding(.leading, KXSpacing.m)
+        .padding(.trailing, KXSpacing.s)
+        .padding(.vertical, KXSpacing.s)
+        .frame(maxWidth: .infinity)
+        .background(KXColor.surface, in: shape)
+        .contentShape(shape)
+        .accessibilityElement(children: .combine)
+    }
+}
+
+// MARK: - Version card
+
+/// A single version on the shelf: the photo of its first product on a square light tile and the
+/// version name below it in up to two lines (space reserved, so the cards line up).
+private struct CatalogVersionCard: View {
+    let collection: CollectionSummary
+
+    @ScaledMetric(relativeTo: .subheadline) private var scaledWidth: CGFloat = 124
+
+    private var width: CGFloat {
+        min(scaledWidth, 180)
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: KXSpacing.xs) {
+            CatalogPhoto(image: collection.displayImage, padding: KXSpacing.s)
+                .frame(width: width, height: width)
+                .clipShape(RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous))
+            Text(CatalogDirectory.versionName(for: collection))
+                .fontWeight(.semibold)
+                .kxFont(.subheadline)
+                .foregroundStyle(KXColor.textPrimary)
+                .multilineTextAlignment(.leading)
+                .lineLimit(2, reservesSpace: true)
+        }
+        .frame(width: width, alignment: .leading)
+        .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
+    }
+}
+
+// MARK: - Photo
+
+/// The photo of a collection on its light grey tile. A collection without a photo shows a
+/// neutral box on the tile instead of the image placeholder.
+private struct CatalogPhoto: View {
+    let image: ShopifyImage?
+    /// The space between the photo and the edge of the tile.
+    let padding: CGFloat
+
+    var body: some View {
+        Group {
+            if let image {
+                ProductImage(image, isDecorative: true)
+                    .padding(padding)
+            } else {
+                Image(systemName: "shippingbox")
+                    .kxFont(.title2)
+                    .foregroundStyle(KXColor.imageIcon)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .accessibilityHidden(true)
+            }
+        }
+        .kxPhotoTile()
     }
 }
 
 // MARK: - Row
 
-/// A further collection: symbol, title and a chevron, at least 44 pt high.
+/// A further collection: the photo of its first product, the name and a chevron, at least 44 pt
+/// high.
 private struct CatalogCollectionRow: View {
     let collection: CollectionSummary
 
+    @ScaledMetric(relativeTo: .body) private var photoSide: CGFloat = 40
+
     var body: some View {
         HStack(spacing: KXSpacing.s) {
-            Image(systemName: CatalogDirectory.systemImage(for: collection.handle))
-                .kxFont(.body)
-                .foregroundStyle(KXColor.brand)
-                .frame(minWidth: KXSpacing.l)
-                .accessibilityHidden(true)
-            Text(collection.title)
+            CatalogPhoto(image: collection.displayImage, padding: KXSpacing.xxs)
+                .frame(width: photoSide, height: photoSide)
+                .clipShape(RoundedRectangle(cornerRadius: KXRadius.small, style: .continuous))
+            Text(CollectionNames.title(for: collection))
                 .kxFont(.body)
                 .foregroundStyle(KXColor.textPrimary)
                 .multilineTextAlignment(.leading)
@@ -213,7 +360,7 @@ private struct CatalogCollectionRow: View {
                 .accessibilityHidden(true)
         }
         .padding(.horizontal, KXSpacing.m)
-        .padding(.vertical, KXSpacing.s)
+        .padding(.vertical, KXSpacing.xs)
         .frame(minHeight: KXSpacing.minimumTapTarget)
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
@@ -222,21 +369,26 @@ private struct CatalogCollectionRow: View {
 
 // MARK: - Skeleton
 
-/// The loading placeholder of the Shop tab: a header and six tiles.
+/// The loading placeholder of the Shop tab: the two cards, a header and four rows.
 private struct CatalogSkeleton: View {
-    @ScaledMetric(relativeTo: .body) private var tileHeight: CGFloat = 150
+    @ScaledMetric(relativeTo: .title3) private var rowHeight: CGFloat = 100
 
     var body: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.m) {
-            KXSkeleton()
-                .frame(width: 180, height: KXSpacing.l)
-            LazyVGrid(
-                columns: [GridItem(.flexible(), spacing: KXSpacing.m), GridItem(.flexible(), spacing: KXSpacing.m)],
-                spacing: KXSpacing.m
-            ) {
-                ForEach(0..<6, id: \.self) { _ in
-                    KXSkeleton(cornerRadius: KXRadius.card)
-                        .frame(height: tileHeight)
+        VStack(alignment: .leading, spacing: KXSpacing.xxl) {
+            HStack(spacing: KXSpacing.s) {
+                ForEach(0..<2, id: \.self) { _ in
+                    KXSkeleton(cornerRadius: KXRadius.large)
+                        .aspectRatio(0.78, contentMode: .fit)
+                }
+            }
+            VStack(alignment: .leading, spacing: KXSpacing.m) {
+                KXSkeleton()
+                    .frame(width: 180, height: KXSpacing.l)
+                VStack(spacing: KXSpacing.xs) {
+                    ForEach(0..<4, id: \.self) { _ in
+                        KXSkeleton(cornerRadius: KXRadius.medium)
+                            .frame(height: rowHeight)
+                    }
                 }
             }
         }

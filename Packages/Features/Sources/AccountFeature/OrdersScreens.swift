@@ -82,7 +82,8 @@ final class OrdersViewModel {
 
 // MARK: - OrdersScreen
 
-/// "Bestellungen": every order with number, date, total and a status pill.
+/// "Bestellungen": every order as a card with its status, date, the photos of its products,
+/// the order number with the first product and the total.
 public struct OrdersScreen: View {
     private let onRoute: @MainActor (CommerceRoute) -> Void
 
@@ -116,7 +117,7 @@ public struct OrdersScreen: View {
                             Button {
                                 onRoute(.account(.order(id: order.id)))
                             } label: {
-                                OrderRow(
+                                OrderCard(
                                     order: order,
                                     pill: OrderStatusPill(order: order, delivery: model.delivery(for: order)),
                                     locale: locale
@@ -156,32 +157,92 @@ public struct OrdersScreen: View {
     }
 }
 
-/// One order in the list.
-private struct OrderRow: View {
+/// One order in the list: the status and the date, the photos of up to four products (a plus
+/// tile when there are more), then the order number with the first product and the total.
+private struct OrderCard: View {
+    /// The most photos a card shows.
+    static let maximumPhotos = 4
+
     let order: CustomerOrder
     let pill: OrderStatusPill
     let locale: Locale
 
+    @ScaledMetric(relativeTo: .body) private var photoSide: CGFloat = 64
+
     var body: some View {
-        KXCard {
-            HStack(alignment: .top, spacing: KXSpacing.m) {
+        VStack(alignment: .leading, spacing: KXSpacing.m) {
+            HStack(alignment: .firstTextBaseline, spacing: KXSpacing.s) {
+                KXBadge(pill.title, style: pill.style)
+                Spacer(minLength: KXSpacing.s)
+                Text(order.processedAt.formatted(Date.FormatStyle(date: .abbreviated, time: .omitted).locale(locale)))
+                    .kxFont(.footnote)
+                    .foregroundStyle(KXColor.textSecondary)
+            }
+            if !order.lineItems.isEmpty {
+                photos
+            }
+            HStack(alignment: .center, spacing: KXSpacing.s) {
                 VStack(alignment: .leading, spacing: KXSpacing.xxs) {
                     Text(order.name)
                         .kxFont(.headline)
                         .foregroundStyle(KXColor.textPrimary)
-                    Text(order.processedAt.formatted(Date.FormatStyle(date: .long, time: .omitted).locale(locale)))
-                        .kxFont(.subheadline)
-                        .foregroundStyle(KXColor.textSecondary)
-                    Text(order.totalPrice.formatted(locale: locale))
-                        .kxFont(.body)
-                        .foregroundStyle(KXColor.textPrimary)
+                    if let first = order.lineItems.first {
+                        Text(first.name)
+                            .kxFont(.subheadline)
+                            .foregroundStyle(KXColor.textSecondary)
+                            .lineLimit(1)
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                KXBadge(pill.title, style: pill.style)
+                Text(order.totalPrice.formatted(locale: locale))
+                    .kxFont(.headline)
+                    .foregroundStyle(KXColor.textPrimary)
+                Image(systemName: "chevron.right")
+                    .fontWeight(.medium)
+                    .kxFont(.footnote)
+                    .foregroundStyle(KXColor.iconSecondary)
+                    .accessibilityHidden(true)
             }
         }
+        .padding(KXSpacing.m)
+        .background(KXColor.background, in: RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous)
+                .strokeBorder(KXColor.hairline, lineWidth: KXBorder.hairline)
+        }
+        .contentShape(RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous))
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isButton)
+    }
+
+    /// The product photos on light tiles.
+    private var photos: some View {
+        let side = min(photoSide, 96)
+        return HStack(spacing: KXSpacing.xs) {
+            ForEach(order.lineItems.prefix(Self.maximumPhotos)) { line in
+                Group {
+                    if let image = line.image {
+                        ProductImage(image, contentMode: .fit, isDecorative: true)
+                            .padding(KXSpacing.xxs)
+                    } else {
+                        Image(systemName: "key")
+                            .foregroundStyle(KXColor.imageIcon)
+                    }
+                }
+                .frame(width: side, height: side)
+                .kxPhotoTile()
+                .clipShape(RoundedRectangle(cornerRadius: KXRadius.small, style: .continuous))
+                .accessibilityHidden(true)
+            }
+            if order.lineItems.count > Self.maximumPhotos {
+                Image(systemName: "plus")
+                    .kxFont(.headline)
+                    .foregroundStyle(KXColor.textSecondary)
+                    .frame(width: side, height: side)
+                    .background(KXColor.surface, in: RoundedRectangle(cornerRadius: KXRadius.small, style: .continuous))
+                    .accessibilityHidden(true)
+            }
+        }
     }
 }
 
@@ -258,11 +319,14 @@ final class OrderDetailViewModel {
 // MARK: - OrderDetailScreen
 
 /// An order: number and date, the vertical timeline, the lines, the totals exactly as Shopify
-/// returns them, "Rechnung (PDF)", "Lizenzschlüssel anzeigen" and help with this order.
+/// returns them, "Erneut kaufen" (the same products and quantities back into the cart),
+/// "Lizenzschlüssel anzeigen", "Rechnung (PDF)" and help with this order.
 public struct OrderDetailScreen: View {
     private let onRoute: @MainActor (CommerceRoute) -> Void
+    private let onReorder: (@MainActor ([OrderLineItem]) async -> Void)?
 
     @State private var model: OrderDetailViewModel
+    @State private var isReordering = false
 
     @Environment(\.locale) private var locale
     @Environment(\.openURL) private var openURL
@@ -272,10 +336,12 @@ public struct OrderDetailScreen: View {
         orderID: ShopifyID,
         repository: any CustomerAccountRepository,
         backend: any BackendClient,
-        onRoute: @escaping @MainActor (CommerceRoute) -> Void
+        onRoute: @escaping @MainActor (CommerceRoute) -> Void,
+        onReorder: (@MainActor ([OrderLineItem]) async -> Void)? = nil
     ) {
         _model = State(initialValue: OrderDetailViewModel(orderID: orderID, repository: repository, backend: backend))
         self.onRoute = onRoute
+        self.onReorder = onReorder
     }
 
     public var body: some View {
@@ -390,10 +456,28 @@ public struct OrderDetailScreen: View {
     }
 
     private func actions(_ order: CustomerOrder) -> some View {
-        VStack(alignment: .leading, spacing: KXSpacing.s) {
+        let reorderable = OrderReorder.lines(of: order)
+        return VStack(alignment: .leading, spacing: KXSpacing.s) {
+            if let onReorder, !reorderable.isEmpty {
+                KXButton(
+                    String(localized: "account.order.reorder", bundle: .module),
+                    systemImage: "arrow.clockwise",
+                    isFullWidth: true,
+                    isLoading: isReordering
+                ) {
+                    Task {
+                        isReordering = true
+                        await onReorder(reorderable)
+                        isReordering = false
+                    }
+                }
+                .disabled(isReordering)
+                .accessibilityIdentifier("account.order.reorder")
+            }
             KXButton(
                 String(localized: "account.order.keys", bundle: .module),
                 systemImage: "key",
+                style: .secondary,
                 isFullWidth: true
             ) {
                 onRoute(.account(.licenses(orderID: order.numericID)))
@@ -440,6 +524,17 @@ public struct OrderDetailScreen: View {
     }
 }
 
+// MARK: - OrderReorder
+
+/// "Erneut kaufen": the lines of an order that can go back into the cart.
+enum OrderReorder {
+    /// The lines with a variant that still exists; custom lines and deleted variants are left
+    /// out. Each line goes into the cart with its quantity.
+    static func lines(of order: CustomerOrder) -> [OrderLineItem] {
+        order.lineItems.filter { $0.variantID != nil && $0.quantity > 0 }
+    }
+}
+
 /// One line of an order.
 private struct OrderLineRow: View {
     let line: OrderLineItem
@@ -454,13 +549,13 @@ private struct OrderLineRow: View {
                     ProductImage(image, contentMode: .fit, isDecorative: true)
                 } else {
                     Image(systemName: "key")
-                        .foregroundStyle(KXColor.iconSecondary)
+                        .foregroundStyle(KXColor.imageIcon)
                         .accessibilityHidden(true)
                 }
             }
+            .kxPhotoTile()
             .frame(width: Self.imageSize, height: Self.imageSize)
-            .background(KXColor.surface)
-            .clipShape(RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: KXRadius.small, style: .continuous))
             VStack(alignment: .leading, spacing: KXSpacing.xxs) {
                 Text(line.name)
                     .kxFont(.body)

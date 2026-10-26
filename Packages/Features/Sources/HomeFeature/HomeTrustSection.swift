@@ -3,9 +3,10 @@ import SwiftUI
 
 // MARK: - HomeTrustSection
 
-/// The trust strip of the Start tab with its section header and the money-back footnote.
+/// The trust facts of the Start tab as icon rows, with their section header and the money-back
+/// footnote.
 ///
-/// The four facts come from ``HomeTrustFact``. The money-back tile carries the footnote marker
+/// The four facts come from ``HomeTrustFact``. The money-back row carries the footnote marker
 /// and presents the conditions on tap; the footnote below the strip repeats the condition in
 /// short form and offers the same sheet, so the condition is always visible next to the promise
 /// (PROMPT.md section 2).
@@ -19,7 +20,7 @@ struct HomeTrustSection: View {
                 String(localized: "home.trust.title", bundle: .module),
                 eyebrow: String(localized: "home.trust.eyebrow", bundle: .module)
             )
-            KXTrustStrip(items: HomeTrustFact.allCases.map { trustItem(for: $0) })
+            KXTrustStrip(items: HomeTrustFact.allCases.map { trustItem(for: $0) }, arrangement: .list)
                 .accessibilityIdentifier("home.trust")
             conditionFootnote
         }

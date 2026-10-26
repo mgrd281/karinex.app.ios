@@ -46,6 +46,7 @@ public struct ContrastRequirement: Hashable, Sendable {
             }
             requirements.append(.init(foreground: .iconSecondary, background: background, kind: .nonText))
             requirements.append(.init(foreground: .brand, background: background, kind: .nonText))
+            requirements.append(.init(foreground: .accent, background: background, kind: .nonText))
         }
         requirements += [
             .init(foreground: .textOnBrand, background: .brand, kind: .text),
@@ -55,8 +56,7 @@ public struct ContrastRequirement: Hashable, Sendable {
             .init(foreground: .textOnUrgency, background: .urgency, kind: .text),
             .init(foreground: .keyCardText, background: .keyCardBackground, kind: .text),
             .init(foreground: .keyCardMuted, background: .keyCardBackground, kind: .text),
-            .init(foreground: .accent, background: .keyCardBackground, kind: .text),
-            .init(foreground: .keyCardAccent, background: .keyCardBackground, kind: .nonText),
+            .init(foreground: .imageIcon, background: .imageBackground, kind: .nonText),
         ]
         return requirements
     }()

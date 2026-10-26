@@ -3,7 +3,7 @@ import SwiftUI
 import Testing
 
 extension DesignSystemSnapshotTests {
-    /// `KXProductCard` with recorded store data and a local image (never a download), with gold
+    /// `KXProductCard` with recorded store data and a local image (never a download), with accent
     /// and urgency badges. Two columns as in the catalog grid, one column at accessibility sizes.
     /// A second test renders the convenience initializer without an image URL, which shows the
     /// local fallback symbol and makes no request.

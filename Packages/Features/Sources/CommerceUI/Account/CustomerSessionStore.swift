@@ -140,6 +140,23 @@ public final class CustomerSessionStore {
         }
     }
 
+    // MARK: Checkout
+
+    /// A valid access token for a signed-in checkout (`CartStore.customerAccessToken`), `nil`
+    /// when nobody is signed in or the token cannot be refreshed; checkout then opens as a guest
+    /// checkout. A refresh token Shopify rejects signs the customer out on its own.
+    public func checkoutAccessToken() async -> String? {
+        guard status == .signedIn, let session else { return nil }
+        do {
+            return try await session.accessToken()
+        } catch {
+            if let failure = UserFacingError(error) {
+                logger.notice("No access token for the checkout: \(failure.logName)")
+            }
+            return nil
+        }
+    }
+
     // MARK: Logout
 
     /// Signs out locally and returns the URL that ends the Shopify session, if any.

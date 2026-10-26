@@ -78,15 +78,14 @@ public struct HomeSection: Sendable, Hashable, Identifiable {
 
 // MARK: - HomeLayout
 
-/// The ordered live modules of the Start screen. The hero, the trust strip and the support card
-/// are fixed; everything in between is described by this value, so a future `app_home`
-/// metaobject can replace ``standard`` without touching the view.
+/// The rows the Start screen loads: every collection and blog its modules show, once each.
+/// ``HomeModules/standard`` derives it; the view model loads it.
 ///
 /// ```swift
-/// HomeView(catalog: catalog, content: content, layout: .standard, onRoute: route, onBrowse: browse)
+/// HomeViewModel(catalog: catalog, content: content, layout: HomeModules.standard.layout)
 /// ```
 public struct HomeLayout: Sendable, Hashable {
-    /// The modules in display order. Handles must be unique.
+    /// The rows in loading order. Handles are unique.
     public let sections: [HomeSection]
 
     /// Creates a layout. Later sections with a handle that already appeared are dropped, so
@@ -96,52 +95,264 @@ public struct HomeLayout: Sendable, Hashable {
         self.sections = sections.filter { seen.insert($0.id).inserted }
     }
 
-    /// The number of products loaded for each collection row (PROMPT.md asks for 4 to 6 cards;
-    /// a few more keep the row worth scrolling).
+    /// The section with `handle`, if the layout loads it.
+    public func section(_ handle: String) -> HomeSection? {
+        sections.first { $0.id == handle }
+    }
+
+    /// The number of products loaded for a collection that shows a row of products (PROMPT.md
+    /// asks for 4 to 6 cards; a few more keep the row worth scrolling).
     public static let productsPerRow = 8
 
-    /// The number of guide articles in the Ratgeber row.
-    public static let articlesPerRow = 6
+    /// The number of products loaded for a tile that shows only its first product's photo.
+    public static let productsPerTile = 1
 
-    /// The fixed layout with the live store handles (docs/STORE_AUDIT.md): Angebote (`sale`),
-    /// Windows (`windows`), Office (`microsoft-office`), Server (`windows-server`), Entwicklung
-    /// (`visual-studio-entwicklungstools`), Bestseller (`bestseller`) and Ratgeber (blog
-    /// `guides`, 6 articles).
-    public static let standard = HomeLayout(sections: [
-        HomeSection(
-            title: .localized("home.section.deals.title"),
-            eyebrow: .localized("home.section.deals.eyebrow"),
-            content: .collection(handle: "sale", limit: productsPerRow, highlight: .none)
-        ),
-        HomeSection(
-            title: .localized("home.section.windows.title"),
-            eyebrow: .localized("home.section.windows.eyebrow"),
-            content: .collection(handle: "windows", limit: productsPerRow, highlight: .none)
-        ),
-        HomeSection(
-            title: .localized("home.section.office.title"),
-            eyebrow: .localized("home.section.office.eyebrow"),
-            content: .collection(handle: "microsoft-office", limit: productsPerRow, highlight: .none)
-        ),
-        HomeSection(
-            title: .localized("home.section.server.title"),
-            eyebrow: .localized("home.section.server.eyebrow"),
-            content: .collection(handle: "windows-server", limit: productsPerRow, highlight: .none)
-        ),
-        HomeSection(
-            title: .localized("home.section.development.title"),
-            eyebrow: .localized("home.section.development.eyebrow"),
-            content: .collection(handle: "visual-studio-entwicklungstools", limit: productsPerRow, highlight: .none)
-        ),
-        HomeSection(
-            title: .localized("home.section.bestseller.title"),
-            eyebrow: .localized("home.section.bestseller.eyebrow"),
-            content: .collection(handle: "bestseller", limit: productsPerRow, highlight: .bestseller)
-        ),
-        HomeSection(
-            title: .localized("home.section.guides.title"),
-            eyebrow: .localized("home.section.guides.eyebrow"),
-            content: .blog(handle: "guides", limit: articlesPerRow)
-        ),
-    ])
+    /// The number of guide articles in the Ratgeber module.
+    public static let articlesPerRow = 6
+}
+
+// MARK: - HomeCategoryIcon
+
+/// The icon of a category tile. The KARINEX category icons are drawn for the app as SVG in
+/// `CategoryIcons.xcassets` (a 24 point grid, 1.5 point lines with round ends, one soft 20 %
+/// fill each, no third-party logos) and are template images, tinted like text.
+public enum HomeCategoryIcon: String, Sendable, Hashable, CaseIterable {
+    /// A display with a snap layout of one large and two small windows.
+    case windows = "category-windows"
+    /// A page with a line of text and a small bar chart.
+    case office = "category-office"
+    /// Two rack units with status lights.
+    case server = "category-server"
+    /// A notebook with a slim base.
+    case mac = "category-mac"
+    /// An editor tile with the code sign.
+    case development = "category-development"
+    /// A cloud with the arrows of a renewing subscription.
+    case microsoft365 = "category-microsoft365"
+    /// A medal with a star.
+    case bestseller = "category-bestseller"
+    /// A price tag with a percent sign.
+    case sale = "category-sale"
+    /// Three tiles and a disc, for the tile that leads to every category.
+    case allCategories = "category-all"
+
+    /// The name of the image set in `CategoryIcons.xcassets`.
+    public var assetName: String {
+        rawValue
+    }
+}
+
+// MARK: - HomeCategory
+
+/// A store collection the Start screen features, with the app's short name, an optional small
+/// label and an icon. The collection's own title in the store is often long (it is written for
+/// search engines), so the screen uses these names.
+public struct HomeCategory: Sendable, Hashable, Identifiable {
+    /// The collection handle, e.g. `windows`.
+    public let handle: String
+    /// The short name, e.g. "Windows".
+    public let title: HomeText
+    /// The small label above the name in panels, e.g. "Betriebssysteme".
+    public let eyebrow: HomeText?
+    /// The icon of the category tile.
+    public let icon: HomeCategoryIcon
+
+    /// Creates a category.
+    public init(handle: String, title: HomeText, eyebrow: HomeText? = nil, icon: HomeCategoryIcon) {
+        self.handle = handle
+        self.title = title
+        self.eyebrow = eyebrow
+        self.icon = icon
+    }
+
+    /// The handle.
+    public var id: String {
+        handle
+    }
+}
+
+// MARK: - HomeStory
+
+/// One card of the story carousel at the top of the Start screen: a category with the small tag
+/// above its photo.
+public struct HomeStory: Sendable, Hashable, Identifiable {
+    /// The featured collection.
+    public let category: HomeCategory
+    /// The tag above the photo, e.g. "Bestseller".
+    public let tag: HomeText
+
+    /// Creates a story.
+    public init(category: HomeCategory, tag: HomeText) {
+        self.category = category
+        self.tag = tag
+    }
+
+    /// The collection handle.
+    public var id: String {
+        category.handle
+    }
+}
+
+// MARK: - HomeModules
+
+/// The modules of the Start screen, in the style of fashion retail apps, and the store
+/// collections behind them (docs/STORE_AUDIT.md):
+///
+/// - ``stories``: the story carousel at the top (one card per collection).
+/// - ``showcase``: the category tiles with the dark product panel of the chosen one.
+/// - ``bestsellers``: the row of cards with prices below the showcase.
+/// - ``deals``: the dark sale panel.
+/// - ``versions``: the two by two grid of product versions (one photo each).
+/// - ``guidesBlog``: the Ratgeber stories.
+///
+/// The fixed texts, the trust facts, "Zuletzt angesehen", the service tiles and the support
+/// card need no store data and are not listed here.
+public struct HomeModules: Sendable, Hashable {
+    /// The cards of the story carousel.
+    public let stories: [HomeStory]
+    /// The tiles of the category showcase, the first one chosen at start.
+    public let showcase: [HomeCategory]
+    /// The collection of the bestseller row.
+    public let bestsellers: HomeCategory
+    /// The collection of the sale panel.
+    public let deals: HomeCategory
+    /// The tiles of the version grid.
+    public let versions: [HomeCategory]
+    /// The blog of the Ratgeber stories.
+    public let guidesBlog: String
+
+    /// Creates the modules.
+    public init(
+        stories: [HomeStory],
+        showcase: [HomeCategory],
+        bestsellers: HomeCategory,
+        deals: HomeCategory,
+        versions: [HomeCategory],
+        guidesBlog: String
+    ) {
+        self.stories = stories
+        self.showcase = showcase
+        self.bestsellers = bestsellers
+        self.deals = deals
+        self.versions = versions
+        self.guidesBlog = guidesBlog
+    }
+
+    /// The rows to load: every collection once, with the larger size when a collection is both
+    /// a row and a tile, then the guides blog.
+    public var layout: HomeLayout {
+        let rowCategories = stories.map(\.category) + showcase + [bestsellers, deals]
+        let rowHandles = rowCategories.map(\.handle)
+        let rows = Set(rowHandles)
+        var sections = rowHandles.map { handle in
+            HomeSection(
+                title: .verbatim(handle),
+                content: .collection(
+                    handle: handle,
+                    limit: HomeLayout.productsPerRow,
+                    highlight: handle == HomeModules.bestsellerHandle ? .bestseller : .none
+                )
+            )
+        }
+        sections += versions.filter { !rows.contains($0.handle) }.map { version in
+            HomeSection(
+                title: .verbatim(version.handle),
+                content: .collection(handle: version.handle, limit: HomeLayout.productsPerTile, highlight: .none)
+            )
+        }
+        sections.append(
+            HomeSection(
+                title: .localized("home.section.guides.title"),
+                eyebrow: .localized("home.section.guides.eyebrow"),
+                content: .blog(handle: guidesBlog, limit: HomeLayout.articlesPerRow)
+            )
+        )
+        return HomeLayout(sections: sections)
+    }
+
+    /// The bestseller collection, the only one whose cards may say "Bestseller".
+    public static let bestsellerHandle = "bestseller"
+
+    /// The standard modules with the live store handles.
+    public static let standard = HomeModules(
+        stories: [
+            HomeStory(category: .bestseller, tag: .localized("home.story.tag.bestseller")),
+            HomeStory(category: .windows, tag: .localized("home.story.tag.range")),
+            HomeStory(category: .office, tag: .localized("home.story.tag.range")),
+            HomeStory(category: .mac, tag: .localized("home.story.tag.range")),
+            HomeStory(category: .server, tag: .localized("home.story.tag.range")),
+            HomeStory(category: .development, tag: .localized("home.story.tag.range")),
+        ],
+        showcase: [.windows, .office, .server, .mac, .development, .microsoft365],
+        bestsellers: .bestseller,
+        deals: .deals,
+        versions: [
+            HomeCategory(handle: "windows-11", title: .verbatim("Windows 11"), icon: .windows),
+            HomeCategory(handle: "windows-10", title: .verbatim("Windows 10"), icon: .windows),
+            HomeCategory(handle: "microsoft-office-2024", title: .verbatim("Office 2024"), icon: .office),
+            HomeCategory(handle: "microsoft-office-2021", title: .verbatim("Office 2021"), icon: .office),
+        ],
+        guidesBlog: "guides"
+    )
+}
+
+// MARK: - Standard categories
+
+extension HomeCategory {
+    /// `bestseller`.
+    public static let bestseller = HomeCategory(
+        handle: HomeModules.bestsellerHandle,
+        title: .localized("home.section.bestseller.title"),
+        eyebrow: .localized("home.section.bestseller.eyebrow"),
+        icon: .bestseller
+    )
+    /// `windows`.
+    public static let windows = HomeCategory(
+        handle: "windows",
+        title: .localized("home.section.windows.title"),
+        eyebrow: .localized("home.section.windows.eyebrow"),
+        icon: .windows
+    )
+    /// `microsoft-office`.
+    public static let office = HomeCategory(
+        handle: "microsoft-office",
+        title: .localized("home.section.office.title"),
+        eyebrow: .localized("home.section.office.eyebrow"),
+        icon: .office
+    )
+    /// `windows-server`.
+    public static let server = HomeCategory(
+        handle: "windows-server",
+        title: .localized("home.section.server.title"),
+        eyebrow: .localized("home.section.server.eyebrow"),
+        icon: .server
+    )
+    /// `microsoft-office-fur-mac`.
+    public static let mac = HomeCategory(
+        handle: "microsoft-office-fur-mac",
+        title: .localized("home.category.mac.title"),
+        eyebrow: .localized("home.category.mac.eyebrow"),
+        icon: .mac
+    )
+    /// `visual-studio-entwicklungstools`.
+    public static let development = HomeCategory(
+        handle: "visual-studio-entwicklungstools",
+        title: .localized("home.section.development.title"),
+        eyebrow: .localized("home.section.development.eyebrow"),
+        icon: .development
+    )
+    /// `microsoft-365-abonnement`.
+    public static let microsoft365 = HomeCategory(
+        handle: "microsoft-365-abonnement",
+        title: .verbatim("Microsoft 365"),
+        eyebrow: .localized("home.category.microsoft365.eyebrow"),
+        icon: .microsoft365
+    )
+    /// `sale`.
+    public static let deals = HomeCategory(
+        handle: "sale",
+        title: .localized("home.section.deals.title"),
+        eyebrow: .localized("home.section.deals.eyebrow"),
+        icon: .sale
+    )
 }

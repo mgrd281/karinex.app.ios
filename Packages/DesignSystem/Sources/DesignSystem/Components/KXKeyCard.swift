@@ -95,9 +95,8 @@ public enum KXLicenseKeyFormatting {
 
 // MARK: - KXKeyCard
 
-/// A certificate-style license card: an ink panel with a terracotta accent line along the top
-/// and a fine gold inset ring, the serif product name, the eyebrow "Lizenzschlüssel" and the
-/// monospaced key, which wraps between its groups.
+/// A license card in the style of a premium payment card: a black panel with the product name,
+/// the eyebrow "Lizenzschlüssel" and the monospaced key, which wraps between its groups.
 ///
 /// Actions:
 /// - "Kopieren" copies the key with ``KXClipboard/copySensitive(_:expiresAfter:)`` (local to
@@ -111,11 +110,11 @@ public enum KXLicenseKeyFormatting {
 /// "Lizenzschlüssel verborgen" while it is hidden. The key is marked `privacySensitive`, so it
 /// is redacted wherever the system hides private content.
 ///
-/// The card uses the `keyCard*` color tokens and looks the same in light and dark mode. Its
-/// buttons are ``KXButtonStyle`` buttons in their dark-appearance colors, because the ink panel is
-/// a dark surface in both appearances: "Kopieren" is gold with an ink label, "Anzeigen" has a gold
-/// outline and a cream label, "Anleitung" and "Support zu dieser Lizenz" are gold text. At large
-/// text sizes the buttons stack vertically and the key wraps group by group.
+/// The card uses the `keyCard*` color tokens and is dark in light and dark mode. Its buttons
+/// are ``KXButtonStyle`` buttons in their dark-appearance colors, because the panel is a dark
+/// surface in both appearances: "Kopieren" is white with a black label, "Anzeigen" has a white
+/// outline and label, "Anleitung" and "Support zu dieser Lizenz" are white text. At large text
+/// sizes the buttons stack vertically and the key wraps group by group.
 ///
 /// ```swift
 /// @State private var isRevealed = false
@@ -182,28 +181,13 @@ public struct KXKeyCard: View {
                     secondaryActions
                 }
             }
-            // The ink panel is dark in both appearances; the dark-appearance button tokens are
-            // the pairings allowed on it (gold on ink, ink on gold, cream on ink).
+            // The panel is dark in both appearances; the dark-appearance button tokens are the
+            // pairings allowed on it (white on black, black on white).
             .environment(\.colorScheme, .dark)
         }
-        .padding(.horizontal, KXSpacing.l)
-        .padding(.top, KXSpacing.l + kxKeyCardAccentLineHeight)
-        .padding(.bottom, KXSpacing.l)
+        .padding(KXSpacing.l)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background {
-            KXColor.keyCardBackground
-                .overlay(alignment: .top) {
-                    KXColor.keyCardAccent.frame(height: kxKeyCardAccentLineHeight)
-                }
-                .clipShape(shape)
-        }
-        .overlay {
-            RoundedRectangle(cornerRadius: KXRadius.card - kxKeyCardRingInset, style: .continuous)
-                .strokeBorder(KXColor.accent.opacity(0.45), lineWidth: hairlineWidth)
-                .padding(kxKeyCardRingInset)
-                .allowsHitTesting(false)
-                .accessibilityHidden(true)
-        }
+        .background(KXColor.keyCardBackground, in: shape)
         .overlay {
             shape
                 .strokeBorder(KXColor.hairline, lineWidth: hairlineWidth)
@@ -231,10 +215,6 @@ public struct KXKeyCard: View {
                     .foregroundStyle(KXColor.keyCardMuted)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            KXColor.accent
-                .frame(width: KXSpacing.xl, height: KXBorder.regular)
-                .padding(.top, KXSpacing.xxs)
-                .accessibilityHidden(true)
         }
     }
 
@@ -397,11 +377,6 @@ public struct KXKeyCard: View {
         1 / max(displayScale, 1)
     }
 }
-
-/// Height of the terracotta accent line along the top edge of the card.
-private let kxKeyCardAccentLineHeight: CGFloat = KXBorder.emphasis * 2
-/// Distance of the gold inset ring from the card edge.
-private let kxKeyCardRingInset: CGFloat = 6
 
 // MARK: - Key text
 

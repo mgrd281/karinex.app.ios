@@ -9,12 +9,14 @@ import SwiftUI
 /// versendet).
 ///
 /// Every step shows its number in a circle:
-/// - Steps without a ``Step/State`` are informational: a gold numeral (`accentText`) in a gold
-///   ring, joined by gold hairlines. VoiceOver reads no progress state.
-/// - ``Step/State/done``: a gold disc with an ink check mark; the line to the next step is a
-///   stronger gold rule.
-/// - ``Step/State/current``: a brand disc (forest; gold in dark mode) inside a gold ring.
+/// - Steps without a ``Step/State`` are informational: a white numeral on an ink disc, joined
+///   by neutral hairlines. VoiceOver reads no progress state.
+/// - ``Step/State/done``: an ink disc with a white check mark; the line to the next step is a
+///   stronger ink rule.
+/// - ``Step/State/current``: an ink disc inside an ink ring.
 /// - ``Step/State/upcoming``: a neutral ring with a muted numeral and title.
+///
+/// In dark mode the ink and white swap.
 ///
 /// ``Direction/vertical`` suits any number of steps and longer detail texts.
 /// ``Direction/horizontal`` suits three or four short steps; at accessibility text sizes it
@@ -141,12 +143,12 @@ private struct KXTimelineConnector: Equatable {
     let width: CGFloat
 }
 
-/// The line after `step`: gold while the path is completed or informational, neutral ahead of
-/// the current step.
+/// The line after `step`: ink while the path is completed, neutral between informational steps
+/// and ahead of the current step.
 private func kxTimelineConnector(after step: KXStepTimeline.Step) -> KXTimelineConnector {
     switch step.state {
     case nil:
-        KXTimelineConnector(color: KXColor.accent, width: KXBorder.regular)
+        KXTimelineConnector(color: KXColor.divider, width: KXBorder.regular)
     case .some(.done):
         KXTimelineConnector(color: KXColor.accent, width: KXBorder.emphasis)
     case .some(.current), .some(.upcoming):
@@ -253,7 +255,7 @@ private struct KXTimelineIndicator: View {
         case .some(.upcoming):
             numeral.foregroundStyle(KXColor.textTertiary)
         case nil:
-            numeral.foregroundStyle(KXColor.accentText)
+            numeral.foregroundStyle(KXColor.textOnAccent)
         }
     }
 
@@ -278,7 +280,7 @@ private struct KXTimelineIndicator: View {
         case .some(.upcoming):
             Circle().strokeBorder(KXColor.divider, lineWidth: KXBorder.regular)
         case nil:
-            Circle().strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
+            Circle().fill(KXColor.accent)
         }
     }
 }

@@ -12,7 +12,7 @@ enum HomeTrustFact: String, CaseIterable, Identifiable, Sendable {
     case emailDelivery
     /// "Apple Pay, Kreditkarte, Klarna". These are the only payment methods of the store.
     case paymentMethods
-    /// "100 Tage Geld-zurück*". Tapping it presents the conditions.
+    /// "14 Tage Geld-zurück*". Tapping it presents the conditions.
     case moneyBack
     /// "Support Mo. bis So., 06:00 bis 23:00 Uhr".
     case supportHours
@@ -26,7 +26,7 @@ enum HomeTrustFact: String, CaseIterable, Identifiable, Sendable {
         rawValue
     }
 
-    /// SF Symbol shown in the tile's gold ring.
+    /// SF Symbol shown on the tile.
     var systemImage: String {
         switch self {
         case .emailDelivery: "envelope"
@@ -68,7 +68,7 @@ enum HomeTrustFact: String, CaseIterable, Identifiable, Sendable {
 
 // MARK: - MoneyBackClause
 
-/// The conditions of the "100 Tage Geld-zurück" promise, exactly as defined by the business
+/// The conditions of the "14 Tage Geld-zurück" promise, exactly as defined by the business
 /// (PROMPT.md section 2), in the order they are shown.
 enum MoneyBackClause: String, CaseIterable, Identifiable, Sendable {
     /// The promise applies only to activated license keys and to physical goods.
@@ -136,7 +136,7 @@ enum SupportChannel: String, CaseIterable, Identifiable, Sendable {
         rawValue
     }
 
-    /// Decorative SF Symbol shown in the channel's gold ring.
+    /// Decorative SF Symbol shown on the channel's disc.
     var systemImage: String {
         switch self {
         case .whatsApp: "message"

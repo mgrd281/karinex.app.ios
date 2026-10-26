@@ -4,8 +4,8 @@ import SwiftUI
 
 /// A one-pixel rule, horizontal or vertical.
 ///
-/// Unlike SwiftUI's `Divider` it uses the design-system colors, and it can be drawn in
-/// champagne gold for editorial separations. It is decorative and hidden from VoiceOver.
+/// Unlike SwiftUI's `Divider` it uses the design-system colors, and it can be drawn in ink for
+/// a stronger separation. It is decorative and hidden from VoiceOver.
 ///
 /// ```swift
 /// VStack(spacing: KXSpacing.s) {
@@ -18,7 +18,7 @@ public struct KXDivider: View {
     public enum Style: String, CaseIterable, Sendable {
         /// Neutral divider color, for lists and forms.
         case standard
-        /// Champagne gold, for editorial separations.
+        /// Ink (white in dark mode), for a stronger separation.
         case accent
     }
 

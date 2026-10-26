@@ -5,18 +5,21 @@ import SwiftUI
 
 // MARK: - ProductDetailScreen
 
-/// The product detail screen (PROMPT.md section 6.3), the most important screen of the app.
+/// The product detail screen (PROMPT.md section 6.3), the most important screen of the app, laid
+/// out like a fashion retail app.
 ///
-/// From top to bottom: the image gallery with page dots (tap for the full-screen zoom viewer),
-/// the serif title, the price of the selected variant with the market's tax note, availability,
-/// variant chips when there is more than one variant, the key facts from the store's metafields
-/// (hidden when there are none), "So läuft es ab", the description, the activation instructions
-/// (when the store provides them), similar products for comparison, the FAQ (when present), the
-/// money-back conditions and, for digital variants, the right of withdrawal notice. A sticky bar
-/// keeps the price, "In den Warenkorb" and "Jetzt kaufen" in reach; the toolbar shares the
-/// product page of the web shop.
+/// From top to bottom: the photos edge to edge on the light grey photo tile with page dots and
+/// the wishlist heart (tap for the full-screen zoom viewer), the bold title, the price of the
+/// selected variant with the market's tax note, availability and delivery as icon rows, the
+/// variant pills when there is more than one variant, "Jetzt kaufen", the description, the key
+/// facts from the store's metafields (hidden when there are none), "So läuft es ab" and the
+/// activation instructions (when the store provides them) as collapsible rows, the money-back
+/// conditions and, for digital variants, the right of withdrawal notice, similar products and
+/// the FAQ (when present). A sticky bar keeps the price and "In den Warenkorb" in reach; the
+/// navigation bar shares the product page of the web shop and shows the shopping bag with the
+/// number of items, which opens the cart (``ProductToolbar``).
 ///
-/// Every product fact comes from Shopify. The screen adds no ratings, no claims and no wishlist.
+/// Every product fact comes from Shopify. The screen adds no ratings and no claims.
 ///
 /// Push it from a ``CommerceUI/CommerceRoute/product(handle:)`` route:
 ///
@@ -33,6 +36,7 @@ public struct ProductDetailScreen: View {
     @State private var model: ProductDetailViewModel
     @State private var isTitleVisible = true
 
+    private let cartStore: CartStore
     private let onRoute: @MainActor (CommerceRoute) -> Void
     private let onBuyNow: @MainActor () -> Void
 
@@ -57,6 +61,7 @@ public struct ProductDetailScreen: View {
         onBuyNow: @escaping @MainActor () -> Void
     ) {
         _model = State(initialValue: ProductDetailViewModel(handle: handle, catalog: catalog, cartStore: cartStore))
+        self.cartStore = cartStore
         self.onRoute = onRoute
         self.onBuyNow = onBuyNow
     }
@@ -74,7 +79,10 @@ public struct ProductDetailScreen: View {
                 ProductDetailBody(
                     content: content,
                     model: model,
+                    isSaved: savedProducts.map { $0.isSaved(content.product.id) },
+                    onToggleSaved: { savedProducts?.toggle(content.product.id) },
                     onRoute: onRoute,
+                    onBuyNow: buyNow,
                     onTitleVisibilityChange: { isTitleVisible = $0 }
                 )
             },
@@ -85,56 +93,22 @@ public struct ProductDetailScreen: View {
         .kxScreenBackground()
         .navigationTitle(Text(verbatim: model.product?.title ?? String()))
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text(verbatim: model.product?.title ?? String())
-                    .kxFont(.headline)
-                    .foregroundStyle(KXColor.textPrimary)
-                    .lineLimit(1)
-                    .opacity(isTitleVisible ? 0 : 1)
-                    .accessibilityHidden(isTitleVisible)
-                    .kxAnimation(.fade, value: isTitleVisible)
-            }
-            if let product = model.product, let savedProducts {
-                ToolbarItem(placement: .primaryAction) {
-                    let isSaved = savedProducts.isSaved(product.id)
-                    Button {
-                        savedProducts.toggle(product.id)
-                    } label: {
-                        Label {
-                            if isSaved {
-                                Text("product.wishlist.remove", bundle: .module)
-                            } else {
-                                Text("product.wishlist.add", bundle: .module)
-                            }
-                        } icon: {
-                            Image(systemName: isSaved ? "heart.fill" : "heart")
-                        }
-                    }
-                    .sensoryFeedback(.selection, trigger: isSaved)
-                    .accessibilityIdentifier("product.wishlist")
-                }
-            }
-            if let url = model.product?.onlineStoreUrl {
-                ToolbarItem(placement: .primaryAction) {
-                    ShareLink(item: url, subject: Text(verbatim: model.product?.title ?? String())) {
-                        Label {
-                            Text("product.share", bundle: .module)
-                        } icon: {
-                            Image(systemName: "square.and.arrow.up")
-                        }
-                    }
-                    .accessibilityIdentifier("product.share")
-                }
-            }
-        }
+        .modifier(
+            ProductToolbar(
+                title: model.product?.title ?? String(),
+                isTitleVisible: isTitleVisible,
+                shareURL: model.product?.onlineStoreUrl,
+                cartCount: cartStore.itemCount,
+                onCart: { onRoute(.cart) }
+            )
+        )
         .safeAreaInset(edge: .bottom, spacing: 0) {
             if let variant = model.selectedVariant {
                 ProductPurchaseBar(
                     variant: variant,
+                    image: variant.image ?? model.product?.featuredImage,
                     isAdding: model.isAddingToCart,
-                    onAddToCart: addToCart,
-                    onBuyNow: buyNow
+                    onAddToCart: addToCart
                 )
             }
         }
@@ -211,7 +185,11 @@ public struct ProductDetailScreen: View {
 private struct ProductDetailBody: View {
     let content: ProductDetailContent
     let model: ProductDetailViewModel
+    /// Whether the product is on the wishlist, or `nil` when the app offers no wishlist.
+    let isSaved: Bool?
+    let onToggleSaved: @MainActor () -> Void
     let onRoute: @MainActor (CommerceRoute) -> Void
+    let onBuyNow: @MainActor () -> Void
     let onTitleVisibilityChange: @MainActor (Bool) -> Void
 
     @State private var galleryIndex = 0
@@ -221,58 +199,53 @@ private struct ProductDetailBody: View {
         ScrollView {
             VStack(alignment: .leading, spacing: KXSpacing.xl) {
                 VStack(alignment: .leading, spacing: KXSpacing.l) {
-                    ProductGallery(images: content.images, selection: $galleryIndex) { index in
+                    ProductGallery(
+                        images: content.images,
+                        selection: $galleryIndex,
+                        isSaved: isSaved,
+                        onToggleSaved: onToggleSaved
+                    ) { index in
                         viewer = ProductViewerRequest(index: index)
                     }
-                    ProductSummarySection(
-                        product: content.product,
-                        variant: model.selectedVariant,
-                        fulfillment: model.fulfillment,
-                        showsVariantPicker: model.showsVariantPicker,
-                        selectedVariantID: model.selectedVariantID,
-                        onSelectVariant: { model.selectVariant($0) },
-                        onTitleVisibilityChange: onTitleVisibilityChange
-                    )
+                    VStack(alignment: .leading, spacing: KXSpacing.l) {
+                        ProductSummarySection(
+                            product: content.product,
+                            variant: model.selectedVariant,
+                            lowestPrice: model.lowestPrice,
+                            linkedProducts: model.linkedProducts,
+                            onSelectLinkedProduct: { onRoute(.product(handle: $0.handle)) },
+                            fulfillment: model.fulfillment,
+                            recentSales: model.recentSales,
+                            showsVariantPicker: model.showsVariantPicker,
+                            selectedVariantID: model.selectedVariantID,
+                            onSelectVariant: { model.selectVariant($0) },
+                            onTitleVisibilityChange: onTitleVisibilityChange
+                        )
+                        if let variant = model.selectedVariant {
+                            KXButton(
+                                String(localized: "product.cart.buy_now", bundle: .module),
+                                style: .secondary,
+                                isFullWidth: true
+                            ) {
+                                onBuyNow()
+                            }
+                            .disabled(!variant.availableForSale || model.isAddingToCart)
+                            .accessibilityIdentifier("product.buyNow")
+                        }
+                        ProductPaymentMethods()
+                    }
+                    .padding(.horizontal, KXSpacing.gutter)
                 }
-                .padding(.horizontal, KXSpacing.gutter)
 
                 Group {
                     if !content.facts.isEmpty {
                         ProductFactsSection(facts: content.facts)
                     }
-                    ProductProcessSection(fulfillment: model.fulfillment)
-                    if !content.description.isEmpty {
-                        ProductRichTextSection(
-                            title: String(localized: "product.description.title", bundle: .module),
-                            document: content.description,
-                            isCard: false
-                        )
-                        .accessibilityIdentifier("product.description")
-                    }
-                    if let activation = content.activation {
-                        ProductRichTextSection(
-                            title: String(localized: "product.activation.title", bundle: .module),
-                            document: activation,
-                            isCard: true
-                        )
-                        .accessibilityIdentifier("product.activation")
-                    }
-                }
-                .padding(.horizontal, KXSpacing.gutter)
-
-                ProductCarouselSection(
-                    title: String(localized: "product.comparison.title", bundle: .module),
-                    eyebrow: String(localized: "product.comparison.eyebrow", bundle: .module),
-                    state: model.comparison,
-                    retry: { await model.loadComparison() },
-                    onSelect: { onRoute(.product(handle: $0.handle)) }
-                )
-                .accessibilityIdentifier("product.comparison")
-
-                Group {
-                    if !content.faq.isEmpty {
-                        ProductFAQSection(items: content.faq)
-                    }
+                    ProductMoreInformationSection(
+                        description: content.description,
+                        fulfillment: model.fulfillment,
+                        activation: content.activation
+                    )
                     VStack(alignment: .leading, spacing: KXSpacing.l) {
                         ProductRefundSection()
                         if model.fulfillment.showsDigitalContentNotice {
@@ -281,8 +254,14 @@ private struct ProductDetailBody: View {
                     }
                 }
                 .padding(.horizontal, KXSpacing.gutter)
+
+                recommendationRows
+
+                if !content.faq.isEmpty {
+                    ProductFAQSection(items: content.faq)
+                        .padding(.horizontal, KXSpacing.gutter)
+                }
             }
-            .padding(.top, KXSpacing.s)
             .padding(.bottom, KXSpacing.xl)
         }
         .refreshable {
@@ -296,6 +275,30 @@ private struct ProductDetailBody: View {
         .fullScreenCover(item: $viewer) { request in
             ProductImageViewer(images: content.images, initialIndex: request.index)
         }
+    }
+}
+
+extension ProductDetailBody {
+    /// "Passend dazu" (Shopify's `COMPLEMENTARY` recommendations) and "Ähnliche Produkte"
+    /// (`RELATED`); each row hides itself when it is empty.
+    @ViewBuilder private var recommendationRows: some View {
+        ProductCarouselSection(
+            title: String(localized: "product.complementary.title", bundle: .module),
+            eyebrow: String(localized: "product.complementary.eyebrow", bundle: .module),
+            state: model.complementary,
+            retry: { await model.loadComplementary() },
+            onSelect: { onRoute(.product(handle: $0.handle)) }
+        )
+        .accessibilityIdentifier("product.complementary")
+
+        ProductCarouselSection(
+            title: String(localized: "product.comparison.title", bundle: .module),
+            eyebrow: String(localized: "product.comparison.eyebrow", bundle: .module),
+            state: model.comparison,
+            retry: { await model.loadComparison() },
+            onSelect: { onRoute(.product(handle: $0.handle)) }
+        )
+        .accessibilityIdentifier("product.comparison")
     }
 }
 

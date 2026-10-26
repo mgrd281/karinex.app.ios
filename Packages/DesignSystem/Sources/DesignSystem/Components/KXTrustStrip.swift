@@ -5,12 +5,12 @@ import SwiftUI
 /// One fact in a ``KXTrustStrip``: an SF Symbol and a short, already-localized text such as
 /// "Lieferung per E-Mail in Minuten".
 ///
-/// Items with a condition (for example "100 Tage Geld-zurück") carry a footnote marker and an
+/// Items with a condition (for example "14 Tage Geld-zurück") carry a footnote marker and an
 /// `onTap` action that presents the condition, so that it is always one tap away.
 public struct KXTrustItem: Identifiable {
     /// Stable identity. Defaults to the text; must be unique within one strip.
     public let id: String
-    /// SF Symbol name shown in the gold ring, e.g. `"envelope"`. Decorative.
+    /// SF Symbol name shown above the text, e.g. `"envelope"`. Decorative.
     public let systemImage: String
     /// The already-localized fact, without the footnote marker.
     public let text: String
@@ -58,16 +58,18 @@ public struct KXTrustItem: Identifiable {
 // MARK: - KXTrustStrip
 
 /// A set of short trust facts (delivery, payment methods, money-back condition, support
-/// hours), each an SF Symbol in a gold ring above a short text on a cream tile.
+/// hours), each a line icon above a short text on a light grey tile.
 ///
 /// Arrangements:
 /// - ``Arrangement/grid``: two columns with equal row heights (the 2x2 grid of the Start tab).
 ///   Place it inside the screen gutters like any other content.
 /// - ``Arrangement/carousel``: one horizontally scrolling row that snaps to tiles. Place it edge
 ///   to edge (without horizontal padding); it applies the standard gutter as content margins.
+/// - ``Arrangement/list``: one fact per row, icon and text separated by hairlines, without
+///   tiles, in the style of the delivery rows of fashion retail apps.
 ///
-/// At accessibility text sizes both arrangements become a single column of full-width rows so
-/// that no text is truncated.
+/// At accessibility text sizes the grid and the carousel become a single column of full-width
+/// rows so that no text is truncated.
 ///
 /// Items with `onTap` are buttons: they show an info glyph, and VoiceOver reads the text with
 /// the button trait and a hint. Static items are read as plain text.
@@ -87,6 +89,8 @@ public struct KXTrustStrip: View {
         case grid
         /// A single horizontally scrolling row.
         case carousel
+        /// One row per fact, separated by hairlines, without tiles.
+        case list
     }
 
     private let items: [KXTrustItem]
@@ -107,7 +111,9 @@ public struct KXTrustStrip: View {
 
     public var body: some View {
         Group {
-            if dynamicTypeSize.isAccessibilitySize {
+            if arrangement == .list {
+                rows
+            } else if dynamicTypeSize.isAccessibilitySize {
                 list
             } else {
                 switch arrangement {
@@ -115,6 +121,8 @@ public struct KXTrustStrip: View {
                     grid
                 case .carousel:
                     carousel
+                case .list:
+                    rows
                 }
             }
         }
@@ -159,6 +167,15 @@ public struct KXTrustStrip: View {
         .contentMargins(.horizontal, KXSpacing.gutter, for: .scrollContent)
     }
 
+    private var rows: some View {
+        VStack(spacing: 0) {
+            ForEach(items) { item in
+                KXTrustTile(item: item, layout: .row)
+                KXDivider()
+            }
+        }
+    }
+
     private var list: some View {
         VStack(spacing: KXSpacing.s) {
             ForEach(items) { item in
@@ -178,12 +195,13 @@ private struct KXTrustTile: View {
         case stacked
         /// Icon leading the text (single-column fallback).
         case inline
+        /// Icon leading the text without a tile (``KXTrustStrip/Arrangement/list``).
+        case row
     }
 
     let item: KXTrustItem
     let layout: TileLayout
 
-    @Environment(\.displayScale) private var displayScale
     @ScaledMetric(relativeTo: .subheadline) private var iconSize: CGFloat = 36
 
     var body: some View {
@@ -226,7 +244,7 @@ private struct KXTrustTile: View {
                     }
                     label
                 }
-            case .inline:
+            case .inline, .row:
                 HStack(alignment: .center, spacing: KXSpacing.s) {
                     icon
                     label
@@ -237,24 +255,20 @@ private struct KXTrustTile: View {
                 }
             }
         }
-        .padding(KXSpacing.m)
+        .padding(.horizontal, layout == .row ? 0 : KXSpacing.m)
+        .padding(.vertical, layout == .row ? KXSpacing.s : KXSpacing.m)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .frame(minHeight: KXSpacing.minimumTapTarget)
-        .background(KXColor.surface, in: shape)
-        .overlay {
-            shape.strokeBorder(KXColor.hairline, lineWidth: 1 / max(displayScale, 1))
-        }
+        .background(layout == .row ? Color.clear : KXColor.surface, in: shape)
         .contentShape(shape)
     }
 
     private var icon: some View {
         Image(systemName: item.systemImage)
-            .font(KXFont.font(.headline, size: Double(iconSize * 0.45)))
-            .foregroundStyle(KXColor.brand)
-            .frame(width: iconSize, height: iconSize)
-            .overlay {
-                Circle().strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
-            }
+            .font(KXFont.font(.headline, size: Double(iconSize * 0.6)))
+            .fontWeight(.regular)
+            .foregroundStyle(KXColor.textPrimary)
+            .frame(width: iconSize, height: iconSize, alignment: .leading)
             .accessibilityHidden(true)
     }
 
@@ -290,7 +304,7 @@ private struct KXTrustStripPreviewGallery: View {
     private let items: [KXTrustItem] = [
         KXTrustItem(systemImage: "envelope", text: "Lieferung per E-Mail in Minuten"),
         KXTrustItem(systemImage: "creditcard", text: "Apple Pay, Kreditkarte, Klarna"),
-        KXTrustItem(systemImage: "arrow.uturn.backward", text: "100 Tage Geld-zurück", footnoteMarker: "*") {},
+        KXTrustItem(systemImage: "arrow.uturn.backward", text: "14 Tage Geld-zurück", footnoteMarker: "*") {},
         KXTrustItem(systemImage: "bubble.left.and.bubble.right", text: "Support Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit"),
     ]
 

@@ -48,6 +48,22 @@ public struct ProductSummary: Sendable, Hashable, Codable, Identifiable {
         self.requiresShipping = requiresShipping
     }
 
+    /// The summary of a loaded product, for places that list it next to other products (the
+    /// linked products row of the product screen).
+    public init(_ product: Product) {
+        self.init(
+            id: product.id,
+            handle: product.handle,
+            title: product.title,
+            vendor: product.vendor,
+            availableForSale: product.availableForSale,
+            featuredImage: product.featuredImage,
+            priceRange: product.priceRange,
+            compareAtPriceRange: product.compareAtPriceRange,
+            requiresShipping: product.variants.first?.requiresShipping
+        )
+    }
+
     /// The lowest price, shown as "ab" price for multi-variant products.
     public var price: MoneyV2 {
         priceRange.minVariantPrice
@@ -117,14 +133,32 @@ public struct CollectionSummary: Sendable, Hashable, Codable, Identifiable {
     public let description: String
     /// The collection image, if any.
     public let image: ShopifyImage?
+    /// The image of the collection's first product that has one, when the query asked for it
+    /// (``CollectionsQuery``), else `nil`. The store's collections have no images of their own,
+    /// so the Shop tab shows this photo.
+    public let previewImage: ShopifyImage?
 
     /// Creates a collection summary.
-    public init(id: ShopifyID, handle: String, title: String, description: String, image: ShopifyImage?) {
+    public init(
+        id: ShopifyID,
+        handle: String,
+        title: String,
+        description: String,
+        image: ShopifyImage?,
+        previewImage: ShopifyImage? = nil
+    ) {
         self.id = id
         self.handle = handle
         self.title = title
         self.description = description
         self.image = image
+        self.previewImage = previewImage
+    }
+
+    /// The image that stands for the collection: its own image, else the photo of its first
+    /// product.
+    public var displayImage: ShopifyImage? {
+        image ?? previewImage
     }
 }
 

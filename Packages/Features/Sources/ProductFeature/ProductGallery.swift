@@ -5,8 +5,12 @@ import SwiftUI
 
 // MARK: - ProductGallery
 
-/// The product images as a paged gallery on a cream panel with gold page dots. Tapping an image
-/// opens the full-screen ``ProductImageViewer``.
+/// The product images as a paged gallery, edge to edge on the light grey photo tile, the way
+/// fashion retail apps present their products. The page dots sit in the bottom leading corner of
+/// the photo, the wishlist heart in the bottom trailing corner. Tapping an image opens the
+/// full-screen ``ProductImageViewer``.
+///
+/// The tile is light in both appearances, so its overlays always use the light-appearance ink.
 ///
 /// VoiceOver reads each image with its alt text (or "Produktbild") and its position ("Bild 2
 /// von 5"); swiping with three fingers pages through the images.
@@ -15,29 +19,19 @@ struct ProductGallery: View {
     let images: [ShopifyImage]
     /// The visible page.
     @Binding var selection: Int
+    /// The wishlist state of the product, or `nil` to hide the heart.
+    let isSaved: Bool?
+    /// Adds the product to the wishlist or removes it.
+    let onToggleSaved: @MainActor () -> Void
     /// Opens the viewer at an index.
     let onOpen: @MainActor (Int) -> Void
 
-    @Environment(\.displayScale) private var displayScale
-
     var body: some View {
-        VStack(spacing: KXSpacing.s) {
-            panel
-            if images.count > 1 {
-                ProductPageDots(count: images.count, selection: selection)
-            }
-        }
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("product.gallery")
-    }
-
-    private var panel: some View {
-        let shape = RoundedRectangle(cornerRadius: KXRadius.large, style: .continuous)
-        return ZStack {
-            KXColor.surface
+        ZStack {
+            KXColor.imageBackground
             if images.isEmpty {
                 ProductImage(nil)
-                    .padding(KXSpacing.xl)
+                    .kxPhotoTile()
             } else {
                 TabView(selection: $selection) {
                     ForEach(images.indices, id: \.self) { index in
@@ -49,18 +43,22 @@ struct ProductGallery: View {
             }
         }
         .aspectRatio(1, contentMode: .fit)
-        .clipShape(shape)
-        .overlay {
-            shape.strokeBorder(KXColor.hairline, lineWidth: 1 / max(displayScale, 1))
+        .frame(maxWidth: .infinity)
+        .overlay(alignment: .bottom) {
+            overlays
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("product.gallery")
     }
 
     private func page(at index: Int) -> some View {
         Button {
             onOpen(index)
         } label: {
+            // Each page is its own photo tile: the blend has to happen inside the page, because
+            // the paging container is a platform view.
             ProductImage(images[index], isDecorative: true)
-                .padding(KXSpacing.l)
+                .kxPhotoTile()
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -71,6 +69,23 @@ struct ProductGallery: View {
         .accessibilityIdentifier("product.gallery.image.\(index)")
     }
 
+    /// The page dots and the heart over the photo, in the light appearance of the tile.
+    private var overlays: some View {
+        HStack(alignment: .center, spacing: KXSpacing.m) {
+            if images.count > 1 {
+                ProductPageDots(count: images.count, selection: selection)
+            }
+            Spacer(minLength: 0)
+            if let isSaved {
+                ProductWishlistButton(isSaved: isSaved, onToggle: onToggleSaved)
+            }
+        }
+        .padding(.leading, KXSpacing.gutter)
+        .padding(.trailing, KXSpacing.xs)
+        .padding(.bottom, KXSpacing.xs)
+        .environment(\.colorScheme, .light)
+    }
+
     /// The image's alt text, or "Produktbild" when the store has none.
     static func accessibilityLabel(for image: ShopifyImage) -> String {
         let altText = image.altText?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
@@ -78,10 +93,182 @@ struct ProductGallery: View {
     }
 }
 
+// MARK: - ProductWishlistButton
+
+/// The heart over the product photo on a white disc, as in fashion retail apps: outlined while
+/// the product is not saved, filled once it is.
+///
+/// Saving animates like the About You app (owner request): the filled heart grows from the
+/// center of the outline, springs a little larger and settles, and small hearts burst from it
+/// to the upper left and the lower right and fade. Removing it from the Merkliste just shows the
+/// outline again. With Reduce Motion the heart only switches.
+struct ProductWishlistButton: View {
+    let isSaved: Bool
+    let onToggle: @MainActor () -> Void
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @ScaledMetric(relativeTo: .title2) private var discSize: CGFloat = 52
+    /// Counts the saves that animate; each change plays the animation once.
+    @State private var savesToAnimate = 0
+
+    var body: some View {
+        Button {
+            if !isSaved, !reduceMotion {
+                savesToAnimate += 1
+            }
+            onToggle()
+        } label: {
+            label
+        }
+        .buttonStyle(.plain)
+        .sensoryFeedback(.selection, trigger: isSaved)
+        .accessibilityLabel(isSaved ? Text("product.wishlist.remove", bundle: .module) : Text("product.wishlist.add", bundle: .module))
+        .accessibilityAddTraits(isSaved ? .isSelected : [])
+        .accessibilityIdentifier("product.wishlist")
+    }
+
+    private var label: some View {
+        let size = min(discSize, ProductWishlistMetrics.maximumDiscSize)
+        return Circle()
+            .fill(KXColor.surface)
+            .shadow(
+                color: KXColor.scrim.opacity(ProductWishlistMetrics.shadowOpacity),
+                radius: ProductWishlistMetrics.shadowRadius,
+                x: 0,
+                y: ProductWishlistMetrics.shadowOffset
+            )
+            .frame(width: size, height: size)
+            .overlay {
+                heart(size: size * ProductWishlistMetrics.heartToDisc)
+            }
+            .frame(minWidth: KXSpacing.minimumTapTarget, minHeight: KXSpacing.minimumTapTarget)
+            .contentShape(Circle())
+    }
+
+    /// The outline, the filled heart and the burst, driven by one keyframe animation per save.
+    private func heart(size: CGFloat) -> some View {
+        KeyframeAnimator(initialValue: ProductHeartMotion.resting, trigger: savesToAnimate) { motion in
+            ZStack {
+                if !isSaved || motion.fill < 1 {
+                    Image(systemName: "heart")
+                }
+                if isSaved {
+                    Image(systemName: "heart.fill")
+                        .scaleEffect(max(motion.fill * motion.pop, 0.01))
+                }
+                ProductHeartBurst(progress: motion.burst, heartSize: size)
+            }
+            .font(.system(size: size, weight: .regular))
+            .foregroundStyle(KXColor.textPrimary)
+        } keyframes: { _ in
+            KeyframeTrack(\.fill) {
+                MoveKeyframe(0)
+                CubicKeyframe(1, duration: KXMotion.heartFillDuration)
+            }
+            KeyframeTrack(\.pop) {
+                MoveKeyframe(1)
+                LinearKeyframe(1, duration: KXMotion.heartFillDuration)
+                SpringKeyframe(KXMotion.heartPopScale, duration: KXMotion.heartPopDuration * 0.4, spring: .snappy)
+                SpringKeyframe(1, duration: KXMotion.heartPopDuration * 0.6, spring: .bouncy)
+            }
+            KeyframeTrack(\.burst) {
+                MoveKeyframe(0)
+                LinearKeyframe(0, duration: KXMotion.heartFillDuration + KXMotion.heartPopDuration * 0.4)
+                LinearKeyframe(1, duration: KXMotion.heartBurstDuration)
+            }
+        }
+    }
+}
+
+/// The sizes of the wishlist disc.
+private enum ProductWishlistMetrics {
+    /// The largest disc at large text sizes, so it never covers the photo.
+    static let maximumDiscSize: CGFloat = 64
+    /// The heart's size relative to the disc.
+    static let heartToDisc: CGFloat = 0.5
+    static let shadowOpacity = 0.12
+    static let shadowRadius: CGFloat = 4
+    static let shadowOffset: CGFloat = 1
+}
+
+/// The animated values of the wishlist heart. At rest the heart is full and unscaled and the
+/// burst is hidden.
+struct ProductHeartMotion {
+    /// How far the filled heart has grown from the center, from 0 to 1.
+    var fill: CGFloat
+    /// The extra scale of the filled heart while it springs.
+    var pop: CGFloat
+    /// The progress of the burst, from 0 (not started) to 1 (faded).
+    var burst: CGFloat
+
+    static let resting = ProductHeartMotion(fill: 1, pop: 1, burst: 0)
+}
+
+// MARK: - ProductHeartBurst
+
+/// The small hearts that burst from a saved heart: two to the upper left and two to the lower
+/// right. They fly outward, shrink a little and fade as `progress` runs from 0 to 1, and are
+/// hidden at 0 and 1. Decorative.
+struct ProductHeartBurst: View {
+    /// The progress of the burst, from 0 to 1.
+    let progress: CGFloat
+    /// The size of the heart they burst from.
+    let heartSize: CGFloat
+
+    /// One small heart: its direction from the center and its size relative to the heart.
+    struct Particle {
+        let direction: CGVector
+        let scale: CGFloat
+    }
+
+    static let particles = [
+        Particle(direction: CGVector(dx: -0.78, dy: -0.62), scale: 0.3),
+        Particle(direction: CGVector(dx: -0.95, dy: -0.3), scale: 0.16),
+        Particle(direction: CGVector(dx: 0.78, dy: 0.62), scale: 0.3),
+        Particle(direction: CGVector(dx: 0.95, dy: 0.3), scale: 0.16),
+    ]
+
+    var body: some View {
+        ZStack {
+            ForEach(Self.particles.indices, id: \.self) { index in
+                let particle = Self.particles[index]
+                let distance = Self.distance(at: progress) * heartSize
+                Image(systemName: "heart.fill")
+                    .font(.system(size: heartSize * particle.scale))
+                    .scaleEffect(Self.scale(at: progress))
+                    .offset(x: particle.direction.dx * distance, y: particle.direction.dy * distance)
+            }
+        }
+        .opacity(Self.opacity(at: progress))
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+    }
+
+    /// How far the hearts are from the center, in heart sizes: from just outside the heart
+    /// outward, fast at first.
+    static func distance(at progress: CGFloat) -> CGFloat {
+        let clamped = min(max(progress, 0), 1)
+        let eased = 1 - (1 - clamped) * (1 - clamped)
+        return 0.55 + 0.4 * eased
+    }
+
+    /// The hearts grow in during the first fifth of the burst and shrink to two thirds by its end.
+    static func scale(at progress: CGFloat) -> CGFloat {
+        let clamped = min(max(progress, 0), 1)
+        return clamped < 0.2 ? 0.4 + 3 * clamped : 1 - (clamped - 0.2) / 0.8 / 3
+    }
+
+    /// Fully visible until the middle of the burst, then fading out; hidden at 0 and 1.
+    static func opacity(at progress: CGFloat) -> Double {
+        guard progress > 0, progress < 1 else { return 0 }
+        return progress < 0.5 ? 1 : Double((1 - progress) / 0.5)
+    }
+}
+
 // MARK: - ProductPageDots
 
-/// Page dots below the gallery: the current page is a short gold capsule, the others are small
-/// hairline dots. Decorative; VoiceOver reads the position on each image instead.
+/// Page dots: the current page is a short ink capsule, the others are small light grey dots.
+/// Decorative; VoiceOver reads the position on each image instead.
 struct ProductPageDots: View {
     /// The number of pages.
     let count: Int
@@ -92,14 +279,13 @@ struct ProductPageDots: View {
     @ScaledMetric(relativeTo: .caption) private var dotSize: CGFloat = 6
 
     var body: some View {
-        HStack(spacing: KXSpacing.xs) {
+        HStack(spacing: KXSpacing.xs - KXSpacing.xxs / 2) {
             ForEach(0..<count, id: \.self) { index in
                 Capsule(style: .continuous)
                     .fill(index == selection ? KXColor.accent : KXColor.divider)
-                    .frame(width: index == selection ? dotSize * 3 : dotSize, height: dotSize)
+                    .frame(width: index == selection ? dotSize * 4 : dotSize, height: dotSize)
             }
         }
-        .frame(maxWidth: .infinity)
         .animation(KXMotion.animation(.snappy, reduceMotion: reduceMotion), value: selection)
         .accessibilityHidden(true)
     }
@@ -150,6 +336,7 @@ struct ProductImageViewer: View {
         .safeAreaInset(edge: .bottom, spacing: 0) {
             if images.count > 1 {
                 ProductPageDots(count: images.count, selection: selection)
+                    .frame(maxWidth: .infinity)
                     .padding(.vertical, KXSpacing.m)
             }
         }
@@ -176,10 +363,7 @@ struct ProductImageViewer: View {
                     .kxFont(.headline)
                     .foregroundStyle(KXColor.textPrimary)
                     .frame(width: KXSpacing.minimumTapTarget, height: KXSpacing.minimumTapTarget)
-                    .background(KXColor.surfaceElevated, in: Circle())
-                    .overlay {
-                        Circle().strokeBorder(KXColor.accent, lineWidth: KXBorder.regular)
-                    }
+                    .background(KXColor.surface, in: Circle())
                     .contentShape(Circle())
             }
             .buttonStyle(.plain)

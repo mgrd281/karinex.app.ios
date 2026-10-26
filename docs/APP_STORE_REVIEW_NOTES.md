@@ -21,7 +21,7 @@ To test a purchase without being charged, use the discount code <REVIEWER_DISCOU
 (100 percent) on the product <REVIEWER_TEST_PRODUCT>. The order then appears under
 Konto > Bestellungen, with its invoice and license key.
 
-Account deletion: Konto > Konto löschen (guideline 5.1.1(v)).
+Account deletion: Konto > Persönliche Daten > Konto und Daten löschen (guideline 5.1.1(v)).
 Support: WhatsApp, e-mail and live chat from Konto > Hilfe und Support, daily 06:00 to 23:00 German time.
 Tracking: none. Analytics and notifications start only after explicit consent.
 Languages: German (primary), English, Polish, Dutch, Portuguese (Portugal), Swedish, Danish,
@@ -35,10 +35,10 @@ The values in angle brackets come from the owner (see [OWNER_INPUTS.md](OWNER_IN
 
 | Topic | Answer |
 | --- | --- |
-| Guideline 3.1.1 (In-App Purchase) | The keys activate software on a PC or Mac; they are not consumed in the app and unlock nothing in it. Physical media are shipped. Payment happens in Shopify checkout (Apple Pay, card, Klarna). |
+| Guideline 3.1.1 (In-App Purchase) | The keys activate software on a PC or Mac; they are not consumed in the app and unlock nothing in it. Physical media are shipped. Payment happens in Shopify checkout (Apple Pay, Google Pay, card, Klarna, invoice or bank transfer). |
 | Guideline 4.2 (minimum functionality) | All screens are native SwiftUI: catalog with filters, product detail, search, cart, account with orders, invoices and a license vault, support, legal texts, settings. The only web surfaces are the Shopify checkout and the Shopify login page, both required by Shopify. |
 | Guideline 5.1.1 (data collection) | See [PRIVACY_NUTRITION_LABEL.md](PRIVACY_NUTRITION_LABEL.md). Login data is used only to show the account. |
-| Guideline 5.1.1(v) (account deletion) | In the app, Konto > Konto löschen, sends the erasure request; without a backend it opens a prepared e-mail. |
+| Guideline 5.1.1(v) (account deletion) | In the app, Konto > Persönliche Daten > Konto und Daten löschen, sends the erasure request; without a backend it opens a prepared e-mail. |
 | Guideline 5.2 (intellectual property) | Product names and descriptions come from the store. The app adds no claims about license origin. |
 | Face ID | Optional lock for the license vault, off by default, set under Konto > Einstellungen. `NSFaceIDUsageDescription` is localized. |
 | Sign in with Apple (4.8) | Not required: the app offers no third-party social login; login is the store's own customer account. |

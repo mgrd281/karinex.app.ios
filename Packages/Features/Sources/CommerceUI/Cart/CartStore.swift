@@ -21,6 +21,13 @@ import ShopifyKit
 ///   (they may already belong to a placed order); it forgets the cart and reports it.
 /// - After every change the ``checkoutPreloader`` is called with the fresh checkout URL,
 ///   debounced by ``preloadDelay``, so Checkout Kit can preload (CommerceUI does not import it).
+/// - While a customer is signed in, ``checkoutURL()`` puts their access token
+///   (``customerAccessToken``) on the cart right before checkout, so checkout opens signed in
+///   with their e-mail address, addresses and saved payment methods, and the order belongs to
+///   their account (Shopify's "Authenticate checkouts" for Checkout Kit). Such a cart is never
+///   preloaded, because its checkout URL expires. After a sign-out, ``signOutCustomer()``
+///   moves the lines to a new cart without the token, so the next checkout on this device
+///   never shows the previous customer's details.
 ///
 /// No cart ID, line ID or checkout URL is ever logged.
 @MainActor
@@ -34,6 +41,8 @@ public final class CartStore {
     public static let platformAttributeValue = "ios"
     /// The cart attribute carrying the app version.
     public static let versionAttributeKey = "app_version"
+    /// The key the ID of a cart that carries a customer access token is stored under.
+    public static let signedInCartIDKey = "cart.signedIn.v1"
 
     // MARK: State
 
@@ -65,6 +74,15 @@ public final class CartStore {
 
     /// The debounce interval of ``checkoutPreloader``.
     public let preloadDelay: Duration
+
+    /// Returns a valid Customer Account API access token while a customer is signed in, `nil`
+    /// otherwise. ``checkoutURL()`` puts it on the cart; `nil` (or no supplier) keeps every
+    /// checkout a guest checkout. The token is a secret and is never stored or logged here.
+    public var customerAccessToken: (@MainActor () async -> String?)?
+
+    /// Called when a checkout Checkout Kit may have preloaded no longer matches the cart,
+    /// because the cart was signed in or replaced; the App drops Checkout Kit's cache with it.
+    public var checkoutInvalidator: (@MainActor () -> Void)?
 
     // MARK: Dependencies
 
@@ -290,6 +308,31 @@ public final class CartStore {
         forgetCart()
     }
 
+    /// Takes the signed-out customer off the cart: a cart that carried their access token is
+    /// replaced by a new cart with the same lines and discount codes, and Checkout Kit's cache
+    /// is dropped. When the new cart cannot be created, the cart is forgotten instead, so the
+    /// previous customer's checkout can never open again. A cart that never carried a token
+    /// stays as it is.
+    public func signOutCustomer() async {
+        _ = await enqueue { [self] in
+            guard let cartID = storedCartID, isSignedInCart(cartID) else {
+                store.removeValue(forKey: Self.signedInCartIDKey)
+                return
+            }
+            invalidatePreloadedCheckout()
+            do {
+                if let signedInCart = try await repository.cart(id: cartID), !signedInCart.lines.isEmpty {
+                    try await replaceSignedInCart(signedInCart)
+                } else {
+                    forgetCart()
+                }
+            } catch {
+                logger.notice("Replacing the signed-in cart failed (\(Self.logDescription(error))); it is forgotten")
+                forgetCart()
+            }
+        }
+    }
+
     // MARK: Private: checkout
 
     private func freshCheckoutURL() async throws -> URL {
@@ -306,7 +349,57 @@ public final class CartStore {
         guard !fresh.lines.isEmpty else {
             throw UserFacingError(kind: .notFound)
         }
-        return fresh.checkoutUrl
+        guard let token = await customerAccessToken?() else {
+            guard isSignedInCart(cartID) else { return fresh.checkoutUrl }
+            // The customer signed out, but the cart still carries their token (the app ended
+            // before the cart was replaced): never open their checkout for someone else.
+            invalidatePreloadedCheckout()
+            return try await replaceSignedInCart(fresh).checkoutUrl
+        }
+        // Marked before the request: if it fails ambiguously, the token may be on the cart.
+        store.set(cartID.rawValue, forKey: Self.signedInCartIDKey)
+        invalidatePreloadedCheckout()
+        do {
+            let result = try await repository.updateBuyerIdentity(cartID: cartID, customerAccessToken: token)
+            cart = result.cart
+            lastWarnings = result.warnings
+            return result.cart.checkoutUrl
+        } catch {
+            logger.notice("Signing the checkout in failed (\(Self.logDescription(error))); it opens as a guest checkout")
+            return fresh.checkoutUrl
+        }
+    }
+
+    /// Makes a new cart with the lines and discount codes of `signedInCart`, without its buyer
+    /// identity, the current cart. A discount code that cannot be carried over is left out.
+    @discardableResult
+    private func replaceSignedInCart(_ signedInCart: Cart) async throws -> Cart {
+        let lines = signedInCart.lines.map { CartLineInput(merchandiseId: $0.merchandise.id, quantity: $0.quantity) }
+        let created = try await createCart(lines: lines)
+        store.removeValue(forKey: Self.signedInCartIDKey)
+        apply(created)
+        let codes = signedInCart.discountCodes.map(\.code)
+        guard !codes.isEmpty else { return created.cart }
+        do {
+            let discounted = try await repository.updateDiscountCodes(cartID: created.cart.id, codes: codes)
+            apply(discounted)
+            return discounted.cart
+        } catch {
+            logger.notice("Carrying the discount codes to the new cart failed: \(Self.logDescription(error))")
+            return created.cart
+        }
+    }
+
+    /// Whether the cart with `cartID` carries a customer access token.
+    private func isSignedInCart(_ cartID: ShopifyID) -> Bool {
+        store.string(forKey: Self.signedInCartIDKey) == cartID.rawValue
+    }
+
+    /// Stops a pending preload and lets the App drop the checkout Checkout Kit preloaded.
+    private func invalidatePreloadedCheckout() {
+        preloadTask?.cancel()
+        preloadTask = nil
+        checkoutInvalidator?()
     }
 
     // MARK: Private: mutations
@@ -354,6 +447,7 @@ public final class CartStore {
         lastWarnings = []
         lastRemovedLine = nil
         store.removeValue(forKey: Self.cartIDKey)
+        store.removeValue(forKey: Self.signedInCartIDKey)
         preloadTask?.cancel()
         preloadTask = nil
     }
@@ -453,7 +547,8 @@ public final class CartStore {
 
     private func schedulePreload() {
         preloadTask?.cancel()
-        guard checkoutPreloader != nil, let cart, !cart.lines.isEmpty else {
+        // A signed-in cart's checkout URL expires; ``checkoutURL()`` signs it in again instead.
+        guard checkoutPreloader != nil, let cart, !cart.lines.isEmpty, !isSignedInCart(cart.id) else {
             preloadTask = nil
             return
         }

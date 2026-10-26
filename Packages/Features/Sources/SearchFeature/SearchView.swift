@@ -6,35 +6,49 @@ import SwiftUI
 
 // MARK: - SearchView
 
-/// The Suche tab: a search field with predictive results as you type (products, collections,
-/// articles and query suggestions), the recent searches (the last 8, clearable), suggested
-/// queries and category shortcuts while the field is empty, and a "nothing found" state with the
-/// same shortcuts.
+/// The Suche tab, laid out like the search screen of a fashion retail app: the search field
+/// with predictive results as you type (products, collections, articles and query suggestions);
+/// while the field is empty the recent searches (the last 8) as removable chips, suggested
+/// queries as chips and the category tiles with a real product photo each, separated by light
+/// grey bands; and a "nothing found" state with the same tiles.
 ///
 /// Submitting a search records it and asks for ``CommerceRoute/search(query:)``, which the App
 /// maps to ``SearchResultsScreen``. Every other tap asks for a product, collection or article
 /// route.
 ///
-/// Place it inside a `NavigationStack`; it uses a large title and the navigation bar search
+/// Place it inside a `NavigationStack`; it uses an inline title and the navigation bar search
 /// field.
 public struct SearchView: View {
+    private let catalog: (any CatalogRepository)?
+    private let fieldActivation: Int
     private let onRoute: @MainActor (CommerceRoute) -> Void
 
     @State private var model: SearchViewModel
+    @State private var categoryImages = SearchCategoryImages()
     @State private var query = ""
+    @State private var isFieldActive = false
+    /// The last `fieldActivation` that put the cursor into the field.
+    @State private var handledFieldActivation = 0
 
     /// Creates the search screen.
     ///
     /// - Parameters:
     ///   - search: Runs the predictive search.
     ///   - preferences: Stores the recent searches on the device.
+    ///   - catalog: Loads one product photo per category tile; `nil` shows the symbols only.
+    ///   - fieldActivation: Counts the requests to start typing, for example from the search
+    ///     field of the Start tab. Every new value puts the cursor into the search field.
     ///   - onRoute: Called with the destination of a tap or a submitted search.
     public init(
         search: any SearchRepository,
         preferences: any KeyValueStore,
+        catalog: (any CatalogRepository)? = nil,
+        fieldActivation: Int = 0,
         onRoute: @escaping @MainActor (CommerceRoute) -> Void
     ) {
         _model = State(initialValue: SearchViewModel(search: search, preferences: preferences))
+        self.catalog = catalog
+        self.fieldActivation = fieldActivation
         self.onRoute = onRoute
     }
 
@@ -44,6 +58,7 @@ public struct SearchView: View {
                 ScrollView {
                     SearchIdleContent(
                         recentSearches: model.recentSearches,
+                        categoryImages: categoryImages.images,
                         onSearch: submit,
                         onRemoveRecent: { model.removeRecent($0) },
                         onClearRecent: { model.clearRecent() },
@@ -60,6 +75,7 @@ public struct SearchView: View {
                             SearchPredictiveContent(
                                 query: model.activeQuery,
                                 result: result,
+                                categoryImages: categoryImages.images,
                                 onSearch: submit,
                                 onRoute: onRoute,
                                 onCategory: openCategory
@@ -77,9 +93,10 @@ public struct SearchView: View {
         .accessibilityIdentifier("screen.search")
         .kxScreenBackground()
         .navigationTitle(Text("search.title", bundle: .module))
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .searchable(
             text: $query,
+            isPresented: $isFieldActive,
             placement: .navigationBarDrawer(displayMode: .always),
             prompt: Text("search.prompt", bundle: .module)
         )
@@ -90,6 +107,18 @@ public struct SearchView: View {
         }
         .onChange(of: query) { _, newValue in
             model.queryChanged(newValue)
+        }
+        .task {
+            if let catalog {
+                await categoryImages.loadIfNeeded(from: catalog)
+            }
+        }
+        .task(id: fieldActivation) {
+            guard fieldActivation != handledFieldActivation else { return }
+            handledFieldActivation = fieldActivation
+            // Let the navigation bar with the field reach the screen first.
+            await Task.yield()
+            isFieldActive = true
         }
     }
 
@@ -108,77 +137,68 @@ public struct SearchView: View {
 
 // MARK: - Idle content
 
-/// What the search screen shows while the field is empty: recent searches, suggested queries
-/// and category shortcuts.
+/// What the search screen shows while the field is empty, in sections separated by light grey
+/// bands: the recent searches as removable chips, the suggested queries as chips and the
+/// category tiles.
 private struct SearchIdleContent: View {
     let recentSearches: [String]
+    let categoryImages: [String: ShopifyImage]
     let onSearch: @MainActor (String) -> Void
     let onRemoveRecent: @MainActor (String) -> Void
     let onClearRecent: @MainActor () -> Void
     let onCategory: @MainActor (SearchCategoryShortcut) -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.xl) {
+        VStack(alignment: .leading, spacing: 0) {
             if !recentSearches.isEmpty {
                 recentSection
+                SearchSectionBand()
             }
-            VStack(alignment: .leading, spacing: KXSpacing.s) {
-                SearchSectionTitle(title: String(localized: "search.suggested.title", bundle: .module))
-                SearchFlowLayout(spacing: KXSpacing.xs) {
+            VStack(alignment: .leading, spacing: KXSpacing.xs) {
+                SearchSectionTitle(title: String(localized: "search.suggested.title", bundle: .module), systemImage: "sparkles")
+                    .padding(.horizontal, KXSpacing.gutter)
+                SearchChipRow {
                     ForEach(SearchSuggestion.allCases) { suggestion in
-                        SearchChip(title: suggestion.query, systemImage: "magnifyingglass") {
+                        SearchChip(title: suggestion.query) {
                             onSearch(suggestion.query)
                         }
                         .accessibilityIdentifier("search.suggestion.\(suggestion.id)")
                     }
                 }
             }
+            .padding(.vertical, KXSpacing.l)
+            SearchSectionBand()
             VStack(alignment: .leading, spacing: KXSpacing.s) {
-                SearchSectionTitle(title: String(localized: "search.categories.title", bundle: .module))
-                SearchCategoryGrid(onSelect: onCategory)
+                SearchSectionTitle(title: String(localized: "search.categories.title", bundle: .module), systemImage: "square.grid.2x2")
+                SearchCategoryGrid(images: categoryImages, onSelect: onCategory)
             }
+            .padding(.horizontal, KXSpacing.gutter)
+            .padding(.top, KXSpacing.l)
+            .padding(.bottom, KXSpacing.xl)
         }
-        .padding(.horizontal, KXSpacing.gutter)
-        .padding(.top, KXSpacing.m)
-        .padding(.bottom, KXSpacing.xl)
     }
 
     private var recentSection: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.s) {
+        VStack(alignment: .leading, spacing: KXSpacing.xs) {
             SearchSectionTitle(
                 title: String(localized: "search.recent.title", bundle: .module),
+                systemImage: "clock",
                 actionTitle: String(localized: "search.recent.clear", bundle: .module),
                 action: onClearRecent
             )
+            .padding(.horizontal, KXSpacing.gutter)
             .accessibilityIdentifier("search.recent")
-            KXCard(padding: 0) {
-                VStack(alignment: .leading, spacing: 0) {
-                    ForEach(recentSearches, id: \.self) { recent in
-                        SearchListRow(systemImage: "clock.arrow.circlepath", title: recent, detail: nil) {
-                            onSearch(recent)
-                        }
-                        .accessibilityAction(named: Text("search.recent.remove", bundle: .module)) {
-                            onRemoveRecent(recent)
-                        }
-                        .contextMenu {
-                            Button(role: .destructive) {
-                                onRemoveRecent(recent)
-                            } label: {
-                                Label {
-                                    Text("search.recent.remove", bundle: .module)
-                                } icon: {
-                                    Image(systemName: "trash")
-                                }
-                            }
-                        }
-                        if recent != recentSearches.last {
-                            KXDivider()
-                                .padding(.leading, KXSpacing.m)
-                        }
-                    }
+            SearchChipRow {
+                ForEach(recentSearches, id: \.self) { recent in
+                    SearchChip(
+                        title: recent,
+                        onRemove: { onRemoveRecent(recent) },
+                        action: { onSearch(recent) }
+                    )
                 }
             }
         }
+        .padding(.vertical, KXSpacing.l)
     }
 }
 
@@ -189,6 +209,7 @@ private struct SearchIdleContent: View {
 private struct SearchPredictiveContent: View {
     let query: String
     let result: PredictiveSearchResult
+    let categoryImages: [String: ShopifyImage]
     let onSearch: @MainActor (String) -> Void
     let onRoute: @MainActor (CommerceRoute) -> Void
     let onCategory: @MainActor (SearchCategoryShortcut) -> Void
@@ -217,8 +238,9 @@ private struct SearchPredictiveContent: View {
                             title: String(localized: "search.section.collections", bundle: .module),
                             items: result.collections
                         ) { collection in
-                            SearchListRow(systemImage: "square.grid.2x2", title: collection.title, detail: nil) {
-                                onRoute(.collection(handle: collection.handle, title: collection.title))
+                            let name = CollectionNames.title(for: collection)
+                            SearchListRow(systemImage: "square.grid.2x2", title: name, detail: nil) {
+                                onRoute(.collection(handle: collection.handle, title: name))
                             }
                             .accessibilityIdentifier("search.collection.\(collection.handle)")
                         }
@@ -262,8 +284,8 @@ private struct SearchPredictiveContent: View {
             .frame(maxWidth: .infinity)
             .accessibilityIdentifier("state.empty")
             VStack(alignment: .leading, spacing: KXSpacing.s) {
-                SearchSectionTitle(title: String(localized: "search.categories.title", bundle: .module))
-                SearchCategoryGrid(onSelect: onCategory)
+                SearchSectionTitle(title: String(localized: "search.categories.title", bundle: .module), systemImage: "square.grid.2x2")
+                SearchCategoryGrid(images: categoryImages, onSelect: onCategory)
             }
             .padding(.horizontal, KXSpacing.gutter)
         }

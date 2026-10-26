@@ -85,6 +85,25 @@ struct PriceDisplayTests {
         #expect(display.taxNote == .includingVAT)
     }
 
+    @Test("The lowest price of 30 days shows only with a reduced price in the same currency")
+    func lowestPrice() {
+        func display(compareAt: MoneyV2?, lowest: MoneyV2?) -> PriceDisplay {
+            PriceDisplay(
+                price: euro("12.90"),
+                compareAtPrice: compareAt,
+                country: .de,
+                requiresShipping: false,
+                locale: germany,
+                lowestPrice: lowest
+            )
+        }
+        #expect(display(compareAt: euro("79.99"), lowest: euro("12.90")).lowestPrice == euro("12.90").formatted(locale: germany))
+        #expect(display(compareAt: euro("79.99"), lowest: nil).lowestPrice == nil)
+        #expect(display(compareAt: nil, lowest: euro("12.90")).lowestPrice == nil)
+        #expect(display(compareAt: euro("79.99"), lowest: MoneyV2(amount: 12, currencyCode: .chf)).lowestPrice == nil)
+        #expect(display(compareAt: euro("79.99"), lowest: euro("0.00")).lowestPrice == nil)
+    }
+
     @Test("A compare-at price that is not higher is hidden")
     func compareAtHidden() {
         let display = PriceDisplay(
@@ -114,14 +133,16 @@ struct PriceDisplayTests {
     // MARK: Product cards
 
     @MainActor
-    @Test("Product cards show the sale badge only for reduced products")
+    @Test("Product cards show the reduction badge only for reduced products")
     func productCardBadges() {
         let reduced = CommercePreviewData.products[0]
-        let saleBadge = String(localized: "commerce.product.badge.sale", bundle: CommerceUIResources.bundle)
+        let saleBadge = PriceDisplay(product: reduced, country: .de, locale: germany).savingsText
         let bestsellerBadge = String(localized: "commerce.product.badge.bestseller", bundle: CommerceUIResources.bundle)
 
         let saleModel = ProductCardView.model(for: reduced, highlight: .bestseller, country: .de, locale: germany)
+        #expect(saleBadge != nil)
         #expect(saleModel.badge == saleBadge)
+        #expect(saleModel.badgeTone == .urgency)
         #expect(saleModel.compareAtPrice != nil)
         #expect(saleModel.taxNote == PriceDisplay.TaxNote.includingVAT.text)
         #expect(saleModel.vendor == nil)

@@ -50,7 +50,7 @@ enum OrderStatusPill: String, CaseIterable, Sendable {
     var style: KXBadge.Style {
         switch self {
         case .delivered, .shipped: .success
-        case .paid: .gold
+        case .paid: .accent
         case .cancelled, .refunded, .processing: .neutral
         }
     }

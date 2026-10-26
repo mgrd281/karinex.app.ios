@@ -26,6 +26,9 @@ final class AppRouter {
     var selectedTab: AppTab
     /// The navigation path of every tab; tabs without an entry show their root screen.
     private(set) var paths: [AppTab: [CommerceRoute]] = [:]
+    /// How often a screen asked for the empty search, for example the search field of the Start
+    /// tab. The search screen puts the cursor into its field for every new request.
+    private(set) var searchFieldRequests = 0
 
     /// Creates the router with `selectedTab` selected and every tab at its root.
     init(selectedTab: AppTab = .home) {
@@ -66,6 +69,9 @@ final class AppRouter {
         case let .push(destination):
             paths[tab, default: []].append(destination)
         case let .selectTab(target):
+            if target == .search {
+                searchFieldRequests += 1
+            }
             select(target, popToRoot: true)
         }
     }

@@ -649,6 +649,150 @@
         }
       }
     },
+    "product.complementary.eyebrow" : {
+      "comment" : "Small uppercase label above the title of the row of products the shop recommends with this product. One word.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empfohlen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommended"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polecane"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aanbevolen"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomendado"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rekommenderat"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anbefalet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomendado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommandé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consigliato"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suositeltu"
+          }
+        }
+      }
+    },
+    "product.complementary.title" : {
+      "comment" : "Section title of the row of products the shop recommends together with this product (for example a matching operating system for an office suite). Short, neutral, no claims about other customers.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passend dazu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Goes well with"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pasuje do tego"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Past hierbij"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Combina com"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passar till"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passer til"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Combina con"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À associer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Da abbinare"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sopii yhteen"
+          }
+        }
+      }
+    },
     "product.delivery.digital" : {
       "comment" : "Delivery form next to the availability for license keys, which are sent by e-mail. Short.",
       "extractionState" : "manual",
@@ -2089,6 +2233,78 @@
         }
       }
     },
+    "product.linked.title" : {
+      "comment" : "Small label above the row of photo thumbnails of the products the shop linked to this one, for example the other editions of a software product. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weitere Ausführungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other versions"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inne wersje"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andere versies"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Outras versões"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andra versioner"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andre udgaver"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otras versiones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autres versions"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altre versioni"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muut versiot"
+          }
+        }
+      }
+    },
     "product.loading" : {
       "comment" : "VoiceOver label of the placeholder while the product screen loads.",
       "extractionState" : "manual",
@@ -2953,6 +3169,78 @@
         }
       }
     },
+    "product.recent_sales %lld %lld" : {
+      "comment" : "Product page row under availability: how often the product sold recently, as the store reports it. First number: units sold (always 5 or more), second: length of the window in days (always 2 or more).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In den letzten %2$lld Tagen %1$lld-mal verkauft"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sold %1$lld times in the last %2$lld days"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprzedano %1$lld razy w ciągu ostatnich %2$lld dni"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld keer verkocht in de afgelopen %2$lld dagen"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vendido %1$lld vezes nos últimos %2$lld dias"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sålt %1$lld gånger de senaste %2$lld dagarna"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solgt %1$lld gange de seneste %2$lld dage"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vendido %1$lld veces en los últimos %2$lld días"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vendu %1$lld fois au cours des %2$lld derniers jours"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Venduto %1$lld volte negli ultimi %2$lld giorni"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Myyty %1$lld kertaa viimeisten %2$lld päivän aikana"
+          }
+        }
+      }
+    },
     "product.refund.scope" : {
       "comment" : "Condition 1 of the money-back promise, shown right below it. Must state that it applies only to activated licence keys and physical goods.",
       "extractionState" : "manual",
@@ -3098,73 +3386,73 @@
       }
     },
     "product.refund.title" : {
-      "comment" : "Title of the money-back block on the product screen. Use the glossary term for '100 Tage Geld-zurück'.",
+      "comment" : "Title of the money-back block on the product screen. Use the glossary term for '14 Tage Geld-zurück'.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 Tage Geld-zurück"
+            "value" : "14 Tage Geld-zurück"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100-day money-back"
+            "value" : "14-day money-back"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 dni na zwrot pieniędzy"
+            "value" : "14 dni na zwrot pieniędzy"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 dagen geld terug"
+            "value" : "14 dagen geld terug"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 dias de reembolso"
+            "value" : "14 dias de reembolso"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pengarna tillbaka i 100 dagar"
+            "value" : "Pengarna tillbaka i 14 dagar"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pengene tilbage i 100 dage"
+            "value" : "Pengene tilbage i 14 dage"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reembolso en 100 días"
+            "value" : "Reembolso en 14 días"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remboursement sous 100 jours"
+            "value" : "Remboursement sous 14 jours"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rimborso entro 100 giorni"
+            "value" : "Rimborso entro 14 giorni"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "100 päivän rahat takaisin"
+            "value" : "14 päivän rahat takaisin"
           }
         }
       }
@@ -3309,6 +3597,78 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jaa"
+          }
+        }
+      }
+    },
+    "product.toolbar.cart" : {
+      "comment" : "VoiceOver label of the shopping bag in the navigation bar of the product page; it opens the cart. The number of items is read as its value.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurv"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warenkorb"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basket"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cesta"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ostoskori"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Panier"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carrello"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Winkelwagen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koszyk"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carrinho"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varukorg"
           }
         }
       }

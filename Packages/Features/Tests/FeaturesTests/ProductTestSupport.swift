@@ -37,12 +37,13 @@ enum ProductFixtures {
         )
     }
 
-    /// A product with `variants`, `metafields` and `images`.
+    /// A product with `variants`, `metafields`, `images` and `linkedProducts`.
     static func product(
         variants: [ProductVariant] = [variant(1)],
         metafields: [Metafield] = [],
         images: [ShopifyImage] = [ShopifyImage(url: imageURL, altText: "Microsoft Office 2024 Professional Plus")],
-        descriptionHtml: String = "<p>Microsoft Office 2024 Professional Plus als Vollversion.</p>"
+        descriptionHtml: String = "<p>Microsoft Office 2024 Professional Plus als Vollversion.</p>",
+        linkedProducts: [ProductSummary] = []
     ) -> Product {
         Product(
             id: productID,
@@ -62,7 +63,8 @@ enum ProductFixtures {
             priceRange: PriceRange(minVariantPrice: money("29.90"), maxVariantPrice: money("29.90")),
             compareAtPriceRange: PriceRange(minVariantPrice: money("149.99"), maxVariantPrice: money("149.99")),
             onlineStoreUrl: URL(string: "https://www.karinex.de/products/\(handle)"),
-            metafields: metafields
+            metafields: metafields,
+            linkedProducts: linkedProducts
         )
     }
 
@@ -89,21 +91,29 @@ enum ProductFixtures {
 
 // MARK: - ProductStubCatalogRepository
 
-/// A catalog that serves one product and its recommendations, with queued failures.
+/// A catalog that serves one product and its recommendations per intent, with queued failures.
 actor ProductStubCatalogRepository: CatalogRepository {
     private var product: Product?
     private var recommendations: [ProductSummary]
+    private var complementary: [ProductSummary]
     private var productFailures: [any Error] = []
-    private var recommendationFailures: [any Error] = []
+    private var recommendationFailures: [ProductRecommendationIntent: [any Error]] = [:]
 
     /// The handles requested so far.
     private(set) var requestedHandles: [String] = []
     /// The recommendation requests so far.
     private(set) var recommendationRequests: [(productID: ShopifyID, intent: ProductRecommendationIntent)] = []
 
-    init(product: Product?, recommendations: [ProductSummary] = []) {
+    /// Creates the catalog.
+    ///
+    /// - Parameters:
+    ///   - product: The product, or `nil` for a product that does not exist.
+    ///   - recommendations: The `RELATED` recommendations.
+    ///   - complementary: The `COMPLEMENTARY` recommendations.
+    init(product: Product?, recommendations: [ProductSummary] = [], complementary: [ProductSummary] = []) {
         self.product = product
         self.recommendations = recommendations
+        self.complementary = complementary
     }
 
     /// Makes the next product request throw `error`.
@@ -111,9 +121,9 @@ actor ProductStubCatalogRepository: CatalogRepository {
         productFailures.append(error)
     }
 
-    /// Makes the next recommendations request throw `error`.
-    func failNextRecommendations(with error: any Error) {
-        recommendationFailures.append(error)
+    /// Makes the next recommendations request for `intent` throw `error`.
+    func failNextRecommendations(with error: any Error, intent: ProductRecommendationIntent = .related) {
+        recommendationFailures[intent, default: []].append(error)
     }
 
     func product(handle: String) async throws -> Product? {
@@ -141,10 +151,11 @@ actor ProductStubCatalogRepository: CatalogRepository {
 
     func recommendations(productID: ShopifyID, intent: ProductRecommendationIntent) async throws -> [ProductSummary] {
         recommendationRequests.append((productID, intent))
-        if !recommendationFailures.isEmpty {
-            throw recommendationFailures.removeFirst()
+        if let failure = recommendationFailures[intent]?.first {
+            recommendationFailures[intent]?.removeFirst()
+            throw failure
         }
-        return recommendations
+        return intent == .complementary ? complementary : recommendations
     }
 }
 
@@ -194,6 +205,10 @@ actor ProductStubCartRepository: CartRepository {
     }
 
     func updateBuyerIdentity(cartID _: ShopifyID, countryCode _: CountryCode) async throws -> CartMutationResult {
+        CartMutationResult(cart: snapshot(), warnings: [])
+    }
+
+    func updateBuyerIdentity(cartID _: ShopifyID, customerAccessToken _: String) async throws -> CartMutationResult {
         CartMutationResult(cart: snapshot(), warnings: [])
     }
 
