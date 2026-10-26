@@ -24,6 +24,8 @@ public enum TypographyToken: String, CaseIterable, Sendable {
     case footnote
     /// Captions and metadata.
     case caption
+    /// Small figures beside an icon, such as the number of items beside the cart bag.
+    case figure
     /// Small uppercase label above a title ("eyebrow").
     case eyebrow
     /// Prices.
@@ -75,6 +77,7 @@ public enum TypographyToken: String, CaseIterable, Sendable {
         case .subheadline: 15
         case .footnote: 13
         case .caption: 12
+        case .figure: 11
         case .eyebrow: 11
         case .price: 24
         case .numeral: 28
@@ -89,7 +92,7 @@ public enum TypographyToken: String, CaseIterable, Sendable {
     public var weight: Weight {
         switch self {
         case .display: .bold
-        case .title1, .title2, .title3, .headline, .eyebrow, .price, .numeral: .semibold
+        case .title1, .title2, .title3, .headline, .eyebrow, .figure, .price, .numeral: .semibold
         case .licenseKey: .medium
         case .body, .callout, .subheadline, .footnote, .caption: .regular
         }
@@ -107,7 +110,7 @@ public enum TypographyToken: String, CaseIterable, Sendable {
         case .subheadline: .subheadline
         case .footnote: .footnote
         case .caption: .caption
-        case .eyebrow: .caption2
+        case .eyebrow, .figure: .caption2
         case .price: .title3
         case .numeral: .title
         }
@@ -133,7 +136,7 @@ public enum TypographyToken: String, CaseIterable, Sendable {
     /// Whether digits are rendered with fixed width (prices, countdowns, keys).
     public var usesMonospacedDigits: Bool {
         switch self {
-        case .price, .numeral, .licenseKey: true
+        case .price, .numeral, .licenseKey, .figure: true
         default: false
         }
     }

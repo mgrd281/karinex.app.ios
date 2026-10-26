@@ -339,9 +339,9 @@ struct RootView: View {
 
 // MARK: - CartTabIcon
 
-/// The Warenkorb tab icon in the style of fashion retail apps: ``CartBagIcon``, the thin
-/// shopping bag with the number of items beside it at half its height, in the tab's color,
-/// instead of a red badge.
+/// The Warenkorb tab icon in the style of fashion retail apps: ``CartBagIcon``, the outline tote
+/// with its tall handle and the number of items beside it, in the tab's color, instead of a red
+/// badge.
 ///
 /// A tab bar item takes only an image and a title, so the icon is rendered into a template image
 /// that the tab bar tints like its other symbols. An invisible copy of the figure on the leading
@@ -353,8 +353,6 @@ struct CartTabIcon: View {
 
     var body: some View {
         CartBagIcon(count: count, isCentered: true)
-            .kxFont(.body)
-            .imageScale(.large)
             .dynamicTypeSize(.large)
     }
 

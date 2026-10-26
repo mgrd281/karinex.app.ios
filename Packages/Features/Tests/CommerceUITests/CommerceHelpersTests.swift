@@ -2,6 +2,7 @@
 import DesignTokens
 import Foundation
 import ShopifyKit
+import SwiftUI
 import Testing
 
 @Suite("CommerceUI helpers")
@@ -114,6 +115,22 @@ struct CartBagIconTests {
         #expect(CartBagIcon.figure(for: 1) == "1")
         #expect(CartBagIcon.figure(for: 99) == "99")
         #expect(CartBagIcon.figure(for: 100) == "99+")
+    }
+
+    @MainActor
+    @Test("The bag's outline fills its grid and keeps its proportions in any rect")
+    func shape() {
+        let size = CartBagShape.designSize
+        let fitted = CartBagShape().path(in: CGRect(origin: .zero, size: size)).boundingRect
+        #expect(abs(fitted.minX) < 0.05)
+        #expect(abs(fitted.minY) < 0.05)
+        #expect(abs(fitted.maxX - size.width) < 0.05)
+        #expect(abs(fitted.maxY - size.height) < 0.05)
+
+        let wide = CartBagShape().path(in: CGRect(x: 0, y: 0, width: 60, height: 44)).boundingRect
+        #expect(abs(wide.height - 44) < 0.1)
+        #expect(abs(wide.width - 44 * CartBagShape.aspectRatio) < 0.1)
+        #expect(abs(wide.midX - 30) < 0.1)
     }
 }
 

@@ -4,9 +4,10 @@ import SwiftUI
 // MARK: - CartBagIcon
 
 /// The shopping bag with the number of items beside it, as fashion retail apps draw their cart:
-/// a thin outline bag with a small figure to its right, at half its height. An empty cart shows
-/// the bag alone. Decorative; the button or tab around it carries the label and the count for
-/// VoiceOver.
+/// the outline tote with its tall handle (``CartBagShape``) and a small semibold figure to its
+/// right, centered on the bag. An empty cart shows the bag alone. The bag is 22 points high and
+/// scales with Dynamic Type. Decorative; the button or tab around it carries the label and the
+/// count for VoiceOver.
 ///
 /// ```swift
 /// Button { onRoute(.cart) } label: { CartBagIcon(count: cartStore.itemCount) }
@@ -14,6 +15,7 @@ import SwiftUI
 public struct CartBagIcon: View {
     private let count: Int
     private let isCentered: Bool
+    @ScaledMetric(relativeTo: .body) private var bagHeight = CartBagGrid.size.height
 
     /// Creates the icon.
     ///
@@ -27,13 +29,13 @@ public struct CartBagIcon: View {
     }
 
     public var body: some View {
-        HStack(alignment: .center, spacing: KXSpacing.xxs) {
+        HStack(alignment: .center, spacing: KXSpacing.xs) {
             if isCentered {
                 figure
                     .hidden()
             }
-            Image(systemName: "bag")
-                .fontWeight(.light)
+            CartBagShape()
+                .frame(width: bagHeight * CartBagShape.aspectRatio, height: bagHeight)
             figure
         }
         .accessibilityHidden(true)
@@ -43,9 +45,7 @@ public struct CartBagIcon: View {
         let text = Self.figure(for: count)
         if !text.isEmpty {
             Text(verbatim: text)
-                .fontWeight(.medium)
-                .kxFont(.caption)
-                .monospacedDigit()
+                .kxFont(.figure)
         }
     }
 

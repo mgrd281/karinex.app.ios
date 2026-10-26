@@ -183,6 +183,7 @@ struct KXGalleryTypographyPage: View {
         case .headline, .body, .callout, .subheadline: KXGallerySamples.supportChannels
         case .footnote, .caption: KXGallerySamples.taxNote
         case .eyebrow: "Lizenzschlüssel"
+        case .figure: "3"
         case .price: KXGallerySamples.officeProPlusPrice
         case .numeral: "02 03 04"
         case .licenseKey: KXGallerySamples.placeholderLicenseKey

@@ -518,7 +518,7 @@ BrandPalette (raw brand hex values)
   token except the status colors and the sale red is a neutral grey, and that the photo tile
   stays light. Changing a value that breaks contrast or adds a hue fails CI.
 - `TypographyToken` (display, title1 to title3, headline, body, callout, subheadline, footnote,
-  caption, eyebrow, price, numeral, licenseKey) defines design (sans or monospaced), weight,
+  caption, figure, eyebrow, price, numeral, licenseKey) defines design (sans or monospaced), weight,
   base size, the Dynamic Type text style it scales with, tracking and digit style. Every style
   is SF Pro except the monospaced license keys; headlines are bold or semibold and slightly
   tighter tracked.
@@ -712,7 +712,10 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
   FAQ, the 14-day promise with its condition, the withdrawal notice for digital goods, and a
   sticky purchase bar. Sections without data are omitted, never faked. `ProductToolbar` puts the
   share arrow and the shopping bag with the cart's item count (`CartBagIcon`, opens the cart)
-  into the navigation bar as plain symbols (no glass circle on iOS 26).
+  into the navigation bar as plain symbols (no glass circle on iOS 26). The bag is
+  `CartBagShape` in CommerceUI, the same as in the Warenkorb tab: a filled outline drawn on an
+  18.46 by 22 point grid that scales to its frame, so it takes the foreground style like a symbol
+  and renders into the tab's template image.
 - `CatalogFeature`: the Shop tab laid out like the category pages of fashion retail apps
   (`CatalogDirectory` decides the sections: the bestseller and sale collections as two large
   cards, ink and sale red; the product families as rows with a short line and a photo; the

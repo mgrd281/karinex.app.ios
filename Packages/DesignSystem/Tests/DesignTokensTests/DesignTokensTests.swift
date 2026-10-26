@@ -164,6 +164,10 @@ struct LayoutTokenTests {
             #expect(style.design == (style == .licenseKey ? .monospaced : .sans))
         }
         #expect(TypographyToken.display.weight == .bold)
+        #expect(TypographyToken.figure.baseSize == 11)
+        #expect(TypographyToken.figure.weight == .semibold)
+        #expect(TypographyToken.figure.usesMonospacedDigits)
+        #expect(!TypographyToken.figure.isUppercased)
         #expect(TypographyToken.allCases.allSatisfy { $0.baseSize >= 11 })
         #expect(TypographyToken.display.baseSize > TypographyToken.title1.baseSize)
         #expect(TypographyToken.title1.baseSize > TypographyToken.title2.baseSize)

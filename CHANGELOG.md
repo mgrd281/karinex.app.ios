@@ -56,7 +56,10 @@ change.
   described by `HomeModules`; the hero with "Zum Sortiment" is gone, and so is the chip bar
   above the tab bar (owner request).
 - **Cart bag like About You** (owner request): the Warenkorb tab and the product page bar show
-  one thin outline bag with the number of items beside it at half its height (`CartBagIcon` in
+  the outline tote of the About You cart, a straight top edge, sides that widen slightly toward
+  the rounded bottom and a tall round handle in one even 1.67 pt line, 22 points high
+  (`CartBagShape`, its proportions measured from the About You app), with the number of items
+  beside it in the new `figure` type style (11 pt semibold, tabular digits; `CartBagIcon` in
   CommerceUI, used by the tab icon); the other tab symbols stay as they are.
 - **Cart lines like the lists of About You** (owner request): each line shows the photo on its
   light tile with the reduction in sale red at its lower edge, the vendor in capitals, the
