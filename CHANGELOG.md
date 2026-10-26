@@ -19,6 +19,8 @@ change.
   instead of the former ×10.5 display multiplier, the Admin token in the script properties, and
   stale values deleted. The row appears once the definitions get Storefront access.
 
+- **`scripts/testflight-local.sh`:** builds the signed App Store binary on the owner's Mac and uploads it to TestFlight with the same `fastlane beta` lane as the workflow, without waiting for a GitHub macOS runner. It asks for the App Store Connect key ID, issuer ID, the `.p8` file and the team ID, keeps only the three IDs in `~/.config/karinex/testflight.env` and never copies the key.
+
 ### Changed
 
 - **New look, "KARINEX Clean"** (owner decision after the first TestFlight build): the green,
