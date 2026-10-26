@@ -15,7 +15,7 @@ struct PaymentMethodsTests {
         #expect(PaymentMethod.methods(for: .empty) == PaymentMethod.fallback)
     }
 
-    @Test("The live store shows the nine methods of the web shop")
+    @Test("Visa, Mastercard and Amex with Apple Pay and Google Pay give the nine methods of the web shop")
     func liveStore() {
         let settings = PaymentSettings(
             acceptedCardBrands: [.visa, .mastercard, .americanExpress],

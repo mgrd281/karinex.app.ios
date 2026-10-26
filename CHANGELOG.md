@@ -60,8 +60,8 @@ change.
   bar as plain symbols; on iOS 26 without the glass circle (`ProductToolbar`,
   `sharedBackgroundVisibility(.hidden)`).
 - **All payment methods of the web shop, centered** (owner request): the product page and the
-  cart now show UnionPay and Google Pay (Shopify's MIT-licensed marks, Google Pay when Shopify
-  lists the wallet, as it does for the live store) and plain marks with the names "Rechnung"
+  cart now show UnionPay and Google Pay (Shopify's MIT-licensed marks, Google Pay only when Shopify
+  lists the wallet) and plain marks with the names "Rechnung"
   and "Vorkasse" (localized in all 11 languages) next to Apple Pay, the card brands and Klarna.
   The title and the marks are centered in rows that wrap, as below the buy button of the web
   shop (`KXFlowLayout`), instead of sitting at the left edge. PROMPT.md section 2 lists the new
