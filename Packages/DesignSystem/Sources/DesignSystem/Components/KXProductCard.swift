@@ -87,8 +87,9 @@ public struct KXProductCardModel: Identifiable, Hashable, Sendable {
 
 // MARK: - KXProductCard
 
-/// A product tile for grids and carousels, in the style of fashion retail apps: a square photo
-/// tile edge to edge on the light grey photo background (``SwiftUICore/View/kxPhotoTile()``)
+/// A product tile for grids and carousels, in the style of fashion retail apps: a photo tile
+/// (square, or portrait with `imageAspectRatio`) edge to edge on the light grey photo background
+/// (``SwiftUICore/View/kxPhotoTile()``)
 /// with an optional ``KXBadge`` in the corner, then the vendor as an eyebrow, the title in
 /// regular weight (up to three lines with the space reserved, more at accessibility sizes) and
 /// a compact ``KXPriceTag`` with the sale red price, the struck-through compare-at price and
@@ -110,6 +111,7 @@ public struct KXProductCardModel: Identifiable, Hashable, Sendable {
 /// ```
 public struct KXProductCard<ImageContent: View>: View {
     private let model: KXProductCardModel
+    private let imageAspectRatio: CGFloat
     private let imageContent: ImageContent
 
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
@@ -118,10 +120,13 @@ public struct KXProductCard<ImageContent: View>: View {
     ///
     /// - Parameters:
     ///   - model: The display data.
-    ///   - image: The image content. It is proposed the square image area and clipped to it;
-    ///     make it resizable (e.g. `.resizable().scaledToFit()`).
-    public init(_ model: KXProductCardModel, @ViewBuilder image: () -> ImageContent) {
+    ///   - imageAspectRatio: The width of the photo tile divided by its height: 1 (the default)
+    ///     for a square tile, `3.0 / 4.0` for a portrait tile.
+    ///   - image: The image content. It is proposed the image area and clipped to it; make it
+    ///     resizable (e.g. `.resizable().scaledToFit()`).
+    public init(_ model: KXProductCardModel, imageAspectRatio: CGFloat = 1, @ViewBuilder image: () -> ImageContent) {
         self.model = model
+        self.imageAspectRatio = imageAspectRatio
         imageContent = image()
     }
 
@@ -141,7 +146,7 @@ public struct KXProductCard<ImageContent: View>: View {
 
     private var imageArea: some View {
         Color.clear
-            .aspectRatio(1, contentMode: .fit)
+            .aspectRatio(imageAspectRatio, contentMode: .fit)
             .overlay {
                 imageContent
             }
@@ -171,13 +176,13 @@ public struct KXProductCard<ImageContent: View>: View {
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            // Three lines show the full name of nearly every product; the space is reserved so
-            // the prices of a row line up.
             Text(model.title)
                 .kxFont(.subheadline)
                 .foregroundStyle(KXColor.textPrimary)
                 .lineLimit(
-                    dynamicTypeSize.isAccessibilitySize ? 6 : 3,
+                    dynamicTypeSize.isAccessibilitySize
+                        ? KXProductCardMetrics.accessibilityTitleLines
+                        : KXProductCardMetrics.reservedTitleLines,
                     reservesSpace: !dynamicTypeSize.isAccessibilitySize
                 )
                 .multilineTextAlignment(.leading)
@@ -209,10 +214,95 @@ extension KXProductCard where ImageContent == KXProductImage {
     /// Creates a product card that loads `model.imageURL` with `AsyncImage`, showing a
     /// ``KXSkeleton`` while loading and a neutral symbol when there is no image or loading fails.
     ///
-    /// - Parameter model: The display data.
-    public init(_ model: KXProductCardModel) {
-        self.init(model) {
+    /// - Parameters:
+    ///   - model: The display data.
+    ///   - imageAspectRatio: The width of the photo tile divided by its height (1, square, by
+    ///     default).
+    public init(_ model: KXProductCardModel, imageAspectRatio: CGFloat = 1) {
+        self.init(model, imageAspectRatio: imageAspectRatio) {
             KXProductImage(url: model.imageURL)
+        }
+    }
+}
+
+// MARK: - KXProductCardMetrics
+
+/// The title lines of a ``KXProductCard``, shared with its ``KXProductCardSkeleton``.
+enum KXProductCardMetrics {
+    /// The title lines whose space a card reserves, so the prices of a row line up. Three show
+    /// the full name of nearly every product.
+    static let reservedTitleLines = 3
+    /// The most title lines at accessibility text sizes, where no space is reserved.
+    static let accessibilityTitleLines = 6
+}
+
+// MARK: - KXProductCardSkeleton
+
+/// The placeholder of a ``KXProductCard`` while its product loads: a skeleton photo tile, then
+/// skeleton lines in exactly the space the card's title, price and tax note take, so a row
+/// keeps its height when the cards arrive. Hidden from VoiceOver; the row around it announces
+/// the loading once.
+///
+/// ```swift
+/// KXProductCardSkeleton(imageAspectRatio: 3.0 / 4.0)
+///     .frame(width: cardWidth)
+/// ```
+public struct KXProductCardSkeleton: View {
+    /// The lengths of the title lines, as parts of the card width.
+    private static let titleLineLengths: [CGFloat] = [1, 0.8, 0.5]
+    /// The lengths of the price line and the tax note line.
+    private static let priceLineLengths: [CGFloat] = [0.45, 0.3]
+
+    private let imageAspectRatio: CGFloat
+
+    /// Creates the placeholder.
+    ///
+    /// - Parameter imageAspectRatio: The width of the photo tile divided by its height, as
+    ///   given to the cards it stands in for (1, square, by default).
+    public init(imageAspectRatio: CGFloat = 1) {
+        self.imageAspectRatio = imageAspectRatio
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: KXSpacing.s) {
+            KXSkeleton(cornerRadius: KXRadius.image)
+                .aspectRatio(imageAspectRatio, contentMode: .fit)
+            // Invisible text in the card's styles reserves the card's exact height; the lines
+            // are drawn over it.
+            VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+                Text(verbatim: " ")
+                    .kxFont(.subheadline)
+                    .lineLimit(KXProductCardMetrics.reservedTitleLines, reservesSpace: true)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .hidden()
+                    .overlay {
+                        lines(Self.titleLineLengths)
+                    }
+                KXPriceTag(price: " ", taxNote: " ", size: .compact)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .hidden()
+                    .overlay {
+                        lines(Self.priceLineLengths)
+                    }
+                    .padding(.top, KXSpacing.xxs / 2)
+            }
+            .padding(.horizontal, KXSpacing.xxs)
+        }
+        .frame(maxWidth: .infinity, alignment: .topLeading)
+        .accessibilityHidden(true)
+    }
+
+    /// One skeleton line per equal slot of the area, each the given part of its width.
+    private func lines(_ lengths: [CGFloat]) -> some View {
+        GeometryReader { proxy in
+            let slot = proxy.size.height / CGFloat(max(lengths.count, 1))
+            VStack(alignment: .leading, spacing: 0) {
+                ForEach(lengths.indices, id: \.self) { index in
+                    KXSkeleton()
+                        .frame(width: proxy.size.width * lengths[index], height: slot * 0.6)
+                        .frame(height: slot)
+                }
+            }
         }
     }
 }
@@ -386,4 +476,15 @@ private struct KXProductCardPreviewGallery: View {
 #Preview("KXProductCard, accessibility size") {
     KXProductCardPreviewGallery()
         .dynamicTypeSize(.accessibility2)
+}
+
+#Preview("KXProductCard, portrait with its skeleton") {
+    HStack(alignment: .top, spacing: KXSpacing.xs) {
+        KXProductCard(kxProductCardPreviewModels[1], imageAspectRatio: 3.0 / 4.0)
+            .frame(width: 184)
+        KXProductCardSkeleton(imageAspectRatio: 3.0 / 4.0)
+            .frame(width: 184)
+    }
+    .padding(KXSpacing.gutter)
+    .kxScreenBackground()
 }

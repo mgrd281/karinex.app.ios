@@ -104,7 +104,7 @@ that launches in light and dark mode.
 | `BackendKit` | `Packages/Backend` | `Core` | yes | `BackendClient` (`HTTPBackendClient`, `UnavailableBackendClient`), contract models (`RemoteAppConfig`, `SupportHours`, `BackendOrderStatus`, `LicenseKey`, `InvoiceLink`, `DeviceRegistration`), `LicenseKeyCache`. See [BFF_CONTRACT.md](BFF_CONTRACT.md) |
 | `DesignTokens` | `Packages/DesignSystem` | Foundation | yes | `BrandPalette`, `ColorToken`, `ContrastRequirement`, `TypographyToken`, spacing, radius, border and motion tokens, `RGBAColor` with WCAG math |
 | `DesignSystem` | `Packages/DesignSystem` | `DesignTokens` | no (SwiftUI) | `KXColor`, `.kxFont(_:)`, layout and motion helpers, the `KX*` components, `KXDesignSystemGallery` |
-| `CommerceUI` | `Packages/Features` | `Core`, `DesignSystem`, `DesignTokens`, `ShopifyKit`, Nuke | no (SwiftUI) | Not a feature: the state and UI that several features share. `CartStore`, `MarketStore`, `CommerceEnvironment` and `PriceDisplay`, `CommerceRoute` and `DeepLinkParser`, `ProductCardView` and `ProductCarouselSection`, `KXImagePipeline` and `ProductImage`, `RichTextView`, `LoadState`, `AsyncContentView` and `UserFacingError`, `ArticleScreen`, `MarketConfirmationSheet`. See [Commerce layer](#commerce-layer-phase-1) |
+| `CommerceUI` | `Packages/Features` | `Core`, `DesignSystem`, `DesignTokens`, `ShopifyKit`, Nuke | no (SwiftUI) | Not a feature: the state and UI that several features share. `CartStore`, `MarketStore`, `CommerceEnvironment` and `PriceDisplay`, `CommerceRoute` and `DeepLinkParser`, `ProductCardView`, `ProductRow` (card sizes `ProductRowCardSize.regular` and `.large`), `ProductRowSkeleton` and `ProductCarouselSection`, `KXImagePipeline` and `ProductImage`, `RichTextView`, `LoadState`, `AsyncContentView` and `UserFacingError`, `ArticleScreen`, `MarketConfirmationSheet`. See [Commerce layer](#commerce-layer-phase-1) |
 | `HomeFeature`, `CatalogFeature`, `SearchFeature`, `CartFeature`, `AccountFeature`, `ProductFeature`, `CheckoutFeature`, `LicensesFeature`, `SupportFeature`, `LegalFeature`, `SettingsFeature` | `Packages/Features` | `Core`, `DesignSystem`, `ShopifyKit`, `BackendKit`, `CommerceUI` (`CheckoutFeature` also Checkout Kit) | no (SwiftUI) | One feature each, with its own String Catalog. `CheckoutFeature` is the only module that imports Checkout Kit |
 | `KARINEX` (App target) | `project.yml` | everything above | no | Composition root, tab shell, app resources |
 | `FixtureRecording`, `fixture-recorder` | `Tools/FixtureRecorder` | `Core`, `ShopifyKit` | yes | Records the ShopifyKit fixtures from the live store |
@@ -520,12 +520,15 @@ BrandPalette (raw brand hex values)
   is SF Pro except the monospaced license keys; headlines are bold or semibold and slightly
   tighter tracked.
 - `SpacingToken` (8 pt grid, 16 pt gutter, 44 pt tap target), `RadiusToken` (card 12, product
-  photos 0), `BorderToken` and `MotionToken` (springs between 0.25 and 0.35 s) complete the
-  set; SwiftUI code uses them through `KXSpacing`, `KXRadius`, `KXBorder` and `KXMotion`.
+  photos 0), `BorderToken` and `MotionToken` (springs between 0.25 and 0.35 s, the 0.45 s
+  swap cross-fade with its blur, the 5 s dwell of a cycling showcase) complete the set;
+  SwiftUI code uses them through `KXSpacing`, `KXRadius`, `KXBorder` and `KXMotion`.
 - `TintToken.store` is the KARINEX store color `#0E4343` of the large panels of the Start tab
-  (stories, category showcase, sale), with a deepened lower end for the gradient;
-  `TintTokenTests` checks that `textPrimary` and `textSecondary` (dark values) reach 4.5:1 on
-  both ends. SwiftUI uses it through `KXColor.storePanel` and `KXColor.storePanelDeep`.
+  (stories, category showcase, sale), with a deepened lower end for the gradient and a lifted
+  tone (20 % white) for the progress of the chosen category tile; `TintTokenTests` checks that
+  `textPrimary` and `textSecondary` (dark values) reach 4.5:1 on both ends of the panel and
+  `textPrimary` on the lifted tone. SwiftUI uses them through `KXColor.storePanel`,
+  `KXColor.storePanelDeep` and `KXColor.storePanelLifted`.
 
 The asset catalog holds only what iOS reads by name before any code runs: `AppIcon` (the white
 store logo on black), `AccentColor` (global tint of system chrome; mirrors `ColorToken.brand`:
@@ -565,7 +568,8 @@ light, dark and an accessibility text size, and snapshot tests:
 | `KXAccordion`, `KXAccordionItem` | Expandable rows with a chevron that turns upward, each followed by a hairline |
 | `KXCountdown`, `KXCountdownComponents` | Flip-digit countdown to a date, days from 24 h, `onExpire`, no flip with Reduce Motion |
 | `KXTrustStrip`, `KXTrustItem` | Grid or carousel of trust facts, optional footnote marker and tap action |
-| `KXProductCard`, `KXProductCardModel`, `KXProductImage` | Product tile: square photo tile without card or border, badge, regular title of up to three lines (space reserved) and compact price tag |
+| `KXProductCard`, `KXProductCardModel`, `KXProductImage` | Product tile: square (or, with `imageAspectRatio`, portrait) photo tile without card or border, badge, regular title of up to three lines (space reserved) and compact price tag |
+| `KXProductCardSkeleton` | The loading placeholder of a product card in its exact size: skeleton photo tile and lines over invisible text in the card's styles |
 | `KXKeyCard`, `KXLicenseKeyFormatting` | Black license key card with masking, grouping and copy |
 | `KXClipboard` | `copySensitive(_:expiresAfter:)`: local-only pasteboard item that expires after 120 s |
 | `KXSkeleton`, `.kxSkeleton(isActive:)` | Placeholder with shimmer (none with Reduce Motion) |
@@ -577,7 +581,8 @@ light, dark and an accessibility text size, and snapshot tests:
 Foundation helpers in `Foundation/`: `KXColor`, `KXTypography` (`.kxFont(_:)`, `KXFont`),
 `KXLayout` (`KXSpacing`, `KXRadius`, `KXBorder`, `.kxScreenBackground()`, `.kxGutter()`),
 `KXPhotoTile` (`.kxPhotoTile()`, `kxIsInPhotoTile`), `KXMotion` (`.standard`, `.snappy`,
-`.gentle`, `.fade`, all Reduce Motion aware), `KXPressStyle` (`.buttonStyle(.kxPress)`: cards
+`.gentle`, `.fade`, `.swap`, all Reduce Motion aware, plus `cycleDwell`, `cycleProgress` and
+`swapBlurRadius` for cycling showcases), `KXPressStyle` (`.buttonStyle(.kxPress)`: cards
 and tiles shrink to `MotionToken.pressedScale` while pressed, or dim with Reduce Motion),
 `KXLaunchIntro` (the zoom into the logo at app launch) and `KXHaptics`.
 
@@ -731,10 +736,26 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
   in the content coordinate space); the section body is one plain `VStack`, so every module
   exists from the start (UI tests reach the trust facts without lazy loading). "Für Sie" holds
   `HomeStoryCarousel` (a fixed panel in the store color, pages with `scrollPosition(id:)`, fixed dots),
-  `HomeTrustSection`, `HomeCategoryShowcase` (tiles and a `HomeProductPanel` in the store color), the
-  bestseller row, the sale panel, "Zuletzt angesehen", `HomeVersionGrid`, `HomeServiceTiles`
+  `HomeTrustSection`, `HomeCategoryShowcase` (see below), the bestseller row, the sale panel
+  (`HomeProductPanel`), "Zuletzt angesehen", `HomeVersionGrid`, `HomeServiceTiles`
   (account routes), `HomeArticleSection` and the support card. Empty collections drop their module, failed ones show a
   compact error with "Erneut versuchen".
+- `HomeCategoryShowcase` cycles like the brand strip of About You. A `.task(id:)` keyed by
+  `HomeShowcaseCycle.Step` (the category shown and whether it cycles) waits
+  `HomeShowcaseCycle.dwell`, then selects the next category inside a `.swap` animation; the
+  chosen `HomeCategoryTile` shows `HomeShowcaseProgress`, a new view per wait that slides the
+  lifted store color in with `KXMotion.cycleProgress`, so tile and timer start together.
+  `HomeShowcaseCycle.Conditions` decides whether it cycles: enabled (`HomeView`
+  `cyclesShowcase`, off when `RootView` runs under UI tests), more than one category, on
+  screen (`onAppear`/`onDisappear`, and from iOS 18 `onScrollVisibilityChange` at half the
+  showcase) in the active scene, no VoiceOver, Switch Control or Reduce Motion, and not held
+  by the customer (a tap on a tile, or from iOS 18 `onScrollPhaseChange` `.interacting` on
+  the tiles or the products, before that a sideways drag); the hold ends when the showcase
+  leaves the screen. The panels of all categories (`HomePanelContent` with
+  `ProductRowCardSize.large`) lie in one `ZStack`, all but the chosen one transparent,
+  blurred, without hit testing and hidden from VoiceOver, so the panel height is the largest
+  of them and a switch never relayouts the page or reloads photos. The row of tiles follows
+  the selection with `ScrollViewReader.scrollTo(_:anchor: .center)`.
 - Payment marks (`CommerceUI/Payments`): `PaymentMethod.methods(for:)` turns Shopify's
   `PaymentSettings` (`shop.paymentSettings`) into the marks to show: Apple Pay only when Shopify
   lists it, the accepted card brands in Shopify's order (a neutral card symbol when Shopify

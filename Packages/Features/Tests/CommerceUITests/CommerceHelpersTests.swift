@@ -116,3 +116,33 @@ struct CartBagIconTests {
         #expect(CartBagIcon.figure(for: 100) == "99+")
     }
 }
+
+// MARK: - Product row cards
+
+@Suite("Product row card sizes")
+struct ProductRowCardSizeTests {
+    @Test("Regular cards are 164 points wide with square photos, large ones 184 with portrait photos")
+    func sizes() {
+        #expect(ProductRowCardSize.regular.width(textScale: 1) == 164)
+        #expect(ProductRowCardSize.regular.imageAspectRatio == 1)
+        #expect(ProductRowCardSize.large.width(textScale: 1) == 184)
+        #expect(ProductRowCardSize.large.imageAspectRatio == 3.0 / 4.0)
+    }
+
+    @Test("A large card's photo is half again as tall as a regular one")
+    func largePhotoHeight() {
+        let regular = ProductRowCardSize.regular.width(textScale: 1) / ProductRowCardSize.regular.imageAspectRatio
+        let large = ProductRowCardSize.large.width(textScale: 1) / ProductRowCardSize.large.imageAspectRatio
+        #expect(regular == 164)
+        #expect((245...246).contains(large))
+    }
+
+    @Test("Cards grow with the text size up to their widest")
+    func dynamicType() {
+        for size in ProductRowCardSize.allCases {
+            #expect(size.width(textScale: 1.2) > size.width(textScale: 1))
+            #expect(size.width(textScale: 10) == size.maximumWidth)
+        }
+        #expect(ProductRowCardSize.large.maximumWidth > ProductRowCardSize.regular.maximumWidth)
+    }
+}

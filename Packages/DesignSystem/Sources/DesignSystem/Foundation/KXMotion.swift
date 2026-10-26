@@ -14,6 +14,21 @@ public enum KXMotion {
         case gentle
         /// Plain cross-fade.
         case fade
+        /// Slow cross-fade for a large surface that swaps its content, e.g. a showcase moving
+        /// on to its next item.
+        case swap
+    }
+
+    /// How long a cycling showcase shows one item before it moves on to the next.
+    public static let cycleDwell = Duration.seconds(MotionToken.cycleDwellDuration)
+
+    /// How blurred content is at the start and the end of a ``Curve/swap``.
+    public static let swapBlurRadius = CGFloat(MotionToken.swapBlurRadius)
+
+    /// The steady fill of a cycling showcase's progress over ``cycleDwell``. Only run it while
+    /// the showcase cycles, which it never does with Reduce Motion.
+    public static var cycleProgress: Animation {
+        .linear(duration: MotionToken.cycleDwellDuration)
     }
 
     /// Returns the animation for `curve`, or a short cross-fade when Reduce Motion is on.
@@ -30,6 +45,8 @@ public enum KXMotion {
             return .spring(response: MotionToken.gentleResponse, dampingFraction: MotionToken.springDamping)
         case .fade:
             return .easeInOut(duration: MotionToken.fadeDuration)
+        case .swap:
+            return .easeInOut(duration: MotionToken.swapDuration)
         }
     }
 }

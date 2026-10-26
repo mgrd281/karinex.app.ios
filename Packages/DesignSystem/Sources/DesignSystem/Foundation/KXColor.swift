@@ -58,6 +58,9 @@ public enum KXColor {
     public static let storePanel = fixed(TintToken.store)
     /// The deepened lower end of a store color panel gradient.
     public static let storePanelDeep = fixed(TintToken.deepened(TintToken.store))
+    /// The lifted store color that fills the chosen category tile while the showcase of the
+    /// Start tab waits to move on.
+    public static let storePanelLifted = fixed(TintToken.lifted(TintToken.store))
 
     /// A static color for a computed value. It is the same in light and dark mode.
     public static func fixed(_ value: RGBAColor) -> Color {

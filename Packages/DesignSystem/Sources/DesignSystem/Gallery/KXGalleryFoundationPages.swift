@@ -307,7 +307,7 @@ struct KXGalleryLayoutPage: View {
     }
 }
 
-/// The four brand curves side by side: each row moves an ink dot across its track.
+/// The brand curves side by side: each row moves an ink dot across its track.
 private struct KXGalleryMotionDemo: View {
     /// A motion curve with its developer label.
     private struct MotionSample: Identifiable {
@@ -322,6 +322,7 @@ private struct KXGalleryMotionDemo: View {
         MotionSample(name: "snappy", curve: .snappy),
         MotionSample(name: "gentle", curve: .gentle),
         MotionSample(name: "fade", curve: .fade),
+        MotionSample(name: "swap", curve: .swap),
     ]
 
     @State private var isAtEnd = false
@@ -337,7 +338,7 @@ private struct KXGalleryMotionDemo: View {
                     Circle()
                         .fill(KXColor.accent)
                         .frame(width: KXSpacing.l, height: KXSpacing.l)
-                        .opacity(item.curve == .fade && isAtEnd ? 0.35 : 1)
+                        .opacity([.fade, .swap].contains(item.curve) && isAtEnd ? 0.35 : 1)
                         .frame(maxWidth: .infinity, alignment: isAtEnd ? .trailing : .leading)
                         .padding(KXSpacing.xxs)
                         .background(KXColor.surface, in: Capsule(style: .continuous))

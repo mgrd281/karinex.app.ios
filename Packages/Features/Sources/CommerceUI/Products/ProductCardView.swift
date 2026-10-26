@@ -28,6 +28,7 @@ public enum ProductCardHighlight: Sendable, Hashable {
 public struct ProductCardView: View {
     private let product: ProductSummary
     private let highlight: ProductCardHighlight
+    private let imageAspectRatio: CGFloat
 
     @Environment(\.locale) private var locale
     @Environment(\.commerceCountry) private var country
@@ -37,14 +38,17 @@ public struct ProductCardView: View {
     /// - Parameters:
     ///   - product: The product from Shopify.
     ///   - highlight: The editorial badge decided by the caller. Defaults to none.
-    public init(_ product: ProductSummary, highlight: ProductCardHighlight = .none) {
+    ///   - imageAspectRatio: The width of the photo tile divided by its height (1, square, by
+    ///     default).
+    public init(_ product: ProductSummary, highlight: ProductCardHighlight = .none, imageAspectRatio: CGFloat = 1) {
         self.product = product
         self.highlight = highlight
+        self.imageAspectRatio = imageAspectRatio
     }
 
     public var body: some View {
         let model = Self.model(for: product, highlight: highlight, country: country, locale: locale)
-        KXProductCard(model) {
+        KXProductCard(model, imageAspectRatio: imageAspectRatio) {
             ProductImage(product.featuredImage, isDecorative: true)
         }
     }

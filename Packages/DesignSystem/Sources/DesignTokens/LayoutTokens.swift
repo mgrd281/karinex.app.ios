@@ -59,6 +59,13 @@ public enum MotionToken {
     public static let gentleResponse: Double = 0.35
     /// Duration of simple cross-fades.
     public static let fadeDuration: Double = 0.2
+    /// Duration of the slow cross-fade when a large surface swaps its content, e.g. the
+    /// category showcase of the Start tab moving on to the next category.
+    public static let swapDuration: Double = 0.45
+    /// How blurred content is at the start and the end of a swap.
+    public static let swapBlurRadius: Double = 8
+    /// How long a cycling showcase shows one item before it moves on to the next.
+    public static let cycleDwellDuration: Double = 5
     /// How far a pressed card or tile shrinks.
     public static let pressedScale: Double = 0.97
     /// The opacity of a pressed card or tile when Reduce Motion is on (it dims instead).

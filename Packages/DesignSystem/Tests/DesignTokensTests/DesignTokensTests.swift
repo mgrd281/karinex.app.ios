@@ -142,6 +142,15 @@ struct LayoutTokenTests {
         #expect((0.5..<1).contains(MotionToken.pressedOpacity))
     }
 
+    @Test("A showcase swap is a calm cross-fade, and each item stays long enough to look at")
+    func showcaseCycle() {
+        #expect(MotionToken.swapDuration > MotionToken.fadeDuration)
+        #expect(MotionToken.swapDuration < 1)
+        #expect(MotionToken.swapBlurRadius > 0)
+        #expect(MotionToken.cycleDwellDuration >= 4)
+        #expect(MotionToken.cycleDwellDuration > 4 * MotionToken.swapDuration)
+    }
+
     @Test("The launch intro stays under one second and zooms the logo past the screen")
     func launchIntro() {
         #expect(MotionToken.launchHoldDuration + MotionToken.launchZoomDuration < 1)

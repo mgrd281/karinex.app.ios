@@ -485,3 +485,70 @@ struct HomeLiveRowStringTests {
         }
     }
 }
+
+// MARK: - Category showcase
+
+@Suite("Home category showcase")
+struct HomeShowcaseCycleTests {
+    /// The conditions under which the showcase moves on by itself.
+    private let moving = HomeShowcaseCycle.Conditions(
+        isEnabled: true,
+        categoryCount: HomeModules.standard.showcase.count,
+        isVisible: true,
+        isHeldByCustomer: false,
+        prefersStillContent: false
+    )
+
+    @Test("Each category stays five seconds")
+    func dwell() {
+        #expect(HomeShowcaseCycle.dwell == .seconds(5))
+    }
+
+    @Test("The showcase moves on to the next category, and from the last one back to the first")
+    func order() {
+        let handles = HomeModules.standard.showcase.map(\.handle)
+        #expect(handles.count > 1)
+        for (index, handle) in handles.enumerated() {
+            #expect(HomeShowcaseCycle.handle(after: handle, in: handles) == handles[(index + 1) % handles.count])
+        }
+        #expect(HomeShowcaseCycle.handle(after: handles[handles.count - 1], in: handles) == handles[0])
+        #expect(HomeShowcaseCycle.handle(after: "unknown", in: handles) == handles[0])
+        #expect(HomeShowcaseCycle.handle(after: "windows", in: []) == nil)
+    }
+
+    @Test("It moves on only on screen in the active app, untouched, with more than one category")
+    func movesOnlyWhenWatched() {
+        #expect(moving.cycles)
+
+        var conditions = moving
+        conditions.isVisible = false
+        #expect(!conditions.cycles)
+
+        conditions = moving
+        conditions.isHeldByCustomer = true
+        #expect(!conditions.cycles)
+
+        conditions = moving
+        conditions.categoryCount = 1
+        #expect(!conditions.cycles)
+
+        conditions = moving
+        conditions.isEnabled = false
+        #expect(!conditions.cycles)
+    }
+
+    @Test("VoiceOver, Switch Control and Reduce Motion keep it still")
+    func accessibility() {
+        var conditions = moving
+        conditions.prefersStillContent = true
+        #expect(!conditions.cycles)
+    }
+
+    @Test("A new category or a change of the conditions starts a new wait")
+    func steps() {
+        let step = HomeShowcaseCycle.Step(handle: "windows", isCycling: true)
+        #expect(step != HomeShowcaseCycle.Step(handle: "microsoft-office", isCycling: true))
+        #expect(step != HomeShowcaseCycle.Step(handle: "windows", isCycling: false))
+        #expect(step == HomeShowcaseCycle.Step(handle: "windows", isCycling: true))
+    }
+}

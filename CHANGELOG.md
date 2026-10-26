@@ -59,6 +59,19 @@ change.
   the number of items (it opens the cart, `CartBagIcon` in CommerceUI) sit in the navigation
   bar as plain symbols; on iOS 26 without the glass circle (`ProductToolbar`,
   `sharedBackgroundVisibility(.hidden)`).
+- **"Unsere Kategorien" moves on by itself, like the brand strip of About You** (owner
+  request): the chosen tile fills with a lighter store color for five seconds
+  (`MotionToken.cycleDwellDuration`, `KXColor.storePanelLifted`), then the next category takes
+  over with a soft, blurred cross-fade (`KXMotion.Curve.swap`) and the row of tiles glides
+  along; after the last category the first one follows. The showcase holds still while it is
+  off screen or the app is not active, with VoiceOver, Switch Control or Reduce Motion, in UI
+  test runs, and as soon as the customer taps a tile or scrolls the tiles or the products; once
+  it has been off screen it moves on again. The panel is about a fifth taller: large cards 184
+  points wide with portrait photos (3:4, `ProductRowCardSize.large`) instead of 164 point
+  squares. The panels of all categories lie on top of each other, so the height never jumps
+  from category to category and every switch shows photos that are already loaded. Row
+  skeletons now have the exact shape of the cards (`KXProductCardSkeleton`,
+  `ProductRowSkeleton`), so rows keep their height when the products arrive.
 - **Shop tab like a top retail app** (owner request): the bestsellers and the sale open the
   tab as two large cards (ink and sale red) with a product photo, the product families follow
   as rows with a short line and the photo of their first product, the single versions as a shelf

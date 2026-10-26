@@ -154,6 +154,7 @@ struct RootView: View {
             HomeView(
                 catalog: container.catalogRepository,
                 content: container.contentRepository,
+                cyclesShowcase: !container.launchEnvironment.isUITesting,
                 onRoute: { router.open($0, from: .home) },
                 onBrowse: { router.select(.shop) }
             )

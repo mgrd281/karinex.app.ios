@@ -11,8 +11,9 @@ import SwiftUI
 ///   which stays pinned and opens the Suche tab.
 /// - Below: the story carousel of featured collections in the store color,
 ///   the trust facts (the money-back promise opens its conditions), the category showcase with
-///   its dark product panel, the bestsellers, the dark sale panel, "Zuletzt angesehen", the
-///   version grid, the service tiles, the Ratgeber stories and the support card.
+///   its dark product panel, which moves on from category to category by itself, the
+///   bestsellers, the dark sale panel, "Zuletzt angesehen", the version grid, the service
+///   tiles, the Ratgeber stories and the support card.
 ///
 /// Every collection loads concurrently with its own skeleton and error state; pull to refresh
 /// reloads them all. Product facts come only from the Storefront API.
@@ -32,6 +33,7 @@ import SwiftUI
 /// ```
 public struct HomeView: View {
     private let modules: HomeModules
+    private let cyclesShowcase: Bool
     private let onRoute: @MainActor (CommerceRoute) -> Void
     private let onBrowse: @MainActor () -> Void
 
@@ -50,6 +52,8 @@ public struct HomeView: View {
     ///   - catalog: Loads the collections.
     ///   - content: Loads the guide articles.
     ///   - modules: The modules and the store collections behind them.
+    ///   - cyclesShowcase: Whether the category showcase moves on to the next category by
+    ///     itself (`true` by default; UI tests turn it off for a still screen).
     ///   - onRoute: Called with the destination of a tap: a product, a collection, an article,
     ///     the search or a screen of the account area.
     ///   - onBrowse: Called when the user asks to see the whole range ("Alle Kategorien"),
@@ -58,11 +62,13 @@ public struct HomeView: View {
         catalog: any CatalogRepository,
         content: any ContentRepository,
         modules: HomeModules = .standard,
+        cyclesShowcase: Bool = true,
         onRoute: @escaping @MainActor (CommerceRoute) -> Void,
         onBrowse: @escaping @MainActor () -> Void
     ) {
         _model = State(initialValue: HomeViewModel(catalog: catalog, content: content, layout: modules.layout))
         self.modules = modules
+        self.cyclesShowcase = cyclesShowcase
         self.onRoute = onRoute
         self.onBrowse = onBrowse
     }
@@ -139,6 +145,7 @@ public struct HomeView: View {
                 .padding(.horizontal, KXSpacing.gutter)
             HomeCategoryShowcase(
                 categories: modules.showcase,
+                cyclesAutomatically: cyclesShowcase,
                 state: { model.productState(for: $0.handle) },
                 retry: { await model.reload(handles: [$0.handle]) },
                 onOpen: openCategory,
