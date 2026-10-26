@@ -1,6 +1,7 @@
 // Shared build settings for all configurations.
-// Values here are NOT secret. Secrets (Storefront token, client IDs, team ID) live in
-// Config/Secrets.xcconfig, which is git-ignored. Copy Config/Secrets.example.xcconfig to
+// Values here are NOT secret. The public Storefront token and the public Customer Account API
+// client ID have defaults below; Config/Secrets.xcconfig (git-ignored) can override them and
+// holds the team ID. Copy Config/Secrets.example.xcconfig to
 // get started. Note: "//" starts a comment in .xcconfig files, so URLs are stored as
 // host names only and assembled in code.
 
@@ -26,7 +27,11 @@ KX_CUSTOMER_ACCOUNT_API_VERSION = 2026-10
 // tokenless mode: catalog, search and cart work, metafields (specs, FAQ, linked products) are
 // unavailable.
 KX_STOREFRONT_ACCESS_TOKEN = 476c1aa039600e01ee1a1b80572c2197
-KX_CUSTOMER_ACCOUNT_CLIENT_ID =
+// The Customer Account API client ID of the same channel (owner, 2026-10-26), client type
+// "Public" (mobile app) with the callback URI shop.91753283851.app://callback. A public client
+// has no secret: Shopify intends its ID for apps, and the login is protected by PKCE. A client
+// secret never belongs in the app or this repository.
+KX_CUSTOMER_ACCOUNT_CLIENT_ID = 0436c17f-4bb4-43a0-a95f-b7170d6e078d
 KX_APPLE_TEAM_ID =
 // Host name of the KARINEX backend (BFF) on Railway, without scheme. Empty until the backend
 // exists: the license vault then shows the e-mail delivery notice instead of keys.

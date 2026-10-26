@@ -61,8 +61,9 @@ change.
   right away. Every menu row now has a short line under its title. Bestellungen, an order and
   Adressen are wrapped in `AccountSignInGate`, so every way into them (Konto, the service tiles
   of Start, "Bestellungen ansehen" after a purchase, links) offers "Anmelden" in place instead
-  of an error, and shows the content once signed in. The login needs the Customer Account API
-  client ID of the "Karinex Headless" channel (docs/OWNER_INPUTS.md).
+  of an error, and shows the content once signed in. The Customer Account API client ID of the
+  "Karinex Headless" channel (public client, mobile, callback `shop.91753283851.app://callback`)
+  is now the default in `Config/Base.xcconfig`, so login is switched on.
 - **Removing a cart line like About You** (owner request): swiping a line to the left uncovers
   a red "Entfernen"; a long swipe, a tap on it or on the "x" turns the line red with "Produkt
   wird entfernt…" and an outlined "Abbrechen" whose fill runs down for 3 seconds (10 with
