@@ -144,6 +144,10 @@ struct PreviewCartRepository: CartRepository {
         result
     }
 
+    func updateBuyerIdentity(cartID _: ShopifyID, customerAccessToken _: String) async throws -> CartMutationResult {
+        result
+    }
+
     func updateAttributes(cartID _: ShopifyID, attributes _: [AttributeInput]) async throws -> CartMutationResult {
         result
     }

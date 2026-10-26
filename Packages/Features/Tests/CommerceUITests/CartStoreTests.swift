@@ -349,6 +349,135 @@ struct CartStoreTests {
         #expect(recorder.urls == [CartFixtures.checkoutURL(for: cartID)])
     }
 
+    // MARK: Signed-in checkout
+
+    /// A store whose customer is signed in with `token` (or nobody, for `nil`), recording
+    /// preloads and dropped preloads in `recorder`.
+    private func makeSignedInStore(token: String?, recorder: PreloadRecorder) -> CartStore {
+        let store = makeStore(preloadDelay: .milliseconds(50))
+        store.checkoutPreloader = { recorder.urls.append($0) }
+        store.checkoutInvalidator = { recorder.invalidations += 1 }
+        store.customerAccessToken = { token }
+        return store
+    }
+
+    @Test("A signed-in checkout carries the customer's token, drops the preloaded checkout and is not preloaded again")
+    func signedInCheckout() async throws {
+        let recorder = PreloadRecorder()
+        let store = makeSignedInStore(token: "shcat_test", recorder: recorder)
+        await store.add(variantID: CartFixtures.windowsVariant)
+        let cartID = try #require(store.cart?.id)
+
+        let url = try await store.checkoutURL()
+
+        #expect(url == CartFixtures.checkoutURL(for: cartID))
+        #expect(await repository.customerAccessToken(of: cartID) == "shcat_test")
+        #expect(await repository.calls.suffix(2) == [.cart, .customerAccessToken("shcat_test")])
+        #expect(preferences.string(forKey: CartStore.signedInCartIDKey) == cartID.rawValue)
+        #expect(recorder.invalidations == 1)
+
+        recorder.urls.removeAll()
+        await store.add(variantID: CartFixtures.officeVariant)
+        try await Task.sleep(for: .milliseconds(300))
+        #expect(recorder.urls.isEmpty, "A signed-in cart's checkout URL expires, so it is not preloaded")
+    }
+
+    @Test("Without a signed-in customer the checkout stays a guest checkout")
+    func guestCheckout() async throws {
+        let recorder = PreloadRecorder()
+        let store = makeSignedInStore(token: nil, recorder: recorder)
+        await store.add(variantID: CartFixtures.windowsVariant)
+        let cartID = try #require(store.cart?.id)
+
+        let url = try await store.checkoutURL()
+
+        #expect(url == CartFixtures.checkoutURL(for: cartID))
+        #expect(await repository.count(of: .customerAccessToken) == 0)
+        #expect(preferences.string(forKey: CartStore.signedInCartIDKey) == nil)
+        #expect(recorder.invalidations == 0)
+    }
+
+    @Test("A token Shopify refuses still opens the checkout, as a guest checkout")
+    func refusedToken() async throws {
+        let store = makeSignedInStore(token: "shcat_expired", recorder: PreloadRecorder())
+        await store.add(variantID: CartFixtures.windowsVariant)
+        let cartID = try #require(store.cart?.id)
+        await repository.fail(.customerAccessToken, with: ShopifyError.userErrors([]))
+
+        let url = try await store.checkoutURL()
+
+        #expect(url == CartFixtures.checkoutURL(for: cartID))
+        #expect(store.lastError == nil)
+        #expect(await repository.customerAccessToken(of: cartID) == nil)
+    }
+
+    @Test("Signing out moves a signed-in cart's lines and codes to a new cart without the token")
+    func signOutReplacesSignedInCart() async throws {
+        let recorder = PreloadRecorder()
+        let store = makeSignedInStore(token: "shcat_test", recorder: recorder)
+        await store.add(variantID: CartFixtures.officeVariant, quantity: 2)
+        _ = await store.applyDiscountCode(StubCartRepository.validDiscountCode)
+        let signedInID = try #require(store.cart?.id)
+        _ = try await store.checkoutURL()
+        store.customerAccessToken = { nil }
+
+        await store.signOutCustomer()
+
+        let newID = try #require(store.cart?.id)
+        #expect(newID != signedInID)
+        #expect(store.cart?.lines.map(\.merchandise.id) == [CartFixtures.officeVariant])
+        #expect(store.itemCount == 2)
+        #expect(store.cart?.discountCodes.map(\.code) == [StubCartRepository.validDiscountCode])
+        #expect(await repository.customerAccessToken(of: newID) == nil)
+        #expect(preferences.string(forKey: CartStore.cartIDKey) == newID.rawValue)
+        #expect(preferences.string(forKey: CartStore.signedInCartIDKey) == nil)
+        #expect(recorder.invalidations == 2)
+    }
+
+    @Test("Signing out keeps a cart that never carried a token")
+    func signOutKeepsGuestCart() async throws {
+        let store = makeSignedInStore(token: nil, recorder: PreloadRecorder())
+        await store.add(variantID: CartFixtures.windowsVariant)
+        let cartID = try #require(store.cart?.id)
+
+        await store.signOutCustomer()
+
+        #expect(store.cart?.id == cartID)
+        #expect(await repository.count(of: .create) == 1)
+    }
+
+    @Test("A cart still signed in after the customer left is replaced before checkout")
+    func checkoutReplacesLeftoverSignedInCart() async throws {
+        let store = makeSignedInStore(token: "shcat_test", recorder: PreloadRecorder())
+        await store.add(variantID: CartFixtures.windowsVariant)
+        let signedInID = try #require(store.cart?.id)
+        _ = try await store.checkoutURL()
+        store.customerAccessToken = { nil }
+
+        let url = try await store.checkoutURL()
+
+        let newID = try #require(store.cart?.id)
+        #expect(newID != signedInID)
+        #expect(url == CartFixtures.checkoutURL(for: newID))
+        #expect(await repository.customerAccessToken(of: newID) == nil)
+        #expect(preferences.string(forKey: CartStore.signedInCartIDKey) == nil)
+    }
+
+    @Test("When no new cart can be made, signing out forgets the signed-in cart")
+    func signOutForgetsCartOnFailure() async throws {
+        let store = makeSignedInStore(token: "shcat_test", recorder: PreloadRecorder())
+        await store.add(variantID: CartFixtures.windowsVariant)
+        _ = try await store.checkoutURL()
+        store.customerAccessToken = { nil }
+        await repository.fail(.create, with: ShopifyError.network(.offline))
+
+        await store.signOutCustomer()
+
+        #expect(store.cart == nil)
+        #expect(preferences.string(forKey: CartStore.cartIDKey) == nil)
+        #expect(preferences.string(forKey: CartStore.signedInCartIDKey) == nil)
+    }
+
     @Test("Ambiguity: only failures that may have executed count as ambiguous")
     func ambiguity() {
         #expect(CartStore.isAmbiguous(ShopifyError.network(.timeout)))
@@ -360,8 +489,9 @@ struct CartStoreTests {
     }
 }
 
-/// Collects the URLs handed to the checkout preloader.
+/// Collects the URLs handed to the checkout preloader and counts the dropped preloads.
 @MainActor
 private final class PreloadRecorder {
     var urls: [URL] = []
+    var invalidations = 0
 }

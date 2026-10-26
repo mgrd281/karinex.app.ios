@@ -55,6 +55,13 @@ change.
   Ratgeber as tall story tiles and the support card. The modules and their store collections are
   described by `HomeModules`; the hero with "Zum Sortiment" is gone, and so is the chip bar
   above the tab bar (owner request).
+- **Signed-in checkout** (owner request): when a customer is signed in, "Zur Kasse" opens
+  Shopify checkout signed in, with their e-mail address, addresses and saved payment methods
+  filled in, and the order lands in "Meine Bestellungen". `CartStore.checkoutURL()` puts the
+  Customer Account API token on the cart right before checkout (`cartBuyerIdentityUpdate`) and
+  drops a preloaded guest checkout (`ShopifyCheckoutSheetKit.invalidate()`); after a sign-out the
+  lines and discount codes move to a new cart without the token, so the next checkout on the
+  device never shows the previous customer's details.
 - **Meine Bestellungen with a one-tap login** (owner request, reference: the About You app):
   the Konto tab lists "Meine Bestellungen" first, also when nobody is signed in; a tap opens
   Shopify's passwordless login (e-mail code, no extra iOS prompt) and, once signed in, the orders

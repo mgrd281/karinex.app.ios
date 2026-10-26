@@ -40,6 +40,13 @@ public enum CheckoutConfiguration {
         ShopifyCheckoutSheetKit.preload(checkout: url)
     }
 
+    /// Drops the checkout Checkout Kit preloaded. Assign it to `CartStore.checkoutInvalidator`;
+    /// the store calls it when the cart was signed in or replaced, so a preloaded guest checkout
+    /// (or the checkout of a customer who signed out) never appears.
+    public static let invalidator: @MainActor () -> Void = {
+        ShopifyCheckoutSheetKit.invalidate()
+    }
+
     /// The localized title of the checkout sheet ("Kasse").
     static var title: String {
         String(localized: "checkout.title", bundle: .module)

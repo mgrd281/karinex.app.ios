@@ -50,6 +50,14 @@ public protocol CartRepository: Sendable {
     /// - Throws: `ShopifyError.userErrors` when Shopify rejects the input, otherwise `ShopifyError`.
     func updateBuyerIdentity(cartID: ShopifyID, countryCode: CountryCode) async throws -> CartMutationResult
 
+    /// Associates the cart with a signed-in customer: `customerAccessToken` is a Customer Account
+    /// API access token. The cart's checkout then opens signed in, with the customer's e-mail
+    /// address, addresses and saved payment methods, and the order belongs to the account. The
+    /// token is a secret: never log it.
+    ///
+    /// - Throws: `ShopifyError.userErrors` when Shopify rejects the token, otherwise `ShopifyError`.
+    func updateBuyerIdentity(cartID: ShopifyID, customerAccessToken: String) async throws -> CartMutationResult
+
     /// Replaces the cart attributes with `attributes`.
     ///
     /// - Throws: `ShopifyError.userErrors` when Shopify rejects the input, otherwise `ShopifyError`.
@@ -110,6 +118,14 @@ public final class StorefrontCartRepository: CartRepository {
     public func updateBuyerIdentity(cartID: ShopifyID, countryCode: CountryCode) async throws -> CartMutationResult {
         try await perform(
             CartBuyerIdentityUpdateMutation(cartID: cartID, countryCode: countryCode),
+            context: contextProvider.currentContext()
+        )
+    }
+
+    /// Associates the cart with a signed-in customer.
+    public func updateBuyerIdentity(cartID: ShopifyID, customerAccessToken: String) async throws -> CartMutationResult {
+        try await perform(
+            CartBuyerIdentityUpdateMutation(cartID: cartID, countryCode: nil, customerAccessToken: customerAccessToken),
             context: contextProvider.currentContext()
         )
     }

@@ -208,6 +208,10 @@ actor ProductStubCartRepository: CartRepository {
         CartMutationResult(cart: snapshot(), warnings: [])
     }
 
+    func updateBuyerIdentity(cartID _: ShopifyID, customerAccessToken _: String) async throws -> CartMutationResult {
+        CartMutationResult(cart: snapshot(), warnings: [])
+    }
+
     func updateAttributes(cartID _: ShopifyID, attributes _: [AttributeInput]) async throws -> CartMutationResult {
         CartMutationResult(cart: snapshot(), warnings: [])
     }

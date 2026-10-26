@@ -179,6 +179,7 @@ final class AppContainer {
             appVersion: resolution.configuration.appVersion
         )
         cartStore.checkoutPreloader = CheckoutConfiguration.preloader
+        cartStore.checkoutInvalidator = CheckoutConfiguration.invalidator
         let marketStore = MarketStore(
             localizationRepository: localizationRepository,
             contextProvider: contextProvider,
@@ -207,8 +208,13 @@ final class AppContainer {
             callbackScheme: resolution.configuration.customerAccountCallbackScheme,
             hasStoredTokens: account.hasStoredTokens
         )
-        sessionStore.onSignedOut = { [licenseCache] in
+        sessionStore.onSignedOut = { [licenseCache, cartStore] in
             licenseCache.removeAll()
+            Task { await cartStore.signOutCustomer() }
+        }
+        // Signed-in checkouts: the cart carries the customer's token right before checkout.
+        cartStore.customerAccessToken = { [weak sessionStore] in
+            await sessionStore?.checkoutAccessToken()
         }
         self.sessionStore = sessionStore
         settingsStore = AppSettingsStore(store: services.preferences)

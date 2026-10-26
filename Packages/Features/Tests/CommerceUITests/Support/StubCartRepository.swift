@@ -19,12 +19,13 @@ actor StubCartRepository: CartRepository {
         case remove(lineIDs: [ShopifyID])
         case discountCodes([String])
         case buyerIdentity(CountryCode)
+        case customerAccessToken(String)
         case attributes([AttributeInput])
     }
 
     /// The operations failures can be queued for.
     enum Operation: Hashable, Sendable {
-        case cart, create, add, update, remove, discountCodes, buyerIdentity, attributes
+        case cart, create, add, update, remove, discountCodes, buyerIdentity, customerAccessToken, attributes
     }
 
     /// The discount code the stub applies; every other code is not applicable.
@@ -43,6 +44,7 @@ actor StubCartRepository: CartRepository {
         var codes: [String] = []
         var country: CountryCode = .de
         var attributes: [AttributeInput] = []
+        var customerAccessToken: String?
     }
 
     private(set) var calls: [Call] = []
@@ -167,6 +169,19 @@ actor StubCartRepository: CartRepository {
         return try result(for: cartID)
     }
 
+    func updateBuyerIdentity(cartID: ShopifyID, customerAccessToken: String) async throws -> CartMutationResult {
+        calls.append(.customerAccessToken(customerAccessToken))
+        try throwQueuedFailure(.customerAccessToken)
+        try requireCart(cartID)
+        carts[cartID]?.customerAccessToken = customerAccessToken
+        return try result(for: cartID)
+    }
+
+    /// The customer access token on the cart with `cartID`, if any.
+    func customerAccessToken(of cartID: ShopifyID) -> String? {
+        carts[cartID]?.customerAccessToken
+    }
+
     func updateAttributes(cartID: ShopifyID, attributes: [AttributeInput]) async throws -> CartMutationResult {
         calls.append(.attributes(attributes))
         try throwQueuedFailure(.attributes)
@@ -186,6 +201,7 @@ actor StubCartRepository: CartRepository {
         case .remove: .remove
         case .discountCodes: .discountCodes
         case .buyerIdentity: .buyerIdentity
+        case .customerAccessToken: .customerAccessToken
         case .attributes: .attributes
         }
     }

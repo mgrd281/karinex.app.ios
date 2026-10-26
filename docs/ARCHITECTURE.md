@@ -667,7 +667,20 @@ feature imports another.
 - After every change `checkoutPreloader` is called with the new checkout URL, debounced by
   `preloadDelay`. The App sets it to `CheckoutConfiguration.preloader`, so CommerceUI does not
   import Checkout Kit.
-- Cart, line and checkout identifiers are never logged.
+- Signed-in checkout (Shopify's "Authenticate checkouts" for Checkout Kit): the App sets
+  `customerAccessToken` to `CustomerSessionStore.checkoutAccessToken()`. While a customer is
+  signed in, `checkoutURL()` puts their Customer Account API token on the cart
+  (`cartBuyerIdentityUpdate` with `customerAccessToken`, refreshed for every checkout because
+  signed-in checkout URLs expire), marks the cart under `signedInCartIDKey` before the request,
+  and calls `checkoutInvalidator` (`CheckoutConfiguration.invalidator`, Checkout Kit's
+  `invalidate()`), so a preloaded guest checkout never appears. Checkout then opens with the
+  customer's e-mail address, addresses and saved payment methods, and the order belongs to the
+  account. A marked cart is not preloaded. A refused token opens a guest checkout.
+- After a sign-out (`CustomerSessionStore.onSignedOut`) `signOutCustomer()` replaces a marked
+  cart with a new cart holding the same lines and discount codes and drops Checkout Kit's cache;
+  if that fails, the cart is forgotten. `checkoutURL()` does the same for a marked cart when
+  nobody is signed in, so another person never sees the previous customer's checkout.
+- Cart, line and checkout identifiers and the customer token are never logged.
 
 **MarketStore.** Resolves, persists and applies the market, as described in
 [Markets and languages](#markets-and-languages).
