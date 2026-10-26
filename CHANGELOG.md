@@ -64,6 +64,9 @@ change.
   drops a preloaded guest checkout (`ShopifyCheckoutSheetKit.invalidate()`); after a sign-out the
   lines and discount codes move to a new cart without the token, so the next checkout on the
   device never shows the previous customer's details.
+- **Impressum from the shop policy:** "Text nicht verfügbar" is fixed for stores that keep the
+  Impressum as the Shopify legal notice policy. `ShopPoliciesQuery` reads `Shop.legalNotice`; the
+  Impressum uses it first and falls back to the pages `rechtliche-hinweise` and `impressum`.
 - **Rechnungen and a modern license card** (owner request): the Konto tab has "Rechnungen"
   (`InvoicesScreen`): every order with an invoice from the SOFTWAREFACH backend as a `KXList` row
   with order number, date and total; a tap loads the PDF from the short-lived link and opens it

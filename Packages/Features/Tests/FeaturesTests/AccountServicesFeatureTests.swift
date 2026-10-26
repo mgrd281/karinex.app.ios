@@ -570,7 +570,20 @@ struct SupportTests {
 
 @Suite("Legal texts")
 struct LegalTextTests {
-    @Test("The imprint is the page rechtliche-hinweise")
+    @Test("The imprint is the shop's legal notice policy when the store has one")
+    func imprintPolicy() async throws {
+        let repository = StubLegalRepository()
+        let notice = AccountFixtures.legalText("legal-notice", title: "Impressum")
+        await repository.setPolicies(ShopPolicies(privacyPolicy: nil, refundPolicy: nil, shippingPolicy: nil, termsOfService: nil, legalNotice: notice))
+        await repository.setPage(AccountFixtures.legalText("rechtliche-hinweise", title: "Rechtliche Hinweise"))
+
+        let text = try await LegalDocumentViewModel.text(for: .imprint, from: repository)
+
+        #expect(text == notice)
+        #expect(await repository.requestedPages.isEmpty)
+    }
+
+    @Test("Without the legal notice the imprint is the page rechtliche-hinweise")
     func imprint() async throws {
         let repository = StubLegalRepository()
         await repository.setPage(AccountFixtures.legalText("rechtliche-hinweise", title: "Impressum"))

@@ -130,14 +130,22 @@ final class LegalDocumentViewModel {
         }
     }
 
-    /// Where each text lives in the store (docs/STORE_AUDIT.md): the Impressum and the
-    /// Widerrufsbelehrung are pages, the others shop policies. Without the page the
-    /// Widerrufsbelehrung falls back to the refund policy.
+    /// Where each text lives in the store (docs/STORE_AUDIT.md): the Impressum is the shop's
+    /// legal notice policy, else the page `rechtliche-hinweise`, else `impressum`; the
+    /// Widerrufsbelehrung is a page that falls back to the refund policy; the others are shop
+    /// policies.
     static func text(for kind: LegalDocumentKind, from repository: any LegalContentRepository) async throws -> LegalText? {
         switch kind {
         case .imprint:
-            guard let handle = kind.pageHandle else { return nil }
-            return try await repository.page(handle: handle)
+            if let notice = try await repository.policies().legalNotice, !notice.body.isEmpty {
+                return notice
+            }
+            for handle in [kind.pageHandle, "impressum"].compactMap(\.self) {
+                if let page = try await repository.page(handle: handle) {
+                    return page
+                }
+            }
+            return nil
         case .withdrawal:
             if let handle = kind.pageHandle, let page = try await repository.page(handle: handle) {
                 return page
