@@ -64,6 +64,11 @@ change.
   drops a preloaded guest checkout (`ShopifyCheckoutSheetKit.invalidate()`); after a sign-out the
   lines and discount codes move to a new cart without the token, so the next checkout on the
   device never shows the previous customer's details.
+- **Country and language lists like a fashion app** (owner request, reference: the On app): in
+  "Ihr Shop-Land" the Land and Sprache der Inhalte rows open `MarketChoiceSheet` from the bottom
+  instead of a system menu: a bold title with a close button, full-width rows with hairline
+  dividers, the flag and the currency code per country, a checkmark on the chosen one, a search
+  field for long lists, and a tap chooses and closes.
 - **Impressum from the shop policy:** "Text nicht verfügbar" is fixed for stores that keep the
   Impressum as the Shopify legal notice policy. `ShopPoliciesQuery` reads `Shop.legalNotice`; the
   Impressum uses it first and falls back to the pages `rechtliche-hinweise` and `impressum`.
