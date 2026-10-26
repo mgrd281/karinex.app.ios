@@ -3,6 +3,7 @@ import Foundation
 @testable import HomeFeature
 import ShopifyKit
 import Testing
+import UIKit
 
 // MARK: - Trust facts
 
@@ -241,7 +242,7 @@ struct HomeLayoutTests {
             showcase: [],
             bestsellers: .bestseller,
             deals: .deals,
-            versions: [windows, HomeCategory(handle: "windows-11", title: .verbatim("Windows 11"), systemImage: "macwindow")],
+            versions: [windows, HomeCategory(handle: "windows-11", title: .verbatim("Windows 11"), icon: .windows)],
             guidesBlog: "news"
         )
 
@@ -550,5 +551,30 @@ struct HomeShowcaseCycleTests {
         #expect(step != HomeShowcaseCycle.Step(handle: "microsoft-office", isCycling: true))
         #expect(step != HomeShowcaseCycle.Step(handle: "windows", isCycling: false))
         #expect(step == HomeShowcaseCycle.Step(handle: "windows", isCycling: true))
+    }
+}
+
+// MARK: - Category icons
+
+@Suite("Home category icons")
+struct HomeCategoryIconTests {
+    @Test("Every category icon is a template image in the module's asset catalog", arguments: HomeCategoryIcon.allCases)
+    func iconLoads(icon: HomeCategoryIcon) throws {
+        let image = try #require(UIImage(named: icon.assetName, in: HomeResources.bundle, with: nil))
+        #expect(image.renderingMode == .alwaysTemplate)
+        #expect(image.size == CGSize(width: 24, height: 24))
+    }
+
+    @Test("Each tile of the showcase has its own icon, and none is the icon of all categories")
+    func distinctIcons() {
+        let icons = HomeModules.standard.showcase.map(\.icon)
+        #expect(Set(icons).count == icons.count)
+        #expect(!icons.contains(.allCategories))
+    }
+
+    @Test("The bestsellers and the sale have their own icons")
+    func highlightIcons() {
+        #expect(HomeCategory.bestseller.icon == .bestseller)
+        #expect(HomeCategory.deals.icon == .sale)
     }
 }

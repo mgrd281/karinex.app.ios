@@ -111,10 +111,41 @@ public struct HomeLayout: Sendable, Hashable {
     public static let articlesPerRow = 6
 }
 
+// MARK: - HomeCategoryIcon
+
+/// The icon of a category tile. The KARINEX category icons are drawn for the app as SVG in
+/// `CategoryIcons.xcassets` (a 24 point grid, 1.5 point lines with round ends, one soft 20 %
+/// fill each, no third-party logos) and are template images, tinted like text.
+public enum HomeCategoryIcon: String, Sendable, Hashable, CaseIterable {
+    /// A display with a snap layout of one large and two small windows.
+    case windows = "category-windows"
+    /// A page with a line of text and a small bar chart.
+    case office = "category-office"
+    /// Two rack units with status lights.
+    case server = "category-server"
+    /// A notebook with a slim base.
+    case mac = "category-mac"
+    /// An editor tile with the code sign.
+    case development = "category-development"
+    /// A cloud with the arrows of a renewing subscription.
+    case microsoft365 = "category-microsoft365"
+    /// A medal with a star.
+    case bestseller = "category-bestseller"
+    /// A price tag with a percent sign.
+    case sale = "category-sale"
+    /// Three tiles and a disc, for the tile that leads to every category.
+    case allCategories = "category-all"
+
+    /// The name of the image set in `CategoryIcons.xcassets`.
+    public var assetName: String {
+        rawValue
+    }
+}
+
 // MARK: - HomeCategory
 
 /// A store collection the Start screen features, with the app's short name, an optional small
-/// label and a symbol. The collection's own title in the store is often long (it is written for
+/// label and an icon. The collection's own title in the store is often long (it is written for
 /// search engines), so the screen uses these names.
 public struct HomeCategory: Sendable, Hashable, Identifiable {
     /// The collection handle, e.g. `windows`.
@@ -123,15 +154,15 @@ public struct HomeCategory: Sendable, Hashable, Identifiable {
     public let title: HomeText
     /// The small label above the name in panels, e.g. "Betriebssysteme".
     public let eyebrow: HomeText?
-    /// The SF Symbol of the category tile.
-    public let systemImage: String
+    /// The icon of the category tile.
+    public let icon: HomeCategoryIcon
 
     /// Creates a category.
-    public init(handle: String, title: HomeText, eyebrow: HomeText? = nil, systemImage: String) {
+    public init(handle: String, title: HomeText, eyebrow: HomeText? = nil, icon: HomeCategoryIcon) {
         self.handle = handle
         self.title = title
         self.eyebrow = eyebrow
-        self.systemImage = systemImage
+        self.icon = icon
     }
 
     /// The handle.
@@ -255,10 +286,10 @@ public struct HomeModules: Sendable, Hashable {
         bestsellers: .bestseller,
         deals: .deals,
         versions: [
-            HomeCategory(handle: "windows-11", title: .verbatim("Windows 11"), systemImage: "macwindow"),
-            HomeCategory(handle: "windows-10", title: .verbatim("Windows 10"), systemImage: "macwindow"),
-            HomeCategory(handle: "microsoft-office-2024", title: .verbatim("Office 2024"), systemImage: "doc.richtext"),
-            HomeCategory(handle: "microsoft-office-2021", title: .verbatim("Office 2021"), systemImage: "doc.richtext"),
+            HomeCategory(handle: "windows-11", title: .verbatim("Windows 11"), icon: .windows),
+            HomeCategory(handle: "windows-10", title: .verbatim("Windows 10"), icon: .windows),
+            HomeCategory(handle: "microsoft-office-2024", title: .verbatim("Office 2024"), icon: .office),
+            HomeCategory(handle: "microsoft-office-2021", title: .verbatim("Office 2021"), icon: .office),
         ],
         guidesBlog: "guides"
     )
@@ -272,55 +303,55 @@ extension HomeCategory {
         handle: HomeModules.bestsellerHandle,
         title: .localized("home.section.bestseller.title"),
         eyebrow: .localized("home.section.bestseller.eyebrow"),
-        systemImage: "sparkles"
+        icon: .bestseller
     )
     /// `windows`.
     public static let windows = HomeCategory(
         handle: "windows",
         title: .localized("home.section.windows.title"),
         eyebrow: .localized("home.section.windows.eyebrow"),
-        systemImage: "macwindow"
+        icon: .windows
     )
     /// `microsoft-office`.
     public static let office = HomeCategory(
         handle: "microsoft-office",
         title: .localized("home.section.office.title"),
         eyebrow: .localized("home.section.office.eyebrow"),
-        systemImage: "doc.richtext"
+        icon: .office
     )
     /// `windows-server`.
     public static let server = HomeCategory(
         handle: "windows-server",
         title: .localized("home.section.server.title"),
         eyebrow: .localized("home.section.server.eyebrow"),
-        systemImage: "server.rack"
+        icon: .server
     )
     /// `microsoft-office-fur-mac`.
     public static let mac = HomeCategory(
         handle: "microsoft-office-fur-mac",
         title: .localized("home.category.mac.title"),
         eyebrow: .localized("home.category.mac.eyebrow"),
-        systemImage: "laptopcomputer"
+        icon: .mac
     )
     /// `visual-studio-entwicklungstools`.
     public static let development = HomeCategory(
         handle: "visual-studio-entwicklungstools",
         title: .localized("home.section.development.title"),
         eyebrow: .localized("home.section.development.eyebrow"),
-        systemImage: "chevron.left.forwardslash.chevron.right"
+        icon: .development
     )
     /// `microsoft-365-abonnement`.
     public static let microsoft365 = HomeCategory(
         handle: "microsoft-365-abonnement",
         title: .verbatim("Microsoft 365"),
         eyebrow: .localized("home.category.microsoft365.eyebrow"),
-        systemImage: "icloud"
+        icon: .microsoft365
     )
     /// `sale`.
     public static let deals = HomeCategory(
         handle: "sale",
         title: .localized("home.section.deals.title"),
         eyebrow: .localized("home.section.deals.eyebrow"),
-        systemImage: "tag"
+        icon: .sale
     )
 }

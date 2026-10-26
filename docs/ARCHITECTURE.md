@@ -740,6 +740,13 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
   (`HomeProductPanel`), "Zuletzt angesehen", `HomeVersionGrid`, `HomeServiceTiles`
   (account routes), `HomeArticleSection` and the support card. Empty collections drop their module, failed ones show a
   compact error with "Erneut versuchen".
+- Category icons: `HomeCategory.icon` is a `HomeCategoryIcon`, an image set of
+  `HomeFeature/Resources/CategoryIcons.xcassets`. The icons are hand-drawn SVG (24 point
+  viewBox, 1.5 point strokes with round caps and joins, one shape filled at 20 % opacity, solid
+  dots as circles, every element with its own presentation attributes and no CSS), kept as
+  vectors (`preserves-vector-representation`) and rendered as templates, so `HomeCategoryTile`
+  tints them with the text color and scales them with Dynamic Type (26 points at the default
+  size). `HomeCategoryIconTests` loads every one from the module bundle.
 - `HomeCategoryShowcase` cycles like the brand strip of About You. A `.task(id:)` keyed by
   `HomeShowcaseCycle.Step` (the category shown and whether it cycles) waits
   `HomeShowcaseCycle.dwell`, then selects the next category inside a `.swap` animation; the

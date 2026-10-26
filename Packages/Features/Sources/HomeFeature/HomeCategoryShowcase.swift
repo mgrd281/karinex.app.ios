@@ -136,7 +136,7 @@ struct HomeCategoryShowcase: View {
                         let isChosen = category == selected
                         HomeCategoryTile(
                             title: category.title.resolved,
-                            systemImage: category.systemImage,
+                            icon: category.icon,
                             isSelected: isChosen,
                             showsProgress: isChosen && isCycling
                         ) {
@@ -147,7 +147,7 @@ struct HomeCategoryShowcase: View {
                     }
                     HomeCategoryTile(
                         title: String(localized: "home.showcase.all", bundle: .module),
-                        systemImage: "square.grid.2x2",
+                        icon: .allCategories,
                         isSelected: false,
                         action: onBrowseAll
                     )
@@ -239,12 +239,12 @@ enum HomeShowcaseCycle {
 
 // MARK: - HomeCategoryTile
 
-/// One category tile: the symbol above the short name. The chosen tile is filled in the store
-/// color with light text and lifted by a soft shadow; while the showcase waits to move on it
-/// fills with a lighter tone from the leading edge.
+/// One category tile: the category icon above the short name. The chosen tile is filled in the
+/// store color with light text and lifted by a soft shadow; while the showcase waits to move on
+/// it fills with a lighter tone from the leading edge.
 struct HomeCategoryTile: View {
     let title: String
-    let systemImage: String
+    let icon: HomeCategoryIcon
     let isSelected: Bool
     /// Whether the chosen tile shows the time until the showcase moves on.
     var showsProgress = false
@@ -252,16 +252,21 @@ struct HomeCategoryTile: View {
 
     @ScaledMetric(relativeTo: .caption) private var scaledWidth: CGFloat = 92
     @ScaledMetric(relativeTo: .caption) private var scaledHeight: CGFloat = 72
+    @ScaledMetric(relativeTo: .title3) private var scaledIconSide: CGFloat = 26
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: KXRadius.small, style: .continuous)
+        let iconSide = min(scaledIconSide, 40)
         Button {
             action()
         } label: {
             VStack(spacing: KXSpacing.xxs) {
-                Image(systemName: systemImage)
-                    .kxFont(.title3)
+                Image(icon.assetName, bundle: .module)
+                    .renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: iconSide, height: iconSide)
                 Text(title)
                     .fontWeight(.medium)
                     .kxFont(.caption)

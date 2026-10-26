@@ -59,6 +59,13 @@ change.
   the number of items (it opens the cart, `CartBagIcon` in CommerceUI) sit in the navigation
   bar as plain symbols; on iOS 26 without the glass circle (`ProductToolbar`,
   `sharedBackgroundVisibility(.hidden)`).
+- **Own category icons** (owner request): the tiles of "Unsere Kategorien" show KARINEX icons
+  drawn for the app as SVG instead of system symbols: a display with a snap layout (Windows), a
+  page with a bar chart (Office), rack units (Server), a notebook (Office für Mac), an editor
+  with the code sign (Entwicklung), a cloud with renewal arrows (Microsoft 365) and tiles with a
+  disc (Alle Kategorien), plus a medal (Bestseller) and a price tag (Sale). One style for all:
+  24 point grid, 1.5 point lines with round ends and one soft 20 % fill, tinted like text, so
+  they turn white on the chosen tile and in dark mode. No third-party logos.
 - **Return period is 14 days, not 100** (owner correction): the trust fact on the Start tab, the
   money-back sheet and the product page now say "14 Tage Geld-zurück" in all 11 languages; the
   conditions are unchanged.
