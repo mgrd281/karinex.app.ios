@@ -31,6 +31,15 @@ public enum KXMotion {
         .linear(duration: MotionToken.cycleDwellDuration)
     }
 
+    /// How long the wishlist heart takes to fill when a product is saved.
+    public static let heartFillDuration = MotionToken.heartFillDuration
+    /// How long the filled heart takes to grow and settle again after filling.
+    public static let heartPopDuration = MotionToken.heartPopDuration
+    /// How far the filled heart grows before it settles.
+    public static let heartPopScale = CGFloat(MotionToken.heartPopScale)
+    /// How long the small hearts take to burst from the saved heart and fade.
+    public static let heartBurstDuration = MotionToken.heartBurstDuration
+
     /// Returns the animation for `curve`, or a short cross-fade when Reduce Motion is on.
     public static func animation(_ curve: Curve, reduceMotion: Bool) -> Animation {
         if reduceMotion {

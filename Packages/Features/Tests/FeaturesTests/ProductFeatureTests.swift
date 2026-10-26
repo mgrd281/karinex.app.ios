@@ -575,3 +575,29 @@ struct ProductStringTests {
         }
     }
 }
+
+// MARK: - Wishlist heart
+
+@MainActor
+@Suite("Wishlist heart burst")
+struct ProductHeartBurstTests {
+    @Test("The small hearts are hidden before and after the burst and fly outward while it runs")
+    func burst() {
+        #expect(ProductHeartBurst.opacity(at: 0) == 0)
+        #expect(ProductHeartBurst.opacity(at: 1) == 0)
+        #expect(ProductHeartBurst.opacity(at: 0.3) == 1)
+        #expect(ProductHeartBurst.opacity(at: 0.75) == 0.5)
+        #expect(ProductHeartBurst.distance(at: 0) < ProductHeartBurst.distance(at: 0.5))
+        #expect(ProductHeartBurst.distance(at: 0.5) < ProductHeartBurst.distance(at: 1))
+        #expect(ProductHeartBurst.scale(at: 0.2) == 1)
+        #expect(ProductHeartBurst.scale(at: 1) < 1)
+        #expect(ProductHeartBurst.particles.count == 4)
+    }
+
+    @Test("At rest the heart is full, unscaled and without burst")
+    func resting() {
+        #expect(ProductHeartMotion.resting.fill == 1)
+        #expect(ProductHeartMotion.resting.pop == 1)
+        #expect(ProductHeartMotion.resting.burst == 0)
+    }
+}

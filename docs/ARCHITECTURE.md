@@ -860,6 +860,11 @@ through `ProductLookupRepository` (`ProductsByIDQuery`, one Storefront `nodes` c
 products dropped) in the current market. The App puts the store and the lookup into the SwiftUI
 environment (`.environment(savedProductsStore)`, `\.productLookup`); the product page reads
 them optionally, so previews and tests without them simply show no heart and no history.
+The product photo's heart (`ProductWishlistButton`) sits on a white disc and animates a save
+with one `KeyframeAnimator` (fill from the center, pop, burst of four small hearts in
+`ProductHeartBurst`), triggered from the tap so the first frame already starts empty; the
+timings are `MotionToken.heartFillDuration`, `heartPopDuration`, `heartPopScale` and
+`heartBurstDuration`, and Reduce Motion skips the animation.
 
 ### Push notifications
 

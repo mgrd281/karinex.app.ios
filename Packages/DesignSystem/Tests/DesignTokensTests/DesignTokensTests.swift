@@ -158,6 +158,13 @@ struct LayoutTokenTests {
         #expect(MotionToken.launchZoomScale >= 8)
     }
 
+    @Test("The saved heart fills, pops and bursts within a second")
+    func heartMotion() {
+        #expect(MotionToken.heartFillDuration + MotionToken.heartPopDuration + MotionToken.heartBurstDuration < 1)
+        #expect(MotionToken.heartPopScale > 1)
+        #expect(MotionToken.heartPopScale < 1.3)
+    }
+
     @Test("Every style is sans serif except the monospaced license keys")
     func typographyDesigns() {
         for style in TypographyToken.allCases {

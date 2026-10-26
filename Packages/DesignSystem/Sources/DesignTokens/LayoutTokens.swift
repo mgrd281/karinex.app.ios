@@ -78,4 +78,12 @@ public enum MotionToken {
     public static let launchZoomDuration: Double = 0.55
     /// How far the logo grows during the launch intro.
     public static let launchZoomScale: Double = 12
+    /// How long the wishlist heart takes to fill from its center when a product is saved.
+    public static let heartFillDuration: Double = 0.13
+    /// How long the filled heart takes to grow to ``heartPopScale`` and settle again.
+    public static let heartPopDuration: Double = 0.3
+    /// How far the filled heart grows before it settles.
+    public static let heartPopScale: Double = 1.12
+    /// How long the small hearts take to burst from the saved heart and fade.
+    public static let heartBurstDuration: Double = 0.45
 }

@@ -55,6 +55,10 @@ change.
   Ratgeber as tall story tiles and the support card. The modules and their store collections are
   described by `HomeModules`; the hero with "Zum Sortiment" is gone, and so is the chip bar
   above the tab bar (owner request).
+- **Saving with the heart like About You** (owner request): the heart on the product photo
+  sits on a white disc; saving fills it from the center, springs it a little larger and lets
+  four small hearts burst to the upper left and lower right (`ProductWishlistButton`,
+  `ProductHeartBurst`, timings in `MotionToken.heart*`). With Reduce Motion it only switches.
 - **Cart bag like About You** (owner request): the Warenkorb tab and the product page bar show
   the outline tote of the About You cart, a straight top edge, sides that widen slightly toward
   the rounded bottom and a tall round handle in one even 1.67 pt line, 22 points high

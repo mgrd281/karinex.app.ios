@@ -95,28 +95,173 @@ struct ProductGallery: View {
 
 // MARK: - ProductWishlistButton
 
-/// The heart over the product photo: outlined while the product is not saved, filled once it is.
+/// The heart over the product photo on a white disc, as in fashion retail apps: outlined while
+/// the product is not saved, filled once it is.
+///
+/// Saving animates like the About You app (owner request): the filled heart grows from the
+/// center of the outline, springs a little larger and settles, and small hearts burst from it
+/// to the upper left and the lower right and fade. Removing it from the Merkliste just shows the
+/// outline again. With Reduce Motion the heart only switches.
 struct ProductWishlistButton: View {
     let isSaved: Bool
     let onToggle: @MainActor () -> Void
 
-    @ScaledMetric(relativeTo: .title2) private var iconSize: CGFloat = 24
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @ScaledMetric(relativeTo: .title2) private var discSize: CGFloat = 52
+    /// Counts the saves that animate; each change plays the animation once.
+    @State private var savesToAnimate = 0
 
     var body: some View {
         Button {
+            if !isSaved, !reduceMotion {
+                savesToAnimate += 1
+            }
             onToggle()
         } label: {
-            Image(systemName: isSaved ? "heart.fill" : "heart")
-                .font(.system(size: min(iconSize, 36), weight: .regular))
-                .foregroundStyle(KXColor.textPrimary)
-                .frame(minWidth: KXSpacing.minimumTapTarget, minHeight: KXSpacing.minimumTapTarget)
-                .contentShape(Rectangle())
+            label
         }
         .buttonStyle(.plain)
         .sensoryFeedback(.selection, trigger: isSaved)
         .accessibilityLabel(isSaved ? Text("product.wishlist.remove", bundle: .module) : Text("product.wishlist.add", bundle: .module))
         .accessibilityAddTraits(isSaved ? .isSelected : [])
         .accessibilityIdentifier("product.wishlist")
+    }
+
+    private var label: some View {
+        let size = min(discSize, ProductWishlistMetrics.maximumDiscSize)
+        return Circle()
+            .fill(KXColor.surface)
+            .shadow(
+                color: KXColor.scrim.opacity(ProductWishlistMetrics.shadowOpacity),
+                radius: ProductWishlistMetrics.shadowRadius,
+                x: 0,
+                y: ProductWishlistMetrics.shadowOffset
+            )
+            .frame(width: size, height: size)
+            .overlay {
+                heart(size: size * ProductWishlistMetrics.heartToDisc)
+            }
+            .frame(minWidth: KXSpacing.minimumTapTarget, minHeight: KXSpacing.minimumTapTarget)
+            .contentShape(Circle())
+    }
+
+    /// The outline, the filled heart and the burst, driven by one keyframe animation per save.
+    private func heart(size: CGFloat) -> some View {
+        KeyframeAnimator(initialValue: ProductHeartMotion.resting, trigger: savesToAnimate) { motion in
+            ZStack {
+                if !isSaved || motion.fill < 1 {
+                    Image(systemName: "heart")
+                }
+                if isSaved {
+                    Image(systemName: "heart.fill")
+                        .scaleEffect(max(motion.fill * motion.pop, 0.01))
+                }
+                ProductHeartBurst(progress: motion.burst, heartSize: size)
+            }
+            .font(.system(size: size, weight: .regular))
+            .foregroundStyle(KXColor.textPrimary)
+        } keyframes: { _ in
+            KeyframeTrack(\.fill) {
+                MoveKeyframe(0)
+                CubicKeyframe(1, duration: KXMotion.heartFillDuration)
+            }
+            KeyframeTrack(\.pop) {
+                MoveKeyframe(1)
+                LinearKeyframe(1, duration: KXMotion.heartFillDuration)
+                SpringKeyframe(KXMotion.heartPopScale, duration: KXMotion.heartPopDuration * 0.4, spring: .snappy)
+                SpringKeyframe(1, duration: KXMotion.heartPopDuration * 0.6, spring: .bouncy)
+            }
+            KeyframeTrack(\.burst) {
+                MoveKeyframe(0)
+                LinearKeyframe(0, duration: KXMotion.heartFillDuration + KXMotion.heartPopDuration * 0.4)
+                LinearKeyframe(1, duration: KXMotion.heartBurstDuration)
+            }
+        }
+    }
+}
+
+/// The sizes of the wishlist disc.
+private enum ProductWishlistMetrics {
+    /// The largest disc at large text sizes, so it never covers the photo.
+    static let maximumDiscSize: CGFloat = 64
+    /// The heart's size relative to the disc.
+    static let heartToDisc: CGFloat = 0.5
+    static let shadowOpacity = 0.12
+    static let shadowRadius: CGFloat = 4
+    static let shadowOffset: CGFloat = 1
+}
+
+/// The animated values of the wishlist heart. At rest the heart is full and unscaled and the
+/// burst is hidden.
+struct ProductHeartMotion {
+    /// How far the filled heart has grown from the center, from 0 to 1.
+    var fill: CGFloat
+    /// The extra scale of the filled heart while it springs.
+    var pop: CGFloat
+    /// The progress of the burst, from 0 (not started) to 1 (faded).
+    var burst: CGFloat
+
+    static let resting = ProductHeartMotion(fill: 1, pop: 1, burst: 0)
+}
+
+// MARK: - ProductHeartBurst
+
+/// The small hearts that burst from a saved heart: two to the upper left and two to the lower
+/// right. They fly outward, shrink a little and fade as `progress` runs from 0 to 1, and are
+/// hidden at 0 and 1. Decorative.
+struct ProductHeartBurst: View {
+    /// The progress of the burst, from 0 to 1.
+    let progress: CGFloat
+    /// The size of the heart they burst from.
+    let heartSize: CGFloat
+
+    /// One small heart: its direction from the center and its size relative to the heart.
+    struct Particle {
+        let direction: CGVector
+        let scale: CGFloat
+    }
+
+    static let particles = [
+        Particle(direction: CGVector(dx: -0.78, dy: -0.62), scale: 0.3),
+        Particle(direction: CGVector(dx: -0.95, dy: -0.3), scale: 0.16),
+        Particle(direction: CGVector(dx: 0.78, dy: 0.62), scale: 0.3),
+        Particle(direction: CGVector(dx: 0.95, dy: 0.3), scale: 0.16),
+    ]
+
+    var body: some View {
+        ZStack {
+            ForEach(Self.particles.indices, id: \.self) { index in
+                let particle = Self.particles[index]
+                let distance = Self.distance(at: progress) * heartSize
+                Image(systemName: "heart.fill")
+                    .font(.system(size: heartSize * particle.scale))
+                    .scaleEffect(Self.scale(at: progress))
+                    .offset(x: particle.direction.dx * distance, y: particle.direction.dy * distance)
+            }
+        }
+        .opacity(Self.opacity(at: progress))
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+    }
+
+    /// How far the hearts are from the center, in heart sizes: from just outside the heart
+    /// outward, fast at first.
+    static func distance(at progress: CGFloat) -> CGFloat {
+        let clamped = min(max(progress, 0), 1)
+        let eased = 1 - (1 - clamped) * (1 - clamped)
+        return 0.55 + 0.4 * eased
+    }
+
+    /// The hearts grow in during the first fifth of the burst and shrink to two thirds by its end.
+    static func scale(at progress: CGFloat) -> CGFloat {
+        let clamped = min(max(progress, 0), 1)
+        return clamped < 0.2 ? 0.4 + 3 * clamped : 1 - (clamped - 0.2) / 0.8 / 3
+    }
+
+    /// Fully visible until the middle of the burst, then fading out; hidden at 0 and 1.
+    static func opacity(at progress: CGFloat) -> Double {
+        guard progress > 0, progress < 1 else { return 0 }
+        return progress < 0.5 ? 1 : Double((1 - progress) / 0.5)
     }
 }
 
