@@ -39,6 +39,9 @@ cd "$repo_root"
 # An earlier run leaves its build number (agvtool) and the resolved packages in the generated
 # project; the lane needs the committed project, so start from it again.
 git checkout -- KARINEX.xcodeproj
+# The lane writes Config/Secrets.xcconfig after the project check; XcodeGen lists every file of
+# Config/ in the project, so a file left by an earlier run would fail that check.
+rm -f Config/Secrets.xcconfig
 # The pinned XcodeGen of CI: another version writes a different project file, and the lane
 # stops when KARINEX.xcodeproj differs from what project.yml generates.
 tools_path="$(scripts/install-tools.sh --dir "$HOME/.cache/karinex-tools" xcodegen | tail -n 1)"
