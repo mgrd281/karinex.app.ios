@@ -290,8 +290,8 @@ public struct ProductMetafields: Sendable, Hashable {
     // MARK: Typed accessors
 
     /// The FAQ entries of `karinex.faq`; `nil` when missing or not a JSON array of
-    /// `{question, answer}` objects. Entries with an empty question or answer and repeated
-    /// questions are dropped.
+    /// `{question, answer}` objects. The short keys `{q, a}` of the web shop's FAQ JSON are read
+    /// too. Entries with an empty question or answer and repeated questions are dropped.
     public var faq: [FAQEntry]? {
         guard let metafield = metafield(Identifier.faq),
               let array = Self.jsonArray(metafield.value)
@@ -300,8 +300,8 @@ public struct ProductMetafields: Sendable, Hashable {
         var entries: [FAQEntry] = []
         for element in array {
             guard let object = element as? [String: Any],
-                  let question = (object["question"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines),
-                  let answer = (object["answer"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  let question = ((object["question"] ?? object["q"]) as? String)?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  let answer = ((object["answer"] ?? object["a"]) as? String)?.trimmingCharacters(in: .whitespacesAndNewlines),
                   !question.isEmpty, !answer.isEmpty,
                   seenQuestions.insert(question).inserted
             else { continue }

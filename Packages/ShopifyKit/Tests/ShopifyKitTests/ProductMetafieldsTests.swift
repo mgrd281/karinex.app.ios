@@ -40,6 +40,18 @@ struct ProductMetafieldsTests {
         #expect(entries?.first?.id == "Wie aktiviere ich?")
     }
 
+    @Test("The web shop's short FAQ keys q and a are read too")
+    func shortFAQKeys() {
+        let json = """
+            [{"q": "Was ist Windows 11 Pro als Dauerlizenz?", "a": "Windows 11 Pro ist die Version für Unternehmen."},
+             {"q": "Wie schnell erhalte ich meinen Lizenzschlüssel?", "a": "In wenigen Minuten per E-Mail."}]
+            """
+        #expect(metafields([(ID.faq, "json", json)]).faq == [
+            FAQEntry(question: "Was ist Windows 11 Pro als Dauerlizenz?", answer: "Windows 11 Pro ist die Version für Unternehmen."),
+            FAQEntry(question: "Wie schnell erhalte ich meinen Lizenzschlüssel?", answer: "In wenigen Minuten per E-Mail."),
+        ])
+    }
+
     @Test("Invalid FAQ values are nil, an empty array is empty", arguments: ["", "not json", "{\"question\": \"q\"}", "[1, 2"])
     func invalidFAQ(value: String) {
         #expect(metafields([(ID.faq, "json", value)]).faq == nil)
