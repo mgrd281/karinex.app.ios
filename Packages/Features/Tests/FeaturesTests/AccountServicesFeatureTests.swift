@@ -574,7 +574,8 @@ struct LegalTextTests {
     func imprintPolicy() async throws {
         let repository = StubLegalRepository()
         let notice = AccountFixtures.legalText("legal-notice", title: "Impressum")
-        await repository.setPolicies(ShopPolicies(privacyPolicy: nil, refundPolicy: nil, shippingPolicy: nil, termsOfService: nil, legalNotice: notice))
+        let policies = ShopPolicies(privacyPolicy: nil, refundPolicy: nil, shippingPolicy: nil, termsOfService: nil, legalNotice: notice)
+        await repository.setPolicies(policies)
         await repository.setPage(AccountFixtures.legalText("rechtliche-hinweise", title: "Rechtliche Hinweise"))
 
         let text = try await LegalDocumentViewModel.text(for: .imprint, from: repository)
