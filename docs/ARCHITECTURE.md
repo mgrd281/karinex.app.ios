@@ -1224,6 +1224,9 @@ Customer Account client ID and BFF host for an end-to-end test on a device.
   together. Orders are photo cards (`OrderCard`, first five line items of the list query) and
   the detail offers "Erneut kaufen" (`OrderReorder.lines`, each line's `variantID` and quantity
   into `CartStore`).
+- **SettingsFeature:** "Einstellungen" as grouped iOS-style panels (`SettingsGroup`) of rows
+  with an ink icon tile (`SettingsRow` with a value and a chevron, external or checkmark
+  accessory, `SettingsToggleRow` for the consents, notifications and the license lock).
 - **ShopifyKit:** a Customer Account API client on `GraphQLClient` with a bearer token
   `authorization` supplier, endpoint discovery from `customerAccountDiscoveryURL`.
 - **Backend:** a BFF client and a mock server, `BFF_CONTRACT.md` and `openapi.yaml`; feature

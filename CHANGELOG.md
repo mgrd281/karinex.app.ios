@@ -64,6 +64,12 @@ change.
   drops a preloaded guest checkout (`ShopifyCheckoutSheetKit.invalidate()`); after a sign-out the
   lines and discount codes move to a new cart without the token, so the next checkout on the
   device never shows the previous customer's details.
+- **Einstellungen in the style of iOS** (owner request): every setting is a row with a small
+  ink icon tile on grouped grey panels with inset dividers. Shop-Land and Sprache der Inhalte
+  show their value and a chevron and open the market sheet (no "Ändern" button), the app
+  language opens the iOS settings, Darstellung is a list with a checkmark, and the toggles carry
+  their explanation below the title. The dotted leaders are gone from the version row
+  (`SettingsGroup`, `SettingsRow`, `SettingsToggleRow`).
 - **Persönliche Daten instead of Adressen** (owner request, to go beyond the About You app):
   one screen with the customer card (monogram, name, e-mail address, the customer number with
   copy), "Name ändern" (`customerUpdate`, first and last name; the e-mail address stays the
