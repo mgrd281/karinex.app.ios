@@ -8,12 +8,13 @@ import SwiftUI
 
 /// A payment method the app shows with its real acceptance mark (cart, product page).
 ///
-/// Which methods appear follows PROMPT.md section 2 (Apple Pay, credit and debit cards, Klarna,
-/// all inside Shopify checkout) and Shopify's own payment settings: Apple Pay when Shopify lists
-/// it as a wallet, and the card brands Shopify reports as accepted. When Shopify reports
-/// nothing (previews, a failed request) the app shows Apple Pay, a neutral card symbol and
-/// Klarna, the business facts without naming a card brand. Klarna is not part of Shopify's
-/// payment settings and always appears.
+/// Which methods appear follows PROMPT.md section 2 (all inside Shopify checkout) and Shopify's
+/// own payment settings: Apple Pay and Google Pay when Shopify lists them as wallets, and the
+/// card brands Shopify reports as accepted. UnionPay (not part of the card brands of Storefront
+/// API 2026-10), Klarna, Rechnung and Vorkasse are not in Shopify's payment settings and always
+/// appear, as in the web shop. When Shopify reports nothing (previews, a failed request) the
+/// app shows Apple Pay, a neutral card symbol and those fixed methods, without naming a card
+/// brand.
 public enum PaymentMethod: String, CaseIterable, Sendable, Hashable, Identifiable {
     /// Apple Pay.
     case applePay
@@ -31,25 +32,47 @@ public enum PaymentMethod: String, CaseIterable, Sendable, Hashable, Identifiabl
     case jcb
     /// A credit or debit card of a brand Shopify did not name: a neutral card symbol.
     case card
+    /// UnionPay.
+    case unionPay
+    /// Google Pay.
+    case googlePay
     /// Klarna.
     case klarna
+    /// Purchase on invoice ("Rechnung"): no brand mark, the name on a plain card.
+    case invoice
+    /// Payment in advance by bank transfer ("Vorkasse"): no brand mark, the name on a plain
+    /// card.
+    case prepayment
 
     /// Stable identity, also used in accessibility identifiers (`payment.method.visa`).
     public var id: String {
         rawValue
     }
 
+    /// The card brand Shopify's payment settings cannot report (it is no `CardBrand` of
+    /// Storefront API 2026-10), shown after the reported brands: UnionPay.
+    static let fixedCard = PaymentMethod.unionPay
+    /// The methods outside Shopify's payment settings, shown after the wallets: Klarna,
+    /// Rechnung and Vorkasse.
+    static let fixedAfterWallets: [PaymentMethod] = [.klarna, .invoice, .prepayment]
+
     /// The methods to show for Shopify's `settings`, in display order: Apple Pay, the card
-    /// brands in Shopify's order (or the neutral card), Klarna.
+    /// brands in Shopify's order (or the neutral card) and UnionPay, Google Pay, then Klarna,
+    /// Rechnung and Vorkasse.
     public static func methods(for settings: PaymentSettings) -> [PaymentMethod] {
-        let isReported = !settings.acceptedCardBrands.isEmpty || !settings.supportedDigitalWallets.isEmpty
+        let wallets = settings.supportedDigitalWallets
+        let isReported = !settings.acceptedCardBrands.isEmpty || !wallets.isEmpty
         var methods: [PaymentMethod] = []
-        if !isReported || settings.supportedDigitalWallets.contains(.applePay) {
+        if !isReported || wallets.contains(.applePay) {
             methods.append(.applePay)
         }
         let brands = settings.acceptedCardBrands.map(PaymentMethod.init(cardBrand:))
         methods += brands.isEmpty ? [.card] : brands
-        methods.append(.klarna)
+        methods.append(fixedCard)
+        if wallets.contains(.googlePay) {
+            methods.append(.googlePay)
+        }
+        methods += fixedAfterWallets
         return methods
     }
 
@@ -68,8 +91,8 @@ public enum PaymentMethod: String, CaseIterable, Sendable, Hashable, Identifiabl
         }
     }
 
-    /// The asset of the acceptance mark in `PaymentMethods.xcassets`, or `nil` for the
-    /// neutral card symbol.
+    /// The asset of the acceptance mark in `PaymentMethods.xcassets`, or `nil` for the methods
+    /// drawn on a plain card (``plainCardSymbol``).
     var assetName: String? {
         switch self {
         case .applePay: "payment-apple-pay"
@@ -79,12 +102,31 @@ public enum PaymentMethod: String, CaseIterable, Sendable, Hashable, Identifiabl
         case .discover: "payment-discover"
         case .dinersClub: "payment-diners-club"
         case .jcb: "payment-jcb"
-        case .card: nil
+        case .unionPay: "payment-unionpay"
+        case .googlePay: "payment-google-pay"
         case .klarna: "payment-klarna"
+        case .card, .invoice, .prepayment: nil
         }
     }
 
-    /// The name VoiceOver reads. Brand names are never translated; the neutral card is.
+    /// The SF Symbol on the plain card of a method without a brand mark, `nil` for the others.
+    var plainCardSymbol: String? {
+        switch self {
+        case .card: "creditcard"
+        case .invoice: "doc.text"
+        case .prepayment: "building.columns"
+        default: nil
+        }
+    }
+
+    /// Whether the plain card also shows the method's name: Rechnung and Vorkasse, which no
+    /// symbol names on its own.
+    var showsNameOnPlainCard: Bool {
+        self == .invoice || self == .prepayment
+    }
+
+    /// The name VoiceOver reads, also the label of Rechnung and Vorkasse. Brand names are never
+    /// translated; the neutral card, Rechnung and Vorkasse are.
     public var spokenName: String {
         switch self {
         case .applePay: "Apple Pay"
@@ -95,7 +137,11 @@ public enum PaymentMethod: String, CaseIterable, Sendable, Hashable, Identifiabl
         case .dinersClub: "Diners Club"
         case .jcb: "JCB"
         case .card: String(localized: "commerce.payment.card", bundle: .module)
+        case .unionPay: "UnionPay"
+        case .googlePay: "Google Pay"
         case .klarna: "Klarna"
+        case .invoice: String(localized: "commerce.payment.invoice", bundle: .module)
+        case .prepayment: String(localized: "commerce.payment.prepayment", bundle: .module)
         }
     }
 }
@@ -136,10 +182,10 @@ public final class PaymentMethodsStore {
 
 // MARK: - PaymentMethodsRow
 
-/// The acceptance marks of the store's payment methods (the real Apple Pay, card and Klarna
-/// marks the web shop shows), in one row, or two rows when one does not fit. The marks grow a
-/// little with Dynamic Type. VoiceOver reads the row as one element: the title and the names
-/// of the methods.
+/// The acceptance marks of the store's payment methods (the real marks the web shop shows),
+/// centered below the title in rows that wrap like a paragraph (``KXFlowLayout``), as below the
+/// buy button of the web shop. The marks grow a little with Dynamic Type. VoiceOver reads the
+/// row as one element: the title and the names of the methods.
 ///
 /// ```swift
 /// PaymentMethodsRow(methods: paymentMethods?.methods ?? PaymentMethod.fallback)
@@ -168,38 +214,30 @@ public struct PaymentMethodsRow: View {
 
     public var body: some View {
         let heading = title ?? String(localized: "commerce.payment.title", bundle: .module)
-        VStack(alignment: .leading, spacing: KXSpacing.xs) {
+        VStack(spacing: KXSpacing.xs) {
             Text(heading)
                 .kxFont(.eyebrow)
                 .foregroundStyle(KXColor.textSecondary)
-            ViewThatFits(in: .horizontal) {
-                marks(methods)
-                VStack(alignment: .leading, spacing: KXSpacing.xs) {
-                    let split = (methods.count + 1) / 2
-                    marks(Array(methods.prefix(split)))
-                    marks(Array(methods.dropFirst(split)))
+                .multilineTextAlignment(.center)
+            KXFlowLayout(alignment: .center, spacing: KXSpacing.xs, lineSpacing: KXSpacing.xs) {
+                ForEach(methods) { method in
+                    PaymentMark(method: method, height: markHeight)
                 }
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(heading))
         .accessibilityValue(Text(verbatim: methods.map(\.spokenName).joined(separator: ", ")))
         .accessibilityIdentifier("payment.methods")
     }
-
-    private func marks(_ methods: [PaymentMethod]) -> some View {
-        HStack(spacing: KXSpacing.xs) {
-            ForEach(methods) { method in
-                PaymentMark(method: method, height: markHeight)
-            }
-        }
-    }
 }
 
 // MARK: - PaymentMark
 
-/// One acceptance mark on a 38 by 24 card, or the neutral card symbol for ``PaymentMethod/card``.
+/// One acceptance mark on a 38 by 24 card. Methods without a brand mark get a plain white card
+/// in the same size with their symbol, Rechnung and Vorkasse also with their name in capitals,
+/// so the card grows wider. The plain cards stay white in dark mode, like the brand marks.
 private struct PaymentMark: View {
     let method: PaymentMethod
     let height: CGFloat
@@ -211,23 +249,44 @@ private struct PaymentMark: View {
                     .resizable()
                     .interpolation(.high)
                     .scaledToFit()
+                    .frame(width: markWidth, height: height)
             } else {
-                let shape = RoundedRectangle(cornerRadius: height / 8, style: .continuous)
-                shape
-                    .fill(KXColor.background)
-                    .overlay {
-                        shape.strokeBorder(KXColor.divider, lineWidth: KXBorder.hairline)
-                    }
-                    .overlay {
-                        Image(systemName: "creditcard")
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundStyle(KXColor.iconSecondary)
-                            .padding(height / 5)
-                    }
+                plainCard
             }
         }
-        .frame(width: height * 38 / 24, height: height)
         .accessibilityIdentifier("payment.method.\(method.id)")
+    }
+
+    /// The width of a brand mark.
+    private var markWidth: CGFloat {
+        height * 38 / 24
+    }
+
+    private var plainCard: some View {
+        let shape = RoundedRectangle(cornerRadius: height / 8, style: .continuous)
+        return HStack(spacing: height / 6) {
+            if let symbol = method.plainCardSymbol {
+                Image(systemName: symbol)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: height / 2, height: height / 2)
+            }
+            if method.showsNameOnPlainCard {
+                Text(method.spokenName)
+                    .kxFont(.eyebrow)
+                    .lineLimit(1)
+                    .fixedSize()
+                    // Grows with the card, which stops growing at a height of 40 points.
+                    .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
+            }
+        }
+        .foregroundStyle(KXColor.textSecondary)
+        .padding(.horizontal, method.showsNameOnPlainCard ? height / 3 : 0)
+        .frame(minWidth: markWidth, minHeight: height, maxHeight: height)
+        .background(KXColor.background, in: shape)
+        .overlay {
+            shape.strokeBorder(KXColor.divider, lineWidth: KXBorder.hairline)
+        }
+        .environment(\.colorScheme, .light)
     }
 }

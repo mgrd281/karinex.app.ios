@@ -26,7 +26,7 @@ Target outcome: an App Store–approved app that measurably increases repeat pur
 
 **Markets and languages:** 30 active Shopify Markets: 17 individual EU countries plus DE, DK, FI, GR, NL, PL, PT, RO, SE, ES, CH, NO, USA (USA digital-only). Product content exists in 11 languages: **DE (primary), EN, PL, NL, PT-PT, SV, DA, ES, FR, IT, FI**. Roughly 63% of revenue comes from non-German EU countries, so localization is a core feature, not a nice-to-have.
 
-**Payments (as configured in Shopify checkout):** Apple Pay, credit/debit card, Klarna. **PayPal is NOT offered and must never appear anywhere in the app.** Purchase on invoice is not offered to consumers. All payment handling happens inside Shopify checkout; the app never touches card data.
+**Payments (as configured in Shopify checkout, owner update of 2026-10-26, as in the web shop):** Apple Pay, Google Pay, credit/debit card (Visa, Mastercard, American Express, UnionPay), Klarna, Rechnung (purchase on invoice) and Vorkasse (payment in advance by bank transfer). **PayPal is NOT offered and must never appear anywhere in the app.** All payment handling happens inside Shopify checkout; the app never touches card data.
 
 **Support channels:** WhatsApp, email (`kundenservice@karinex.de`), live chat. Hours: **Monday to Sunday, 06:00–23:00 Europe/Berlin**. **Phone support does not exist. Never show a phone number, "Hotline", call button or `tel:` link.**
 
@@ -169,7 +169,7 @@ Laid out like the home screen of the About You app (owner request of 2026-10-25)
 - Opened from the search field of Start, the field is ready for typing.
 
 ### 6.5 Warenkorb (Cart)
-- Line items with quantity stepper, remove with undo, subtotal/discount/total, discount code field, digital-content notice, payment-method acceptance marks (real Apple Pay, card brand and Klarna logos; card brands and Apple Pay as reported by Shopify's `shop.paymentSettings`, Klarna from section 2; never any other method), "Zur Kasse" (Checkout Kit), cross-sell row. The product page shows the same marks below its buy buttons.
+- Line items with quantity stepper, remove with undo, subtotal/discount/total, discount code field, digital-content notice, payment-method acceptance marks, centered below the buttons as in the web shop (real Apple Pay, Google Pay, card brand, UnionPay and Klarna logos, plus plain marks with the names Rechnung and Vorkasse; card brands, Apple Pay and Google Pay as reported by Shopify's `shop.paymentSettings`, UnionPay, Klarna, Rechnung and Vorkasse from section 2; never any other method), "Zur Kasse" (Checkout Kit), cross-sell row. The product page shows the same marks below its buy buttons.
 
 ### 6.6 Checkout
 - Checkout Kit sheet; success screen with order number, delivery expectation, buttons "Bestellungen ansehen" and "Weiter einkaufen".
@@ -247,7 +247,7 @@ Laid out like the home screen of the About You app (owner request of 2026-10-25)
 
 ## 10. APP STORE COMPLIANCE
 
-- **Payments:** goods are consumed outside the app (installed on computers) or are physical → purchases via Shopify checkout with Apple Pay/card/Klarna are permitted; no IAP. The app must not gate any in-app functionality behind a purchase. Prepare `APP_STORE_REVIEW_NOTES.md` explaining this clearly and neutrally.
+- **Payments:** goods are consumed outside the app (installed on computers) or are physical → purchases via Shopify checkout with the methods of section 2 are permitted; no IAP. The app must not gate any in-app functionality behind a purchase. Prepare `APP_STORE_REVIEW_NOTES.md` explaining this clearly and neutrally.
 - **Minimum functionality:** native UI, offline-capable catalog, license vault, widgets — never a repackaged website.
 - **Sign in with Apple:** not required as long as the only login is Shopify's own passwordless account; do not add third-party social logins.
 - **Review access:** provide a reviewer account, a test product priced at the minimum, and a 100% discount code so reviewers can complete checkout without real charges (owner creates the code).

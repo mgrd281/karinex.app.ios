@@ -766,10 +766,15 @@ rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped
 - Payment marks (`CommerceUI/Payments`): `PaymentMethod.methods(for:)` turns Shopify's
   `PaymentSettings` (`shop.paymentSettings`) into the marks to show: Apple Pay only when Shopify
   lists it, the accepted card brands in Shopify's order (a neutral card symbol when Shopify
-  names none), then Klarna, which Shopify's settings do not cover (PROMPT.md section 2).
-  `PaymentMethodsStore` (in `AppContainer`, injected into the environment by `RootView`) loads
-  them once per launch and keeps the business facts on failure; `PaymentMethodsRow` draws the
-  PDF marks of `PaymentMethods.xcassets` (sources and MIT license in `Tools/Brand/payment-icons`).
+  names none), UnionPay (no `CardBrand` of Storefront API 2026-10), Google Pay only when Shopify
+  lists it, then Klarna, Rechnung and Vorkasse, which Shopify's settings do not cover (PROMPT.md
+  section 2). `PaymentMethodsStore` (in `AppContainer`, injected into the environment by
+  `RootView`) loads them once per launch and keeps the business facts on failure;
+  `PaymentMethodsRow` centers the title and the marks in rows that wrap (`KXFlowLayout`, a
+  `Layout` in DesignSystem whose row breaking `KXFlowLayoutTests` checks) and draws the PDF marks
+  of `PaymentMethods.xcassets` (sources and MIT license in `Tools/Brand/payment-icons`). Rechnung
+  and Vorkasse have no brand mark: a plain white card with an SF Symbol and the localized name
+  in capitals, light in dark mode too, like the PDF marks.
 - `CheckoutFeature`: see below.
 
 **Checkout.** `CheckoutCoordinator` is the state machine, free of Checkout Kit so it is testable:

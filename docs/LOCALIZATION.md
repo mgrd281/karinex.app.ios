@@ -55,7 +55,9 @@ catalog value and on forbidden words.
 3. No claims the app cannot prove: never "100 % legal", "original licence", "verified",
    "guaranteed genuine", "cheapest" or equivalents in any language. Product texts from Shopify
    are shown as they are; the app adds nothing to them.
-4. Payment methods are exactly Apple Pay, credit card, Klarna. Support channels are exactly
+4. Payment methods are exactly those of PROMPT.md section 2: Apple Pay, Google Pay, credit
+   card (Visa, Mastercard, American Express, UnionPay), Klarna, Rechnung and Vorkasse. Support
+   channels are exactly
    WhatsApp, e-mail and live chat. Never mention other payment methods or phone support.
 5. The 14-day money-back promise always carries its condition: it applies only to activated
    licence keys and physical goods; delivered but unactivated keys are not refunded
@@ -92,7 +94,9 @@ catalog value and on forbidden words.
 | Widerrufsrecht | right of withdrawal | droit de rétractation | diritto di recesso | derecho de desistimiento | herroepingsrecht | prawo odstąpienia od umowy | direito de livre resolução | ångerrätt | fortrydelsesret | peruuttamisoikeus |
 
 Brand and product names are never translated: KARINEX (always uppercase), Windows, Office,
-Microsoft 365, Visual Studio, Apple Pay, Klarna, WhatsApp.
+Microsoft 365, Visual Studio, Apple Pay, Google Pay, UnionPay, Klarna, WhatsApp. "Rechnung" and
+"Vorkasse" are payment methods, not brands, and are translated (`commerce.payment.invoice`,
+`commerce.payment.prepayment`).
 
 ## QA
 

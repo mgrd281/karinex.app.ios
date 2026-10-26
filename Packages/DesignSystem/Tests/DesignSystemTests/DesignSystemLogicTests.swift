@@ -406,6 +406,32 @@ struct KXColorTests {
     }
 }
 
+// MARK: - KXFlowLayout
+
+@Suite("KXFlowLayout")
+struct KXFlowLayoutTests {
+    @Test("Subviews fill a row, then wrap to the next one, in order")
+    func wraps() {
+        // Seven payment marks of 38 points and two wider name cards, on a 370 point wide phone.
+        let widths: [CGFloat] = Array(repeating: 38, count: 7) + [92, 104]
+        #expect(KXFlowLayout.rows(widths: widths, maximumWidth: 370, spacing: 8) == [Array(0..<7), [7, 8]])
+        #expect(KXFlowLayout.rows(widths: widths, maximumWidth: .infinity, spacing: 8) == [Array(0..<9)])
+    }
+
+    @Test("A row that fits exactly, or within half a point, keeps its last subview")
+    func exactFit() {
+        #expect(KXFlowLayout.rows(widths: [100, 100], maximumWidth: 208, spacing: 8) == [[0, 1]])
+        #expect(KXFlowLayout.rows(widths: [100, 100], maximumWidth: 207.6, spacing: 8) == [[0, 1]])
+        #expect(KXFlowLayout.rows(widths: [100, 100], maximumWidth: 207, spacing: 8) == [[0], [1]])
+    }
+
+    @Test("A subview wider than the row gets a row of its own; nothing gives no rows")
+    func edges() {
+        #expect(KXFlowLayout.rows(widths: [50, 400, 50], maximumWidth: 300, spacing: 8) == [[0], [1], [2]])
+        #expect(KXFlowLayout.rows(widths: [], maximumWidth: 300, spacing: 8).isEmpty)
+    }
+}
+
 // MARK: - Gallery
 
 #if DEBUG

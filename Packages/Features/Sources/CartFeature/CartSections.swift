@@ -244,9 +244,9 @@ struct CartSummaryCard: View {
 
 // MARK: - CartPaymentMethods
 
-/// The store's payment methods with their real acceptance marks (Apple Pay, the card brands
-/// Shopify reports, Klarna), from the app's ``PaymentMethodsStore``; the business facts while it
-/// loads and in previews.
+/// The store's payment methods with their real acceptance marks (the wallets and card brands
+/// Shopify reports, then UnionPay, Klarna, Rechnung and Vorkasse), from the app's
+/// ``PaymentMethodsStore``; the business facts while it loads and in previews.
 struct CartPaymentMethods: View {
     @Environment(PaymentMethodsStore.self) private var paymentMethods: PaymentMethodsStore?
 

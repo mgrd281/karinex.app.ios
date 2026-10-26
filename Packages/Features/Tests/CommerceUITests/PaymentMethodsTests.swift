@@ -6,29 +6,43 @@ import UIKit
 
 @Suite("Payment methods")
 struct PaymentMethodsTests {
-    @Test("Without Shopify's settings the business facts show: Apple Pay, a neutral card, Klarna")
+    /// The methods that always follow, because Shopify's payment settings cannot report them.
+    private static let fixed: [PaymentMethod] = [.klarna, .invoice, .prepayment]
+
+    @Test("Without Shopify's settings the business facts show: Apple Pay, a neutral card, UnionPay, Klarna, Rechnung, Vorkasse")
     func fallback() {
-        #expect(PaymentMethod.fallback == [.applePay, .card, .klarna])
+        #expect(PaymentMethod.fallback == [.applePay, .card, .unionPay] + Self.fixed)
         #expect(PaymentMethod.methods(for: .empty) == PaymentMethod.fallback)
     }
 
-    @Test("Shopify's card brands replace the neutral card, in Shopify's order")
+    @Test("The live store shows the nine methods of the web shop")
+    func liveStore() {
+        let settings = PaymentSettings(
+            acceptedCardBrands: [.visa, .mastercard, .americanExpress],
+            supportedDigitalWallets: [.shopifyPay, .applePay, .googlePay]
+        )
+        #expect(PaymentMethod.methods(for: settings) == [
+            .applePay, .visa, .mastercard, .americanExpress, .unionPay, .googlePay, .klarna, .invoice, .prepayment,
+        ])
+    }
+
+    @Test("Shopify's card brands replace the neutral card, in Shopify's order, followed by UnionPay")
     func reportedBrands() {
         let settings = PaymentSettings(
             acceptedCardBrands: [.visa, .mastercard, .americanExpress],
             supportedDigitalWallets: [.applePay, .shopifyPay]
         )
-        #expect(PaymentMethod.methods(for: settings) == [.applePay, .visa, .mastercard, .americanExpress, .klarna])
+        #expect(PaymentMethod.methods(for: settings) == [.applePay, .visa, .mastercard, .americanExpress, .unionPay] + Self.fixed)
     }
 
-    @Test("Apple Pay shows only when Shopify lists it; Klarna always shows")
+    @Test("Apple Pay and Google Pay show only when Shopify lists them; the fixed methods always show")
     func wallets() {
         let cardsOnly = PaymentSettings(acceptedCardBrands: [.visa], supportedDigitalWallets: [])
-        #expect(PaymentMethod.methods(for: cardsOnly) == [.visa, .klarna])
+        #expect(PaymentMethod.methods(for: cardsOnly) == [.visa, .unionPay] + Self.fixed)
         let walletOnly = PaymentSettings(acceptedCardBrands: [], supportedDigitalWallets: [.applePay])
-        #expect(PaymentMethod.methods(for: walletOnly) == [.applePay, .card, .klarna])
+        #expect(PaymentMethod.methods(for: walletOnly) == [.applePay, .card, .unionPay] + Self.fixed)
         let otherWallets = PaymentSettings(acceptedCardBrands: [.jcb], supportedDigitalWallets: [.googlePay, .shopifyPay])
-        #expect(PaymentMethod.methods(for: otherWallets) == [.jcb, .klarna])
+        #expect(PaymentMethod.methods(for: otherWallets) == [.jcb, .unionPay, .googlePay] + Self.fixed)
     }
 
     @Test("Every card brand has its own method", arguments: CardBrand.allCases)
@@ -38,22 +52,38 @@ struct PaymentMethodsTests {
         #expect(method.assetName != nil)
     }
 
-    @Test("Every acceptance mark is in the module's asset catalog", arguments: PaymentMethod.allCases)
+    @Test("Every acceptance mark is in the module's asset catalog; the others have a plain card", arguments: PaymentMethod.allCases)
     func assets(method: PaymentMethod) {
         guard let assetName = method.assetName else {
-            #expect(method == .card)
+            #expect([.card, .invoice, .prepayment].contains(method))
+            #expect(method.plainCardSymbol != nil)
             return
         }
+        #expect(method.plainCardSymbol == nil)
         #expect(UIImage(named: assetName, in: CommerceUIResources.bundle, with: nil) != nil, "\(assetName) is missing")
     }
 
-    @Test("Brand names stay untranslated; the neutral card has a localized name")
+    @Test("Only Rechnung and Vorkasse show their name on the card")
+    func names() {
+        #expect(PaymentMethod.allCases.filter(\.showsNameOnPlainCard) == [.invoice, .prepayment])
+    }
+
+    @Test("Brand names stay untranslated; the neutral card, Rechnung and Vorkasse have localized names")
     func spokenNames() {
         #expect(PaymentMethod.applePay.spokenName == "Apple Pay")
+        #expect(PaymentMethod.googlePay.spokenName == "Google Pay")
+        #expect(PaymentMethod.unionPay.spokenName == "UnionPay")
         #expect(PaymentMethod.klarna.spokenName == "Klarna")
         #expect(PaymentMethod.mastercard.spokenName == "Mastercard")
-        #expect(!PaymentMethod.card.spokenName.isEmpty)
-        #expect(PaymentMethod.card.spokenName != "commerce.payment.card")
+        let localized: [(PaymentMethod, String)] = [
+            (.card, "commerce.payment.card"),
+            (.invoice, "commerce.payment.invoice"),
+            (.prepayment, "commerce.payment.prepayment"),
+        ]
+        for (method, key) in localized {
+            #expect(!method.spokenName.isEmpty)
+            #expect(method.spokenName != key)
+        }
     }
 }
 
@@ -71,7 +101,7 @@ struct PaymentMethodsStoreTests {
         await store.loadIfNeeded()
         await store.loadIfNeeded()
 
-        #expect(store.methods == [.applePay, .visa, .mastercard, .klarna])
+        #expect(store.methods == [.applePay, .visa, .mastercard, .unionPay, .klarna, .invoice, .prepayment])
         #expect(await catalog.requestCount == 1)
     }
 
@@ -87,7 +117,7 @@ struct PaymentMethodsStoreTests {
         #expect(store.methods == PaymentMethod.fallback)
 
         await store.loadIfNeeded()
-        #expect(store.methods == [.applePay, .mastercard, .klarna])
+        #expect(store.methods == [.applePay, .mastercard, .unionPay, .klarna, .invoice, .prepayment])
         #expect(await catalog.requestCount == 2)
     }
 }

@@ -35,7 +35,7 @@ The values in angle brackets come from the owner (see [OWNER_INPUTS.md](OWNER_IN
 
 | Topic | Answer |
 | --- | --- |
-| Guideline 3.1.1 (In-App Purchase) | The keys activate software on a PC or Mac; they are not consumed in the app and unlock nothing in it. Physical media are shipped. Payment happens in Shopify checkout (Apple Pay, card, Klarna). |
+| Guideline 3.1.1 (In-App Purchase) | The keys activate software on a PC or Mac; they are not consumed in the app and unlock nothing in it. Physical media are shipped. Payment happens in Shopify checkout (Apple Pay, Google Pay, card, Klarna, invoice or bank transfer). |
 | Guideline 4.2 (minimum functionality) | All screens are native SwiftUI: catalog with filters, product detail, search, cart, account with orders, invoices and a license vault, support, legal texts, settings. The only web surfaces are the Shopify checkout and the Shopify login page, both required by Shopify. |
 | Guideline 5.1.1 (data collection) | See [PRIVACY_NUTRITION_LABEL.md](PRIVACY_NUTRITION_LABEL.md). Login data is used only to show the account. |
 | Guideline 5.1.1(v) (account deletion) | In the app, Konto > Konto löschen, sends the erasure request; without a backend it opens a prepared e-mail. |
