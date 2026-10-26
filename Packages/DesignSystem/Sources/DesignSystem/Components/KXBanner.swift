@@ -4,8 +4,8 @@ import SwiftUI
 // MARK: - KXBanner
 
 /// A status banner for offline, error, info and success messages: an SF Symbol, the message,
-/// an optional action (by default "Erneut versuchen") and an optional close button, on an
-/// elevated panel with a colored leading edge.
+/// an optional action (by default "Erneut versuchen") and an optional close button, on a flat
+/// light grey panel. Only the symbol carries the style's color; there is no colored edge.
 ///
 /// When the banner appears, and whenever its message changes, it posts a VoiceOver
 /// announcement so users of assistive technologies learn about the state change without
@@ -27,7 +27,7 @@ import SwiftUI
 /// Without a `message` each style uses its design-system default text, e.g. for
 /// ``Style/offline`` "Sie sind offline. Bitte prüfen Sie Ihre Internetverbindung.".
 public struct KXBanner: View {
-    /// The kind of message a ``KXBanner`` shows. Determines icon, accent color and default text.
+    /// The kind of message a ``KXBanner`` shows. Determines icon, icon color and default text.
     public enum Style: String, CaseIterable, Sendable {
         /// No network connection.
         case offline
@@ -46,7 +46,6 @@ public struct KXBanner: View {
     private let onDismiss: (() -> Void)?
 
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    @Environment(\.displayScale) private var displayScale
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     /// Creates a banner.
@@ -74,7 +73,7 @@ public struct KXBanner: View {
     }
 
     public var body: some View {
-        let shape = RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous)
+        let shape = RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous)
         HStack(alignment: .center, spacing: KXSpacing.s) {
             Image(systemName: systemImage)
                 .kxFont(.headline)
@@ -107,21 +106,9 @@ public struct KXBanner: View {
         }
         .padding(.leading, KXSpacing.m)
         .padding(.trailing, onDismiss == nil ? KXSpacing.s : KXSpacing.xxs)
-        .padding(.vertical, KXSpacing.xxs)
+        .padding(.vertical, KXSpacing.xs)
         .frame(minHeight: KXBannerMetrics.minimumHeight)
-        .background {
-            ZStack(alignment: .leading) {
-                shape.fill(KXColor.surfaceElevated)
-                Rectangle()
-                    .fill(accentColor)
-                    .frame(width: KXBannerMetrics.accentEdgeWidth)
-            }
-            .clipShape(shape)
-        }
-        .overlay {
-            shape.strokeBorder(KXColor.hairline, lineWidth: 1 / max(displayScale, 1))
-        }
-        .shadow(color: KXColor.scrim.opacity(0.25), radius: KXBannerMetrics.shadowRadius, x: 0, y: KXBannerMetrics.shadowOffset)
+        .background(KXColor.surface, in: shape)
         .accessibilityElement(children: .contain)
         .onChange(of: resolvedMessage, initial: true) {
             AccessibilityNotification.Announcement(resolvedMessage).post()
@@ -160,25 +147,15 @@ public struct KXBanner: View {
         switch style {
         case .offline: "wifi.slash"
         case .error: "exclamationmark.triangle.fill"
-        case .info: "info.circle.fill"
+        case .info: "info.circle"
         case .success: "checkmark.circle.fill"
         }
     }
 
     private var iconColor: Color {
         switch style {
-        case .offline: KXColor.textSecondary
+        case .offline, .info: KXColor.textPrimary
         case .error: KXColor.error
-        case .info: KXColor.info
-        case .success: KXColor.success
-        }
-    }
-
-    private var accentColor: Color {
-        switch style {
-        case .offline: KXColor.accent
-        case .error: KXColor.error
-        case .info: KXColor.info
         case .success: KXColor.success
         }
     }
@@ -191,12 +168,6 @@ private enum KXBannerMetrics {
     /// Minimum height: a 44 pt action plus the vertical padding, so one-line banners keep a
     /// calm, consistent height.
     static let minimumHeight: CGFloat = KXSpacing.xxl + KXSpacing.xs
-    /// Width of the colored leading edge that carries the style's accent color.
-    static let accentEdgeWidth: CGFloat = 3
-    /// Blur radius of the soft shadow that lifts the banner off the content.
-    static let shadowRadius: CGFloat = KXSpacing.m
-    /// Downward offset of the shadow.
-    static let shadowOffset: CGFloat = 6
 }
 
 // MARK: - Presentation

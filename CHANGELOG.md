@@ -64,6 +64,10 @@ change.
   drops a preloaded guest checkout (`ShopifyCheckoutSheetKit.invalidate()`); after a sign-out the
   lines and discount codes move to a new cart without the token, so the next checkout on the
   device never shows the previous customer's details.
+- **Calmer banners** (owner feedback): `KXBanner` drops the colored leading stripe, the border
+  and the shadow and sits flat on the light grey panel like the rest of the app; only the
+  symbol carries the color (error red, success green, info and offline in ink). The snapshot
+  references need re-recording.
 - **Einstellungen in the style of iOS** (owner request): every setting is a row with a small
   ink icon tile on grouped grey panels with inset dividers. Shop-Land and Sprache der Inhalte
   show their value and a chevron and open the market sheet (no "Ändern" button), the app
