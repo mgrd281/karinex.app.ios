@@ -126,7 +126,7 @@ struct ProductRowCardSizeTests {
         #expect(ProductRowCardSize.regular.width(textScale: 1) == 164)
         #expect(ProductRowCardSize.regular.imageAspectRatio == 1)
         #expect(ProductRowCardSize.large.width(textScale: 1) == 184)
-        #expect(ProductRowCardSize.large.imageAspectRatio == 3.0 / 4.0)
+        #expect(ProductRowCardSize.large.imageAspectRatio == 0.75)
     }
 
     @Test("A large card's photo is half again as tall as a regular one")
