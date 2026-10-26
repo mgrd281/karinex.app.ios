@@ -2809,6 +2809,222 @@
         }
       }
     },
+    "account.gate.addresses.message" : {
+      "comment" : "Reason to sign in, under \"Bitte melden Sie sich an\" on the addresses screen: after signing in, the saved addresses can be viewed and edited here. One sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dann sehen und bearbeiten Sie hier Ihre gespeicherten Adressen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Then you can view and edit your saved addresses here."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wtedy zobaczysz i edytujesz tutaj zapisane adresy."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dan kun je hier je opgeslagen adressen bekijken en bewerken."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Depois poderá ver e editar aqui as suas moradas guardadas."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Då kan du se och ändra dina sparade adresser här."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Så kan du se og redigere dine gemte adresser her."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Así podrás ver y editar aquí tus direcciones guardadas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous pourrez alors consulter et modifier ici vos adresses enregistrées."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Così potrai vedere e modificare qui i tuoi indirizzi salvati."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voit sitten katsella ja muokata tallennettuja osoitteitasi täällä."
+          }
+        }
+      }
+    },
+    "account.gate.orders.message" : {
+      "comment" : "Reason to sign in, under \"Bitte melden Sie sich an\" on the orders screen: after signing in, the orders and their status appear here. One sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dann sehen Sie hier alle Ihre Bestellungen und ihren Status."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Then you will see all your orders and their status here."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wtedy zobaczysz tutaj wszystkie swoje zamówienia i ich status."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dan zie je hier al je bestellingen en hun status."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Depois verá aqui todas as suas encomendas e o respetivo estado."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Då ser du alla dina beställningar och deras status här."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Så kan du se alle dine ordrer og deres status her."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Así verás aquí todos tus pedidos y su estado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous verrez alors ici toutes vos commandes et leur statut."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Così vedrai qui tutti i tuoi ordini e il loro stato."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Näet sitten täällä kaikki tilauksesi ja niiden tilan."
+          }
+        }
+      }
+    },
+    "account.gate.title" : {
+      "comment" : "Title on a screen that needs the customer account (orders, addresses) while nobody is signed in, above the reason and the \"Anmelden\" button.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte melden Sie sich an"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please sign in"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaloguj się"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log in"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicie sessão"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logga in"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log ind"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicia sesión"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veuillez vous connecter"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accedi"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kirjaudu sisään"
+          }
+        }
+      }
+    },
     "account.intro.eyebrow" : {
       "comment" : "Small label above the title of the account benefits card on the Konto tab (signed-out state). Max ~20 characters. The app renders it in uppercase letters; write it in normal sentence case.",
       "extractionState" : "manual",
@@ -3025,6 +3241,78 @@
         }
       }
     },
+    "account.menu.addresses.subtitle" : {
+      "comment" : "Short line under \"Adressen\" in the Konto menu. Max ~45 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre gespeicherten Adressen verwalten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage your saved addresses"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zarządzaj zapisanymi adresami"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je opgeslagen adressen beheren"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerir as suas moradas guardadas"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hantera dina sparade adresser"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Administrer dine gemte adresser"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestiona tus direcciones guardadas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gérer vos adresses enregistrées"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestisci gli indirizzi salvati"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hallitse tallennettuja osoitteitasi"
+          }
+        }
+      }
+    },
     "account.menu.legal" : {
       "comment" : "Konto menu row: legal texts.",
       "extractionState" : "manual",
@@ -3093,6 +3381,78 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Oikeudelliset tiedot"
+          }
+        }
+      }
+    },
+    "account.menu.legal.subtitle" : {
+      "comment" : "Short line under \"Rechtliches\" in the Konto menu: the legal texts it contains. Max ~45 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impressum, AGB, Datenschutz und Widerruf"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imprint, terms, privacy and withdrawal"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nota prawna, regulamin, prywatność i odstąpienie"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colofon, voorwaarden, privacy en herroeping"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ficha técnica, termos, privacidade e livre resolução"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Företagsinformation, villkor, integritet och ångerrätt"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolofon, vilkår, privatliv og fortrydelsesret"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aviso legal, condiciones, privacidad y desistimiento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mentions légales, CGV, confidentialité et rétractation"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note legali, condizioni, privacy e recesso"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yritystiedot, ehdot, tietosuoja ja peruuttaminen"
           }
         }
       }
@@ -3169,74 +3529,218 @@
         }
       }
     },
-    "account.menu.orders" : {
-      "comment" : "Konto menu row.",
+    "account.menu.licenses.subtitle" : {
+      "comment" : "Short line under \"Meine Lizenzen\" in the Konto menu: the licence keys are kept securely on this device. Max ~45 characters.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bestellungen"
+            "value" : "Ihre Lizenzschlüssel sicher auf diesem Gerät"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Orders"
+            "value" : "Your licence keys, safely on this device"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zamówienia"
+            "value" : "Twoje klucze licencyjne bezpiecznie na tym urządzeniu"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bestellingen"
+            "value" : "Je licentiesleutels veilig op dit apparaat"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Encomendas"
+            "value" : "As suas chaves de licença em segurança neste dispositivo"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beställningar"
+            "value" : "Dina licensnycklar säkert på den här enheten"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ordrer"
+            "value" : "Dine licensnøgler sikkert på denne enhed"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pedidos"
+            "value" : "Tus claves de licencia, a salvo en este dispositivo"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Commandes"
+            "value" : "Vos clés de licence en sécurité sur cet appareil"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ordini"
+            "value" : "I tuoi codici di licenza al sicuro sul dispositivo"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tilaukset"
+            "value" : "Lisenssiavaimesi turvassa tällä laitteella"
+          }
+        }
+      }
+    },
+    "account.menu.orders" : {
+      "comment" : "Konto menu row that opens the customer's orders (or the login first). \"My orders\" in the sense of the About You app.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meine Bestellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My orders"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moje zamówienia"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mijn bestellingen"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As minhas encomendas"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mina beställningar"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mine ordrer"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mis pedidos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mes commandes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I miei ordini"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Omat tilaukset"
+          }
+        }
+      }
+    },
+    "account.menu.orders.subtitle" : {
+      "comment" : "Short line under \"Meine Bestellungen\" in the Konto menu: what the orders screen offers. One line, max ~45 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status verfolgen und Rechnungen abrufen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Track status and view invoices"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Śledź status i pobieraj faktury"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status volgen en facturen bekijken"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acompanhar o estado e consultar faturas"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Följ status och hämta fakturor"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Følg status og hent fakturaer"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sigue el estado y consulta tus facturas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suivre le statut et consulter vos factures"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Segui lo stato e consulta le fatture"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seuraa tilaa ja katso laskut"
           }
         }
       }
@@ -3313,6 +3817,78 @@
         }
       }
     },
+    "account.menu.settings.subtitle" : {
+      "comment" : "Short line under \"Einstellungen\" in the Konto menu: what the settings contain. Max ~45 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprache, Land, Darstellung und Mitteilungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language, country, appearance and notifications"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Język, kraj, wygląd i powiadomienia"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taal, land, weergave en meldingen"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idioma, país, aspeto e notificações"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Språk, land, utseende och notiser"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprog, land, udseende og notifikationer"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idioma, país, apariencia y notificaciones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langue, pays, apparence et notifications"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lingua, paese, aspetto e notifiche"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kieli, maa, ulkoasu ja ilmoitukset"
+          }
+        }
+      }
+    },
     "account.menu.support" : {
       "comment" : "Konto menu row.",
       "extractionState" : "manual",
@@ -3385,6 +3961,78 @@
         }
       }
     },
+    "account.menu.support.subtitle" : {
+      "comment" : "Short line under \"Hilfe und Support\" in the Konto menu: FAQ and ways to contact the shop. Max ~45 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Antworten auf häufige Fragen und Kontakt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Answers to common questions and contact"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odpowiedzi na częste pytania i kontakt"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Antwoorden op veelgestelde vragen en contact"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respostas a perguntas frequentes e contacto"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Svar på vanliga frågor och kontakt"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Svar på ofte stillede spørgsmål og kontakt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respuestas a preguntas frecuentes y contacto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réponses aux questions fréquentes et contact"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Risposte alle domande frequenti e contatti"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vastauksia usein kysyttyihin kysymyksiin ja yhteystiedot"
+          }
+        }
+      }
+    },
     "account.menu.wishlist" : {
       "comment" : "Row in the account menu that opens the wishlist. Max ~30 characters.",
       "extractionState" : "manual",
@@ -3453,6 +4101,78 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Toivelista"
+          }
+        }
+      }
+    },
+    "account.menu.wishlist.subtitle" : {
+      "comment" : "Short line under \"Merkliste\" in the Konto menu: the products the customer saved with the heart. Max ~45 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre gemerkten Produkte"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Products you saved"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapisane produkty"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je bewaarde producten"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os produtos que guardou"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkter du har sparat"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produkter, du har gemt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los productos que has guardado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les produits que vous avez enregistrés"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I prodotti che hai salvato"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tallentamasi tuotteet"
           }
         }
       }

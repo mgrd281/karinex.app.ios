@@ -9,10 +9,12 @@ import SwiftUI
 /// The Konto tab (PROMPT.md 6.7).
 ///
 /// - Signed out: the benefits and "Anmelden" (Shopify's passwordless login in
-///   `ASWebAuthenticationSession`, ephemeral, so no cookies are shared with Safari). Builds
-///   without a Customer Account client ID say that login is not available yet.
-/// - Signed in: the name and e-mail address, Bestellungen, Meine Lizenzen, Adressen, then
-///   Einstellungen, Hilfe und Support, Rechtliches, "Abmelden" and "Konto löschen".
+///   `ASWebAuthenticationSession`, ephemeral, so no cookies are shared with Safari), then
+///   "Meine Bestellungen": a tap opens the login and, once signed in, the orders right away.
+///   Builds without a Customer Account client ID say that login is not available yet.
+/// - Signed in: the name and e-mail address, Meine Bestellungen, Meine Lizenzen, Adressen, then
+///   Merkliste, Einstellungen, Hilfe und Support, Rechtliches, "Abmelden" and "Konto löschen".
+/// - Every row has a short line under its title, like the account tab of fashion retail apps.
 /// - Support, legal texts and settings are reachable in both states, so the Impressum and the
 ///   privacy policy are always within two taps.
 public struct AccountView: View {
@@ -50,10 +52,11 @@ public struct AccountView: View {
                 if sessionStore.isSignedIn {
                     profileHeader
                     menu(AccountMenuItem.signedIn)
+                    menu(AccountMenuItem.general)
                 } else {
                     benefits
+                    menu((sessionStore.isAvailable ? AccountMenuItem.signedOut : []) + AccountMenuItem.general)
                 }
-                menu(AccountMenuItem.general)
                 if sessionStore.isSignedIn {
                     signedInActions
                 }
@@ -74,22 +77,7 @@ public struct AccountView: View {
                 await sessionStore.loadCustomer()
             }
         }
-        .alert(
-            Text("account.signin.error.title", bundle: .module),
-            isPresented: Binding(
-                get: { sessionStore.signInError != nil },
-                set: { if !$0 { sessionStore.dismissSignInError() } }
-            ),
-            presenting: sessionStore.signInError
-        ) { _ in
-            Button(role: .cancel) {
-                sessionStore.dismissSignInError()
-            } label: {
-                Text("account.signin.error.close", bundle: .module)
-            }
-        } message: { error in
-            Text(error.message)
-        }
+        .accountSignInErrorAlert(sessionStore)
         .confirmationDialog(
             Text("account.signout.confirm.title", bundle: .module),
             isPresented: $isSignOutConfirmationPresented,
@@ -163,14 +151,7 @@ public struct AccountView: View {
     }
 
     private func signIn() async {
-        let session = webAuthenticationSession
-        await sessionStore.signIn(locale: AccountLoginLocale.code(for: locale)) { url, scheme in
-            do {
-                return try await session.authenticate(using: url, callbackURLScheme: scheme, preferredBrowserSession: .ephemeral)
-            } catch let error as ASWebAuthenticationSessionError where error.code == .canceledLogin {
-                throw CustomerAccountAuthError.cancelled
-            }
-        }
+        await AccountLogin.signIn(with: sessionStore, using: webAuthenticationSession, locale: locale)
     }
 
     // MARK: Signed in
@@ -249,13 +230,29 @@ public struct AccountView: View {
             KXDivider()
             ForEach(items) { item in
                 Button {
-                    onRoute(.account(item.destination))
+                    open(item)
                 } label: {
                     AccountMenuRow(item: item)
                 }
                 .buttonStyle(.plain)
+                .disabled(sessionStore.status == .signingIn)
                 .accessibilityIdentifier("account.menu.\(item.rawValue)")
                 KXDivider()
+            }
+        }
+    }
+
+    /// Opens the screen of `item`. A row that needs the account first runs the login and then
+    /// opens its screen, so "Meine Bestellungen" takes one tap and the e-mail code.
+    private func open(_ item: AccountMenuItem) {
+        guard item.requiresSignIn, !sessionStore.isSignedIn else {
+            onRoute(.account(item.destination))
+            return
+        }
+        Task {
+            await signIn()
+            if sessionStore.isSignedIn {
+                onRoute(.account(item.destination))
             }
         }
     }
@@ -299,16 +296,6 @@ public struct AccountView: View {
     }
 }
 
-// MARK: - AccountLoginLocale
-
-/// The `locale` parameter of the login page: the app's language code, `pt-PT` for Portuguese.
-enum AccountLoginLocale {
-    static func code(for locale: Locale) -> String? {
-        guard let language = locale.language.languageCode?.identifier else { return nil }
-        return language == "pt" ? "pt-PT" : language
-    }
-}
-
 // MARK: - AccountMenuItem
 
 /// The rows of the Konto tab.
@@ -323,8 +310,18 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
 
     /// The rows only a signed-in customer sees.
     static let signedIn: [AccountMenuItem] = [.orders, .licenses, .addresses]
+    /// The rows that lead into the login when nobody is signed in.
+    static let signedOut: [AccountMenuItem] = [.orders]
     /// The rows everyone sees.
     static let general: [AccountMenuItem] = [.wishlist, .settings, .support, .legal]
+
+    /// Whether the row's screen needs a signed-in customer.
+    var requiresSignIn: Bool {
+        switch self {
+        case .orders, .licenses, .addresses: true
+        case .wishlist, .settings, .support, .legal: false
+        }
+    }
 
     var id: String {
         rawValue
@@ -365,9 +362,22 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
         case .legal: String(localized: "account.menu.legal", bundle: .module)
         }
     }
+
+    /// The short line under the title.
+    var subtitle: String {
+        switch self {
+        case .orders: String(localized: "account.menu.orders.subtitle", bundle: .module)
+        case .licenses: String(localized: "account.menu.licenses.subtitle", bundle: .module)
+        case .addresses: String(localized: "account.menu.addresses.subtitle", bundle: .module)
+        case .wishlist: String(localized: "account.menu.wishlist.subtitle", bundle: .module)
+        case .settings: String(localized: "account.menu.settings.subtitle", bundle: .module)
+        case .support: String(localized: "account.menu.support.subtitle", bundle: .module)
+        case .legal: String(localized: "account.menu.legal.subtitle", bundle: .module)
+        }
+    }
 }
 
-/// One row of the menu.
+/// One row of the menu: the symbol, the title with its short line below, and the chevron.
 private struct AccountMenuRow: View {
     let item: AccountMenuItem
 
@@ -381,17 +391,23 @@ private struct AccountMenuRow: View {
                 .foregroundStyle(KXColor.textPrimary)
                 .frame(width: iconWidth)
                 .accessibilityHidden(true)
-            Text(item.title)
-                .kxFont(.body)
-                .foregroundStyle(KXColor.textPrimary)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+                Text(item.title)
+                    .kxFont(.headline)
+                    .foregroundStyle(KXColor.textPrimary)
+                Text(item.subtitle)
+                    .kxFont(.subheadline)
+                    .foregroundStyle(KXColor.textSecondary)
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
             Image(systemName: "chevron.right")
                 .fontWeight(.medium)
                 .kxFont(.footnote)
                 .foregroundStyle(KXColor.iconSecondary)
                 .accessibilityHidden(true)
         }
-        .padding(.vertical, KXSpacing.s)
+        .padding(.vertical, KXSpacing.m)
         .frame(minHeight: KXSpacing.minimumTapTarget + KXSpacing.m)
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)

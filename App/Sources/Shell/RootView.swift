@@ -224,9 +224,13 @@ struct RootView: View {
         case .overview:
             accountOverview(in: tab)
         case .orders:
-            OrdersScreen(repository: container.customerRepository, backend: container.backendClient, onRoute: onRoute)
+            AccountSignInGate(sessionStore: container.sessionStore, reason: .orders) {
+                OrdersScreen(repository: container.customerRepository, backend: container.backendClient, onRoute: onRoute)
+            }
         case let .order(id):
-            OrderDetailScreen(orderID: id, repository: container.customerRepository, backend: container.backendClient, onRoute: onRoute)
+            AccountSignInGate(sessionStore: container.sessionStore, reason: .order) {
+                OrderDetailScreen(orderID: id, repository: container.customerRepository, backend: container.backendClient, onRoute: onRoute)
+            }
         case let .licenses(orderID):
             LicenseVaultScreen(
                 orderID: orderID,
@@ -236,7 +240,9 @@ struct RootView: View {
                 onRoute: onRoute
             )
         case .addresses:
-            AddressesScreen(repository: container.customerRepository, countries: addressCountries)
+            AccountSignInGate(sessionStore: container.sessionStore, reason: .addresses) {
+                AddressesScreen(repository: container.customerRepository, countries: addressCountries)
+            }
         case .wishlist:
             WishlistScreen(savedProducts: container.savedProductsStore, onRoute: onRoute)
         case let .support(orderName):

@@ -55,6 +55,14 @@ change.
   Ratgeber as tall story tiles and the support card. The modules and their store collections are
   described by `HomeModules`; the hero with "Zum Sortiment" is gone, and so is the chip bar
   above the tab bar (owner request).
+- **Meine Bestellungen with a one-tap login** (owner request, reference: the About You app):
+  the Konto tab lists "Meine Bestellungen" first, also when nobody is signed in; a tap opens
+  Shopify's passwordless login (e-mail code, no extra iOS prompt) and, once signed in, the orders
+  right away. Every menu row now has a short line under its title. Bestellungen, an order and
+  Adressen are wrapped in `AccountSignInGate`, so every way into them (Konto, the service tiles
+  of Start, "Bestellungen ansehen" after a purchase, links) offers "Anmelden" in place instead
+  of an error, and shows the content once signed in. The login needs the Customer Account API
+  client ID of the "Karinex Headless" channel (docs/OWNER_INPUTS.md).
 - **Removing a cart line like About You** (owner request): swiping a line to the left uncovers
   a red "Entfernen"; a long swipe, a tap on it or on the "x" turns the line red with "Produkt
   wird entfernt…" and an outlined "Abbrechen" whose fill runs down for 3 seconds (10 with

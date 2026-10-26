@@ -175,7 +175,7 @@ Laid out like the home screen of the About You app (owner request of 2026-10-25)
 - Checkout Kit sheet; success screen with order number, delivery expectation, buttons "Bestellungen ansehen" and "Weiter einkaufen".
 
 ### 6.7 Konto (Account)
-- Logged-out: benefits list + "Anmelden" (passwordless). Logged-in: profile, orders, licenses, addresses, notifications, language and market, legal, help, account deletion, logout.
+- Logged-out: benefits list + "Anmelden" (passwordless), then "Meine Bestellungen" (owner request of 2026-10-26, reference: the About You app), which opens the login and then the orders in one go; screens that need the account show "Anmelden" in place when reached signed out. Every menu row has a short line under its title. Logged-in: profile, orders, licenses, addresses, notifications, language and market, legal, help, account deletion, logout.
 - **Bestellungen:** list with status pills; detail with a vertical timeline (Bestellt → Bezahlt → Lizenz versendet / Versendet), line items, totals, "Rechnung (PDF)" and "Lizenzschlüssel anzeigen".
 - **Meine Lizenzen (License vault):** black key cards (`#111111` card, bold product name, monospaced key, "Kopieren" with haptic and expiring clipboard, "Anleitung" link, "Support zu dieser Lizenz"). Optional Face ID gate (setting). Keys cached in Keychain for offline viewing, hidden behind a privacy overlay in the app switcher.
 - **Konto löschen:** in-app flow that submits a GDPR erasure request to the backend, confirms by email, and logs the user out (App Store requirement).
