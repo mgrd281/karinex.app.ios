@@ -98,10 +98,13 @@ public struct CustomerAddressBook: Sendable, Hashable {
 // MARK: - CustomerAccountRepository
 
 /// The customer-scoped data of the account screens. Read-only toward everything except the
-/// customer's own addresses (PROMPT.md 3.9).
+/// customer's own name and addresses (PROMPT.md 3.9).
 public protocol CustomerAccountRepository: Sendable {
     /// The signed-in customer.
     func customer() async throws -> Customer
+    /// Changes the customer's first and last name. Throws `ShopifyError.userErrors` with
+    /// Shopify's messages.
+    func updateName(firstName: String, lastName: String) async throws -> Customer
     /// A page of orders, newest first.
     func orders(first: Int, after: String?) async throws -> CustomerOrderPage
     /// One order, or `nil` when it does not exist or belongs to someone else.
@@ -129,6 +132,13 @@ public final class ShopifyCustomerAccountRepository: CustomerAccountRepository {
 
     public func customer() async throws -> Customer {
         try await client.execute(CustomerQuery()).customer
+    }
+
+    public func updateName(firstName: String, lastName: String) async throws -> Customer {
+        let payload = try await client.execute(CustomerUpdateMutation(firstName: firstName, lastName: lastName))
+            .customerUpdate.throwingUserErrors()
+        guard let customer = payload.customer else { throw ShopifyError.notFound }
+        return customer
     }
 
     public func orders(first: Int, after: String?) async throws -> CustomerOrderPage {
@@ -173,6 +183,10 @@ public struct UnavailableCustomerAccountRepository: CustomerAccountRepository {
     public init() {}
 
     public func customer() async throws -> Customer {
+        throw CustomerAccountAuthError.signedOut
+    }
+
+    public func updateName(firstName _: String, lastName _: String) async throws -> Customer {
         throw CustomerAccountAuthError.signedOut
     }
 

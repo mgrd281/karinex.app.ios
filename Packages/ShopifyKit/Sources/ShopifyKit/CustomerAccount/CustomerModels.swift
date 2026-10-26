@@ -298,7 +298,8 @@ public struct CustomerOrder: Sendable, Hashable, Decodable, Identifiable {
     public let totalTax: MoneyV2?
     /// The shipping costs.
     public let totalShipping: MoneyV2?
-    /// The line items (detail only).
+    /// The line items: all of them in the detail, the first five (name, quantity and photo
+    /// only) in the order list.
     public let lineItems: [OrderLineItem]
     /// The fulfillments (detail only).
     public let fulfillments: [OrderFulfillment]
@@ -382,9 +383,21 @@ public struct OrderLineItem: Sendable, Hashable, Decodable, Identifiable {
     public let total: MoneyV2?
     /// The image, if any.
     public let image: ShopifyImage?
+    /// The variant GID, `nil` for custom lines or variants deleted since; "Erneut kaufen" puts
+    /// it back into the cart.
+    public let variantID: ShopifyID?
 
     /// Creates a line item.
-    public init(id: ShopifyID, name: String, variantTitle: String?, quantity: Int, price: MoneyV2?, total: MoneyV2?, image: ShopifyImage?) {
+    public init(
+        id: ShopifyID,
+        name: String,
+        variantTitle: String?,
+        quantity: Int,
+        price: MoneyV2?,
+        total: MoneyV2?,
+        image: ShopifyImage?,
+        variantID: ShopifyID? = nil
+    ) {
         self.id = id
         self.name = name
         self.variantTitle = variantTitle
@@ -392,10 +405,11 @@ public struct OrderLineItem: Sendable, Hashable, Decodable, Identifiable {
         self.price = price
         self.total = total
         self.image = image
+        self.variantID = variantID
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, name, presentmentTitle, quantity, price, currentTotalPrice, image
+        case id, name, presentmentTitle, variantId, quantity, price, currentTotalPrice, image
     }
 
     /// Decodes `presentmentTitle` as the variant title and `currentTotalPrice` as the total.
@@ -409,6 +423,7 @@ public struct OrderLineItem: Sendable, Hashable, Decodable, Identifiable {
         price = try container.decodeIfPresent(MoneyV2.self, forKey: .price)
         total = try container.decodeIfPresent(MoneyV2.self, forKey: .currentTotalPrice)
         image = try container.decodeIfPresent(ShopifyImage.self, forKey: .image)
+        variantID = try container.decodeIfPresent(ShopifyID.self, forKey: .variantId)
     }
 }
 

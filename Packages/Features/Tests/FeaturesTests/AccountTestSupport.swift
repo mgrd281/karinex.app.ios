@@ -155,6 +155,7 @@ actor StubCustomerRepository: CustomerAccountRepository {
     private(set) var orderRequests: [String?] = []
     private(set) var created: [CustomerAddressInput] = []
     private(set) var deleted: [ShopifyID] = []
+    private(set) var names: [String] = []
 
     func setPage(_ page: CustomerOrderPage, after cursor: String?) {
         pages[cursor] = page
@@ -183,6 +184,21 @@ actor StubCustomerRepository: CustomerAccountRepository {
         )
     }
 
+    func updateName(firstName: String, lastName: String) async throws -> Customer {
+        if let mutationError {
+            throw mutationError
+        }
+        names.append("\(firstName) \(lastName)")
+        return Customer(
+            id: "gid://shopify/Customer/1",
+            displayName: "\(firstName) \(lastName)",
+            firstName: firstName,
+            lastName: lastName,
+            emailAddress: nil,
+            defaultAddress: nil
+        )
+    }
+
     func orders(first _: Int, after: String?) async throws -> CustomerOrderPage {
         orderRequests.append(after)
         return pages[after] ?? CustomerOrderPage(orders: [], nextCursor: nil)
@@ -206,11 +222,14 @@ actor StubCustomerRepository: CustomerAccountRepository {
         return new
     }
 
-    func updateAddress(id: ShopifyID, with _: CustomerAddressInput, makeDefault _: Bool) async throws -> CustomerAddress {
+    func updateAddress(id: ShopifyID, with _: CustomerAddressInput, makeDefault: Bool) async throws -> CustomerAddress {
         if let mutationError {
             throw mutationError
         }
-        return AccountFixtures.address(1)
+        if makeDefault {
+            book = CustomerAddressBook(addresses: book.addresses, defaultAddressID: id)
+        }
+        return book.addresses.first { $0.id == id } ?? AccountFixtures.address(1)
     }
 
     func deleteAddress(id: ShopifyID) async throws {

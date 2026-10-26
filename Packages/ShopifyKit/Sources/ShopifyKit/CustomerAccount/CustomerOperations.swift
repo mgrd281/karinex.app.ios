@@ -66,6 +66,7 @@ public enum CustomerFragments {
               id
               name
               presentmentTitle
+              variantId
               quantity
               price {
                 ...CustomerMoneyFields
@@ -175,6 +176,19 @@ public struct CustomerOrdersQuery: GraphQLOperation {
             orders(first: $first, after: $after, sortKey: PROCESSED_AT, reverse: true) {
               nodes {
                 ...OrderSummaryFields
+                lineItems(first: 5) {
+                  nodes {
+                    id
+                    name
+                    quantity
+                    image {
+                      url
+                      altText
+                      width
+                      height
+                    }
+                  }
+                }
               }
               pageInfo {
                 hasNextPage
@@ -447,5 +461,79 @@ public struct CustomerAddressDeleteMutation: GraphQLOperation {
     /// Creates the mutation.
     public init(addressID: ShopifyID) {
         variables = Variables(addressId: addressID)
+    }
+}
+
+// MARK: - CustomerUpdateMutation
+
+/// The payload of `customerUpdate`.
+public struct CustomerUpdatePayload: Decodable, Sendable, Equatable, UserErrorsPayload {
+    /// The changed customer.
+    public let customer: Customer?
+    /// Validation errors with Shopify's localized messages.
+    public let userErrors: [UserError]
+}
+
+/// Changes the customer's first and last name (`customerUpdate`). The name is the only personal
+/// detail the Customer Account API lets the customer change; the e-mail address is the login.
+public struct CustomerUpdateMutation: GraphQLOperation {
+    /// The operation variables.
+    public struct Variables: Encodable, Sendable, Equatable {
+        /// The new name.
+        public let input: Input
+    }
+
+    /// The Customer Account API `CustomerUpdateInput`.
+    public struct Input: Encodable, Sendable, Equatable {
+        /// The first name.
+        public let firstName: String
+        /// The last name.
+        public let lastName: String
+    }
+
+    /// The `data` of the response.
+    public struct ResponseData: Decodable, Sendable, Equatable {
+        /// The payload.
+        public let customerUpdate: CustomerUpdatePayload
+    }
+
+    /// `CustomerUpdate`.
+    public static let operationName = "CustomerUpdate"
+    /// A mutation.
+    public static let kind = GraphQLOperationKind.mutation
+    /// The operation and its fragments.
+    public static let document = CustomerFragments.document(
+        """
+        mutation CustomerUpdate($input: CustomerUpdateInput!) {
+          customerUpdate(input: $input) {
+            customer {
+              id
+              displayName
+              firstName
+              lastName
+              emailAddress {
+                emailAddress
+              }
+              defaultAddress {
+                ...CustomerAddressFields
+              }
+            }
+            userErrors {
+              field
+              message
+              code
+            }
+          }
+        }
+        """,
+        fragments: [CustomerFragments.address]
+    )
+
+    /// The variables of this call.
+    public let variables: Variables
+
+    /// Creates the mutation.
+    public init(firstName: String, lastName: String) {
+        variables = Variables(input: Input(firstName: firstName, lastName: lastName))
     }
 }

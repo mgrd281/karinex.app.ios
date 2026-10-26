@@ -62,6 +62,18 @@ change.
   drops a preloaded guest checkout (`ShopifyCheckoutSheetKit.invalidate()`); after a sign-out the
   lines and discount codes move to a new cart without the token, so the next checkout on the
   device never shows the previous customer's details.
+- **Persönliche Daten instead of Adressen** (owner request, to go beyond the About You app):
+  one screen with the customer card (monogram, name, e-mail address, the customer number with
+  copy), "Name ändern" (`customerUpdate`, first and last name; the e-mail address stays the
+  login), a note that the login needs no password, the addresses as swipeable cards with
+  "Als Standard festlegen", edit and delete, a card to add one, and the account section with
+  "Konto und Daten löschen" and "Abmelden". The signed-in card at the top of the Konto tab opens
+  it. `ProfileScreen` and `ProfileViewModel` replace `AddressesScreen`.
+- **Bestellungen as photo cards and "Erneut kaufen"** (owner request): each order is a card
+  with the status, the date, up to four product photos, the first product and the total (the
+  list query now reads the first five line items). The order detail has "Erneut kaufen", which
+  puts the same products with the same quantities into the cart and opens it
+  (`OrderLineItem.variantID`, `OrderReorder.lines`).
 - **Meine Bestellungen with a one-tap login** (owner request, reference: the About You app):
   the Konto tab lists "Meine Bestellungen" first, also when nobody is signed in; a tap opens
   Shopify's passwordless login (e-mail code, no extra iOS prompt) and, once signed in, the orders

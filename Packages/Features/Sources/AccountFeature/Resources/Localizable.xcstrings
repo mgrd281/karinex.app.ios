@@ -1297,218 +1297,74 @@
         }
       }
     },
-    "account.addresses.edit" : {
-      "comment" : "Button editing an address.",
+    "account.addresses.make_default" : {
+      "comment" : "Link on an address card that makes this address the default address.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bearbeiten"
+            "value" : "Als Standard festlegen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Edit"
+            "value" : "Set as default"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Edytuj"
+            "value" : "Ustaw jako domyślny"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bewerken"
+            "value" : "Als standaard instellen"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Editar"
+            "value" : "Definir como predefinida"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Redigera"
+            "value" : "Ange som standard"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rediger"
+            "value" : "Angiv som standard"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Editar"
+            "value" : "Establecer como predeterminada"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modifier"
+            "value" : "Définir par défaut"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modifica"
+            "value" : "Imposta come predefinito"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Muokkaa"
-          }
-        }
-      }
-    },
-    "account.addresses.empty.message" : {
-      "comment" : "Empty state of the address list.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sie haben noch keine Adresse hinterlegt."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You have not saved an address yet."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nie masz jeszcze zapisanego adresu."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Je hebt nog geen adres opgeslagen."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ainda não guardou nenhuma morada."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Du har inte sparat någon adress ännu."
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Du har endnu ikke gemt en adresse."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Todavía no has guardado ninguna dirección."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vous n’avez pas encore enregistré d’adresse."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Non hai ancora salvato un indirizzo."
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Et ole vielä tallentanut osoitetta."
-          }
-        }
-      }
-    },
-    "account.addresses.empty.title" : {
-      "comment" : "Title of the empty address list.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keine Adressen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No addresses"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Brak adresów"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geen adressen"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sem moradas"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Inga adresser"
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ingen adresser"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sin direcciones"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aucune adresse"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessun indirizzo"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ei osoitteita"
+            "value" : "Aseta oletukseksi"
           }
         }
       }
@@ -1797,78 +1653,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se dina beställningar och fakturor när som helst"
-          }
-        }
-      }
-    },
-    "account.delete" : {
-      "comment" : "Button on the Konto tab opening the account deletion.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Konto löschen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete account"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Usuń konto"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Account verwijderen"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar conta"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Radera konto"
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Slet konto"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar cuenta"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Supprimer le compte"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Elimina account"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Poista tili"
           }
         }
       }
@@ -2809,78 +2593,6 @@
         }
       }
     },
-    "account.gate.addresses.message" : {
-      "comment" : "Reason to sign in, under \"Bitte melden Sie sich an\" on the addresses screen: after signing in, the saved addresses can be viewed and edited here. One sentence.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dann sehen und bearbeiten Sie hier Ihre gespeicherten Adressen."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Then you can view and edit your saved addresses here."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wtedy zobaczysz i edytujesz tutaj zapisane adresy."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dan kun je hier je opgeslagen adressen bekijken en bewerken."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Depois poderá ver e editar aqui as suas moradas guardadas."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Då kan du se och ändra dina sparade adresser här."
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Så kan du se og redigere dine gemte adresser her."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Así podrás ver y editar aquí tus direcciones guardadas."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vous pourrez alors consulter et modifier ici vos adresses enregistrées."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Così potrai vedere e modificare qui i tuoi indirizzi salvati."
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Voit sitten katsella ja muokata tallennettuja osoitteitasi täällä."
-          }
-        }
-      }
-    },
     "account.gate.orders.message" : {
       "comment" : "Reason to sign in, under \"Bitte melden Sie sich an\" on the orders screen: after signing in, the orders and their status appear here. One sentence.",
       "extractionState" : "manual",
@@ -2949,6 +2661,78 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Näet sitten täällä kaikki tilauksesi ja niiden tilan."
+          }
+        }
+      }
+    },
+    "account.gate.profile.message" : {
+      "comment" : "Reason to sign in, under \"Bitte melden Sie sich an\" on the personal details screen: after signing in, the name and addresses can be viewed and changed here. One sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dann sehen und ändern Sie hier Ihren Namen und Ihre Adressen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Then you can view and change your name and addresses here."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wtedy zobaczysz i zmienisz tutaj swoje imię i nazwisko oraz adresy."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dan kun je hier je naam en adressen bekijken en wijzigen."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Depois poderá ver e alterar aqui o seu nome e as suas moradas."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Då kan du se och ändra ditt namn och dina adresser här."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Så kan du se og ændre dit navn og dine adresser her."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Así podrás ver y cambiar aquí tu nombre y tus direcciones."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous pourrez alors consulter et modifier ici votre nom et vos adresses."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Così potrai vedere e modificare qui il tuo nome e i tuoi indirizzi."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voit sitten katsella ja muuttaa nimeäsi ja osoitteitasi täällä."
           }
         }
       }
@@ -3165,150 +2949,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dina köp samlade på ett ställe"
-          }
-        }
-      }
-    },
-    "account.menu.addresses" : {
-      "comment" : "Konto menu row.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adressen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Addresses"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adresy"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adressen"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Moradas"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adresser"
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adresser"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Direcciones"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adresses"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Indirizzi"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Osoitteet"
-          }
-        }
-      }
-    },
-    "account.menu.addresses.subtitle" : {
-      "comment" : "Short line under \"Adressen\" in the Konto menu. Max ~45 characters.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ihre gespeicherten Adressen verwalten"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Manage your saved addresses"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zarządzaj zapisanymi adresami"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Je opgeslagen adressen beheren"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gerir as suas moradas guardadas"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hantera dina sparade adresser"
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Administrer dine gemte adresser"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gestiona tus direcciones guardadas"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gérer vos adresses enregistrées"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gestisci gli indirizzi salvati"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hallitse tallennettuja osoitteitasi"
           }
         }
       }
@@ -3741,6 +3381,150 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seuraa tilaa ja katso laskut"
+          }
+        }
+      }
+    },
+    "account.menu.profile" : {
+      "comment" : "Konto menu row that opens the personal details (name, e-mail address, addresses, account deletion).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Persönliche Daten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personal details"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dane osobowe"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Persoonlijke gegevens"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dados pessoais"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personuppgifter"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personlige oplysninger"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datos personales"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Données personnelles"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dati personali"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Henkilötiedot"
+          }
+        }
+      }
+    },
+    "account.menu.profile.subtitle" : {
+      "comment" : "Short line under \"Persönliche Daten\" in the Konto menu. Max ~45 characters.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name, E-Mail und Adressen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name, e-mail and addresses"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imię i nazwisko, e-mail i adresy"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naam, e-mail en adressen"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome, e-mail e moradas"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Namn, e-post och adresser"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navn, e-mail og adresser"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre, correo electrónico y direcciones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nom, e-mail et adresses"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome, e-mail e indirizzi"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nimi, sähköposti ja osoitteet"
           }
         }
       }
@@ -4821,6 +4605,78 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Määrä: %lld"
+          }
+        }
+      }
+    },
+    "account.order.reorder" : {
+      "comment" : "Button on an order: puts the same products with the same quantities into the cart again and opens the cart.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erneut kaufen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buy again"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kup ponownie"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opnieuw kopen"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comprar novamente"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Köp igen"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Køb igen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volver a comprar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acheter à nouveau"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acquista di nuovo"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Osta uudelleen"
           }
         }
       }
@@ -6193,74 +6049,722 @@
         }
       }
     },
-    "account.profile.eyebrow" : {
-      "comment" : "Small label above the customer's name.",
+    "account.profile.delete.subtitle" : {
+      "comment" : "Short line under \"Konto und Daten löschen\": the customer account and stored data are removed on request. Max ~60 characters.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Angemeldet"
+            "value" : "Ihr Kundenkonto und Ihre gespeicherten Daten entfernen lassen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Signed in"
+            "value" : "Have your customer account and stored data removed"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zalogowano"
+            "value" : "Usuń konto klienta i zapisane dane"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ingelogd"
+            "value" : "Je klantaccount en opgeslagen gegevens laten verwijderen"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sessão iniciada"
+            "value" : "Pedir a remoção da sua conta de cliente e dos dados guardados"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inloggad"
+            "value" : "Låt ta bort ditt kundkonto och dina sparade uppgifter"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Logget ind"
+            "value" : "Få din kundekonto og dine gemte data fjernet"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sesión iniciada"
+            "value" : "Solicita que se eliminen tu cuenta de cliente y tus datos guardados"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connecté"
+            "value" : "Faire supprimer votre compte client et vos données enregistrées"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Accesso effettuato"
+            "value" : "Fai eliminare il tuo account cliente e i dati salvati"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kirjautunut"
+            "value" : "Pyydä poistamaan asiakastilisi ja tallennetut tietosi"
+          }
+        }
+      }
+    },
+    "account.profile.delete.title" : {
+      "comment" : "Row on the personal details screen that opens the account deletion request.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto und Daten löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete account and data"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuń konto i dane"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account en gegevens verwijderen"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar conta e dados"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radera konto och uppgifter"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slet konto og data"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar cuenta y datos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer le compte et les données"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina account e dati"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poista tili ja tiedot"
+          }
+        }
+      }
+    },
+    "account.profile.login.message" : {
+      "comment" : "Text of the no-password note: every sign-in sends a code to the e-mail address, so there is no password to guess or steal. Two short sentences.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bei jeder Anmeldung erhalten Sie einen Code an Ihre E-Mail-Adresse. So gibt es kein Passwort, das jemand erraten oder stehlen kann."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Each time you sign in, you receive a code at your e-mail address. So there is no password that anyone could guess or steal."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przy każdym logowaniu otrzymujesz kod na swój adres e-mail. Dzięki temu nie ma hasła, które ktoś mógłby odgadnąć lub ukraść."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bij elke keer inloggen ontvang je een code op je e-mailadres. Zo is er geen wachtwoord dat iemand kan raden of stelen."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sempre que inicia sessão, recebe um código no seu endereço de e-mail. Assim não existe nenhuma palavra-passe que alguém possa adivinhar ou roubar."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varje gång du loggar in får du en kod till din e-postadress. Så finns det inget lösenord som någon kan gissa eller stjäla."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hver gang du logger ind, modtager du en kode på din e-mailadresse. Så er der ingen adgangskode, som nogen kan gætte eller stjæle."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada vez que inicias sesión, recibes un código en tu correo electrónico. Así no hay ninguna contraseña que alguien pueda adivinar o robar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À chaque connexion, vous recevez un code à votre adresse e-mail. Il n’y a donc aucun mot de passe à deviner ou à voler."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A ogni accesso ricevi un codice al tuo indirizzo e-mail. Così non c’è nessuna password che qualcuno possa indovinare o rubare."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saat jokaisella kirjautumiskerralla koodin sähköpostiisi. Näin ei ole salasanaa, jonka joku voisi arvata tai varastaa."
+          }
+        }
+      }
+    },
+    "account.profile.login.title" : {
+      "comment" : "Heading of a note on the personal details screen: the shop login has no password (a code by e-mail instead).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anmeldung ohne Passwort"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign-in without a password"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logowanie bez hasła"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inloggen zonder wachtwoord"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Início de sessão sem palavra-passe"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inloggning utan lösenord"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Login uden adgangskode"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicio de sesión sin contraseña"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connexion sans mot de passe"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accesso senza password"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kirjautuminen ilman salasanaa"
+          }
+        }
+      }
+    },
+    "account.profile.name.edit" : {
+      "comment" : "Button (pencil) and sheet title on the personal details screen: change the first and last name.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name ändern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change name"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmień imię i nazwisko"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naam wijzigen"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alterar nome"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ändra namn"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skift navn"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar nombre"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifier le nom"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica nome"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muuta nimeä"
+          }
+        }
+      }
+    },
+    "account.profile.name.note" : {
+      "comment" : "Footer of the change-name form: the e-mail address is the login and cannot be changed here. One sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre E-Mail-Adresse ist Ihre Anmeldung und bleibt unverändert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your e-mail address is your login and stays the same."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twój adres e-mail służy do logowania i pozostaje bez zmian."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je e-mailadres is je login en blijft hetzelfde."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O seu endereço de e-mail é o seu início de sessão e não se altera."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din e-postadress är din inloggning och förblir densamma."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din e-mailadresse er dit login og forbliver den samme."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu correo electrónico es tu inicio de sesión y no cambia."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre adresse e-mail sert à vous connecter et reste inchangée."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo indirizzo e-mail è il tuo accesso e resta invariato."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sähköpostiosoitteesi on kirjautumistunnuksesi, eikä se muutu."
+          }
+        }
+      }
+    },
+    "account.profile.number %@" : {
+      "comment" : "The customer number under the name on the personal details screen, e.g. \"Kundennummer 3029680329\". The argument is the number.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kundennummer %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Customer number %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Numer klienta %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klantnummer %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Número de cliente %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kundnummer %@"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kundenummer %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Número de cliente %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Numéro client %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Numero cliente %@"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asiakasnumero %@"
+          }
+        }
+      }
+    },
+    "account.profile.number.copy" : {
+      "comment" : "VoiceOver hint of the customer number: a tap copies it, for example for a support request. One sentence.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopiert die Kundennummer, zum Beispiel für eine Anfrage an den Kundenservice."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copies the customer number, for example for a request to customer service."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopiuje numer klienta, na przykład do zapytania do obsługi klienta."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopieert het klantnummer, bijvoorbeeld voor een vraag aan de klantenservice."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copia o número de cliente, por exemplo para um pedido ao apoio ao cliente."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopierar kundnumret, till exempel för en fråga till kundtjänst."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopierer kundenummeret, for eksempel til en henvendelse til kundeservice."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copia el número de cliente, por ejemplo para una consulta al servicio de atención al cliente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copie le numéro client, par exemple pour une demande au service client."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copia il numero cliente, ad esempio per una richiesta al servizio clienti."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopioi asiakasnumeron esimerkiksi asiakaspalvelulle lähetettävää kysymystä varten."
+          }
+        }
+      }
+    },
+    "account.profile.open" : {
+      "comment" : "Small link line on the signed-in customer card at the top of the Konto tab; the card opens the personal details.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Persönliche Daten ansehen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View personal details"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zobacz dane osobowe"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Persoonlijke gegevens bekijken"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver dados pessoais"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visa personuppgifter"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se personlige oplysninger"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver datos personales"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voir les données personnelles"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vedi dati personali"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Näytä henkilötiedot"
+          }
+        }
+      }
+    },
+    "account.profile.screen.title" : {
+      "comment" : "Navigation title of the personal details screen (name, e-mail address, addresses, account deletion, sign out).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Persönliche Daten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personal details"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dane osobowe"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Persoonlijke gegevens"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dados pessoais"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personuppgifter"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personlige oplysninger"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datos personales"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Données personnelles"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dati personali"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Henkilötiedot"
           }
         }
       }

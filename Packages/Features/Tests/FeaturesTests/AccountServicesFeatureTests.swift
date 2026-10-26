@@ -183,17 +183,27 @@ struct OrderDetailViewModelTests {
     }
 }
 
-// MARK: - Addresses
+// MARK: - Persönliche Daten
 
-@Suite("Addresses")
+@Suite("Persönliche Daten")
 @MainActor
-struct AddressesViewModelTests {
+struct ProfileViewModelTests {
+    @Test("Loading shows the customer and an empty address book as content, not as an empty screen")
+    func load() async {
+        let repository = StubCustomerRepository()
+        let model = ProfileViewModel(repository: repository)
+
+        await model.load()
+
+        #expect(model.customer?.displayName == "Anna Schmidt")
+        #expect(model.state.value?.addresses.isEmpty == true)
+    }
+
     @Test("Saving a new address reloads the book")
     func create() async {
         let repository = StubCustomerRepository()
-        let model = AddressesViewModel(repository: repository)
+        let model = ProfileViewModel(repository: repository)
         await model.load()
-        #expect(model.state == .empty)
 
         let saved = await model.save(CustomerAddressInput(city: "Berlin", territoryCode: "DE"), id: nil, makeDefault: false)
 
@@ -207,7 +217,7 @@ struct AddressesViewModelTests {
         let repository = StubCustomerRepository()
         let refusal = UserError(field: ["zip"], message: "Die Postleitzahl ist ungültig.", code: nil)
         await repository.setMutationError(ShopifyError.userErrors([refusal]))
-        let model = AddressesViewModel(repository: repository)
+        let model = ProfileViewModel(repository: repository)
 
         let saved = await model.save(CustomerAddressInput(zip: "1"), id: nil, makeDefault: false)
 
@@ -222,13 +232,134 @@ struct AddressesViewModelTests {
         let repository = StubCustomerRepository()
         let address = AccountFixtures.address(1)
         await repository.setBook(CustomerAddressBook(addresses: [address], defaultAddressID: nil))
-        let model = AddressesViewModel(repository: repository)
+        let model = ProfileViewModel(repository: repository)
         await model.load()
 
         await model.delete(address.id)
 
-        #expect(model.state == .empty)
+        #expect(model.state.value?.addresses.isEmpty == true)
         #expect(await repository.deleted == [address.id])
+    }
+
+    @Test("Als Standard festlegen makes the address the default one")
+    func makeDefault() async {
+        let repository = StubCustomerRepository()
+        let first = AccountFixtures.address(1)
+        let second = AccountFixtures.address(2)
+        await repository.setBook(CustomerAddressBook(addresses: [first, second], defaultAddressID: first.id))
+        let model = ProfileViewModel(repository: repository)
+        await model.load()
+
+        await model.makeDefault(second)
+
+        #expect(model.state.value?.defaultAddressID == second.id)
+    }
+
+    @Test("Changing the name trims it and shows the new name")
+    func updateName() async {
+        let repository = StubCustomerRepository()
+        let model = ProfileViewModel(repository: repository)
+
+        let saved = await model.updateName(firstName: " Anna ", lastName: "Berg ")
+
+        #expect(saved)
+        #expect(await repository.names == ["Anna Berg"])
+        #expect(model.customer?.lastName == "Berg")
+    }
+
+    @Test("A refused name keeps the old one and explains why")
+    func refusedName() async {
+        let repository = StubCustomerRepository()
+        await repository.setMutationError(ShopifyError.userErrors([UserError(field: ["lastName"], message: "Zu lang.", code: nil)]))
+        let model = ProfileViewModel(repository: repository)
+
+        let saved = await model.updateName(firstName: "Anna", lastName: "Berg")
+
+        #expect(!saved)
+        #expect(model.actionError?.kind == .rejected(messages: ["Zu lang."]))
+    }
+}
+
+// MARK: - Erneut kaufen
+
+@Suite("Erneut kaufen")
+struct OrderReorderTests {
+    @Test("Only lines with a variant go back into the cart, each with its quantity")
+    func lines() {
+        let base = AccountFixtures.order(1042)
+        let order = CustomerOrder(
+            id: base.id,
+            name: base.name,
+            confirmationNumber: nil,
+            processedAt: base.processedAt,
+            cancelledAt: nil,
+            financialStatus: .paid,
+            fulfillmentStatus: .fulfilled,
+            totalPrice: base.totalPrice,
+            subtotal: nil,
+            totalTax: nil,
+            totalShipping: nil,
+            lineItems: [
+                OrderLineItem(
+                    id: "gid://shopify/LineItem/1", name: "Windows 11 Pro", variantTitle: nil, quantity: 2,
+                    price: nil, total: nil, image: nil, variantID: "gid://shopify/ProductVariant/7"
+                ),
+                OrderLineItem(
+                    id: "gid://shopify/LineItem/2",
+                    name: "Versand",
+                    variantTitle: nil,
+                    quantity: 1,
+                    price: nil,
+                    total: nil,
+                    image: nil
+                ),
+            ],
+            fulfillments: []
+        )
+
+        let lines = OrderReorder.lines(of: order)
+
+        #expect(lines.map(\.variantID) == ["gid://shopify/ProductVariant/7"])
+        #expect(lines.map(\.quantity) == [2])
+        #expect(OrderReorder.lines(of: base).isEmpty)
+    }
+}
+
+// MARK: - Profile names
+
+@Suite("Profile names")
+struct ProfileNameTests {
+    private func customer(first: String?, last: String?, display: String, email: String?) -> Customer {
+        Customer(
+            id: "gid://shopify/Customer/3029680329",
+            displayName: display,
+            firstName: first,
+            lastName: last,
+            emailAddress: email,
+            defaultAddress: nil
+        )
+    }
+
+    @Test("The name comes from first and last name, else from a display name that is not the e-mail address")
+    func names() {
+        #expect(ProfileName.displayName(of: customer(first: "Anna", last: "Schmidt", display: "x", email: nil)) == "Anna Schmidt")
+        #expect(ProfileName.displayName(of: customer(first: nil, last: " ", display: "Anna", email: nil)) == "Anna")
+        #expect(ProfileName.displayName(of: customer(first: nil, last: nil, display: "a@b.de", email: "a@b.de")) == nil)
+        #expect(ProfileName.displayName(of: nil) == nil)
+    }
+
+    @Test("Initials: first and last word, the e-mail address's first letter, or none")
+    func initials() {
+        #expect(ProfileName.initials(of: customer(first: "Mgrdegh", last: "Ghazarian", display: "", email: nil)) == "MG")
+        #expect(ProfileName.initials(of: customer(first: "anna", last: nil, display: "", email: nil)) == "A")
+        #expect(ProfileName.initials(of: customer(first: nil, last: nil, display: "", email: "kunde@karinex.de")) == "K")
+        #expect(ProfileName.initials(of: nil).isEmpty)
+    }
+
+    @Test("Address cards take most of the width so the next one peeks in, at most 340 points")
+    func cardWidth() {
+        #expect(ProfileLayout.cardWidth(in: 400) == 320)
+        #expect(ProfileLayout.cardWidth(in: 1000) == 340)
     }
 }
 

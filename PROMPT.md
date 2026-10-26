@@ -57,7 +57,7 @@ Target outcome: an App Store–approved app that measurably increases repeat pur
 6. **German UI copy**: formal "Sie", professional and calm, no filler phrases, no em dashes or en dashes (use normal punctuation). All 11 languages must read like native, professionally written retail copy.
 7. **Deliver complete code.** Every file you output is complete and compiles. No `// ... unchanged`, no `TODO`, no placeholder implementations in shipped code.
 8. **Verify before you build.** Check shopify.dev for the current stable Storefront API and Customer Account API versions and the latest Checkout Kit release on the day you start, and pin them explicitly.
-9. **Read-only toward the store.** The app performs only cart mutations and customer-scoped queries. Never touch Admin API from the app.
+9. **Read-only toward the store.** The app performs only cart mutations and customer-scoped queries and mutations (the customer's own addresses and name). Never touch Admin API from the app.
 10. **Privacy by default.** No analytics, crash reporting or push registration before explicit user consent. No advertising SDKs. No App Tracking Transparency prompt (nothing to track).
 
 ---
@@ -175,8 +175,8 @@ Laid out like the home screen of the About You app (owner request of 2026-10-25)
 - Checkout Kit sheet; a signed-in customer gets a signed-in checkout with their e-mail address, addresses and saved payment methods filled in, and the order belongs to their account (owner request of 2026-10-26; the cart carries the Customer Account API token, refreshed right before each checkout; after a sign-out the lines move to a new cart without it). Success screen with order number, delivery expectation, buttons "Bestellungen ansehen" and "Weiter einkaufen".
 
 ### 6.7 Konto (Account)
-- Logged-out: benefits list + "Anmelden" (passwordless), then "Meine Bestellungen" (owner request of 2026-10-26, reference: the About You app), which opens the login and then the orders in one go; screens that need the account show "Anmelden" in place when reached signed out. Every menu row has a short line under its title. Logged-in: profile, orders, licenses, addresses, notifications, language and market, legal, help, account deletion, logout.
-- **Bestellungen:** list with status pills; detail with a vertical timeline (Bestellt → Bezahlt → Lizenz versendet / Versendet), line items, totals, "Rechnung (PDF)" and "Lizenzschlüssel anzeigen".
+- Logged-out: benefits list + "Anmelden" (passwordless), then "Meine Bestellungen" (owner request of 2026-10-26, reference: the About You app), which opens the login and then the orders in one go; screens that need the account show "Anmelden" in place when reached signed out. Every menu row has a short line under its title. Logged-in: "Persönliche Daten" (name with "Name ändern", e-mail address, customer number, no-password note, addresses as cards with default, edit and delete, "Konto und Daten löschen", logout), orders, licenses, notifications, language and market, legal, help, account deletion, logout.
+- **Bestellungen:** list of photo cards (status, date, up to four product photos, total); "Erneut kaufen" puts the same lines into the cart; detail with a vertical timeline (Bestellt → Bezahlt → Lizenz versendet / Versendet), line items, totals, "Rechnung (PDF)" and "Lizenzschlüssel anzeigen".
 - **Meine Lizenzen (License vault):** black key cards (`#111111` card, bold product name, monospaced key, "Kopieren" with haptic and expiring clipboard, "Anleitung" link, "Support zu dieser Lizenz"). Optional Face ID gate (setting). Keys cached in Keychain for offline viewing, hidden behind a privacy overlay in the app switcher.
 - **Konto löschen:** in-app flow that submits a GDPR erasure request to the backend, confirms by email, and logs the user out (App Store requirement).
 

@@ -15,8 +15,9 @@ public enum AccountDestination: Hashable, Sendable {
     case order(id: ShopifyID)
     /// The license vault, optionally limited to one order (numeric Shopify order ID).
     case licenses(orderID: String?)
-    /// The customer's addresses.
-    case addresses
+    /// "Persönliche Daten": the customer's name, e-mail address and addresses, and the way to
+    /// delete the account.
+    case profile
     /// The wishlist kept on this device (no login needed).
     case wishlist
     /// Help and support, optionally about an order (its name, e.g. `#1042`).

@@ -78,14 +78,25 @@ struct AccountStringTests {
             "account.menu.orders",
             "account.menu.orders.subtitle",
             "account.menu.licenses.subtitle",
-            "account.menu.addresses.subtitle",
+            "account.menu.profile",
+            "account.menu.profile.subtitle",
+            "account.profile.screen.title",
+            "account.profile.open",
+            "account.profile.name.edit",
+            "account.profile.name.note",
+            "account.profile.login.title",
+            "account.profile.login.message",
+            "account.profile.delete.title",
+            "account.profile.delete.subtitle",
+            "account.addresses.make_default",
+            "account.order.reorder",
             "account.menu.wishlist.subtitle",
             "account.menu.settings.subtitle",
             "account.menu.support.subtitle",
             "account.menu.legal.subtitle",
             "account.gate.title",
             "account.gate.orders.message",
-            "account.gate.addresses.message",
+            "account.gate.profile.message",
         ]
 
         for key in keys {
@@ -103,9 +114,9 @@ struct AccountMenuTests {
     @Test("Meine Bestellungen leads the list for everyone; only the account rows need a login")
     func rows() {
         #expect(AccountMenuItem.signedOut == [.orders])
-        #expect(AccountMenuItem.signedIn == [.orders, .licenses, .addresses])
+        #expect(AccountMenuItem.signedIn == [.orders, .licenses, .profile])
         #expect(AccountMenuItem.general == [.wishlist, .settings, .support, .legal])
-        #expect(AccountMenuItem.allCases.filter(\.requiresSignIn) == [.orders, .licenses, .addresses])
+        #expect(AccountMenuItem.allCases.filter(\.requiresSignIn) == [.orders, .licenses, .profile])
     }
 
     @Test("German titles and the short lines under them")

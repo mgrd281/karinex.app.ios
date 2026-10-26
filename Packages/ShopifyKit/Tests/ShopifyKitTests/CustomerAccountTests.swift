@@ -476,7 +476,9 @@ struct CustomerAccountAPITests {
         {"data": {"customer": {"orders": {"nodes": [
           {"id": "gid://shopify/Order/5678", "name": "#1042", "confirmationNumber": "ABC123",
            "processedAt": "2026-10-20T09:15:00Z", "cancelledAt": null, "financialStatus": "PAID",
-           "fulfillmentStatus": "FULFILLED", "totalPrice": {"amount": "119.9", "currencyCode": "EUR"}},
+           "fulfillmentStatus": "FULFILLED", "totalPrice": {"amount": "119.9", "currencyCode": "EUR"},
+           "lineItems": {"nodes": [{"id": "gid://shopify/LineItem/1", "name": "Office 2024 Professional Plus", "quantity": 2,
+             "image": {"url": "https://cdn.shopify.com/s/files/1/office.png", "altText": null, "width": 800, "height": 800}}]}},
           {"id": "gid://shopify/Order/5677", "name": "#1041", "confirmationNumber": null,
            "processedAt": "2026-10-01T09:15:00.123Z", "cancelledAt": "2026-10-02T09:15:00Z", "financialStatus": "REFUNDED",
            "fulfillmentStatus": "SOMETHING_NEW", "totalPrice": {"amount": "11.90", "currencyCode": "EUR"}}],
@@ -489,7 +491,7 @@ struct CustomerAccountAPITests {
           "totalPrice": {"amount": "119.9", "currencyCode": "EUR"}, "subtotal": {"amount": "100.76", "currencyCode": "EUR"},
           "totalTax": {"amount": "19.14", "currencyCode": "EUR"}, "totalShipping": {"amount": "0.0", "currencyCode": "EUR"},
           "lineItems": {"nodes": [{"id": "gid://shopify/LineItem/1", "name": "Office 2024 Professional Plus",
-            "presentmentTitle": "Default Title", "quantity": 1, "price": {"amount": "119.9", "currencyCode": "EUR"},
+            "presentmentTitle": "Default Title", "variantId": "gid://shopify/ProductVariant/77", "quantity": 1, "price": {"amount": "119.9", "currencyCode": "EUR"},
             "currentTotalPrice": {"amount": "119.9", "currencyCode": "EUR"}, "image": null}]},
           "fulfillments": {"nodes": [{"id": "gid://shopify/Fulfillment/3", "status": "SUCCESS", "latestShipmentStatus": null,
             "updatedAt": "2026-10-20T09:20:00Z"}]}}}}
@@ -549,12 +551,17 @@ struct CustomerAccountAPITests {
         #expect(first.fulfillmentStatus == .fulfilled)
         #expect(first.totalPrice == MoneyV2(amount: decimal("119.9"), currencyCode: .eur))
         #expect(first.numericID == "5678")
+        #expect(first.lineItems.map(\.name) == ["Office 2024 Professional Plus"])
+        #expect(first.lineItems.first?.quantity == 2)
+        #expect(first.lineItems.first?.image != nil)
+        #expect(page.orders[1].lineItems.isEmpty)
         #expect(page.orders[1].cancelledAt != nil)
         #expect(page.orders[1].fulfillmentStatus == .unknown("SOMETHING_NEW"))
 
         let body = try SentGraphQLBody(#require(http.requests(to: "/customer/api/2026-10/graphql").first))
         #expect(body.variables["first"] == .number(20))
         #expect(body.query.contains("sortKey: PROCESSED_AT, reverse: true"))
+        #expect(body.query.contains("lineItems(first: 5)"))
     }
 
     @Test("An order detail has line items and fulfillments; the default variant title is hidden")
@@ -564,6 +571,7 @@ struct CustomerAccountAPITests {
         #expect(order.lineItems.count == 1)
         #expect(order.lineItems[0].variantTitle == nil)
         #expect(order.lineItems[0].quantity == 1)
+        #expect(order.lineItems[0].variantID == "gid://shopify/ProductVariant/77")
         #expect(order.fulfillments.first?.isSuccessful == true)
         #expect(order.totalTax?.amount == decimal("19.14"))
     }
@@ -608,6 +616,24 @@ struct CustomerAccountAPITests {
         #expect(body.variables["defaultAddress"] == .bool(false))
     }
 
+    @Test("Changing the name sends both names and returns the changed customer")
+    func updateName() async throws {
+        let updated = """
+            {"data": {"customerUpdate": {"customer": {"id": "gid://shopify/Customer/1", "displayName": "Anna Berg",
+              "firstName": "Anna", "lastName": "Berg", "emailAddress": {"emailAddress": "anna@example.com"},
+              "defaultAddress": null}, "userErrors": []}}}
+            """
+        let (repository, http, _) = try await Self.makeRepository(graphQL: [.json(updated)])
+
+        let customer = try await repository.updateName(firstName: "Anna", lastName: "Berg")
+
+        #expect(customer.displayName == "Anna Berg")
+        #expect(customer.lastName == "Berg")
+        let body = try SentGraphQLBody(#require(http.requests(to: "/customer/api/2026-10/graphql").first))
+        #expect(body.operationName == "CustomerUpdate")
+        #expect(body.variables["input"] == .object(["firstName": .string("Anna"), "lastName": .string("Berg")]))
+    }
+
     @Test("Every Customer Account document is a single named operation with its fragments")
     func documents() {
         let documents = [
@@ -618,6 +644,7 @@ struct CustomerAccountAPITests {
             (CustomerAddressCreateMutation.operationName, CustomerAddressCreateMutation.document),
             (CustomerAddressUpdateMutation.operationName, CustomerAddressUpdateMutation.document),
             (CustomerAddressDeleteMutation.operationName, CustomerAddressDeleteMutation.document),
+            (CustomerUpdateMutation.operationName, CustomerUpdateMutation.document),
         ]
         for (name, document) in documents {
             #expect(document.contains(" \(name)"))

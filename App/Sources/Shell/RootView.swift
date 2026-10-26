@@ -11,6 +11,7 @@ import LicensesFeature
 import ProductFeature
 import SearchFeature
 import SettingsFeature
+import ShopifyKit
 import SupportFeature
 import SwiftUI
 import UIKit
@@ -229,7 +230,21 @@ struct RootView: View {
             }
         case let .order(id):
             AccountSignInGate(sessionStore: container.sessionStore, reason: .order) {
-                OrderDetailScreen(orderID: id, repository: container.customerRepository, backend: container.backendClient, onRoute: onRoute)
+                OrderDetailScreen(
+                    orderID: id,
+                    repository: container.customerRepository,
+                    backend: container.backendClient,
+                    onRoute: onRoute,
+                    onReorder: { lines in
+                        // "Erneut kaufen": the same products and quantities, then the cart.
+                        for line in lines {
+                            if let variantID = line.variantID {
+                                _ = await container.cartStore.add(variantID: variantID, quantity: line.quantity)
+                            }
+                        }
+                        router.select(.cart)
+                    }
+                )
             }
         case let .licenses(orderID):
             LicenseVaultScreen(
@@ -239,9 +254,14 @@ struct RootView: View {
                 locksVault: container.settingsStore.locksLicenses,
                 onRoute: onRoute
             )
-        case .addresses:
-            AccountSignInGate(sessionStore: container.sessionStore, reason: .addresses) {
-                AddressesScreen(repository: container.customerRepository, countries: addressCountries)
+        case .profile:
+            AccountSignInGate(sessionStore: container.sessionStore, reason: .profile) {
+                ProfileScreen(
+                    repository: container.customerRepository,
+                    countries: addressCountries,
+                    sessionStore: container.sessionStore,
+                    onRoute: onRoute
+                )
             }
         case .wishlist:
             WishlistScreen(savedProducts: container.savedProductsStore, onRoute: onRoute)

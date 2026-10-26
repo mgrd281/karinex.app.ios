@@ -1214,11 +1214,16 @@ Customer Account client ID and BFF host for an end-to-end test on a device.
 - **AccountFeature:** Customer Account API login (OAuth 2.0 with PKCE through
   `ASWebAuthenticationSession`), orders with timeline, addresses, invoices, account deletion,
   logout. `AccountLogin.signIn` runs the login (ephemeral session, the app's language) for the
-  Konto tab and `AccountSignInGate`, which wraps Bestellungen, an order and Adressen in the App's
+  Konto tab and `AccountSignInGate`, which wraps Bestellungen, an order and Persönliche Daten in the App's
   routing: signed out it shows the reason and "Anmelden" in place, signed in the screen itself.
   The Konto rows carry a short line under the title; "Meine Bestellungen" is listed signed out
   too and runs the login before it opens the orders. `accountSignInErrorAlert` presents a failed
-  login only on the screen that is on screen.
+  login only on the screen that is on screen. `ProfileScreen` ("Persönliche Daten") holds the
+  customer card, "Name ändern" (`customerUpdate`), the addresses as horizontal cards, "Konto und
+  Daten löschen" and "Abmelden"; `ProfileViewModel` loads the customer and the address book
+  together. Orders are photo cards (`OrderCard`, first five line items of the list query) and
+  the detail offers "Erneut kaufen" (`OrderReorder.lines`, each line's `variantID` and quantity
+  into `CartStore`).
 - **ShopifyKit:** a Customer Account API client on `GraphQLClient` with a bearer token
   `authorization` supplier, endpoint discovery from `customerAccountDiscoveryURL`.
 - **Backend:** a BFF client and a mock server, `BFF_CONTRACT.md` and `openapi.yaml`; feature

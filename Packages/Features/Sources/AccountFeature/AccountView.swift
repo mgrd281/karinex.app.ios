@@ -12,8 +12,9 @@ import SwiftUI
 ///   `ASWebAuthenticationSession`, ephemeral, so no cookies are shared with Safari), then
 ///   "Meine Bestellungen": a tap opens the login and, once signed in, the orders right away.
 ///   Builds without a Customer Account client ID say that login is not available yet.
-/// - Signed in: the name and e-mail address, Meine Bestellungen, Meine Lizenzen, Adressen, then
-///   Merkliste, Einstellungen, Hilfe und Support, Rechtliches, "Abmelden" and "Konto löschen".
+/// - Signed in: the monogram, name and e-mail address as a card into "Persönliche Daten" (name,
+///   addresses, "Konto und Daten löschen"), Meine Bestellungen, Meine Lizenzen, Persönliche
+///   Daten, then Merkliste, Einstellungen, Hilfe und Support, Rechtliches and "Abmelden".
 /// - Every row has a short line under its title, like the account tab of fashion retail apps.
 /// - Support, legal texts and settings are reachable in both states, so the Impressum and the
 ///   privacy policy are always within two taps.
@@ -156,70 +157,70 @@ public struct AccountView: View {
 
     // MARK: Signed in
 
-    /// The signed-in header: a disc with the person symbol, the name and the e-mail address.
+    /// The signed-in header: the monogram, the name and the e-mail address as one card that
+    /// opens "Persönliche Daten".
     private var profileHeader: some View {
-        HStack(spacing: KXSpacing.m) {
-            Image(systemName: "person.fill")
-                .kxFont(.title2)
-                .foregroundStyle(KXColor.textSecondary)
-                .frame(width: KXSpacing.xxxl, height: KXSpacing.xxxl)
-                .background(KXColor.surface, in: Circle())
-                .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: KXSpacing.xxs) {
-                Text("account.profile.eyebrow", bundle: .module)
-                    .kxFont(.eyebrow)
-                    .foregroundStyle(KXColor.textSecondary)
-                if let customer = sessionStore.customer {
-                    Text(customer.displayName)
-                        .kxFont(.title2)
-                        .foregroundStyle(KXColor.textPrimary)
-                        .accessibilityAddTraits(.isHeader)
-                    if let email = customer.emailAddress, email != customer.displayName {
-                        Text(email)
+        Button {
+            onRoute(.account(.profile))
+        } label: {
+            HStack(spacing: KXSpacing.m) {
+                ProfileMonogram(initials: ProfileName.initials(of: sessionStore.customer))
+                VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+                    Group {
+                        if let name = ProfileName.displayName(of: sessionStore.customer) {
+                            Text(verbatim: name)
+                        } else {
+                            Text("account.profile.title", bundle: .module)
+                        }
+                    }
+                    .kxFont(.title2)
+                    .foregroundStyle(KXColor.textPrimary)
+                    .accessibilityAddTraits(.isHeader)
+                    if let email = sessionStore.customer?.emailAddress {
+                        Text(verbatim: email)
                             .kxFont(.subheadline)
                             .foregroundStyle(KXColor.textSecondary)
                     }
-                } else {
-                    Text("account.profile.title", bundle: .module)
-                        .kxFont(.title2)
+                    Text("account.profile.open", bundle: .module)
+                        .fontWeight(.semibold)
+                        .kxFont(.footnote)
                         .foregroundStyle(KXColor.textPrimary)
-                        .accessibilityAddTraits(.isHeader)
+                        .padding(.top, KXSpacing.xxs)
                 }
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                Image(systemName: "chevron.right")
+                    .fontWeight(.medium)
+                    .kxFont(.footnote)
+                    .foregroundStyle(KXColor.iconSecondary)
+                    .accessibilityHidden(true)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(KXSpacing.m)
+            .background(KXColor.surface, in: RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous))
+            .contentShape(RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous))
         }
+        .buttonStyle(.plain)
         .padding(.top, KXSpacing.xs)
         .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isButton)
         .accessibilityIdentifier("account.profile")
     }
 
+    /// "Abmelden". "Konto löschen" lives in "Persönliche Daten", next to the personal details.
     private var signedInActions: some View {
-        VStack(spacing: KXSpacing.s) {
-            KXButton(
-                String(localized: "account.signout", bundle: .module),
-                systemImage: "rectangle.portrait.and.arrow.right",
-                style: .secondary,
-                isFullWidth: true
-            ) {
-                isSignOutConfirmationPresented = true
-            }
-            .accessibilityIdentifier("account.signout")
-            KXButton(
-                String(localized: "account.delete", bundle: .module),
-                style: .tertiary,
-                isFullWidth: true
-            ) {
-                onRoute(.account(.deleteAccount))
-            }
-            .accessibilityIdentifier("account.delete")
+        KXButton(
+            String(localized: "account.signout", bundle: .module),
+            systemImage: "rectangle.portrait.and.arrow.right",
+            style: .secondary,
+            isFullWidth: true
+        ) {
+            isSignOutConfirmationPresented = true
         }
+        .accessibilityIdentifier("account.signout")
     }
 
     private func signOut() async {
-        guard let endSession = await sessionStore.signOut() else { return }
-        // Ends the Shopify session in the background; the local logout is already complete.
-        let request = URLRequest(url: endSession)
-        _ = try? await URLSession.shared.data(for: request)
+        await AccountLogin.signOut(sessionStore)
     }
 
     // MARK: Menu
@@ -302,14 +303,14 @@ public struct AccountView: View {
 enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
     case orders
     case licenses
-    case addresses
+    case profile
     case wishlist
     case settings
     case support
     case legal
 
     /// The rows only a signed-in customer sees.
-    static let signedIn: [AccountMenuItem] = [.orders, .licenses, .addresses]
+    static let signedIn: [AccountMenuItem] = [.orders, .licenses, .profile]
     /// The rows that lead into the login when nobody is signed in.
     static let signedOut: [AccountMenuItem] = [.orders]
     /// The rows everyone sees.
@@ -318,7 +319,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
     /// Whether the row's screen needs a signed-in customer.
     var requiresSignIn: Bool {
         switch self {
-        case .orders, .licenses, .addresses: true
+        case .orders, .licenses, .profile: true
         case .wishlist, .settings, .support, .legal: false
         }
     }
@@ -331,7 +332,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
         switch self {
         case .orders: .orders
         case .licenses: .licenses(orderID: nil)
-        case .addresses: .addresses
+        case .profile: .profile
         case .wishlist: .wishlist
         case .settings: .settings
         case .support: .support(orderName: nil)
@@ -343,7 +344,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
         switch self {
         case .orders: "shippingbox"
         case .licenses: "key"
-        case .addresses: "house"
+        case .profile: "person.text.rectangle"
         case .wishlist: "heart"
         case .settings: "gearshape"
         case .support: "questionmark.bubble"
@@ -355,7 +356,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
         switch self {
         case .orders: String(localized: "account.menu.orders", bundle: .module)
         case .licenses: String(localized: "account.menu.licenses", bundle: .module)
-        case .addresses: String(localized: "account.menu.addresses", bundle: .module)
+        case .profile: String(localized: "account.menu.profile", bundle: .module)
         case .wishlist: String(localized: "account.menu.wishlist", bundle: .module)
         case .settings: String(localized: "account.menu.settings", bundle: .module)
         case .support: String(localized: "account.menu.support", bundle: .module)
@@ -368,7 +369,7 @@ enum AccountMenuItem: String, CaseIterable, Identifiable, Sendable {
         switch self {
         case .orders: String(localized: "account.menu.orders.subtitle", bundle: .module)
         case .licenses: String(localized: "account.menu.licenses.subtitle", bundle: .module)
-        case .addresses: String(localized: "account.menu.addresses.subtitle", bundle: .module)
+        case .profile: String(localized: "account.menu.profile.subtitle", bundle: .module)
         case .wishlist: String(localized: "account.menu.wishlist.subtitle", bundle: .module)
         case .settings: String(localized: "account.menu.settings.subtitle", bundle: .module)
         case .support: String(localized: "account.menu.support.subtitle", bundle: .module)

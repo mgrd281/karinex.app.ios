@@ -31,6 +31,15 @@ enum AccountLogin {
     }
 }
 
+extension AccountLogin {
+    /// Signs out on this device right away and ends the Shopify session in the background.
+    @MainActor
+    static func signOut(_ sessionStore: CustomerSessionStore) async {
+        guard let endSession = await sessionStore.signOut() else { return }
+        _ = try? await URLSession.shared.data(for: URLRequest(url: endSession))
+    }
+}
+
 // MARK: - AccountLoginLocale
 
 /// The `locale` parameter of the login page: the app's language code, `pt-PT` for Portuguese.
@@ -81,7 +90,7 @@ private struct AccountSignInErrorAlert: ViewModifier {
 
 // MARK: - AccountSignInGate
 
-/// A screen that needs the customer account (Bestellungen, one order, Adressen): the content
+/// A screen that needs the customer account (Bestellungen, one order, Persönliche Daten): the content
 /// for a signed-in customer, otherwise a short reason to sign in with "Anmelden" right there.
 /// After the login the content appears in place, so every way into the screen (the Konto tab,
 /// the service tiles of Start, "Bestellungen ansehen" after a purchase, a link) works the same.
@@ -192,8 +201,8 @@ public enum AccountSignInReason: Sendable {
     case orders
     /// One order.
     case order
-    /// The saved addresses.
-    case addresses
+    /// "Persönliche Daten": the name and the addresses.
+    case profile
 }
 
 extension AccountSignInReason {
@@ -202,7 +211,7 @@ extension AccountSignInReason {
         switch self {
         case .orders: Text("account.orders.title", bundle: .module)
         case .order: Text("account.order.title", bundle: .module)
-        case .addresses: Text("account.addresses.title", bundle: .module)
+        case .profile: Text("account.profile.screen.title", bundle: .module)
         }
     }
 
@@ -210,7 +219,7 @@ extension AccountSignInReason {
     var message: Text {
         switch self {
         case .orders, .order: Text("account.gate.orders.message", bundle: .module)
-        case .addresses: Text("account.gate.addresses.message", bundle: .module)
+        case .profile: Text("account.gate.profile.message", bundle: .module)
         }
     }
 
@@ -218,7 +227,7 @@ extension AccountSignInReason {
     var systemImage: String {
         switch self {
         case .orders, .order: AccountMenuItem.orders.systemImage
-        case .addresses: AccountMenuItem.addresses.systemImage
+        case .profile: AccountMenuItem.profile.systemImage
         }
     }
 }
