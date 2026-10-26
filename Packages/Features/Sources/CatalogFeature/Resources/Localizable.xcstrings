@@ -3122,7 +3122,7 @@
       }
     },
     "catalog.versions.eyebrow" : {
-      "comment" : "Small uppercase label above the title of the version chips in the Shop tab (chips such as Windows 11 or Microsoft Office 2024).",
+      "comment" : "Small uppercase label above the title of the version shelf in the Shop tab (photo cards such as Windows 11 or Office 2024).",
       "extractionState" : "manual",
       "localizations" : {
         "da" : {
@@ -3194,7 +3194,7 @@
       }
     },
     "catalog.versions.title" : {
-      "comment" : "Title of the version chips in the Shop tab; each chip opens the collection of one product version.",
+      "comment" : "Title of the version shelf in the Shop tab; each photo card opens the collection of one product version.",
       "extractionState" : "manual",
       "localizations" : {
         "da" : {

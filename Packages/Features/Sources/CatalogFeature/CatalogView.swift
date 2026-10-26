@@ -7,7 +7,7 @@ import SwiftUI
 
 /// The Shop tab, laid out like the category pages of fashion retail apps: the bestsellers and
 /// the sale as two large cards, the product families as rows with the photo of their first
-/// product, the single versions as chips with a photo and every other collection as a list
+/// product, the single versions as a shelf of photo cards and every other collection as a list
 /// (``CatalogDirectory``). The names come from ``CollectionNames``, so the store's search engine
 /// titles never show. A tap asks for ``CommerceRoute/collection(handle:title:)``.
 ///
@@ -111,13 +111,20 @@ private struct CatalogDirectoryContent: View {
                         String(localized: "catalog.versions.title", bundle: .module),
                         eyebrow: String(localized: "catalog.versions.eyebrow", bundle: .module)
                     )
-                    KXFlowLayout(spacing: KXSpacing.xs) {
-                        ForEach(sections.versions) { collection in
-                            collectionButton(collection) {
-                                CatalogVersionChip(collection: collection)
+                    // A shelf from edge to edge, aligned with the page margins.
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        LazyHStack(alignment: .top, spacing: KXSpacing.s) {
+                            ForEach(sections.versions) { collection in
+                                collectionButton(collection) {
+                                    CatalogVersionCard(collection: collection)
+                                }
                             }
                         }
+                        .scrollTargetLayout()
                     }
+                    .contentMargins(.horizontal, KXSpacing.gutter, for: .scrollContent)
+                    .scrollTargetBehavior(.viewAligned)
+                    .padding(.horizontal, -KXSpacing.gutter)
                 }
             }
             if !sections.more.isEmpty {
@@ -195,9 +202,7 @@ private struct CatalogHighlightCard: View {
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: KXRadius.large, style: .continuous)
         VStack(alignment: .leading, spacing: KXSpacing.s) {
-            ProductImage(collection.displayImage, isDecorative: true)
-                .padding(KXSpacing.m)
-                .kxPhotoTile()
+            CatalogPhoto(image: collection.displayImage, padding: KXSpacing.m)
                 .aspectRatio(1, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous))
             VStack(alignment: .leading, spacing: KXSpacing.xxs) {
@@ -258,9 +263,7 @@ private struct CatalogCategoryRow: View {
             .multilineTextAlignment(.leading)
             .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity, alignment: .leading)
-            ProductImage(collection.displayImage, isDecorative: true)
-                .padding(KXSpacing.xs)
-                .kxPhotoTile()
+            CatalogPhoto(image: collection.displayImage, padding: KXSpacing.xs)
                 .frame(width: photoSide, height: photoSide)
                 .clipShape(RoundedRectangle(cornerRadius: KXRadius.small, style: .continuous))
         }
@@ -274,36 +277,60 @@ private struct CatalogCategoryRow: View {
     }
 }
 
-// MARK: - Version chip
+// MARK: - Version card
 
-/// A single version: the photo of its first product in a small circle and the name, in a light
-/// grey capsule.
-private struct CatalogVersionChip: View {
+/// A single version on the shelf: the photo of its first product on a square light tile and the
+/// version name below it in up to two lines (space reserved, so the cards line up).
+private struct CatalogVersionCard: View {
     let collection: CollectionSummary
 
-    @ScaledMetric(relativeTo: .subheadline) private var photoDiameter: CGFloat = 32
+    @ScaledMetric(relativeTo: .subheadline) private var scaledWidth: CGFloat = 124
+
+    private var width: CGFloat {
+        min(scaledWidth, 180)
+    }
 
     var body: some View {
-        let shape = Capsule(style: .continuous)
-        HStack(spacing: KXSpacing.xs) {
-            ProductImage(collection.displayImage, isDecorative: true)
-                .padding(KXSpacing.xxs)
-                .kxPhotoTile()
-                .frame(width: photoDiameter, height: photoDiameter)
-                .clipShape(Circle())
-            Text(CollectionNames.title(for: collection))
+        VStack(alignment: .leading, spacing: KXSpacing.xs) {
+            CatalogPhoto(image: collection.displayImage, padding: KXSpacing.s)
+                .frame(width: width, height: width)
+                .clipShape(RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous))
+            Text(CatalogDirectory.versionName(for: collection))
                 .fontWeight(.semibold)
                 .kxFont(.subheadline)
                 .foregroundStyle(KXColor.textPrimary)
                 .multilineTextAlignment(.leading)
+                .lineLimit(2, reservesSpace: true)
         }
-        .padding(.leading, KXSpacing.xxs)
-        .padding(.trailing, KXSpacing.s)
-        .padding(.vertical, KXSpacing.xxs)
-        .frame(minHeight: KXSpacing.minimumTapTarget)
-        .background(KXColor.surface, in: shape)
-        .contentShape(shape)
+        .frame(width: width, alignment: .leading)
+        .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
+    }
+}
+
+// MARK: - Photo
+
+/// The photo of a collection on its light grey tile. A collection without a photo shows a
+/// neutral box on the tile instead of the image placeholder.
+private struct CatalogPhoto: View {
+    let image: ShopifyImage?
+    /// The space between the photo and the edge of the tile.
+    let padding: CGFloat
+
+    var body: some View {
+        Group {
+            if let image {
+                ProductImage(image, isDecorative: true)
+                    .padding(padding)
+            } else {
+                Image(systemName: "shippingbox")
+                    .kxFont(.title2)
+                    .foregroundStyle(KXColor.imageIcon)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .accessibilityHidden(true)
+            }
+        }
+        .kxPhotoTile()
     }
 }
 
@@ -318,9 +345,7 @@ private struct CatalogCollectionRow: View {
 
     var body: some View {
         HStack(spacing: KXSpacing.s) {
-            ProductImage(collection.displayImage, isDecorative: true)
-                .padding(KXSpacing.xxs)
-                .kxPhotoTile()
+            CatalogPhoto(image: collection.displayImage, padding: KXSpacing.xxs)
                 .frame(width: photoSide, height: photoSide)
                 .clipShape(RoundedRectangle(cornerRadius: KXRadius.small, style: .continuous))
             Text(CollectionNames.title(for: collection))

@@ -3,10 +3,10 @@ import Foundation
 // MARK: - CollectionsQuery
 
 /// Lists the store's collections by title (Storefront `collections`), for the Shop tab, each
-/// with the image of its first product as ``CollectionSummary/previewImage``.
+/// with the image of its first product that has one as ``CollectionSummary/previewImage``.
 ///
-/// The requested cost is about 4 per collection (the image, the one-product connection and its
-/// image), so 100 collections stay well below the tokenless limit of 1000.
+/// The requested cost is about 6 per collection (the image and the connection of three products
+/// with their images), so 100 collections stay below the tokenless limit of 1000.
 public struct CollectionsQuery: GraphQLOperation {
     /// The largest page size the Storefront API accepts.
     public static let maximumPageSize = 250
@@ -23,9 +23,10 @@ public struct CollectionsQuery: GraphQLOperation {
         public let collections: Connection<Node>
     }
 
-    /// One collection of the response: the summary fields and its first product's image.
+    /// One collection of the response: the summary fields and the images of its first products.
     public struct Node: Decodable, Sendable, Equatable {
-        /// The collection, with ``CollectionSummary/previewImage`` taken from its first product.
+        /// The collection, with ``CollectionSummary/previewImage`` taken from its first product
+        /// that has an image.
         public let collection: CollectionSummary
 
         private enum CodingKeys: String, CodingKey {
@@ -47,10 +48,13 @@ public struct CollectionsQuery: GraphQLOperation {
                 title: summary.title,
                 description: summary.description,
                 image: summary.image,
-                previewImage: products?.nodes.first?.featuredImage ?? summary.previewImage
+                previewImage: products?.nodes.lazy.compactMap(\.featuredImage).first ?? summary.previewImage
             )
         }
     }
+
+    /// The number of products per collection whose images are candidates for the preview.
+    public static let previewProductCount = 3
 
     /// `Collections`.
     public static let operationName = "Collections"
@@ -63,7 +67,7 @@ public struct CollectionsQuery: GraphQLOperation {
           collections(first: $first, sortKey: TITLE) {
             nodes {
               ...CollectionSummaryFields
-              products(first: 1) {
+              products(first: \(previewProductCount)) {
                 nodes {
                   featuredImage {
                     ...ImageFields

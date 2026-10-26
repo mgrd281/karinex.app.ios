@@ -133,7 +133,7 @@ public struct CollectionSummary: Sendable, Hashable, Codable, Identifiable {
     public let description: String
     /// The collection image, if any.
     public let image: ShopifyImage?
-    /// The image of the collection's first product, when the query asked for it
+    /// The image of the collection's first product that has one, when the query asked for it
     /// (``CollectionsQuery``), else `nil`. The store's collections have no images of their own,
     /// so the Shop tab shows this photo.
     public let previewImage: ShopifyImage?

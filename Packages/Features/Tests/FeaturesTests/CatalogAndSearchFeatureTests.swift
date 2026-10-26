@@ -71,6 +71,20 @@ struct CatalogDirectoryTests {
         }
     }
 
+    @Test("Version cards drop the leading Microsoft that every version shares")
+    func versionNames() {
+        func name(_ handle: String, _ title: String) -> String {
+            CatalogDirectory.versionName(for: BrowseFixtures.collection(handle, title: title))
+        }
+
+        #expect(name("microsoft-office-2024", "Microsoft Office 2024") == "Office 2024")
+        #expect(name("microsoft-office-2024-fur-mac", "Microsoft Office 2024 für Mac") == "Office 2024 für Mac")
+        #expect(name("microsoft-sql-server", "Microsoft SQL Server") == "SQL Server")
+        #expect(name("windows-server-2025", "Windows Server 2025") == "Windows Server 2025")
+        #expect(name("windows-11", "Windows 11") == "Windows 11")
+        #expect(name("odd", "Microsoft ") == "Microsoft ")
+    }
+
     @Test("The German lines describe the families")
     func germanLines() throws {
         let german = try LocalizedStrings(language: "de", in: CatalogResources.bundle)

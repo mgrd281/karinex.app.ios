@@ -100,7 +100,7 @@ struct CatalogSearchContentTests {
         #expect(bodies[2].variables["intent"] == .string("COMPLEMENTARY"))
     }
 
-    @Test("Each listed collection carries the photo of its first product")
+    @Test("Each listed collection carries the photo of its first product that has one")
     func collectionPreviewImages() async throws {
         let stub = StubHTTPClient([
             .json(#"""
@@ -108,6 +108,10 @@ struct CatalogSearchContentTests {
                   {"id":"gid://shopify/Collection/1","handle":"windows","title":"Windows","description":"","image":null,
                    "products":{"nodes":[{"featuredImage":{
                      "url":"https://cdn.shopify.com/s/files/w.png","altText":"Windows 11 Pro","width":800,"height":800
+                   }}]}},
+                  {"id":"gid://shopify/Collection/3","handle":"windows-server-2022","title":"Windows Server 2022","description":"",
+                   "image":null,"products":{"nodes":[{"featuredImage":null},{"featuredImage":{
+                     "url":"https://cdn.shopify.com/s/files/s.png","altText":null,"width":800,"height":800
                    }}]}},
                   {"id":"gid://shopify/Collection/2","handle":"leer","title":"Leer","description":"","image":null,"products":{"nodes":[]}}
                 ]}}}
@@ -117,18 +121,20 @@ struct CatalogSearchContentTests {
 
         let collections = try await repository.collections(first: 60)
 
-        #expect(collections.map(\.handle) == ["windows", "leer"])
+        #expect(collections.map(\.handle) == ["windows", "windows-server-2022", "leer"])
         let windows = try #require(collections.first)
         #expect(windows.image == nil)
         #expect(windows.previewImage?.url.absoluteString == "https://cdn.shopify.com/s/files/w.png")
         #expect(windows.previewImage?.altText == "Windows 11 Pro")
         #expect(windows.displayImage == windows.previewImage)
+        #expect(collections[1].previewImage?.url.absoluteString == "https://cdn.shopify.com/s/files/s.png")
         #expect(collections.last?.previewImage == nil)
         #expect(collections.last?.displayImage == nil)
         #expect(try JSONDecoder().decode([CollectionSummary].self, from: JSONEncoder().encode(collections)) == collections)
 
         let body = try SentGraphQLBody(#require(stub.requests.first))
-        #expect(body.query.contains("products(first: 1)"))
+        #expect(body.query.contains("products(first: \(CollectionsQuery.previewProductCount))"))
+        #expect(CollectionsQuery.previewProductCount == 3)
         #expect(body.variables["first"] == .number(60))
     }
 

@@ -1,3 +1,4 @@
+import CommerceUI
 import Foundation
 import ShopifyKit
 
@@ -8,7 +9,7 @@ import ShopifyKit
 ///
 /// - ``highlightHandles``: the bestsellers and the sale as two large cards on top.
 /// - ``categoryHandles``: the product families as rows with a photo and a short line.
-/// - ``versionHandles``: the single versions (Windows 11, Office 2024, ...) as chips.
+/// - ``versionHandles``: the single versions (Windows 11, Office 2024, ...) as a shelf of cards.
 /// - Every other collection of the store, in the store's order (by title), as a list.
 ///
 /// `all` (the whole range) and `digital-goods-vat-tax` (a helper collection for tax settings)
@@ -49,7 +50,7 @@ enum CatalogDirectory {
     static let excludedHandles: Set<String> = ["all", "digital-goods-vat-tax"]
 
     /// The number of collections requested from the store. The live store has about 30, and
-    /// each costs about 4 of the 1000 a tokenless request may cost (``CollectionsQuery``).
+    /// each costs about 6 of the 1000 a tokenless request may cost (``CollectionsQuery``).
     static let requestLimit = 60
 
     /// The store's sale collection, whose card is sale red.
@@ -75,6 +76,15 @@ enum CatalogDirectory {
             versions: versionHandles.compactMap { byHandle[$0] },
             more: listed.filter { !placed.contains($0.handle) }
         )
+    }
+
+    /// The name of a version card: the collection's name without the leading "Microsoft " that
+    /// every version shares, e.g. "Office 2024", "Windows Server 2025" or "Project".
+    static func versionName(for collection: CollectionSummary) -> String {
+        let name = CollectionNames.title(for: collection)
+        let prefix = "Microsoft "
+        guard name.hasPrefix(prefix), name.count > prefix.count else { return name }
+        return String(name.dropFirst(prefix.count))
     }
 
     /// The short line below a family's name, e.g. "Betriebssysteme"; `nil` for every other
@@ -128,7 +138,7 @@ struct CatalogSections: Sendable, Hashable {
     let highlights: [CollectionSummary]
     /// The product families, as rows with a photo.
     let categories: [CollectionSummary]
-    /// The single versions, as chips.
+    /// The single versions, as a shelf of cards.
     let versions: [CollectionSummary]
     /// Every other listed collection, in the store's order.
     let more: [CollectionSummary]
