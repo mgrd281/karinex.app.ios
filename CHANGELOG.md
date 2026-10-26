@@ -64,6 +64,12 @@ change.
   drops a preloaded guest checkout (`ShopifyCheckoutSheetKit.invalidate()`); after a sign-out the
   lines and discount codes move to a new cart without the token, so the next checkout on the
   device never shows the previous customer's details.
+- **Legal texts in the style of karinex.de** (owner request): AGB, Datenschutz, Widerruf,
+  Versand and Impressum open with a header (icon disc, title, "Zuletzt aktualisiert" with a
+  clock), then an "Inhaltsverzeichnis" whose entries scroll to their section, and every section
+  on its own light grey panel, like the website's legal pages. `LegalOutline` splits the
+  Shopify text at the heading level that repeats and drops a heading that repeats the title;
+  texts without such headings stay one block.
 - **Country and language lists like a fashion app** (owner request, reference: the On app): in
   "Ihr Shop-Land" the Land and Sprache der Inhalte rows open `MarketChoiceSheet` from the bottom
   instead of a system menu: a bold title with a close button, full-width rows with hairline

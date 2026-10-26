@@ -625,6 +625,32 @@ struct LegalTextTests {
         #expect(await repository.requestedPages.isEmpty)
     }
 
+    @Test("A legal text splits into sections at the level that repeats, without the title heading")
+    func outline() {
+        let document = HTMLDocument(html: """
+            <h1>AGB</h1><p>Vorwort</p>
+            <h2>1. Geltungsbereich</h2><p>Text eins</p><h3>1.1 Detail</h3><p>Mehr</p>
+            <h2>2. Vertragsschluss</h2><p>Text zwei</p>
+            """)
+
+        let outline = LegalOutline.split(document.blocks, title: "AGB")
+
+        #expect(outline.intro.count == 1)
+        #expect(outline.sections.map(\.title) == ["1. Geltungsbereich", "2. Vertragsschluss"])
+        #expect(outline.sections.map(\.id) == [0, 1])
+        #expect(outline.sections[0].blocks.count == 3)
+    }
+
+    @Test("A text without repeating headings stays one block")
+    func outlineFlat() {
+        let document = HTMLDocument(html: "<h2>Impressum</h2><p>KARINEX</p><p>Hamburg</p>")
+
+        let outline = LegalOutline.split(document.blocks, title: "Impressum")
+
+        #expect(outline.sections.isEmpty)
+        #expect(outline.intro.count == 2)
+    }
+
     @Test("A missing text is empty, not an error")
     @MainActor
     func missing() async {
