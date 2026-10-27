@@ -12,6 +12,11 @@ change.
 
 ### Added
 
+- **Save counter beside the heart** (owner request): the product page shows how many customers
+  saved the product, the same number as the web shop (its Firebase counter
+  `wishlist/<handle>`), and counts the customer's own save or removal. Only with the analytics
+  consent from Settings, only the product handle goes over the wire, nothing is shown without a
+  number (`SaveCountStore`).
 - **Recently sold on the product page:** "In den letzten 30 Tagen 109-mal verkauft" as an icon
   row below availability and delivery, from the store's `custom.recently_sold_count` and
   `custom.recently_sold_hours` (`ProductMetafields.recentSales`), from 5 units on, in all 11
@@ -64,6 +69,20 @@ change.
   drops a preloaded guest checkout (`ShopifyCheckoutSheetKit.invalidate()`); after a sign-out the
   lines and discount codes move to a new cart without the token, so the next checkout on the
   device never shows the previous customer's details.
+- **Legal texts in the style of karinex.de** (owner request): AGB, Datenschutz, Widerruf,
+  Versand and Impressum open with a header (icon disc, title, "Zuletzt aktualisiert" with a
+  clock), then an "Inhaltsverzeichnis" whose entries scroll to their section, and every section
+  on its own light grey panel, like the website's legal pages. `LegalOutline` splits the
+  Shopify text at the heading level that repeats and drops a heading that repeats the title;
+  texts without such headings stay one block.
+- **Country and language lists like a fashion app** (owner request, reference: the On app): in
+  "Ihr Shop-Land" the Land and Sprache der Inhalte rows open `MarketChoiceSheet` from the bottom
+  instead of a system menu: a bold title with a close button, full-width rows with hairline
+  dividers, the flag and the currency code per country, a checkmark on the chosen one, a search
+  field for long lists, and a tap chooses and closes.
+- **Impressum from the shop policy:** "Text nicht verfügbar" is fixed for stores that keep the
+  Impressum as the Shopify legal notice policy. `ShopPoliciesQuery` reads `Shop.legalNotice`; the
+  Impressum uses it first and falls back to the pages `rechtliche-hinweise` and `impressum`.
 - **Rechnungen and a modern license card** (owner request): the Konto tab has "Rechnungen"
   (`InvoicesScreen`): every order with an invoice from the SOFTWAREFACH backend as a `KXList` row
   with order number, date and total; a tap loads the PDF from the short-lived link and opens it

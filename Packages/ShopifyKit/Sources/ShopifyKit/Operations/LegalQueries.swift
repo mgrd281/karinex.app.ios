@@ -46,8 +46,10 @@ public struct LegalText: Sendable, Hashable, Decodable, Identifiable {
 
 // MARK: - ShopPolicies
 
-/// The four shop policies; `nil` for a policy the store has not written.
+/// The shop policies; `nil` for a policy the store has not written.
 public struct ShopPolicies: Sendable, Hashable, Decodable {
+    /// Impressum (`Shop.legalNotice`, Settings > Policies > Impressum in the Shopify admin).
+    public let legalNotice: LegalText?
     /// Datenschutzerklärung.
     public let privacyPolicy: LegalText?
     /// Rückerstattung.
@@ -58,7 +60,14 @@ public struct ShopPolicies: Sendable, Hashable, Decodable {
     public let termsOfService: LegalText?
 
     /// Creates the policies.
-    public init(privacyPolicy: LegalText?, refundPolicy: LegalText?, shippingPolicy: LegalText?, termsOfService: LegalText?) {
+    public init(
+        privacyPolicy: LegalText?,
+        refundPolicy: LegalText?,
+        shippingPolicy: LegalText?,
+        termsOfService: LegalText?,
+        legalNotice: LegalText? = nil
+    ) {
+        self.legalNotice = legalNotice
         self.privacyPolicy = privacyPolicy
         self.refundPolicy = refundPolicy
         self.shippingPolicy = shippingPolicy
@@ -85,6 +94,9 @@ public struct ShopPoliciesQuery: GraphQLOperation {
         """
         query ShopPolicies {
           shop {
+            legalNotice {
+              ...ShopPolicyFields
+            }
             privacyPolicy {
               ...ShopPolicyFields
             }

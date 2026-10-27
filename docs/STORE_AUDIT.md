@@ -64,7 +64,7 @@ fixed section order with the live handles above.
 | PROMPT.md | Live store |
 | --- | --- |
 | Blog `news` | exists (`news`), plus `guides` ("Anleitungen & Guides") which fits the "Ratgeber" row and activation guides better |
-| Page `impressum` | **does not exist**. Candidate: `rechtliche-hinweise` (to be confirmed by the owner) |
+| Page `impressum` | **does not exist**. The app reads the Impressum from the shop policy `Shop.legalNotice` (Shopify admin: Settings > Policies > Impressum) and falls back to the pages `rechtliche-hinweise` and `impressum` |
 | Policies | `privacyPolicy`, `refundPolicy`, `shippingPolicy`, `termsOfService` all exist; pages `agb`, `widerrufsrecht`, `versand` also exist |
 
 ## Product metafields

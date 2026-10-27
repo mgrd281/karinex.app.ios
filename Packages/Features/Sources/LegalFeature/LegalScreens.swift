@@ -130,14 +130,22 @@ final class LegalDocumentViewModel {
         }
     }
 
-    /// Where each text lives in the store (docs/STORE_AUDIT.md): the Impressum and the
-    /// Widerrufsbelehrung are pages, the others shop policies. Without the page the
-    /// Widerrufsbelehrung falls back to the refund policy.
+    /// Where each text lives in the store (docs/STORE_AUDIT.md): the Impressum is the shop's
+    /// legal notice policy, else the page `rechtliche-hinweise`, else `impressum`; the
+    /// Widerrufsbelehrung is a page that falls back to the refund policy; the others are shop
+    /// policies.
     static func text(for kind: LegalDocumentKind, from repository: any LegalContentRepository) async throws -> LegalText? {
         switch kind {
         case .imprint:
-            guard let handle = kind.pageHandle else { return nil }
-            return try await repository.page(handle: handle)
+            if let notice = try await repository.policies().legalNotice, !notice.body.isEmpty {
+                return notice
+            }
+            for handle in [kind.pageHandle, "impressum"].compactMap(\.self) {
+                if let page = try await repository.page(handle: handle) {
+                    return page
+                }
+            }
+            return nil
         case .withdrawal:
             if let handle = kind.pageHandle, let page = try await repository.page(handle: handle) {
                 return page
@@ -160,6 +168,8 @@ public struct LegalDocumentScreen: View {
     @State private var model: LegalDocumentViewModel
 
     @Environment(\.locale) private var locale
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @ScaledMetric(relativeTo: .title) private var heroSide: CGFloat = 56
 
     /// Creates the screen.
     public init(kind: LegalDocumentKind, repository: any LegalContentRepository) {
@@ -176,10 +186,12 @@ public struct LegalDocumentScreen: View {
             ),
             retry: { await model.load() },
             content: { loaded in
-                ScrollView {
-                    content(loaded)
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        content(loaded, proxy: proxy)
+                    }
+                    .refreshable { await model.load() }
                 }
-                .refreshable { await model.load() }
             },
             placeholder: {
                 AsyncContentSkeleton()
@@ -197,27 +209,98 @@ public struct LegalDocumentScreen: View {
         }
     }
 
-    private func content(_ loaded: LegalDocumentViewModel.LoadedText) -> some View {
-        VStack(alignment: .leading, spacing: KXSpacing.l) {
-            VStack(alignment: .leading, spacing: KXSpacing.s) {
-                Text(loaded.text.title)
-                    .kxFont(.title1)
-                    .foregroundStyle(KXColor.textPrimary)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .accessibilityAddTraits(.isHeader)
-                if let updatedAt = loaded.text.updatedAt {
-                    let date = updatedAt.formatted(Date.FormatStyle(date: .long, time: .omitted).locale(locale))
-                    Text("legal.updated \(date)", bundle: .module)
-                        .kxFont(.footnote)
-                        .foregroundStyle(KXColor.textSecondary)
-                }
+    /// The text like on karinex.de: a header with the title and "Zuletzt aktualisiert", a table
+    /// of contents that scrolls to each section, and one panel per section.
+    private func content(_ loaded: LegalDocumentViewModel.LoadedText, proxy: ScrollViewProxy) -> some View {
+        let outline = LegalOutline.split(loaded.document.blocks, title: loaded.text.title)
+        return VStack(alignment: .leading, spacing: KXSpacing.l) {
+            header(loaded)
+            if outline.sections.count >= 3 {
+                tableOfContents(outline.sections, proxy: proxy)
             }
-            KXDivider(.accent)
-            RichTextView(document: loaded.document)
+            if !outline.intro.isEmpty {
+                RichTextView(document: HTMLDocument(blocks: outline.intro))
+            }
+            ForEach(outline.sections) { section in
+                VStack(alignment: .leading, spacing: KXSpacing.m) {
+                    Text(verbatim: section.title)
+                        .kxFont(.title3)
+                        .foregroundStyle(KXColor.textPrimary)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityAddTraits(.isHeader)
+                    if !section.blocks.isEmpty {
+                        RichTextView(document: HTMLDocument(blocks: section.blocks))
+                    }
+                }
+                .padding(KXSpacing.l)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(KXColor.surface, in: RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous))
+                .id(section.id)
+            }
         }
         .padding(.horizontal, KXSpacing.gutter)
         .padding(.vertical, KXSpacing.m)
         .kxReadableWidth()
+    }
+
+    private func header(_ loaded: LegalDocumentViewModel.LoadedText) -> some View {
+        VStack(alignment: .leading, spacing: KXSpacing.m) {
+            Image(systemName: model.kind.systemImage)
+                .kxFont(.title2)
+                .foregroundStyle(KXColor.background)
+                .frame(width: heroSide, height: heroSide)
+                .background(KXColor.textPrimary, in: Circle())
+                .accessibilityHidden(true)
+            Text(loaded.text.title)
+                .kxFont(.title1)
+                .foregroundStyle(KXColor.textPrimary)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityAddTraits(.isHeader)
+            if let updatedAt = loaded.text.updatedAt {
+                let date = updatedAt.formatted(Date.FormatStyle(date: .long, time: .omitted).locale(locale))
+                Label {
+                    Text("legal.updated \(date)", bundle: .module)
+                } icon: {
+                    Image(systemName: "clock")
+                }
+                .kxFont(.footnote)
+                .foregroundStyle(KXColor.textSecondary)
+            }
+            KXDivider()
+        }
+    }
+
+    private func tableOfContents(_ sections: [LegalSection], proxy: ScrollViewProxy) -> some View {
+        KXListGroup(Text("legal.toc", bundle: .module)) {
+            ForEach(sections) { section in
+                if section.id > 0 {
+                    KXDivider()
+                        .padding(.leading, KXSpacing.m)
+                }
+                Button {
+                    withAnimation(KXMotion.animation(.snappy, reduceMotion: reduceMotion)) {
+                        proxy.scrollTo(section.id, anchor: .top)
+                    }
+                } label: {
+                    HStack(spacing: KXSpacing.m) {
+                        Text(verbatim: section.title)
+                            .kxFont(.body)
+                            .foregroundStyle(KXColor.textPrimary)
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Image(systemName: "arrow.down")
+                            .kxFont(.footnote)
+                            .foregroundStyle(KXColor.iconSecondary)
+                            .accessibilityHidden(true)
+                    }
+                    .padding(.horizontal, KXSpacing.m)
+                    .padding(.vertical, KXSpacing.s)
+                    .frame(minHeight: KXSpacing.minimumTapTarget)
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+            }
+        }
     }
 }
 

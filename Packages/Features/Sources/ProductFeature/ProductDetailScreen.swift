@@ -42,6 +42,7 @@ public struct ProductDetailScreen: View {
 
     @Environment(\.accessibilityVoiceOverEnabled) private var isVoiceOverEnabled
     @Environment(SavedProductsStore.self) private var savedProducts: SavedProductsStore?
+    @Environment(SaveCountStore.self) private var saveCounts: SaveCountStore?
 
     /// Creates the screen.
     ///
@@ -80,7 +81,8 @@ public struct ProductDetailScreen: View {
                     content: content,
                     model: model,
                     isSaved: savedProducts.map { $0.isSaved(content.product.id) },
-                    onToggleSaved: { savedProducts?.toggle(content.product.id) },
+                    saveCount: saveCounts?.displayCount(for: model.handle),
+                    onToggleSaved: toggleSaved,
                     onRoute: onRoute,
                     onBuyNow: buyNow,
                     onTitleVisibilityChange: { isTitleVisible = $0 }
@@ -124,12 +126,25 @@ public struct ProductDetailScreen: View {
                 await model.load()
             }
         }
+        .task {
+            await saveCounts?.refresh(handle: model.handle)
+        }
         .onChange(of: model.product?.id, initial: true) { _, id in
             if let id {
                 savedProducts?.recordView(id)
             }
         }
         .accessibilityIdentifier("screen.product")
+    }
+
+    /// Saves or removes the product and counts it in the shared save counter.
+    private func toggleSaved() {
+        guard let id = model.product?.id, let isSaved = savedProducts?.toggle(id) else { return }
+        let handle = model.handle
+        let counts = saveCounts
+        Task {
+            await counts?.didChange(handle: handle, isSaved: isSaved)
+        }
     }
 
     // MARK: Banner
@@ -187,6 +202,8 @@ private struct ProductDetailBody: View {
     let model: ProductDetailViewModel
     /// Whether the product is on the wishlist, or `nil` when the app offers no wishlist.
     let isSaved: Bool?
+    /// How many customers saved the product, or `nil` to show no number.
+    let saveCount: Int?
     let onToggleSaved: @MainActor () -> Void
     let onRoute: @MainActor (CommerceRoute) -> Void
     let onBuyNow: @MainActor () -> Void
@@ -203,6 +220,7 @@ private struct ProductDetailBody: View {
                         images: content.images,
                         selection: $galleryIndex,
                         isSaved: isSaved,
+                        saveCount: saveCount,
                         onToggleSaved: onToggleSaved
                     ) { index in
                         viewer = ProductViewerRequest(index: index)

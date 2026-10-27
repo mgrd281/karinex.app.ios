@@ -74,6 +74,7 @@ struct RootView: View {
         .offlineBanner(monitor: container.networkMonitor)
         .commerceCountry(container.marketStore.selection.country)
         .environment(container.savedProductsStore)
+        .environment(container.saveCountStore)
         .environment(container.paymentMethodsStore)
         .environment(\.productLookup, container.productLookup)
         .kxCheckout(isPresented: $isCheckoutPresented, cartStore: container.cartStore) { order in

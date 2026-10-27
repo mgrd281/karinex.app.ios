@@ -25,6 +25,7 @@ public struct MarketConfirmationSheet: View {
     @State private var country: CountryCode
     @State private var language: LanguageCode
     @State private var isSaving = false
+    @State private var openChoice: OpenChoice?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.locale) private var locale
     @ScaledMetric(relativeTo: .title) private var heroSide: CGFloat = 64
@@ -89,6 +90,9 @@ public struct MarketConfirmationSheet: View {
         .kxScreenBackground()
         .interactiveDismissDisabled(true)
         .accessibilityIdentifier("screen.market")
+        .sheet(item: $openChoice) { choice in
+            choiceSheet(choice)
+        }
         .onChange(of: country) {
             let offered = store.availableLanguages(for: country).map(\.isoCode)
             if !offered.isEmpty, !offered.contains(language) {
@@ -120,23 +124,16 @@ public struct MarketConfirmationSheet: View {
         .fixedSize(horizontal: false, vertical: true)
     }
 
-    /// The country as a row that opens the store's countries in a menu.
+    /// The country as a row that opens the store's countries in a sheet.
     private var countryRow: some View {
-        Menu {
-            Picker(selection: $country) {
-                ForEach(store.availableCountries(locale: locale)) { entry in
-                    Text(MarketFlag.label(MarketStore.displayName(of: entry, locale: locale), country: entry.isoCode.rawValue))
-                        .tag(entry.isoCode)
-                }
-            } label: {
-                Text("commerce.market.country", bundle: .module)
-            }
+        Button {
+            openChoice = .country
         } label: {
             KXListRow(
                 systemImage: "mappin.and.ellipse",
                 title: Text("commerce.market.country", bundle: .module),
                 value: MarketFlag.label(countryName, country: country.rawValue),
-                accessory: .menu
+                accessory: .chevron
             )
         }
         .buttonStyle(.plain)
@@ -145,24 +142,45 @@ public struct MarketConfirmationSheet: View {
 
     /// The content language as a row that opens the languages of the chosen country.
     private var languageRow: some View {
-        Menu {
-            Picker(selection: $language) {
-                ForEach(store.availableLanguages(for: country)) { entry in
-                    Text(MarketStore.displayName(of: entry, locale: locale)).tag(entry.isoCode)
-                }
-            } label: {
-                Text("commerce.market.language", bundle: .module)
-            }
+        Button {
+            openChoice = .language
         } label: {
             KXListRow(
                 systemImage: "text.bubble",
                 title: Text("commerce.market.language", bundle: .module),
                 value: languageName,
-                accessory: .menu
+                accessory: .chevron
             )
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("market.language")
+    }
+
+    @ViewBuilder
+    private func choiceSheet(_ choice: OpenChoice) -> some View {
+        switch choice {
+        case .country:
+            MarketChoiceSheet(
+                title: Text("commerce.market.country", bundle: .module),
+                choices: store.availableCountries(locale: locale).map { entry in
+                    MarketChoice(
+                        id: entry.isoCode,
+                        flag: MarketFlag.emoji(for: entry.isoCode.rawValue),
+                        name: MarketStore.displayName(of: entry, locale: locale),
+                        detail: entry.currency.isoCode.rawValue
+                    )
+                },
+                selection: $country
+            )
+        case .language:
+            MarketChoiceSheet(
+                title: Text("commerce.market.language", bundle: .module),
+                choices: store.availableLanguages(for: country).map { entry in
+                    MarketChoice(id: entry.isoCode, flag: nil, name: MarketStore.displayName(of: entry, locale: locale), detail: nil)
+                },
+                selection: $language
+            )
+        }
     }
 
     private var countryName: String {
@@ -213,6 +231,18 @@ public struct MarketConfirmationSheet: View {
         KXHaptics.confirm()
         onFinish()
         dismiss()
+    }
+}
+
+// MARK: - OpenChoice
+
+/// Which list of "Ihr Shop-Land" is open.
+private enum OpenChoice: String, Identifiable {
+    case country
+    case language
+
+    var id: String {
+        rawValue
     }
 }
 
