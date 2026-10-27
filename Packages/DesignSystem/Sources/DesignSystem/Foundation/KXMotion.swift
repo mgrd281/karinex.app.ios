@@ -39,12 +39,16 @@ public enum KXMotion {
     public static let heartPopScale = CGFloat(MotionToken.heartPopScale)
     /// How long the small hearts take to burst from the saved heart and fade.
     public static let heartBurstDuration = MotionToken.heartBurstDuration
-    /// How long the trend arrow takes to rise and settle again.
-    public static let trendRiseDuration = MotionToken.trendRiseDuration
-    /// How long the trend arrow rests between two rises.
+    /// How long the trend line takes to draw itself.
+    public static let trendDrawDuration = MotionToken.trendDrawDuration
+    /// How long the arrow head takes to draw after the line.
+    public static let trendArrowDuration = MotionToken.trendArrowDuration
+    /// How long the drawn trend stays visible.
+    public static let trendHoldDuration = MotionToken.trendHoldDuration
+    /// How long the trend takes to erase itself again.
+    public static let trendEraseDuration = MotionToken.trendEraseDuration
+    /// How long the trend rests erased before it draws again.
     public static let trendRestDuration = MotionToken.trendRestDuration
-    /// How far the trend arrow rises along each axis.
-    public static let trendRiseDistance = CGFloat(MotionToken.trendRiseDistance)
 
     /// Returns the animation for `curve`, or a short cross-fade when Reduce Motion is on.
     public static func animation(_ curve: Curve, reduceMotion: Bool) -> Animation {

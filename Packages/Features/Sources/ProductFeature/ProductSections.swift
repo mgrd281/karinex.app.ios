@@ -124,38 +124,78 @@ struct ProductAvailabilityRow: View {
 
 // MARK: - ProductTrendIcon
 
-/// The icon of the "recently sold" row: an arrow pointing up and to the right on a soft green
-/// disc. Every few seconds the arrow rises a little along its direction and settles again; with
-/// Reduce Motion it stays still.
+/// The icon of the "recently sold" row, the same as in the web shop: a rising trend line with an
+/// arrow head in green. It draws itself, then the arrow head, stays for a few seconds, erases and
+/// starts again; with Reduce Motion it stays drawn.
 struct ProductTrendIcon: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @ScaledMetric(relativeTo: .callout) private var discSize: CGFloat = 26
+    @ScaledMetric(relativeTo: .callout) private var size: CGFloat = 20
 
     var body: some View {
-        Circle()
-            .fill(KXColor.success.opacity(0.14))
-            .frame(width: discSize, height: discSize)
-            .overlay {
-                if reduceMotion {
-                    arrow
-                } else {
-                    KeyframeAnimator(initialValue: CGFloat.zero, repeating: true) { rise in
-                        arrow.offset(x: rise, y: -rise)
-                    } keyframes: { _ in
-                        SpringKeyframe(KXMotion.trendRiseDistance, duration: KXMotion.trendRiseDuration / 2, spring: .snappy)
-                        SpringKeyframe(0, duration: KXMotion.trendRiseDuration / 2, spring: .smooth)
+        Group {
+            if reduceMotion {
+                trend(ProductTrendProgress.drawn)
+            } else {
+                KeyframeAnimator(initialValue: ProductTrendProgress.erased, repeating: true) { progress in
+                    trend(progress)
+                } keyframes: { _ in
+                    KeyframeTrack(\.line) {
+                        CubicKeyframe(1, duration: KXMotion.trendDrawDuration)
+                        LinearKeyframe(1, duration: KXMotion.trendArrowDuration + KXMotion.trendHoldDuration)
+                        CubicKeyframe(0, duration: KXMotion.trendEraseDuration)
+                        LinearKeyframe(0, duration: KXMotion.trendRestDuration)
+                    }
+                    KeyframeTrack(\.arrow) {
+                        LinearKeyframe(0, duration: KXMotion.trendDrawDuration)
+                        CubicKeyframe(1, duration: KXMotion.trendArrowDuration)
+                        LinearKeyframe(1, duration: KXMotion.trendHoldDuration)
+                        CubicKeyframe(0, duration: KXMotion.trendEraseDuration)
                         LinearKeyframe(0, duration: KXMotion.trendRestDuration)
                     }
                 }
             }
-            .clipShape(Circle())
-            .accessibilityHidden(true)
+        }
+        .frame(width: size, height: size)
+        .accessibilityHidden(true)
     }
 
-    private var arrow: some View {
-        Image(systemName: "arrow.up.right")
-            .font(.system(size: discSize * 0.5, weight: .bold))
-            .foregroundStyle(KXColor.success)
+    private func trend(_ progress: ProductTrendProgress) -> some View {
+        let style = StrokeStyle(lineWidth: size / 12, lineCap: .round, lineJoin: .round)
+        return ZStack {
+            ProductTrendShape(points: ProductTrendShape.line)
+                .trim(from: 0, to: progress.line)
+                .stroke(KXColor.success, style: style)
+            ProductTrendShape(points: ProductTrendShape.arrowHead)
+                .trim(from: 0, to: progress.arrow)
+                .stroke(KXColor.success, style: style)
+        }
+    }
+}
+
+/// How far the trend line and its arrow head are drawn, from 0 to 1.
+struct ProductTrendProgress {
+    var line: CGFloat
+    var arrow: CGFloat
+
+    static let erased = ProductTrendProgress(line: 0, arrow: 0)
+    static let drawn = ProductTrendProgress(line: 1, arrow: 1)
+}
+
+/// A polyline in a 24 by 24 grid, scaled to the frame.
+struct ProductTrendShape: Shape {
+    /// The rising line: down, up, a small dip and up to the top right.
+    static let line = [CGPoint(x: 1, y: 18), CGPoint(x: 8.5, y: 10.5), CGPoint(x: 13.5, y: 15.5), CGPoint(x: 23, y: 6)]
+    /// The arrow head at the top right end.
+    static let arrowHead = [CGPoint(x: 17, y: 6), CGPoint(x: 23, y: 6), CGPoint(x: 23, y: 12)]
+
+    let points: [CGPoint]
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        let scale = min(rect.width, rect.height) / 24
+        let placed = points.map { CGPoint(x: rect.minX + $0.x * scale, y: rect.minY + $0.y * scale) }
+        path.addLines(placed)
+        return path
     }
 }
 

@@ -15,9 +15,10 @@ change.
 - **Save counter for everyone** (owner request "like ASOS"): `SaveCountStore` asks the KARINEX
   backend (`/v1/app/save-counts`) instead of the counter host, so the number beside the heart is
   shown without the analytics consent and the device never contacts a third party for it.
-- **Trend icon in the "recently sold" row** (owner request): a green arrow pointing up and to
-  the right on a soft green disc replaces the chart line; every few seconds it rises a little and
-  settles (`ProductTrendIcon`, timings `MotionToken.trend*`), still with Reduce Motion.
+- **Trend icon in the "recently sold" row** (owner request, "the icon in my shop is much
+  better"): the web shop's icon, a rising trend line with an arrow head in green, that draws
+  itself, holds, erases and starts again (`ProductTrendIcon`, timings `MotionToken.trend*`); drawn
+  and still with Reduce Motion.
 - **Save counter beside the heart** (owner request): the product page shows how many customers
   saved the product, the same number as the web shop (its Firebase counter
   `wishlist/<handle>`), and counts the customer's own save or removal. Only with the analytics
