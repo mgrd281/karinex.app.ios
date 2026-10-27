@@ -27,6 +27,7 @@ public struct MarketConfirmationSheet: View {
     @State private var isSaving = false
     @Environment(\.dismiss) private var dismiss
     @Environment(\.locale) private var locale
+    @ScaledMetric(relativeTo: .title) private var heroSide: CGFloat = 64
 
     /// Creates the sheet.
     ///
@@ -42,37 +43,48 @@ public struct MarketConfirmationSheet: View {
 
     public var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: KXSpacing.l) {
+            VStack(alignment: .leading, spacing: KXSpacing.xl) {
                 header
                 if let reason = reasonText {
                     KXBanner(.info, message: reason)
                         .accessibilityIdentifier("market.reason")
                 }
-                KXCard {
-                    VStack(alignment: .leading, spacing: KXSpacing.m) {
-                        countryPicker
-                        KXDivider()
-                        languagePicker
-                        if let currency = currencyText {
-                            KXDivider()
-                            KXSpecRow(String(localized: "commerce.market.currency", bundle: .module), value: currency)
-                        }
+                KXListGroup {
+                    countryRow
+                    KXListDivider()
+                    languageRow
+                    if let currency = currencyText {
+                        KXListDivider()
+                        KXListRow(
+                            systemImage: "banknote",
+                            title: Text("commerce.market.currency", bundle: .module),
+                            value: currency
+                        )
+                        .accessibilityIdentifier("market.currency")
                     }
+                } footer: {
+                    Text("commerce.market.footnote", bundle: .module)
                 }
-                Text("commerce.market.footnote", bundle: .module)
-                    .kxFont(.footnote)
-                    .foregroundStyle(KXColor.textSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                KXButton(
-                    String(localized: "commerce.market.continue", bundle: .module),
-                    isFullWidth: true,
-                    isLoading: isSaving
-                ) {
-                    Task { await finish() }
-                }
-                .accessibilityIdentifier("market.continue")
             }
-            .padding(KXSpacing.gutter)
+            .padding(.horizontal, KXSpacing.gutter)
+            .padding(.top, KXSpacing.xl)
+            .padding(.bottom, KXSpacing.l)
+            .kxReadableWidth()
+        }
+        .safeAreaInset(edge: .bottom) {
+            KXButton(
+                String(localized: "commerce.market.continue", bundle: .module),
+                isFullWidth: true,
+                isLoading: isSaving
+            ) {
+                Task { await finish() }
+            }
+            .accessibilityIdentifier("market.continue")
+            .padding(.horizontal, KXSpacing.gutter)
+            .padding(.top, KXSpacing.s)
+            .padding(.bottom, KXSpacing.m)
+            .kxReadableWidth()
+            .background(KXColor.background)
         }
         .kxScreenBackground()
         .interactiveDismissDisabled(true)
@@ -88,33 +100,52 @@ public struct MarketConfirmationSheet: View {
     // MARK: Parts
 
     private var header: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.s) {
-            Text("commerce.market.title", bundle: .module)
+        VStack(alignment: .leading, spacing: KXSpacing.m) {
+            Image(systemName: "globe.europe.africa.fill")
                 .kxFont(.title1)
-                .foregroundStyle(KXColor.textPrimary)
-                .accessibilityAddTraits(.isHeader)
-            Text("commerce.market.message", bundle: .module)
-                .kxFont(.body)
-                .foregroundStyle(KXColor.textSecondary)
+                .foregroundStyle(KXColor.background)
+                .frame(width: heroSide, height: heroSide)
+                .background(KXColor.textPrimary, in: Circle())
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: KXSpacing.s) {
+                Text("commerce.market.title", bundle: .module)
+                    .kxFont(.title1)
+                    .foregroundStyle(KXColor.textPrimary)
+                    .accessibilityAddTraits(.isHeader)
+                Text("commerce.market.message", bundle: .module)
+                    .kxFont(.body)
+                    .foregroundStyle(KXColor.textSecondary)
+            }
         }
         .fixedSize(horizontal: false, vertical: true)
     }
 
-    private var countryPicker: some View {
-        pickerRow(title: String(localized: "commerce.market.country", bundle: .module)) {
+    /// The country as a row that opens the store's countries in a menu.
+    private var countryRow: some View {
+        Menu {
             Picker(selection: $country) {
                 ForEach(store.availableCountries(locale: locale)) { entry in
-                    Text(MarketStore.displayName(of: entry, locale: locale)).tag(entry.isoCode)
+                    Text(MarketFlag.label(MarketStore.displayName(of: entry, locale: locale), country: entry.isoCode.rawValue))
+                        .tag(entry.isoCode)
                 }
             } label: {
                 Text("commerce.market.country", bundle: .module)
             }
-            .accessibilityIdentifier("market.country")
+        } label: {
+            KXListRow(
+                systemImage: "mappin.and.ellipse",
+                title: Text("commerce.market.country", bundle: .module),
+                value: MarketFlag.label(countryName, country: country.rawValue),
+                accessory: .menu
+            )
         }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("market.country")
     }
 
-    private var languagePicker: some View {
-        pickerRow(title: String(localized: "commerce.market.language", bundle: .module)) {
+    /// The content language as a row that opens the languages of the chosen country.
+    private var languageRow: some View {
+        Menu {
             Picker(selection: $language) {
                 ForEach(store.availableLanguages(for: country)) { entry in
                     Text(MarketStore.displayName(of: entry, locale: locale)).tag(entry.isoCode)
@@ -122,32 +153,29 @@ public struct MarketConfirmationSheet: View {
             } label: {
                 Text("commerce.market.language", bundle: .module)
             }
-            .accessibilityIdentifier("market.language")
+        } label: {
+            KXListRow(
+                systemImage: "text.bubble",
+                title: Text("commerce.market.language", bundle: .module),
+                value: languageName,
+                accessory: .menu
+            )
         }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("market.language")
     }
 
-    private func pickerRow(title: String, @ViewBuilder picker: () -> some View) -> some View {
-        ViewThatFits(in: .horizontal) {
-            HStack(spacing: KXSpacing.s) {
-                pickerTitle(title)
-                Spacer(minLength: KXSpacing.s)
-                picker()
-            }
-            VStack(alignment: .leading, spacing: KXSpacing.xs) {
-                pickerTitle(title)
-                picker()
-            }
-        }
-        .pickerStyle(.menu)
-        .tint(KXColor.accentText)
-        .frame(minHeight: KXSpacing.minimumTapTarget)
+    private var countryName: String {
+        store.availableCountries(locale: locale).first { $0.isoCode == country }
+            .map { MarketStore.displayName(of: $0, locale: locale) }
+            ?? locale.localizedString(forRegionCode: country.rawValue)
+            ?? country.rawValue
     }
 
-    private func pickerTitle(_ title: String) -> some View {
-        Text(title)
-            .kxFont(.body)
-            .foregroundStyle(KXColor.textPrimary)
-            .accessibilityHidden(true)
+    private var languageName: String {
+        store.availableLanguages(for: country).first { $0.isoCode == language }
+            .map { MarketStore.displayName(of: $0, locale: locale) }
+            ?? language.rawValue
     }
 
     // MARK: Text
@@ -185,6 +213,24 @@ public struct MarketConfirmationSheet: View {
         KXHaptics.confirm()
         onFinish()
         dismiss()
+    }
+}
+
+// MARK: - MarketFlag
+
+/// The flag emoji of a country before its name, e.g. "🇩🇪 Deutschland". Codes that are not two
+/// letters get no flag.
+enum MarketFlag {
+    static func emoji(for country: String) -> String? {
+        let letters = country.uppercased()
+        guard letters.count == 2, letters.allSatisfy({ ("A"..."Z").contains($0) }) else { return nil }
+        let scalars = letters.unicodeScalars.compactMap { UnicodeScalar(127_397 + $0.value) }
+        return String(String.UnicodeScalarView(scalars))
+    }
+
+    static func label(_ name: String, country: String) -> String {
+        guard let flag = emoji(for: country) else { return name }
+        return "\(flag) \(name)"
     }
 }
 

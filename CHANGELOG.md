@@ -19,6 +19,8 @@ change.
   instead of the former ×10.5 display multiplier, the Admin token in the script properties, and
   stale values deleted. The row appears once the definitions get Storefront access.
 
+- **`scripts/testflight-local.sh`:** builds the signed App Store binary on the owner's Mac and uploads it to TestFlight with the same `fastlane beta` lane as the workflow, without waiting for a GitHub macOS runner. It asks for the App Store Connect key ID, issuer ID, the `.p8` file and the team ID, keeps only the three IDs in `~/.config/karinex/testflight.env` and never copies the key.
+
 ### Changed
 
 - **New look, "KARINEX Clean"** (owner decision after the first TestFlight build): the green,
@@ -62,6 +64,38 @@ change.
   drops a preloaded guest checkout (`ShopifyCheckoutSheetKit.invalidate()`); after a sign-out the
   lines and discount codes move to a new cart without the token, so the next checkout on the
   device never shows the previous customer's details.
+- **Rechnungen and a modern license card** (owner request): the Konto tab has "Rechnungen"
+  (`InvoicesScreen`): every order with an invoice from the SOFTWAREFACH backend as a `KXList` row
+  with order number, date and total; a tap loads the PDF from the short-lived link and opens it
+  in Quick Look (share, print, save to Files). "Rechnung (PDF)" on an order opens in Quick Look
+  too, never in a browser (`InvoicePDF`). `KXKeyCard` has a key icon tile beside the product
+  name and the key on an inset field: hidden, it shows blurred stand-in letters
+  (`KXLicenseKeyFormatting.veiled`, the real key is never drawn) under "Zum Anzeigen tippen",
+  and a tap on the field shows the key, instead of rows of bullets. The key stays on one line,
+  and the actions are simpler: "Kopieren" across the card with a round eye button beside it,
+  "Anleitung" and "Support zu dieser Lizenz" as quiet links below.
+- **No dotted leaders, modern shop country sheet** (owner request): `KXSpecRow` shows label and
+  value with open space between them instead of a dotted leader, everywhere (product facts,
+  orders, order success, support, settings). The settings rows became the design-system
+  component `KXList` (`KXListGroup`, `KXListRow` with chevron, external, checkmark or menu
+  accessory, `KXListToggleRow`, gallery page and snapshot test). "Ihr Shop-Land" is rebuilt with
+  it: a globe disc above the title, Land with its flag and Sprache der Inhalte as menu rows,
+  Währung as a plain row, the note as the group footer and "Weiter" pinned at the bottom.
+- **Keys, invoices and account deletion in the app** (owner request): `KX_BACKEND_HOST` is now
+  `www.softwarefach.de`, the SOFTWAREFACH app that already delivers the keys and invoices. Its new
+  `/v1/app` routes (repo `mgrd281/invoice`, PR 1040) check the Customer Account API token with
+  Shopify, answer only for the customer's own orders and give the keys of an order, a 10 minute
+  invoice PDF link and the deletion request (a support ticket with an e-mail confirmation).
+- **Calmer banners** (owner feedback): `KXBanner` drops the colored leading stripe, the border
+  and the shadow and sits flat on the light grey panel like the rest of the app; only the
+  symbol carries the color (error red, success green, info and offline in ink). The snapshot
+  references need re-recording.
+- **Einstellungen in the style of iOS** (owner request): every setting is a row with a small
+  ink icon tile on grouped grey panels with inset dividers. Shop-Land and Sprache der Inhalte
+  show their value and a chevron and open the market sheet (no "Ändern" button), the app
+  language opens the iOS settings, Darstellung is a list with a checkmark, and the toggles carry
+  their explanation below the title. The dotted leaders are gone from the version row
+  (`SettingsGroup`, `SettingsRow`, `SettingsToggleRow`).
 - **Persönliche Daten instead of Adressen** (owner request, to go beyond the About You app):
   one screen with the customer card (monogram, name, e-mail address, the customer number with
   copy), "Name ändern" (`customerUpdate`, first and last name; the e-mail address stays the

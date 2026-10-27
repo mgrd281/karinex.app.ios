@@ -55,3 +55,6 @@ make fixtures        # re-record Storefront fixtures from the live store
   Every key needs a translator comment and all 11 languages (`make check`).
 - Colors, fonts, spacing and motion only through the design-system tokens (`KXColor`,
   `.kxFont(_:)`, `KXSpacing`, `KXRadius`, `KXMotion`).
+- No dotted leaders (`Label ........ Wert`) anywhere: the owner finds them dated (2026-10-26).
+  Put the value at the trailing edge with open space before it (`KXSpecRow`), and build settings
+  and choice screens from `KXList` rows (icon tile, title, value, chevron, menu or switch).

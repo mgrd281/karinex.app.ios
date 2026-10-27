@@ -240,7 +240,7 @@ struct KXGallerySectionHeaderPage: View {
 
 // MARK: - KXSpecRow
 
-/// Specification rows with dotted leaders, separated by dividers inside a card.
+/// Specification rows without leaders, separated by dividers inside a card.
 struct KXGallerySpecRowPage: View {
     private let rows: [(label: String, value: String)] = [
         (label: "Produkt", value: "Windows 11 Pro"),
@@ -264,6 +264,74 @@ struct KXGallerySpecRowPage: View {
                             KXSpecRow(row.label, value: row.value)
                         }
                     }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - KXList
+
+/// Grouped iOS-style rows: values with every accessory, a switch and a footer.
+struct KXGalleryListPage: View {
+    @State private var locks = true
+    @State private var appearance = 0
+
+    var body: some View {
+        KXGalleryPage(topic: .list) {
+            KXGalleryDemo(
+                "Values and accessories",
+                note: "Values sit at the trailing edge with open space before them, never behind dots."
+            ) {
+                KXListGroup(Text(verbatim: "Shop-Land und Inhalte")) {
+                    KXListRow(systemImage: "globe.europe.africa", title: Text(verbatim: "Land"), value: "Deutschland", accessory: .menu)
+                    KXListDivider()
+                    KXListRow(
+                        systemImage: "text.bubble",
+                        title: Text(verbatim: "Sprache der Inhalte"),
+                        value: "Deutsch",
+                        accessory: .chevron
+                    )
+                    KXListDivider()
+                    KXListRow(
+                        systemImage: "character.bubble",
+                        title: Text(verbatim: "Sprache der App"),
+                        value: "Deutsch",
+                        accessory: .external
+                    )
+                    KXListDivider()
+                    KXListRow(systemImage: "eurosign", title: Text(verbatim: "Währung"), value: "Euro (EUR)")
+                } footer: {
+                    Text(verbatim: "Die Sprache der App richtet sich nach den Einstellungen Ihres iPhone.")
+                }
+            }
+            KXGalleryDemo("Choice with a checkmark") {
+                KXListGroup {
+                    ForEach(Array(["System", "Hell", "Dunkel"].enumerated()), id: \.offset) { index, title in
+                        if index > 0 {
+                            KXListDivider()
+                        }
+                        Button {
+                            appearance = index
+                        } label: {
+                            KXListRow(
+                                systemImage: ["circle.lefthalf.filled", "sun.max", "moon"][index],
+                                title: Text(verbatim: title),
+                                accessory: appearance == index ? .checkmark : .none
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+            KXGalleryDemo("Switch") {
+                KXListGroup {
+                    KXListToggleRow(
+                        systemImage: "faceid",
+                        title: Text(verbatim: "Lizenzschlüssel sperren"),
+                        detail: Text(verbatim: "Vor dem Anzeigen fragt die App nach Face ID, Touch ID oder Ihrem Gerätecode."),
+                        isOn: $locks
+                    )
                 }
             }
         }

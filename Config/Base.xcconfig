@@ -33,9 +33,10 @@ KX_STOREFRONT_ACCESS_TOKEN = 476c1aa039600e01ee1a1b80572c2197
 // secret never belongs in the app or this repository.
 KX_CUSTOMER_ACCOUNT_CLIENT_ID = 0436c17f-4bb4-43a0-a95f-b7170d6e078d
 KX_APPLE_TEAM_ID =
-// Host name of the KARINEX backend (BFF) on Railway, without scheme. Empty until the backend
-// exists: the license vault then shows the e-mail delivery notice instead of keys.
-KX_BACKEND_HOST =
+// Host name of the KARINEX backend (BFF), without scheme: the SOFTWAREFACH app on Railway
+// (repo mgrd281/invoice, routes /v1/app/*, area card bereich-kunden-app). Empty would make the
+// license vault show the e-mail delivery notice instead of keys.
+KX_BACKEND_HOST = www.softwarefach.de
 
 // MARK: Toolchain
 IPHONEOS_DEPLOYMENT_TARGET = 17.0

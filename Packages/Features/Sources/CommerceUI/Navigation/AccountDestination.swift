@@ -13,6 +13,8 @@ public enum AccountDestination: Hashable, Sendable {
     case orders
     /// One order.
     case order(id: ShopifyID)
+    /// "Rechnungen": every invoice of the customer as a PDF.
+    case invoices
     /// The license vault, optionally limited to one order (numeric Shopify order ID).
     case licenses(orderID: String?)
     /// "Persönliche Daten": the customer's name, e-mail address and addresses, and the way to

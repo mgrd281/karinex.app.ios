@@ -2,9 +2,9 @@ import SwiftUI
 
 // MARK: - KXSpecRow
 
-/// A specification line in the style of a printed spec sheet: the label on the leading side,
-/// the value on the trailing side and a light grey dotted leader filling the gap between them,
-/// sitting on the text baseline.
+/// A specification line: the label in grey on the leading side and the value on the trailing
+/// side, with open space between them. There is deliberately no dotted leader (owner decision of
+/// 2026-10-26: dots between label and value look dated).
 ///
 /// When label and value do not fit on one line (long values, long translations, large text
 /// sizes) the row stacks the value below the label instead of truncating either.
@@ -34,17 +34,10 @@ public struct KXSpecRow: View {
 
     public var body: some View {
         ViewThatFits(in: .horizontal) {
-            HStack(alignment: .firstTextBaseline, spacing: KXSpacing.xs) {
+            HStack(alignment: .firstTextBaseline, spacing: KXSpacing.m) {
                 labelText
                     .lineLimit(1)
-                KXDotLeader()
-                    .stroke(
-                        KXColor.iconSecondary,
-                        style: StrokeStyle(lineWidth: 1.5, lineCap: .round, dash: [0.1, 5])
-                    )
-                    .frame(height: KXBorder.emphasis)
-                    .frame(minWidth: KXSpacing.m, maxWidth: .infinity)
-                    .accessibilityHidden(true)
+                Spacer(minLength: KXSpacing.m)
                 valueText
                     .lineLimit(1)
             }
@@ -75,19 +68,6 @@ public struct KXSpecRow: View {
             .fontWeight(.medium)
             .kxFont(.callout)
             .foregroundStyle(KXColor.textPrimary)
-    }
-}
-
-// MARK: - Dot leader
-
-/// A horizontal line through the vertical center of its frame. Stroked with a near-zero dash and
-/// round caps it renders as a row of round dots, 5 pt apart.
-private struct KXDotLeader: Shape {
-    nonisolated func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: rect.minX, y: rect.midY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
-        return path
     }
 }
 

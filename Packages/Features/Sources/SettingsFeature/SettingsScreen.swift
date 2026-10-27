@@ -61,8 +61,7 @@ public struct SettingsScreen: View {
                     notificationsSection
                 }
                 licensesSection
-                legalSection
-                aboutSection
+                legalAndAboutSection
             }
             .padding(.horizontal, KXSpacing.gutter)
             .padding(.vertical, KXSpacing.m)
@@ -83,23 +82,32 @@ public struct SettingsScreen: View {
     // MARK: Market
 
     private var marketSection: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.m) {
-            KXSectionHeader(String(localized: "settings.market.title", bundle: .module))
-            KXCard {
-                VStack(alignment: .leading, spacing: KXSpacing.m) {
-                    KXSpecRow(String(localized: "settings.market.country", bundle: .module), value: countryName)
-                    KXSpecRow(String(localized: "settings.market.language", bundle: .module), value: languageName)
-                    KXButton(
-                        String(localized: "settings.market.change", bundle: .module),
-                        style: .secondary,
-                        isFullWidth: true
-                    ) {
-                        isMarketSheetPresented = true
-                    }
-                    .accessibilityIdentifier("settings.market.change")
-                }
-            }
+        KXListGroup(Text("settings.market.title", bundle: .module)) {
+            marketRow(
+                systemImage: "globe.europe.africa",
+                title: Text("settings.market.country", bundle: .module),
+                value: countryName,
+                identifier: "settings.market.change"
+            )
+            KXListDivider()
+            marketRow(
+                systemImage: "text.bubble",
+                title: Text("settings.market.language", bundle: .module),
+                value: languageName,
+                identifier: "settings.market.language"
+            )
         }
+    }
+
+    private func marketRow(systemImage: String, title: Text, value: String, identifier: String) -> some View {
+        Button {
+            isMarketSheetPresented = true
+        } label: {
+            KXListRow(systemImage: systemImage, title: title, value: value, accessory: .chevron)
+        }
+        .buttonStyle(.plain)
+        .accessibilityHint(Text("settings.market.change", bundle: .module))
+        .accessibilityIdentifier(identifier)
     }
 
     private var countryName: String {
@@ -115,45 +123,59 @@ public struct SettingsScreen: View {
     // MARK: App language
 
     private var languageSection: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.m) {
-            KXSectionHeader(String(localized: "settings.language.title", bundle: .module))
-            KXCard {
-                VStack(alignment: .leading, spacing: KXSpacing.m) {
-                    Text("settings.language.message", bundle: .module)
-                        .kxFont(.body)
-                        .foregroundStyle(KXColor.textPrimary)
-                        .fixedSize(horizontal: false, vertical: true)
-                    KXButton(
-                        String(localized: "settings.language.open", bundle: .module),
-                        systemImage: "gear",
-                        style: .secondary,
-                        isFullWidth: true
-                    ) {
-                        if let url = URL(string: UIApplication.openSettingsURLString) {
-                            openURL(url)
-                        }
-                    }
-                    .accessibilityIdentifier("settings.language.open")
+        KXListGroup {
+            Button {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    openURL(url)
                 }
+            } label: {
+                KXListRow(
+                    systemImage: "character.bubble",
+                    title: Text("settings.language.title", bundle: .module),
+                    value: appLanguageName,
+                    accessory: .external
+                )
             }
+            .buttonStyle(.plain)
+            .accessibilityHint(Text("settings.language.open", bundle: .module))
+            .accessibilityIdentifier("settings.language.open")
+        } footer: {
+            Text("settings.language.message", bundle: .module)
         }
+    }
+
+    /// The language the app is shown in, e.g. "Deutsch".
+    private var appLanguageName: String? {
+        guard let code = locale.language.languageCode?.identifier,
+              let name = locale.localizedString(forLanguageCode: code)
+        else { return nil }
+        return name.prefix(1).uppercased(with: locale) + name.dropFirst()
     }
 
     // MARK: Appearance
 
     private var appearanceSection: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.m) {
-            KXSectionHeader(String(localized: "settings.appearance.title", bundle: .module))
-            Picker(selection: $settings.appearance) {
-                ForEach(AppSettingsStore.Appearance.allCases) { appearance in
-                    Text(Self.title(of: appearance)).tag(appearance)
+        KXListGroup(Text("settings.appearance.title", bundle: .module)) {
+            ForEach(Array(AppSettingsStore.Appearance.allCases.enumerated()), id: \.element) { index, appearance in
+                if index > 0 {
+                    KXListDivider()
                 }
-            } label: {
-                Text("settings.appearance.title", bundle: .module)
+                let isSelected = settings.appearance == appearance
+                Button {
+                    settings.appearance = appearance
+                } label: {
+                    KXListRow(
+                        systemImage: Self.systemImage(of: appearance),
+                        title: Text(Self.title(of: appearance)),
+                        accessory: isSelected ? .checkmark : .none
+                    )
+                }
+                .buttonStyle(.plain)
+                .accessibilityAddTraits(isSelected ? .isSelected : [])
+                .accessibilityIdentifier("settings.appearance.\(appearance.rawValue)")
             }
-            .pickerStyle(.segmented)
-            .accessibilityIdentifier("settings.appearance")
         }
+        .accessibilityIdentifier("settings.appearance")
     }
 
     private static func title(of appearance: AppSettingsStore.Appearance) -> String {
@@ -164,35 +186,35 @@ public struct SettingsScreen: View {
         }
     }
 
+    private static func systemImage(of appearance: AppSettingsStore.Appearance) -> String {
+        switch appearance {
+        case .system: "circle.lefthalf.filled"
+        case .light: "sun.max"
+        case .dark: "moon"
+        }
+    }
+
     // MARK: Privacy
 
     private var privacySection: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.m) {
-            KXSectionHeader(String(localized: "settings.privacy.title", bundle: .module))
-            KXCard {
-                VStack(alignment: .leading, spacing: KXSpacing.m) {
-                    Toggle(isOn: consentBinding(\.analytics)) {
-                        SettingsToggleLabel(
-                            title: String(localized: "settings.privacy.analytics", bundle: .module),
-                            detail: String(localized: "settings.privacy.analytics.detail", bundle: .module)
-                        )
-                    }
-                    .accessibilityIdentifier("settings.privacy.analytics")
-                    KXDivider()
-                    Toggle(isOn: consentBinding(\.crashReports)) {
-                        SettingsToggleLabel(
-                            title: String(localized: "settings.privacy.crash", bundle: .module),
-                            detail: String(localized: "settings.privacy.crash.detail", bundle: .module)
-                        )
-                    }
-                    .accessibilityIdentifier("settings.privacy.crash")
-                }
-                .tint(KXColor.brand)
-            }
+        KXListGroup(Text("settings.privacy.title", bundle: .module)) {
+            KXListToggleRow(
+                systemImage: "chart.bar.xaxis",
+                title: Text("settings.privacy.analytics", bundle: .module),
+                detail: Text("settings.privacy.analytics.detail", bundle: .module),
+                isOn: consentBinding(\.analytics)
+            )
+            .accessibilityIdentifier("settings.privacy.analytics")
+            KXListDivider()
+            KXListToggleRow(
+                systemImage: "exclamationmark.bubble",
+                title: Text("settings.privacy.crash", bundle: .module),
+                detail: Text("settings.privacy.crash.detail", bundle: .module),
+                isOn: consentBinding(\.crashReports)
+            )
+            .accessibilityIdentifier("settings.privacy.crash")
+        } footer: {
             Text("settings.privacy.footnote", bundle: .module)
-                .kxFont(.footnote)
-                .foregroundStyle(KXColor.textSecondary)
-                .fixedSize(horizontal: false, vertical: true)
         }
     }
 
@@ -220,28 +242,23 @@ public struct SettingsScreen: View {
     // MARK: Notifications
 
     private var notificationsSection: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.m) {
-            KXSectionHeader(String(localized: "settings.notifications.title", bundle: .module))
-            KXCard {
-                VStack(alignment: .leading, spacing: KXSpacing.m) {
-                    Toggle(isOn: consentBinding(\.orderUpdateNotifications)) {
-                        SettingsToggleLabel(
-                            title: String(localized: "settings.notifications.orders", bundle: .module),
-                            detail: String(localized: "settings.notifications.orders.detail", bundle: .module)
-                        )
-                    }
-                    .accessibilityIdentifier("settings.notifications.orders")
-                    KXDivider()
-                    Toggle(isOn: consentBinding(\.dealNotifications)) {
-                        SettingsToggleLabel(
-                            title: String(localized: "settings.notifications.deals", bundle: .module),
-                            detail: String(localized: "settings.notifications.deals.detail", bundle: .module)
-                        )
-                    }
-                    .accessibilityIdentifier("settings.notifications.deals")
-                }
-                .tint(KXColor.brand)
-            }
+        KXListGroup(Text("settings.notifications.title", bundle: .module)) {
+            KXListToggleRow(
+                systemImage: "shippingbox",
+                title: Text("settings.notifications.orders", bundle: .module),
+                detail: Text("settings.notifications.orders.detail", bundle: .module),
+                isOn: consentBinding(\.orderUpdateNotifications)
+            )
+            .accessibilityIdentifier("settings.notifications.orders")
+            KXListDivider()
+            KXListToggleRow(
+                systemImage: "tag",
+                title: Text("settings.notifications.deals", bundle: .module),
+                detail: Text("settings.notifications.deals.detail", bundle: .module),
+                isOn: consentBinding(\.dealNotifications)
+            )
+            .accessibilityIdentifier("settings.notifications.deals")
+        } footer: {
             if pushCoordinator?.isPermissionDenied == true {
                 Button {
                     if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
@@ -249,7 +266,6 @@ public struct SettingsScreen: View {
                     }
                 } label: {
                     Text("settings.notifications.denied", bundle: .module)
-                        .kxFont(.footnote)
                         .multilineTextAlignment(.leading)
                 }
                 .accessibilityIdentifier("settings.notifications.denied")
@@ -260,62 +276,39 @@ public struct SettingsScreen: View {
     // MARK: Licenses
 
     private var licensesSection: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.m) {
-            KXSectionHeader(String(localized: "settings.licenses.title", bundle: .module))
-            KXCard {
-                Toggle(isOn: $settings.locksLicenses) {
-                    SettingsToggleLabel(
-                        title: String(localized: "settings.licenses.lock", bundle: .module),
-                        detail: String(localized: "settings.licenses.lock.detail", bundle: .module)
-                    )
-                }
-                .tint(KXColor.brand)
-                .accessibilityIdentifier("settings.licenses.lock")
-            }
+        KXListGroup(Text("settings.licenses.title", bundle: .module)) {
+            KXListToggleRow(
+                systemImage: "faceid",
+                title: Text("settings.licenses.lock", bundle: .module),
+                detail: Text("settings.licenses.lock.detail", bundle: .module),
+                isOn: $settings.locksLicenses
+            )
+            .accessibilityIdentifier("settings.licenses.lock")
         }
     }
 
     // MARK: Legal and about
 
-    private var legalSection: some View {
-        KXButton(
-            String(localized: "settings.legal", bundle: .module),
-            systemImage: "doc.text",
-            style: .secondary,
-            isFullWidth: true
-        ) {
-            onRoute(.account(.legal))
-        }
-        .accessibilityIdentifier("settings.legal")
-    }
-
-    private var aboutSection: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.m) {
-            KXSectionHeader(String(localized: "settings.about.title", bundle: .module))
-            KXCard {
-                KXSpecRow(String(localized: "settings.about.version", bundle: .module), value: appVersion)
+    private var legalAndAboutSection: some View {
+        KXListGroup(Text("settings.about.title", bundle: .module)) {
+            Button {
+                onRoute(.account(.legal))
+            } label: {
+                KXListRow(
+                    systemImage: "doc.text",
+                    title: Text("settings.legal", bundle: .module),
+                    accessory: .chevron
+                )
             }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("settings.legal")
+            KXListDivider()
+            KXListRow(
+                systemImage: "info.circle",
+                title: Text("settings.about.version", bundle: .module),
+                value: appVersion
+            )
             .accessibilityIdentifier("settings.about")
-        }
-    }
-}
-
-// MARK: - SettingsToggleLabel
-
-/// A toggle label with a title and a secondary explanation.
-private struct SettingsToggleLabel: View {
-    let title: String
-    let detail: String
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.xxs) {
-            Text(title)
-                .kxFont(.body)
-                .foregroundStyle(KXColor.textPrimary)
-            Text(detail)
-                .kxFont(.footnote)
-                .foregroundStyle(KXColor.textSecondary)
-                .fixedSize(horizontal: false, vertical: true)
         }
     }
 }

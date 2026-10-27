@@ -119,6 +119,7 @@ enum KXGalleryTopic: String, CaseIterable, Identifiable, Sendable {
     case priceTag
     case sectionHeader
     case specRow
+    case list
     case divider
     case wordmark
     case skeleton
@@ -158,6 +159,7 @@ enum KXGalleryTopic: String, CaseIterable, Identifiable, Sendable {
         case .priceTag: "KXPriceTag"
         case .sectionHeader: "KXSectionHeader"
         case .specRow: "KXSpecRow"
+        case .list: "KXList"
         case .divider: "KXDivider"
         case .wordmark: "KXWordmark"
         case .skeleton: "KXSkeleton"
@@ -183,7 +185,8 @@ enum KXGalleryTopic: String, CaseIterable, Identifiable, Sendable {
         case .badge: "Accent, sale, neutral and success capsules, with and without symbols."
         case .priceTag: "Price, compare-at price, savings badge and tax note, regular and compact."
         case .sectionHeader: "Bold title with eyebrow and the optional trailing action."
-        case .specRow: "Label and value with a dotted leader that stacks when space runs out."
+        case .specRow: "Label and value with open space between them; stacks when space runs out."
+        case .list: "iOS-style grouped rows with an icon tile, value, accessory or switch."
         case .divider: "Hairline rules in the neutral and ink styles, horizontal and vertical."
         case .wordmark: "The interim typographic logo in three sizes and on brand panels."
         case .skeleton: "Loading placeholders, the redacting modifier and the shimmer switch."
@@ -210,6 +213,7 @@ enum KXGalleryTopic: String, CaseIterable, Identifiable, Sendable {
         case .priceTag: "eurosign"
         case .sectionHeader: "textformat.size"
         case .specRow: "list.bullet.rectangle"
+        case .list: "list.bullet"
         case .divider: "minus"
         case .wordmark: "character.cursor.ibeam"
         case .skeleton: "rectangle.dashed"
@@ -373,6 +377,7 @@ struct KXGalleryTopicPage: View {
         case .priceTag: KXGalleryPriceTagPage()
         case .sectionHeader: KXGallerySectionHeaderPage()
         case .specRow: KXGallerySpecRowPage()
+        case .list: KXGalleryListPage()
         case .divider: KXGalleryDividerPage()
         case .wordmark: KXGalleryWordmarkPage()
         case .skeleton: KXGallerySkeletonPage()

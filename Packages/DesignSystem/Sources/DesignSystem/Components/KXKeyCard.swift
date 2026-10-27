@@ -81,6 +81,19 @@ public enum KXLicenseKeyFormatting {
         String(key.map { $0 == "-" || $0.isWhitespace ? $0 : maskCharacter })
     }
 
+    /// Stand-in letters for a hidden key: the same grouping, but fixed characters that say
+    /// nothing about the real key. ``KXKeyCard`` shows them blurred while the key is hidden, so
+    /// the real key is never on screen, not even blurred.
+    public static func veiled(_ key: String) -> String {
+        let letters = Array("K7Q2MX9B4TR8VN3H")
+        var index = 0
+        return String(key.map { character in
+            guard character != "-", !character.isWhitespace else { return character }
+            defer { index += 1 }
+            return letters[index % letters.count]
+        })
+    }
+
     /// The separator used to join groups when displaying `key`.
     static func separator(of key: String) -> String {
         if key.contains("-") {
@@ -102,8 +115,10 @@ public enum KXLicenseKeyFormatting {
 /// - "Kopieren" copies the key with ``KXClipboard/copySensitive(_:expiresAfter:)`` (local to
 ///   this device, removed after two minutes), plays the success haptic, announces "Lizenzschlüssel
 ///   kopiert" to VoiceOver and shows "Kopiert" for two seconds.
-/// - "Anzeigen" / "Verbergen" toggles `isRevealed`. While hidden the key is masked with bullets
-///   (copying still works).
+/// - The round eye button beside "Kopieren", or a tap on the key field, toggles `isRevealed`.
+///   The key stays on one line (it shrinks to fit; it wraps only at accessibility text sizes). While hidden the
+///   field shows blurred stand-in letters with "Zum Anzeigen tippen" (``KXLicenseKeyFormatting/veiled(_:)``;
+///   the real key is never drawn) and copying still works.
 /// - "Anleitung" and "Support zu dieser Lizenz" appear only when their closures are passed.
 ///
 /// VoiceOver reads the revealed key character by character (`speechSpellsOutCharacters`), and
@@ -112,9 +127,8 @@ public enum KXLicenseKeyFormatting {
 ///
 /// The card uses the `keyCard*` color tokens and is dark in light and dark mode. Its buttons
 /// are ``KXButtonStyle`` buttons in their dark-appearance colors, because the panel is a dark
-/// surface in both appearances: "Kopieren" is white with a black label, "Anzeigen" has a white
-/// outline and label, "Anleitung" and "Support zu dieser Lizenz" are white text. At large text
-/// sizes the buttons stack vertically and the key wraps group by group.
+/// surface in both appearances: "Kopieren" is white with a black label, the eye button is a
+/// light disc, "Anleitung" and "Support zu dieser Lizenz" are white text links.
 ///
 /// ```swift
 /// @State private var isRevealed = false
@@ -140,6 +154,9 @@ public struct KXKeyCard: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.displayScale) private var displayScale
+    @ScaledMetric(relativeTo: .headline) private var iconSide: CGFloat = 36
+    @ScaledMetric(relativeTo: .headline) private var revealSide: CGFloat = KXSpacing.minimumTapTarget
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     /// Creates a license key card.
     ///
@@ -172,13 +189,13 @@ public struct KXKeyCard: View {
 
     public var body: some View {
         let shape = RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous)
-        VStack(alignment: .leading, spacing: KXSpacing.l) {
+        VStack(alignment: .leading, spacing: KXSpacing.m) {
             header
-            keySection
+            keyField
             Group {
-                primaryActions
+                actions
                 if onShowGuide != nil || onContactSupport != nil {
-                    secondaryActions
+                    links
                 }
             }
             // The panel is dark in both appearances; the dark-appearance button tokens are the
@@ -203,72 +220,117 @@ public struct KXKeyCard: View {
     // MARK: Sections
 
     private var header: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.xs) {
-            Text(productName)
-                .kxFont(.title3)
-                .foregroundStyle(KXColor.keyCardText)
-                .fixedSize(horizontal: false, vertical: true)
-                .accessibilityAddTraits(.isHeader)
-            if let subtitle, !subtitle.isEmpty {
-                Text(subtitle)
-                    .kxFont(.footnote)
-                    .foregroundStyle(KXColor.keyCardMuted)
+        HStack(alignment: .top, spacing: KXSpacing.m) {
+            Image(systemName: "key.fill")
+                .kxFont(.headline)
+                .foregroundStyle(KXColor.keyCardBackground)
+                .frame(width: iconSide, height: iconSide)
+                .background(KXColor.keyCardText, in: RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous))
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+                Text(productName)
+                    .kxFont(.headline)
+                    .foregroundStyle(KXColor.keyCardText)
                     .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityAddTraits(.isHeader)
+                if let subtitle, !subtitle.isEmpty {
+                    Text(subtitle)
+                        .kxFont(.footnote)
+                        .foregroundStyle(KXColor.keyCardMuted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
         }
     }
 
-    private var keySection: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.xs) {
-            Text("kx.keycard.eyebrow", bundle: .module)
-                .kxFont(.eyebrow)
-                .foregroundStyle(KXColor.keyCardMuted)
-            KXLicenseKeyText(key: isRevealed ? licenseKey : KXLicenseKeyFormatting.masked(licenseKey))
+    /// The key on one line in an inset field: clear text when revealed, otherwise blurred
+    /// stand-in letters under "Zum Anzeigen tippen". A tap toggles it. Only at accessibility
+    /// text sizes the key may wrap between its groups.
+    private var keyField: some View {
+        let shape = RoundedRectangle(cornerRadius: KXRadius.medium, style: .continuous)
+        let shown = isRevealed ? licenseKey : KXLicenseKeyFormatting.veiled(licenseKey)
+        return Button {
+            toggleReveal()
+        } label: {
+            ZStack {
+                Group {
+                    if dynamicTypeSize.isAccessibilitySize {
+                        KXLicenseKeyText(key: shown)
+                    } else {
+                        Text(verbatim: shown)
+                            .lineLimit(1)
+                            .minimumScaleFactor(KXKeyCardMetrics.minimumKeyScale)
+                    }
+                }
                 .kxFont(.licenseKey)
                 .foregroundStyle(KXColor.keyCardText)
-                .contentTransition(.opacity)
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel(keyAccessibilityLabel)
-                .speechSpellsOutCharacters(isRevealed)
-                .privacySensitive()
+                .blur(radius: isRevealed ? 0 : KXKeyCardMetrics.veilBlur)
+                .opacity(isRevealed ? 1 : 0.55)
+                .frame(maxWidth: .infinity, alignment: .center)
+                if !isRevealed {
+                    HStack(spacing: KXSpacing.xs) {
+                        Image(systemName: "eye")
+                            .accessibilityHidden(true)
+                        Text("kx.keycard.tap_to_reveal", bundle: .module)
+                    }
+                    .kxFont(.footnote)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(KXColor.keyCardBackground)
+                    .padding(.horizontal, KXSpacing.m)
+                    .padding(.vertical, KXSpacing.xs)
+                    .background(KXColor.keyCardText, in: Capsule())
+                    .transition(.opacity)
+                }
+            }
+            .padding(.horizontal, KXSpacing.m)
+            .padding(.vertical, KXSpacing.l)
+            .background(KXColor.keyCardText.opacity(0.08), in: shape)
+            .contentShape(shape)
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("kx.keycard.eyebrow", bundle: .module) + Text(verbatim: ", ") + keyAccessibilityLabel)
+        .accessibilityHint(isRevealed ? Text("kx.keycard.hide", bundle: .module) : Text("kx.keycard.tap_to_reveal", bundle: .module))
+        .speechSpellsOutCharacters(isRevealed)
+        .privacySensitive()
+    }
+
+    /// "Kopieren" across the card and a round eye button that shows or hides the key.
+    private var actions: some View {
+        HStack(spacing: KXSpacing.s) {
+            copyButton
+            Button {
+                toggleReveal()
+            } label: {
+                Image(systemName: isRevealed ? "eye.slash" : "eye")
+                    .kxFont(.headline)
+                    .foregroundStyle(KXColor.keyCardText)
+                    .frame(width: revealSide, height: revealSide)
+                    .background(KXColor.keyCardText.opacity(0.12), in: Circle())
+                    .contentShape(Circle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(isRevealed ? Text("kx.keycard.hide", bundle: .module) : Text("kx.keycard.reveal", bundle: .module))
         }
     }
 
-    private var primaryActions: some View {
+    /// "Anleitung" and "Support zu dieser Lizenz" as quiet text links.
+    private var links: some View {
         ViewThatFits(in: .horizontal) {
-            HStack(spacing: KXSpacing.s) {
-                copyButton(isFullWidth: false)
-                revealButton(isFullWidth: false)
+            HStack(spacing: KXSpacing.l) {
+                guideButton
+                supportButton
             }
-            VStack(spacing: KXSpacing.s) {
-                copyButton(isFullWidth: true)
-                revealButton(isFullWidth: true)
-            }
-        }
-    }
-
-    private var secondaryActions: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.s) {
-            KXColor.keyCardMuted
-                .opacity(0.35)
-                .frame(height: hairlineWidth)
-                .accessibilityHidden(true)
-            ViewThatFits(in: .horizontal) {
-                HStack(spacing: KXSpacing.l) {
-                    guideButton
-                    supportButton
-                }
-                VStack(alignment: .leading, spacing: KXSpacing.xxs) {
-                    guideButton
-                    supportButton
-                }
+            VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+                guideButton
+                supportButton
             }
         }
     }
 
     // MARK: Buttons
 
-    private func copyButton(isFullWidth: Bool) -> some View {
+    private var copyButton: some View {
         Button {
             copyKey()
         } label: {
@@ -282,27 +344,8 @@ public struct KXKeyCard: View {
                 }
             }
         }
-        .buttonStyle(.kx(.primary, size: .compact, isFullWidth: isFullWidth))
+        .buttonStyle(.kx(.primary, size: .compact, isFullWidth: true))
         .accessibilityHint(Text("kx.keycard.copy.hint", bundle: .module))
-    }
-
-    private func revealButton(isFullWidth: Bool) -> some View {
-        Button {
-            withAnimation(KXMotion.animation(.fade, reduceMotion: reduceMotion)) {
-                isRevealed.toggle()
-            }
-        } label: {
-            HStack(spacing: KXSpacing.xs) {
-                Image(systemName: isRevealed ? "eye.slash" : "eye")
-                    .accessibilityHidden(true)
-                if isRevealed {
-                    Text("kx.keycard.hide", bundle: .module)
-                } else {
-                    Text("kx.keycard.reveal", bundle: .module)
-                }
-            }
-        }
-        .buttonStyle(.kx(.secondary, size: .compact, isFullWidth: isFullWidth))
     }
 
     @ViewBuilder private var guideButton: some View {
@@ -336,6 +379,12 @@ public struct KXKeyCard: View {
     }
 
     // MARK: Behavior
+
+    private func toggleReveal() {
+        withAnimation(KXMotion.animation(.fade, reduceMotion: reduceMotion)) {
+            isRevealed.toggle()
+        }
+    }
 
     private func copyKey() {
         KXClipboard.copySensitive(licenseKey)
@@ -376,6 +425,17 @@ public struct KXKeyCard: View {
     private var hairlineWidth: CGFloat {
         1 / max(displayScale, 1)
     }
+}
+
+// MARK: - Metrics
+
+/// Fixed metrics of ``KXKeyCard`` that have no general design token.
+private enum KXKeyCardMetrics {
+    /// Blur of the stand-in letters while the key is hidden: the grouping stays visible, the
+    /// letters do not.
+    static let veilBlur: CGFloat = 6
+    /// How far the key may shrink to stay on one line (a 29 character key on a small iPhone).
+    static let minimumKeyScale: CGFloat = 0.5
 }
 
 // MARK: - Key text

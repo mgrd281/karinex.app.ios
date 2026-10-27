@@ -186,6 +186,14 @@ struct KXLicenseKeyFormattingTests {
         #expect(Set(candidates).count == candidates.count)
     }
 
+    @Test("Veils a hidden key with fixed letters in its grouping")
+    func veiling() {
+        let veiled = KXLicenseKeyFormatting.veiled("ABCDE-12345-FGHIJ")
+        #expect(veiled == "K7Q2M-X9B4T-R8VN3")
+        #expect(KXLicenseKeyFormatting.veiled("ZZZZZ-99999-ZZZZZ") == veiled, "says nothing about the real key")
+        #expect(KXLicenseKeyFormatting.veiled("AB CD") == "K7 Q2")
+    }
+
     @Test("Masks every character but keeps the grouping")
     func masking() {
         let bullets = String(repeating: KXLicenseKeyFormatting.maskCharacter, count: 5)
@@ -450,7 +458,7 @@ struct KXDesignSystemGalleryTests {
     func coversComponents() {
         let titles = Set(KXGalleryTopic.components.map(\.title))
         let expected: Set = [
-            "KXButton", "KXCard", "KXBadge", "KXPriceTag", "KXSectionHeader", "KXSpecRow", "KXDivider",
+            "KXButton", "KXCard", "KXBadge", "KXPriceTag", "KXSectionHeader", "KXSpecRow", "KXList", "KXDivider",
             "KXWordmark", "KXSkeleton", "KXEmptyState", "KXBanner", "KXStepTimeline", "KXAccordion",
             "KXCountdown", "KXTrustStrip", "KXProductCard", "KXKeyCard",
         ]

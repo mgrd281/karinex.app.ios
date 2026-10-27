@@ -228,6 +228,10 @@ struct RootView: View {
             AccountSignInGate(sessionStore: container.sessionStore, reason: .orders) {
                 OrdersScreen(repository: container.customerRepository, backend: container.backendClient, onRoute: onRoute)
             }
+        case .invoices:
+            AccountSignInGate(sessionStore: container.sessionStore, reason: .invoices) {
+                InvoicesScreen(repository: container.customerRepository, backend: container.backendClient, onRoute: onRoute)
+            }
         case let .order(id):
             AccountSignInGate(sessionStore: container.sessionStore, reason: .order) {
                 OrderDetailScreen(

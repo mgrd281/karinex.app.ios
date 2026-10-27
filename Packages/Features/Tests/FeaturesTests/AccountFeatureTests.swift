@@ -77,6 +77,14 @@ struct AccountStringTests {
             "account.about.version",
             "account.menu.orders",
             "account.menu.orders.subtitle",
+            "account.menu.invoices",
+            "account.menu.invoices.subtitle",
+            "account.invoices.title",
+            "account.invoices.empty.title",
+            "account.invoices.empty.message",
+            "account.invoices.footnote",
+            "account.invoices.error.title",
+            "account.gate.invoices.message",
             "account.menu.licenses.subtitle",
             "account.menu.profile",
             "account.menu.profile.subtitle",
@@ -114,9 +122,9 @@ struct AccountMenuTests {
     @Test("Meine Bestellungen leads the list for everyone; only the account rows need a login")
     func rows() {
         #expect(AccountMenuItem.signedOut == [.orders])
-        #expect(AccountMenuItem.signedIn == [.orders, .licenses, .profile])
+        #expect(AccountMenuItem.signedIn == [.orders, .invoices, .licenses, .profile])
         #expect(AccountMenuItem.general == [.wishlist, .settings, .support, .legal])
-        #expect(AccountMenuItem.allCases.filter(\.requiresSignIn) == [.orders, .licenses, .profile])
+        #expect(AccountMenuItem.allCases.filter(\.requiresSignIn) == [.orders, .invoices, .licenses, .profile])
     }
 
     @Test("German titles and the short lines under them")
