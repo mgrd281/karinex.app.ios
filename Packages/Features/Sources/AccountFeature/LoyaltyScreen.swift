@@ -702,7 +702,11 @@ private struct AddPassButton: UIViewRepresentable {
         button.isEnabled = !isLoading
         button.alpha = isLoading ? 0.6 : 1
         if let spinner = button.viewWithTag(Self.spinnerTag) as? UIActivityIndicatorView {
-            isLoading ? spinner.startAnimating() : spinner.stopAnimating()
+            if isLoading {
+                spinner.startAnimating()
+            } else {
+                spinner.stopAnimating()
+            }
         }
     }
 
