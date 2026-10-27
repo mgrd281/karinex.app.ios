@@ -21,6 +21,8 @@ struct ProductGallery: View {
     @Binding var selection: Int
     /// The wishlist state of the product, or `nil` to hide the heart.
     let isSaved: Bool?
+    /// How many customers saved the product, or `nil` to show no number.
+    var saveCount: Int?
     /// Adds the product to the wishlist or removes it.
     let onToggleSaved: @MainActor () -> Void
     /// Opens the viewer at an index.
@@ -77,7 +79,7 @@ struct ProductGallery: View {
             }
             Spacer(minLength: 0)
             if let isSaved {
-                ProductWishlistButton(isSaved: isSaved, onToggle: onToggleSaved)
+                ProductWishlistButton(isSaved: isSaved, count: saveCount, onToggle: onToggleSaved)
             }
         }
         .padding(.leading, KXSpacing.gutter)
@@ -104,6 +106,8 @@ struct ProductGallery: View {
 /// outline again. With Reduce Motion the heart only switches.
 struct ProductWishlistButton: View {
     let isSaved: Bool
+    /// How many customers saved the product, shown beside the heart; `nil` shows none.
+    var count: Int?
     let onToggle: @MainActor () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -123,13 +127,29 @@ struct ProductWishlistButton: View {
         .buttonStyle(.plain)
         .sensoryFeedback(.selection, trigger: isSaved)
         .accessibilityLabel(isSaved ? Text("product.wishlist.remove", bundle: .module) : Text("product.wishlist.add", bundle: .module))
+        .accessibilityValue(count.map { Text(verbatim: $0.formatted()) } ?? Text(verbatim: ""))
         .accessibilityAddTraits(isSaved ? .isSelected : [])
         .accessibilityIdentifier("product.wishlist")
     }
 
     private var label: some View {
         let size = min(discSize, ProductWishlistMetrics.maximumDiscSize)
-        return Circle()
+        return HStack(spacing: KXSpacing.xxs) {
+            if let count {
+                Text(verbatim: count.formatted())
+                    .kxFont(.footnote)
+                    .foregroundStyle(KXColor.textPrimary)
+                    .padding(.horizontal, KXSpacing.xs)
+                    .padding(.vertical, KXSpacing.xxs)
+                    .background(KXColor.surface, in: Capsule())
+                    .accessibilityHidden(true)
+            }
+            disc(size: size)
+        }
+    }
+
+    private func disc(size: CGFloat) -> some View {
+        Circle()
             .fill(KXColor.surface)
             .shadow(
                 color: KXColor.scrim.opacity(ProductWishlistMetrics.shadowOpacity),

@@ -12,6 +12,11 @@ change.
 
 ### Added
 
+- **Save counter beside the heart** (owner request): the product page shows how many customers
+  saved the product, the same number as the web shop (its Firebase counter
+  `wishlist/<handle>`), and counts the customer's own save or removal. Only with the analytics
+  consent from Settings, only the product handle goes over the wire, nothing is shown without a
+  number (`SaveCountStore`).
 - **Recently sold on the product page:** "In den letzten 30 Tagen 109-mal verkauft" as an icon
   row below availability and delivery, from the store's `custom.recently_sold_count` and
   `custom.recently_sold_hours` (`ProductMetafields.recentSales`), from 5 units on, in all 11

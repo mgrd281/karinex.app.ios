@@ -106,6 +106,7 @@ final class AppContainer {
     let settingsStore: AppSettingsStore
     /// The wishlist and the recently viewed products, on this device only.
     let savedProductsStore: SavedProductsStore
+    let saveCountStore: SaveCountStore
     /// The accepted payment methods (Shopify's payment settings plus Klarna), shown with their
     /// acceptance marks in the cart and on the product page.
     let paymentMethodsStore: PaymentMethodsStore
@@ -219,6 +220,7 @@ final class AppContainer {
         self.sessionStore = sessionStore
         settingsStore = AppSettingsStore(store: services.preferences)
         savedProductsStore = SavedProductsStore(store: services.preferences)
+        saveCountStore = SaveCountStore(http: services.httpClient, consentStore: consentStore)
         paymentMethodsStore = PaymentMethodsStore(catalog: catalogRepository)
         let pushCoordinator = PushRegistrationCoordinator(
             system: SystemRemoteNotifications(),
