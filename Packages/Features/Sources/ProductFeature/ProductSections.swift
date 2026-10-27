@@ -92,11 +92,15 @@ struct ProductAvailabilityRow: View {
             )
             row(systemImage: fulfillment.systemImage, iconColor: KXColor.textPrimary, text: Text(fulfillment.deliveryNote))
             if let recentSales {
-                row(
-                    systemImage: "chart.line.uptrend.xyaxis",
-                    iconColor: KXColor.textPrimary,
-                    text: Text("product.recent_sales \(recentSales.count) \(recentSales.days)", bundle: .module)
-                )
+                HStack(alignment: .center, spacing: KXSpacing.s) {
+                    ProductTrendIcon()
+                        .frame(width: iconWidth, alignment: .leading)
+                    Text("product.recent_sales \(recentSales.count) \(recentSales.days)", bundle: .module)
+                        .foregroundStyle(KXColor.textPrimary)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .kxFont(.callout)
             }
         }
         .accessibilityElement(children: .combine)
@@ -115,6 +119,43 @@ struct ProductAvailabilityRow: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .kxFont(.callout)
+    }
+}
+
+// MARK: - ProductTrendIcon
+
+/// The icon of the "recently sold" row: an arrow pointing up and to the right on a soft green
+/// disc. Every few seconds the arrow rises a little along its direction and settles again; with
+/// Reduce Motion it stays still.
+struct ProductTrendIcon: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @ScaledMetric(relativeTo: .callout) private var discSize: CGFloat = 26
+
+    var body: some View {
+        Circle()
+            .fill(KXColor.success.opacity(0.14))
+            .frame(width: discSize, height: discSize)
+            .overlay {
+                if reduceMotion {
+                    arrow
+                } else {
+                    KeyframeAnimator(initialValue: CGFloat.zero, repeating: true) { rise in
+                        arrow.offset(x: rise, y: -rise)
+                    } keyframes: { _ in
+                        SpringKeyframe(KXMotion.trendRiseDistance, duration: KXMotion.trendRiseDuration / 2, spring: .snappy)
+                        SpringKeyframe(0, duration: KXMotion.trendRiseDuration / 2, spring: .smooth)
+                        LinearKeyframe(0, duration: KXMotion.trendRestDuration)
+                    }
+                }
+            }
+            .clipShape(Circle())
+            .accessibilityHidden(true)
+    }
+
+    private var arrow: some View {
+        Image(systemName: "arrow.up.right")
+            .font(.system(size: discSize * 0.5, weight: .bold))
+            .foregroundStyle(KXColor.success)
     }
 }
 

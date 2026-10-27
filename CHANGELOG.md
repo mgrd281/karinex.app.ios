@@ -12,6 +12,9 @@ change.
 
 ### Added
 
+- **Trend icon in the "recently sold" row** (owner request): a green arrow pointing up and to
+  the right on a soft green disc replaces the chart line; every few seconds it rises a little and
+  settles (`ProductTrendIcon`, timings `MotionToken.trend*`), still with Reduce Motion.
 - **Save counter beside the heart** (owner request): the product page shows how many customers
   saved the product, the same number as the web shop (its Firebase counter
   `wishlist/<handle>`), and counts the customer's own save or removal. Only with the analytics

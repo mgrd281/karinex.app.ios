@@ -86,4 +86,10 @@ public enum MotionToken {
     public static let heartPopScale: Double = 1.12
     /// How long the small hearts take to burst from the saved heart and fade.
     public static let heartBurstDuration: Double = 0.45
+    /// How long the trend arrow on the product page takes to rise and settle again.
+    public static let trendRiseDuration: Double = 0.7
+    /// How long the trend arrow rests between two rises.
+    public static let trendRestDuration: Double = 2.3
+    /// How far the trend arrow rises, in points along each axis.
+    public static let trendRiseDistance: Double = 2.5
 }
