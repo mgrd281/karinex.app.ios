@@ -64,6 +64,10 @@ private actor RecordingBackend: BackendClient {
         throw BackendError.notConfigured
     }
 
+    func loyaltyReferral() async throws -> LoyaltyReferralCode {
+        throw BackendError.notConfigured
+    }
+
     func walletPass() async throws -> Data {
         throw BackendError.notConfigured
     }

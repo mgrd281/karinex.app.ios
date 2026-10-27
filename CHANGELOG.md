@@ -12,6 +12,12 @@ change.
 
 ### Added
 
+- **Invite friends** (owner request, like the referral box on karinex.de): the loyalty screen has a
+  section "Freunde einladen". The customer creates a personal code once (`POST
+  /v1/app/loyalty/referral`), shares it with the system share sheet (message plus the shop link that
+  puts the code into the cart) or copies it. The friend saves 10 % on the first order, the customer
+  gets the reward points once that order is confirmed; the section shows how many friends were
+  referred. History line "Freund geworben". Texts in the 11 languages.
 - **Permanent discount per loyalty level** (owner decision 27.10.2026): two new levels, Diamant and
   Elite (with their own card colors), and a section "Ihr Dauerrabatt" on the loyalty screen with the
   discount of the current level ("5 % auf jede Bestellung") and of the next one. The backend sends it

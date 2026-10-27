@@ -142,6 +142,16 @@ public struct LoyaltyScreen: View {
             Text(failureMessage ?? "")
         }
         .alert(
+            Text("account.loyalty.referral.error.title", bundle: .module),
+            isPresented: $model.referralFailed
+        ) {
+            Button(role: .cancel) {} label: {
+                Text("account.signin.error.close", bundle: .module)
+            }
+        } message: {
+            Text("account.loyalty.referral.error.message", bundle: .module)
+        }
+        .alert(
             Text("account.loyalty.wallet.error.title", bundle: .module),
             isPresented: $model.walletPassFailed
         ) {
@@ -214,6 +224,7 @@ public struct LoyaltyScreen: View {
                     balance(status, format)
                     rewards(status, format)
                         .id(Anchor.rewards)
+                    referral(status, format)
                     history(status, format)
                         .id(Anchor.history)
                 }
@@ -288,6 +299,79 @@ public struct LoyaltyScreen: View {
         }
     }
     #endif
+
+    /// "Freunde einladen": the friend saves on the first order with the customer's code, the
+    /// customer gets reward points. The code is created on the first tap and shared with the
+    /// system share sheet (message and the shop link that puts the code into the cart).
+    @ViewBuilder
+    private func referral(_ status: LoyaltyStatus, _ format: LoyaltyFormat) -> some View {
+        if let referral = status.referral, referral.active {
+            KXListGroup(Text("account.loyalty.referral.title", bundle: .module)) {
+                VStack(alignment: .leading, spacing: KXSpacing.m) {
+                    Text(
+                        "account.loyalty.referral.body \(referral.friendPercent) \(format.points(referral.rewardPoints)) \(format.euro(cents: referral.rewardCents))",
+                        bundle: .module
+                    )
+                    .kxFont(.body)
+                    .foregroundStyle(KXColor.textPrimary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    if let code = referral.code {
+                        Text(verbatim: code)
+                            .kxFont(.licenseKey)
+                            .foregroundStyle(KXColor.keyCardText)
+                            .frame(maxWidth: .infinity)
+                            .padding(KXSpacing.m)
+                            .background(KXColor.keyCardBackground, in: RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous))
+                            .textSelection(.enabled)
+                            .accessibilityIdentifier("loyalty.referral.code")
+                        if let link = referral.link {
+                            ShareLink(
+                                item: link,
+                                subject: Text("account.loyalty.referral.share.subject", bundle: .module),
+                                message: Text("account.loyalty.referral.share.message \(code) \(referral.friendPercent)", bundle: .module)
+                            ) {
+                                Label {
+                                    Text("account.loyalty.referral.share", bundle: .module)
+                                } icon: {
+                                    Image(systemName: "square.and.arrow.up")
+                                        .accessibilityHidden(true)
+                                }
+                            }
+                            .buttonStyle(.kx(isFullWidth: true))
+                            .accessibilityIdentifier("loyalty.referral.share")
+                        }
+                        KXButton(
+                            String(localized: "account.loyalty.code.copy", bundle: .module),
+                            systemImage: "doc.on.doc",
+                            style: .secondary,
+                            isFullWidth: true
+                        ) {
+                            KXClipboard.copySensitive(code)
+                        }
+                    } else {
+                        KXButton(
+                            String(localized: "account.loyalty.referral.create", bundle: .module),
+                            systemImage: "person.badge.plus",
+                            isFullWidth: true,
+                            isLoading: model.isCreatingReferral
+                        ) {
+                            Task { await model.createReferral() }
+                        }
+                        .accessibilityIdentifier("loyalty.referral.create")
+                    }
+                    if referral.rewarded > 0 || referral.pending > 0 {
+                        Text("account.loyalty.referral.count \(referral.rewarded) \(referral.pending)", bundle: .module)
+                            .kxFont(.subheadline)
+                            .foregroundStyle(KXColor.textSecondary)
+                    }
+                }
+                .padding(KXSpacing.m)
+            } footer: {
+                Text("account.loyalty.referral.footer \(referral.maxPerYear)", bundle: .module)
+            }
+            .accessibilityIdentifier("loyalty.referral")
+        }
+    }
 
     /// "Ihr Dauerrabatt": the permanent discount of the level and the next one, only while the
     /// store has it switched on.
@@ -688,6 +772,7 @@ extension LoyaltyStatus.HistoryKind {
         case .release: "arrow.counterclockwise.circle"
         case .adjust: "slider.horizontal.3"
         case .expire: "clock.badge.xmark"
+        case .referral: "person.2"
         case .other: "circle"
         }
     }
@@ -700,6 +785,7 @@ extension LoyaltyStatus.HistoryKind {
         case .release: String(localized: "account.loyalty.history.release", bundle: .module)
         case .adjust: String(localized: "account.loyalty.history.adjust", bundle: .module)
         case .expire: String(localized: "account.loyalty.history.expire", bundle: .module)
+        case .referral: String(localized: "account.loyalty.history.referral", bundle: .module)
         case .other: String(localized: "account.loyalty.history.other", bundle: .module)
         }
     }

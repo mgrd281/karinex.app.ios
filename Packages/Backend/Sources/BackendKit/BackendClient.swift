@@ -67,6 +67,9 @@ public protocol BackendClient: Sendable {
     /// same `idempotencyKey` always returns the same code, so a double tap never spends twice.
     /// Throws ``LoyaltyRedeemError`` when the backend refuses (the points are not spent).
     func redeemLoyalty(points: Int, idempotencyKey: String) async throws -> LoyaltyRedeemCode
+    /// `POST /v1/app/loyalty/referral`: the customer's referral code, created on the first call; the
+    /// same customer always gets the same code. Throws ``LoyaltyReferralError`` when refused.
+    func loyaltyReferral() async throws -> LoyaltyReferralCode
     /// `GET /v1/app/wallet-card`: the customer's KARINEX card for Apple Wallet as `.pkpass` data.
     /// `.notFound` when the account has no card or Apple Wallet is not set up on the backend.
     func walletPass() async throws -> Data
@@ -202,6 +205,18 @@ public final class HTTPBackendClient: BackendClient {
         let response = try await send(.post, path: "/v1/app/loyalty/redeem", authenticated: true, body: body, acceptedStatus: [200, 409])
         if response.statusCode == 409 {
             throw LoyaltyRedeemError(reason: (try? JSONDecoder().decode(Rejection.self, from: response.body))?.reason)
+        }
+        return try decode(response)
+    }
+
+    public func loyaltyReferral() async throws -> LoyaltyReferralCode {
+        struct Rejection: Decodable {
+            let reason: String?
+        }
+        let response = try await send(.post, path: "/v1/app/loyalty/referral", authenticated: true, acceptedStatus: [200, 409])
+        if response.statusCode == 409 {
+            let reason = (try? JSONDecoder().decode(Rejection.self, from: response.body))?.reason
+            throw reason == "in_progress" ? LoyaltyReferralError.inProgress : LoyaltyReferralError.disabled
         }
         return try decode(response)
     }
@@ -396,6 +411,10 @@ public struct UnavailableBackendClient: BackendClient {
     }
 
     public func redeemLoyalty(points _: Int, idempotencyKey _: String) async throws -> LoyaltyRedeemCode {
+        throw BackendError.notConfigured
+    }
+
+    public func loyaltyReferral() async throws -> LoyaltyReferralCode {
         throw BackendError.notConfigured
     }
 

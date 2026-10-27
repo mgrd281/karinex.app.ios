@@ -34,6 +34,10 @@ final class LoyaltyViewModel {
     private(set) var isLoadingWalletPass = false
     /// Whether the last attempt to get the Apple Wallet card failed; shown until dismissed.
     var walletPassFailed = false
+    /// Whether the referral code is being created.
+    private(set) var isCreatingReferral = false
+    /// Whether the last attempt to create the referral code failed; shown until dismissed.
+    var referralFailed = false
 
     @ObservationIgnored private let backend: any BackendClient
     @ObservationIgnored private let makeKey: @Sendable () -> String
@@ -112,6 +116,21 @@ final class LoyaltyViewModel {
                 walletPassFailed = true
             }
             return nil
+        }
+    }
+
+    /// Creates the customer's referral code (the backend keeps one per customer, so a repeated tap
+    /// returns the same code) and reloads the status, which then carries the code and the link.
+    func createReferral() async {
+        guard !isCreatingReferral, state.value?.referral?.active == true else { return }
+        isCreatingReferral = true
+        defer { isCreatingReferral = false }
+        do {
+            _ = try await backend.loyaltyReferral()
+            await load()
+        } catch {
+            referralFailed = true
+            await load()
         }
     }
 

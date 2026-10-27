@@ -867,6 +867,10 @@ No Apple In-App Purchase is involved anywhere.
   (current and next level) while `discount.active` is true; Shopify deducts it at checkout for a
   signed-in customer, so the app does nothing at checkout. Six levels: Starter, Silber, Gold,
   Platin, Diamant, Elite; `LoyaltyTier` decodes an unknown id as `starter` wherever it appears.
+- Invite friends (`referral` in the status, optional): the backend keeps one Shopify discount code
+  per customer and decides every reward (first order of a new customer only, never the customer
+  themself, a yearly cap). The app only creates the code on a tap (`LoyaltyViewModel.createReferral`)
+  and shares it with `ShareLink` (only https links from the backend are shared).
 - Redeeming is a deliberate flow: the confirmation dialog states the conditions first, then
   `LoyaltyViewModel.redeem` posts the step with one idempotency key per attempt. After a failure
   that may have reached the server the next tap reuses the key, so the backend returns the same

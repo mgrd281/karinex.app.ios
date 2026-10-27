@@ -88,6 +88,7 @@ actor StubBackend: BackendClient {
     var loyaltyResult: Result<LoyaltyStatus, BackendError> = .failure(.notConfigured)
     var redeemResult: Result<LoyaltyRedeemCode, any Error> = .failure(BackendError.notConfigured)
     var walletPassResult: Result<Data, BackendError> = .failure(.notConfigured)
+    var referralResult: Result<LoyaltyReferralCode, any Error> = .failure(BackendError.notConfigured)
     private(set) var calls: [String] = []
 
     func setOrders(_ result: Result<[BackendOrderStatus], BackendError>) {
@@ -116,6 +117,10 @@ actor StubBackend: BackendClient {
 
     func setWalletPass(_ result: Result<Data, BackendError>) {
         walletPassResult = result
+    }
+
+    func setReferral(_ result: Result<LoyaltyReferralCode, any Error>) {
+        referralResult = result
     }
 
     func setConfig(_ config: RemoteAppConfig) {
@@ -158,6 +163,11 @@ actor StubBackend: BackendClient {
     func redeemLoyalty(points: Int, idempotencyKey: String) async throws -> LoyaltyRedeemCode {
         calls.append("redeem:\(points):\(idempotencyKey)")
         return try redeemResult.get()
+    }
+
+    func loyaltyReferral() async throws -> LoyaltyReferralCode {
+        calls.append("referral")
+        return try referralResult.get()
     }
 
     func walletPass() async throws -> Data {

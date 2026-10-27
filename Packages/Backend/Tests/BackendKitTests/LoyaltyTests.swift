@@ -105,6 +105,41 @@ struct LoyaltyTests {
         #expect(status.perks[0].text(languageCode: "fr") == "Early access to sales")
     }
 
+    @Test("The referral block decodes; only https links are kept")
+    func referral() throws {
+        let json = #"""
+            {"active": true, "friendPercent": 10, "rewardPoints": 5000, "rewardCents": 500, "maxPerYear": 20,
+             "code": "FREUND-AB23CD", "link": "https://www.karinex.de/discount/FREUND-AB23CD", "rewarded": 2, "pending": 1}
+            """#
+        let referral = try JSONDecoder().decode(LoyaltyStatus.Referral.self, from: Data(json.utf8))
+        #expect(referral.active)
+        #expect(referral.code == "FREUND-AB23CD")
+        #expect(referral.link?.absoluteString == "https://www.karinex.de/discount/FREUND-AB23CD")
+        #expect(referral.rewardCents == 500)
+        #expect(referral.rewarded == 2 && referral.pending == 1)
+        let bare = try JSONDecoder().decode(LoyaltyStatus.Referral.self, from: Data(#"{"active": true, "code": "", "link": "javascript:alert(1)"}"#.utf8))
+        #expect(bare.code == nil)
+        #expect(bare.link == nil)
+    }
+
+    @Test("Creating the referral code posts to the route; a refusal maps to an error")
+    func createReferral() async throws {
+        let http = QueueHTTPClient([
+            reply(#"{"code":"FREUND-AB23CD","link":"https://www.karinex.de/discount/FREUND-AB23CD","friendPercent":10,"rewardPoints":5000,"rewardCents":500}"#),
+            reply(#"{"code":"referral_rejected","reason":"disabled","message":"x","requestId":"r"}"#, status: 409),
+            reply(#"{"code":"referral_rejected","reason":"in_progress","message":"x","requestId":"r"}"#, status: 409),
+        ])
+        let client = makeClient(http)
+        let code = try await client.loyaltyReferral()
+        #expect(code.code == "FREUND-AB23CD")
+        #expect(code.friendPercent == 10)
+        #expect(http.requests.first?.url.path == "/v1/app/loyalty/referral")
+        #expect(http.requests.first?.method == .post)
+        #expect(http.requests.first?.headers["Authorization"] == "Bearer shcat_token")
+        await #expect(throws: LoyaltyReferralError.disabled) { try await client.loyaltyReferral() }
+        await #expect(throws: LoyaltyReferralError.inProgress) { try await client.loyaltyReferral() }
+    }
+
     @Test("A backend without permanent discounts decodes; the discount is nil")
     func noDiscount() async throws {
         let status = try await makeClient(QueueHTTPClient([reply(statusJSON)])).loyalty()

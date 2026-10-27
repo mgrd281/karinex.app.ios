@@ -12,7 +12,7 @@ private enum LoyaltyFixtures {
         LoyaltyStatus.RedeemStep(points: 3000, cents: 300, minSubtotalCents: 1500),
     ]
 
-    static func status(available: Int = 1500, enabled: Bool = true) -> LoyaltyStatus {
+    static func status(available: Int = 1500, enabled: Bool = true, referral: LoyaltyStatus.Referral? = nil) -> LoyaltyStatus {
         LoyaltyStatus(
             enabled: enabled,
             tier: .init(
@@ -25,6 +25,7 @@ private enum LoyaltyFixtures {
             perks: [.init(de: "Früher Zugang", en: "Early access")],
             reward: .init(available: available, pending: 0, expiringSoon: nil),
             redeem: .init(steps: steps, maxPercent: 20, minOrderCents: 1000, codeValidDays: 30),
+            referral: referral,
             earn: .init(tierPerEuro: 10, rewardPerEuro: 10, holdDays: 7, tierWindowMonths: 12, rewardExpiryMonths: 12),
             history: []
         )
@@ -76,6 +77,33 @@ struct LoyaltyViewModelTests {
         #expect(await model.loadWalletPass() == nil)
         #expect(model.walletPassFailed)
         #expect(await backend.calls == ["walletPass", "walletPass"])
+    }
+
+    @Test("The referral code is created once on a tap, only while the program runs, and the status reloads")
+    func createReferral() async {
+        let backend = StubBackend()
+        let on = LoyaltyStatus.Referral(active: true, friendPercent: 10, rewardPoints: 5000, rewardCents: 500, maxPerYear: 20)
+        await backend.setLoyalty(.success(LoyaltyFixtures.status(referral: on)))
+        let code = LoyaltyReferralCode(code: "FREUND-AB23CD", link: URL(string: "https://www.karinex.de/discount/FREUND-AB23CD"), friendPercent: 10, rewardPoints: 5000)
+        await backend.setReferral(.success(code))
+        let model = model(backend)
+        await model.load()
+
+        await model.createReferral()
+        #expect(!model.referralFailed)
+        #expect(!model.isCreatingReferral)
+        #expect(await backend.calls == ["loyalty", "referral", "loyalty"])
+
+        await backend.setReferral(.failure(LoyaltyReferralError.disabled))
+        await model.createReferral()
+        #expect(model.referralFailed)
+
+        let off = LoyaltyStatus.Referral(active: false, friendPercent: 10, rewardPoints: 5000, rewardCents: 500, maxPerYear: 20)
+        await backend.setLoyalty(.success(LoyaltyFixtures.status(referral: off)))
+        await model.load()
+        let before = await backend.calls.count
+        await model.createReferral()
+        #expect(await backend.calls.count == before, "switched off: no request")
     }
 
     @Test("The status is loaded from the backend")
@@ -252,6 +280,13 @@ struct LoyaltyStringTests {
             "account.loyalty.discount.title",
             "account.loyalty.discount.current.detail",
             "account.loyalty.discount.none",
+            "account.loyalty.referral.title",
+            "account.loyalty.referral.create",
+            "account.loyalty.referral.share",
+            "account.loyalty.referral.share.subject",
+            "account.loyalty.referral.error.title",
+            "account.loyalty.referral.error.message",
+            "account.loyalty.history.referral",
             "account.loyalty.message.max",
             "account.loyalty.action.collect",
             "account.loyalty.action.rewards",

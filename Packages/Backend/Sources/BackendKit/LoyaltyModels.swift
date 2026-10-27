@@ -193,6 +193,8 @@ public struct LoyaltyStatus: Sendable, Hashable, Decodable {
         case release = "RELEASE"
         case adjust = "ADJUST"
         case expire = "EXPIRE"
+        /// Reward points for a friend's first order with the customer's referral code.
+        case referral = "REFERRAL"
         /// A kind a newer backend added.
         case other
     }
@@ -302,6 +304,66 @@ public struct LoyaltyStatus: Sendable, Hashable, Decodable {
         }
     }
 
+    /// "Freunde einladen": the friend saves `friendPercent` on the first order with the customer's
+    /// code, the customer gets `rewardPoints` once that order is confirmed.
+    public struct Referral: Sendable, Hashable, Decodable {
+        /// Whether the store runs the referral program.
+        public let active: Bool
+        public let friendPercent: Int
+        public let rewardPoints: Int
+        /// What the reward points are worth, in cents (computed by the backend).
+        public let rewardCents: Int
+        /// The most friends rewarded within 12 months.
+        public let maxPerYear: Int
+        /// The customer's code, `nil` until it was created.
+        public let code: String?
+        /// The link that puts the code into the cart in the web shop.
+        public let link: URL?
+        /// Friends whose first order is confirmed.
+        public let rewarded: Int
+        /// Friends whose first order is not confirmed yet.
+        public let pending: Int
+
+        private enum CodingKeys: String, CodingKey {
+            case active, friendPercent, rewardPoints, rewardCents, maxPerYear, code, link, rewarded, pending
+        }
+
+        public init(from decoder: any Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            active = try container.decodeIfPresent(Bool.self, forKey: .active) ?? false
+            friendPercent = try max(0, container.decodeIfPresent(Int.self, forKey: .friendPercent) ?? 0)
+            rewardPoints = try max(0, container.decodeIfPresent(Int.self, forKey: .rewardPoints) ?? 0)
+            rewardCents = try max(0, container.decodeIfPresent(Int.self, forKey: .rewardCents) ?? 0)
+            maxPerYear = try max(0, container.decodeIfPresent(Int.self, forKey: .maxPerYear) ?? 0)
+            code = try container.decodeIfPresent(String.self, forKey: .code).flatMap { $0.isEmpty ? nil : $0 }
+            link = try container.decodeIfPresent(String.self, forKey: .link).flatMap(LoyaltyReferralCode.webLink)
+            rewarded = try max(0, container.decodeIfPresent(Int.self, forKey: .rewarded) ?? 0)
+            pending = try max(0, container.decodeIfPresent(Int.self, forKey: .pending) ?? 0)
+        }
+
+        public init(
+            active: Bool,
+            friendPercent: Int,
+            rewardPoints: Int,
+            rewardCents: Int,
+            maxPerYear: Int,
+            code: String? = nil,
+            link: URL? = nil,
+            rewarded: Int = 0,
+            pending: Int = 0
+        ) {
+            self.active = active
+            self.friendPercent = friendPercent
+            self.rewardPoints = rewardPoints
+            self.rewardCents = rewardCents
+            self.maxPerYear = maxPerYear
+            self.code = code
+            self.link = link
+            self.rewarded = rewarded
+            self.pending = pending
+        }
+    }
+
     /// Whether the program is switched on.
     public let enabled: Bool
     public let tier: Level
@@ -310,6 +372,8 @@ public struct LoyaltyStatus: Sendable, Hashable, Decodable {
     public let perks: [Perk]
     public let reward: Reward
     public let redeem: Redeem
+    /// `nil` from a backend without the referral program.
+    public let referral: Referral?
     public let earn: Earn
     public let history: [HistoryItem]
 
@@ -320,6 +384,7 @@ public struct LoyaltyStatus: Sendable, Hashable, Decodable {
         perks: [Perk],
         reward: Reward,
         redeem: Redeem,
+        referral: Referral? = nil,
         earn: Earn,
         history: [HistoryItem]
     ) {
@@ -329,6 +394,7 @@ public struct LoyaltyStatus: Sendable, Hashable, Decodable {
         self.perks = perks
         self.reward = reward
         self.redeem = redeem
+        self.referral = referral
         self.earn = earn
         self.history = history
     }
@@ -367,6 +433,51 @@ public struct LoyaltyRedeemCode: Sendable, Hashable, Decodable, Identifiable {
         self.minSubtotalCents = minSubtotalCents
         self.expiresAt = expiresAt
     }
+}
+
+// MARK: - LoyaltyReferralCode
+
+/// `POST /v1/app/loyalty/referral`: the customer's own referral code, created on the first call.
+public struct LoyaltyReferralCode: Sendable, Hashable, Decodable {
+    public let code: String
+    /// The link that puts the code into the cart in the web shop; `nil` when the backend sent no
+    /// usable https link.
+    public let link: URL?
+    public let friendPercent: Int
+    public let rewardPoints: Int
+
+    private enum CodingKeys: String, CodingKey {
+        case code, link, friendPercent, rewardPoints
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        code = try container.decode(String.self, forKey: .code)
+        link = try container.decodeIfPresent(String.self, forKey: .link).flatMap(Self.webLink)
+        friendPercent = try container.decodeIfPresent(Int.self, forKey: .friendPercent) ?? 0
+        rewardPoints = try container.decodeIfPresent(Int.self, forKey: .rewardPoints) ?? 0
+    }
+
+    public init(code: String, link: URL?, friendPercent: Int, rewardPoints: Int) {
+        self.code = code
+        self.link = link
+        self.friendPercent = friendPercent
+        self.rewardPoints = rewardPoints
+    }
+
+    /// Only https links are shared, so a broken backend value never ends up in a message.
+    static func webLink(_ string: String) -> URL? {
+        guard let url = URL(string: string), url.scheme == "https", url.host != nil else { return nil }
+        return url
+    }
+}
+
+/// Why the backend refused to create the referral code.
+public enum LoyaltyReferralError: Error, Sendable, Hashable {
+    /// The referral program is switched off.
+    case disabled
+    /// Another request is creating the code right now.
+    case inProgress
 }
 
 // MARK: - LoyaltyRedeemError

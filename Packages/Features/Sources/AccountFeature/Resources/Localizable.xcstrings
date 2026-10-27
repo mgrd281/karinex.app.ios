@@ -7561,6 +7561,78 @@
         }
       }
     },
+    "account.loyalty.history.referral" : {
+      "comment" : "History line: reward points for a friend's first order.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freund geworben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Friend referred"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polecony znajomy"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vriend geworven"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amigo indicado"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vän värvad"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ven hvervet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amigo invitado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ami parrainé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amico invitato"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ystävä kutsuttu"
+          }
+        }
+      }
+    },
     "account.loyalty.history.refund" : {
       "comment" : "History line: points were taken back because of a refund.",
       "extractionState" : "manual",
@@ -8205,6 +8277,726 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ statuspistettä · %2$@ alkaen %3$@"
+          }
+        }
+      }
+    },
+    "account.loyalty.referral.body %lld %@ %@" : {
+      "comment" : "Text of the referral section. %1$lld is the friend's discount in percent, %2$@ the reward points, %3$@ their value in euros.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihr Freund spart %1$lld %% auf seine erste Bestellung. Sie bekommen dafür %2$@ Prämienpunkte (%3$@)."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your friend saves %1$lld %% on their first order. You get %2$@ reward points (%3$@)."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Znajomy oszczędza %1$lld %% na pierwszym zamówieniu. Otrzymujesz %2$@ punktów nagród (%3$@)."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uw vriend bespaart %1$lld %% op de eerste bestelling. U krijgt %2$@ beloningspunten (%3$@)."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O seu amigo poupa %1$lld %% na primeira encomenda. Recebe %2$@ pontos de recompensa (%3$@)."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din vän sparar %1$lld %% på sin första beställning. Du får %2$@ bonuspoäng (%3$@)."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din ven sparer %1$lld %% på sin første bestilling. Du får %2$@ bonuspoint (%3$@)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Su amigo ahorra un %1$lld %% en su primer pedido. Usted recibe %2$@ puntos de premio (%3$@)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre ami économise %1$lld %% sur sa première commande. Vous recevez %2$@ points de récompense (%3$@)."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il suo amico risparmia il %1$lld %% sul primo ordine. Lei riceve %2$@ punti premio (%3$@)."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ystäväsi säästää %1$lld %% ensimmäisestä tilauksestaan. Saat %2$@ palkintopistettä (%3$@)."
+          }
+        }
+      }
+    },
+    "account.loyalty.referral.count %lld %lld" : {
+      "comment" : "Line under the referral code. %1$lld friends rewarded, %2$lld friends whose first order is still being checked.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geworben: %1$lld, in Prüfung: %2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referred: %1$lld, being checked: %2$lld"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polecono: %1$lld, w trakcie sprawdzania: %2$lld"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geworven: %1$lld, in behandeling: %2$lld"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indicados: %1$lld, em verificação: %2$lld"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Värvade: %1$lld, under kontroll: %2$lld"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hvervet: %1$lld, under kontrol: %2$lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invitados: %1$lld, en revisión: %2$lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parrainés : %1$lld, en vérification : %2$lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invitati: %1$lld, in verifica: %2$lld"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kutsuttu: %1$lld, tarkistuksessa: %2$lld"
+          }
+        }
+      }
+    },
+    "account.loyalty.referral.create" : {
+      "comment" : "Button: creates the customer's personal referral code.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meinen Einladungscode erstellen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create my invite code"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utwórz mój kod zaproszenia"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mijn uitnodigingscode maken"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criar o meu código de convite"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skapa min inbjudningskod"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opret min invitationskode"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear mi código de invitación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Créer mon code d’invitation"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea il mio codice invito"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luo kutsukoodini"
+          }
+        }
+      }
+    },
+    "account.loyalty.referral.error.message" : {
+      "comment" : "Alert message when the referral code could not be created.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte versuchen Sie es gleich noch einmal."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please try again in a moment."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spróbuj ponownie za chwilę."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Probeer het zo meteen opnieuw."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tente novamente daqui a pouco."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Försök igen om en stund."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prøv igen om lidt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inténtelo de nuevo en un momento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veuillez réessayer dans un instant."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riprovi tra un momento."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yritä hetken kuluttua uudelleen."
+          }
+        }
+      }
+    },
+    "account.loyalty.referral.error.title" : {
+      "comment" : "Alert title when the referral code could not be created.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code nicht erstellt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code not created"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie utworzono kodu"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code niet gemaakt"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Código não criado"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koden skapades inte"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koden blev ikke oprettet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Código no creado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code non créé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codice non creato"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koodia ei luotu"
+          }
+        }
+      }
+    },
+    "account.loyalty.referral.footer %lld" : {
+      "comment" : "Footer of the referral section. %lld is the most friends rewarded within 12 months.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Punkte kommen, wenn Ihr Freund zum ersten Mal bei KARINEX bestellt, und gelten wie bei einem eigenen Einkauf nach der Lieferung. Höchstens %lld Freunde in 12 Monaten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The points arrive when your friend orders at KARINEX for the first time and count after delivery, like your own purchases. At most %lld friends in 12 months."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punkty otrzymasz, gdy znajomy po raz pierwszy zamówi w KARINEX; liczą się po dostawie, jak przy własnych zakupach. Maksymalnie %lld znajomych w ciągu 12 miesięcy."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De punten komen als uw vriend voor het eerst bij KARINEX bestelt en tellen na de levering, net als bij uw eigen aankopen. Maximaal %lld vrienden in 12 maanden."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os pontos chegam quando o seu amigo encomendar pela primeira vez na KARINEX e contam após a entrega, como nas suas compras. No máximo %lld amigos em 12 meses."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poängen kommer när din vän beställer hos KARINEX för första gången och gäller efter leveransen, som vid egna köp. Högst %lld vänner på 12 månader."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pointene kommer, når din ven bestiller hos KARINEX første gang, og gælder efter leveringen som ved dine egne køb. Højst %lld venner på 12 måneder."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los puntos llegan cuando su amigo pide por primera vez en KARINEX y cuentan tras la entrega, como en sus propias compras. Como máximo %lld amigos en 12 meses."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les points arrivent lorsque votre ami commande pour la première fois chez KARINEX et comptent après la livraison, comme pour vos propres achats. Au maximum %lld amis sur 12 mois."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I punti arrivano quando il suo amico ordina per la prima volta da KARINEX e valgono dopo la consegna, come per i suoi acquisti. Al massimo %lld amici in 12 mesi."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pisteet tulevat, kun ystäväsi tilaa KARINEXilta ensimmäistä kertaa, ja ne lasketaan toimituksen jälkeen kuten omissa ostoksissa. Enintään %lld ystävää 12 kuukaudessa."
+          }
+        }
+      }
+    },
+    "account.loyalty.referral.share" : {
+      "comment" : "Button: opens the share sheet with the referral code and link.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code teilen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share code"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Udostępnij kod"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code delen"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partilhar código"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dela kod"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Del kode"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compartir código"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partager le code"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condividi codice"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jaa koodi"
+          }
+        }
+      }
+    },
+    "account.loyalty.referral.share.message %@ %lld" : {
+      "comment" : "Message shared with a friend; the shop link follows it. %1$@ is the code, %2$lld the discount in percent.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit dem Code %1$@ gibt es %2$lld %% Rabatt auf die erste Bestellung bei KARINEX:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With the code %1$@ you get %2$lld %% off your first order at KARINEX:"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Z kodem %1$@ otrzymasz %2$lld %% rabatu na pierwsze zamówienie w KARINEX:"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Met de code %1$@ krijgt u %2$lld %% korting op de eerste bestelling bij KARINEX:"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Com o código %1$@ tem %2$lld %% de desconto na primeira encomenda na KARINEX:"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Med koden %1$@ får du %2$lld %% rabatt på första beställningen hos KARINEX:"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Med koden %1$@ får du %2$lld %% rabat på den første bestilling hos KARINEX:"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con el código %1$@ hay un %2$lld %% de descuento en el primer pedido en KARINEX:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avec le code %1$@, vous obtenez %2$lld %% de remise sur votre première commande chez KARINEX :"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con il codice %1$@ c’è il %2$lld %% di sconto sul primo ordine da KARINEX:"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koodilla %1$@ saat %2$lld %% alennuksen ensimmäisestä tilauksesta KARINEXilla:"
+          }
+        }
+      }
+    },
+    "account.loyalty.referral.share.subject" : {
+      "comment" : "Subject of the shared referral message (mail and similar apps).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rabatt bei KARINEX"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discount at KARINEX"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rabat w KARINEX"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Korting bij KARINEX"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconto na KARINEX"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rabatt hos KARINEX"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rabat hos KARINEX"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descuento en KARINEX"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remise chez KARINEX"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sconto da KARINEX"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alennus KARINEXilla"
+          }
+        }
+      }
+    },
+    "account.loyalty.referral.title" : {
+      "comment" : "Section title on the loyalty screen: invite friends (referral program).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Freunde einladen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite friends"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaproś znajomych"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vrienden uitnodigen"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Convidar amigos"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bjud in vänner"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inviter venner"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invitar a amigos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inviter des amis"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invita amici"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kutsu ystäviä"
           }
         }
       }

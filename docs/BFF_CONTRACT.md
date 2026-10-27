@@ -190,6 +190,9 @@ token like the other routes.
                 "ladder": [{ "tier": "silber", "min": 1000, "percent": 3 },
                            { "tier": "gold", "min": 2500, "percent": 5 }] },
   "perks": [{ "de": "Früher Zugang zu Aktionen", "en": "Early access to promotions" }],
+  "referral": { "active": true, "friendPercent": 10, "rewardPoints": 5000, "rewardCents": 500,
+                "maxPerYear": 20, "code": "FREUND-AB23CD",
+                "link": "https://www.karinex.de/discount/FREUND-AB23CD", "rewarded": 2, "pending": 1 },
   "reward": { "available": 1840, "pending": 120,
               "expiringSoon": { "points": 500, "at": "2026-12-01T00:00:00.000Z" } },
   "redeem": { "steps": [{ "points": 1000, "cents": 100, "minSubtotalCents": 1000 }],
@@ -212,9 +215,28 @@ token like the other routes.
   `tier.next` is `null` and `maxReached` true at the top level (the ring is full).
 - `enabled: false` while the program is switched off (nothing is earned or redeemed).
 - Dates are ISO 8601 with or without fractional seconds. `history[].type` is `EARN`, `REFUND`,
-  `REDEEM`, `RELEASE`, `ADJUST` or `EXPIRE`; `status` is `PENDING` or `CONFIRMED`.
+  `REDEEM`, `RELEASE`, `ADJUST`, `EXPIRE` or `REFERRAL`; `status` is `PENDING` or `CONFIRMED`.
 - Points of an order are credited after payment as pending and confirmed `holdDays` after
   delivery. A refund takes back exactly the linked points.
+
+- `referral` ("Freunde einladen"): the friend saves `friendPercent` on the first order with the
+  customer's code, the customer gets `rewardPoints` reward points (worth `rewardCents`) once that
+  order is confirmed, at most `maxPerYear` friends in 12 months. `code` and `link` are `null` until
+  the customer created the code. `history[].type` `REFERRAL` is such a reward. Older backends omit
+  the field; `active: false` hides the section.
+
+### `POST /v1/app/loyalty/referral`
+
+Returns the customer's referral code and creates it on the first call (one Shopify discount code
+per customer, the same code on every call). No body.
+
+```json
+{ "code": "FREUND-AB23CD", "link": "https://www.karinex.de/discount/FREUND-AB23CD",
+  "friendPercent": 10, "rewardPoints": 5000, "rewardCents": 500 }
+```
+
+- `409` `{ "code": "referral_rejected", "reason": "disabled" | "in_progress" }` while the program is
+  off or another request is creating the code; `503` when Shopify could not create it (retry later).
 
 ### `POST /v1/app/loyalty/redeem`
 

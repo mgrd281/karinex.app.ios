@@ -186,6 +186,40 @@ paths:
           description: No card for this account, or Apple Wallet is not set up.
         default:
           $ref: '#/components/responses/Error'
+  /v1/app/loyalty/referral:
+    post:
+      operationId: loyaltyReferral
+      summary: Returns the customer's referral code, created on the first call
+      parameters:
+        - $ref: '#/components/parameters/AppVersion'
+      responses:
+        '200':
+          description: The code. Every call returns the same code for the same customer.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [code]
+                properties:
+                  code: { type: string }
+                  link: { type: string, format: uri }
+                  friendPercent: { type: integer }
+                  rewardPoints: { type: integer }
+                  rewardCents: { type: integer }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          description: The program is off or the code is being created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reason:
+                    type: string
+                    enum: [disabled, in_progress]
+        '503':
+          description: Shopify could not create the code; retry later.
   /v1/app/loyalty/redeem:
     post:
       operationId: redeemLoyalty
@@ -492,6 +526,19 @@ components:
               maximum: 1
             maxReached:
               type: boolean
+        referral:
+          type: object
+          description: Invite friends. Omitted by older backends.
+          properties:
+            active: { type: boolean }
+            friendPercent: { type: integer }
+            rewardPoints: { type: integer }
+            rewardCents: { type: integer }
+            maxPerYear: { type: integer }
+            code: { type: [string, 'null'] }
+            link: { type: [string, 'null'] }
+            rewarded: { type: integer }
+            pending: { type: integer }
         discount:
           type: object
           description: Permanent discount of the level (Shopify automatic discount for signed-in customers). Omitted by older backends.
