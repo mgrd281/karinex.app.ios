@@ -94,6 +94,28 @@ def write_authentication_key(key_id, pem)
   path
 end
 
+# Revokes the development certificates that earlier CI builds created through the API key.
+#
+# Every TestFlight run starts on a fresh macOS runner without a signing identity, so
+# `-allowProvisioningUpdates` creates a new "Apple Development: Created via API" certificate for
+# the archive; the private key leaves with the runner. After enough runs Apple refuses a new one
+# ("Your account has reached the maximum number of certificates", 27.10.2026). Only certificates
+# of a development type whose name says "Created via API" are revoked: certificates made in Xcode
+# with an Apple ID and every distribution certificate stay. A failure here never stops the build.
+def revoke_ci_development_certificates(api_key)
+  Spaceship::ConnectAPI.token = Spaceship::ConnectAPI::Token.from(hash: api_key)
+  certificates = Spaceship::ConnectAPI::Certificate.all(
+    filter: { certificateType: "DEVELOPMENT,IOS_DEVELOPMENT" }
+  )
+  stale = certificates.select do |certificate|
+    [certificate.name, certificate.display_name].compact.any? { |text| text.include?("Created via API") }
+  end
+  stale.each(&:delete!)
+  UI.message("Revoked #{stale.count} of #{certificates.count} development certificates created by earlier CI builds.")
+rescue StandardError => e
+  UI.important("Could not clean up CI development certificates: #{e.message}")
+end
+
 platform :ios do
   desc "Runs every test target of the KARINEX scheme on an iPhone simulator"
   lane :tests do
@@ -145,6 +167,7 @@ platform :ios do
       )
       build_number = latest.to_i + 1
       UI.message("Latest TestFlight build is #{latest}; this upload is build #{build_number}.")
+      revoke_ci_development_certificates(api_key)
 
       # The build number normally comes from CURRENT_PROJECT_VERSION in Config/Base.xcconfig
       # (Info.plist references it). agvtool writes it into this CI checkout of the generated

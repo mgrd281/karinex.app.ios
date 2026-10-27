@@ -1056,6 +1056,11 @@ DesignTokens tests run through `xcodebuild` because the package declares only iO
 - **Project sync check.** The `ios` job runs `xcodegen generate --spec project.yml` with the
   pinned XcodeGen 2.46.0 and fails if `KARINEX.xcodeproj` changes; the fastlane `beta` lane does
   the same before archiving.
+- **Signing certificates.** Each `beta` run signs on a fresh runner, so automatic signing with
+  the API key creates a new development certificate per run. Before archiving, the lane revokes
+  the development certificates named "Created via API" (`revoke_ci_development_certificates` in
+  `fastlane/Fastfile`) so the account never hits Apple's certificate limit; other certificates are
+  left alone and a failed cleanup never stops the build.
 - **Secrets.** `scripts/write-secrets-xcconfig.sh` writes `Config/Secrets.xcconfig` from the
   repository secrets `KX_STOREFRONT_ACCESS_TOKEN`, `KX_CUSTOMER_ACCOUNT_CLIENT_ID` and
   `KX_APPLE_TEAM_ID` (all optional for CI; an empty value writes no line, so the default of

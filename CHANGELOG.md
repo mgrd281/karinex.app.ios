@@ -272,6 +272,10 @@ change.
 
 ### Fixed
 
+- TestFlight builds no longer stop at "Your account has reached the maximum number of
+  certificates": every run on a fresh runner created a new "Apple Development: Created via API"
+  certificate. The `beta` lane now revokes those CI-made development certificates before
+  archiving; certificates made in Xcode with an Apple ID and distribution certificates stay.
 - The TestFlight export step no longer fails with `option '-authenticationKeyPath' may only be
   provided once`: fastlane already adds the App Store Connect key flags to the export, so the
   lane stops passing them a second time (`export_xcargs`).
