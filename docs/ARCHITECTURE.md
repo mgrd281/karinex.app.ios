@@ -847,6 +847,26 @@ No Apple In-App Purchase is involved anywhere.
   `LocalAuthentication` (`AppSettingsStore.locksLicenses`). `PrivacyCover` hides the whole UI in
   the app switcher.
 
+### Loyalty program
+
+- Server truth, app display: `GET /v1/app/loyalty` returns the level, both point balances, the
+  redemption steps, the earning rules and the history, all computed by the backend from an
+  append-only ledger (docs/BFF_CONTRACT.md). The app calculates nothing and stores no balance;
+  `LoyaltyStatus` is a pure `Decodable` in `BackendKit` (Linux-testable, tolerant of unknown
+  levels and history kinds).
+- Two kinds of points: status points (never spent, rolling 12 months) set the level, reward
+  points are redeemed. `LoyaltyScreen` shows the membership card (`KXLoyaltyCard` in the design
+  system: gradient and ring per level from `LoyaltyPalette`, ring open at the bottom, fills once,
+  still with Reduce Motion), the balances, the reward steps and the history.
+- Redeeming is a deliberate flow: the confirmation dialog states the conditions first, then
+  `LoyaltyViewModel.redeem` posts the step with one idempotency key per attempt. After a failure
+  that may have reached the server the next tap reuses the key, so the backend returns the same
+  code and never spends points twice; a clear answer (code or refusal) ends the attempt. The
+  code sheet copies with `KXClipboard.copySensitive` and applies through
+  `CartStore.applyDiscountCode`.
+- The row "Treueprogramm" sits in the signed-in Konto menu (`AccountDestination.loyalty`) behind
+  `AccountSignInGate`.
+
 ### Support, legal texts and settings
 
 - `SupportContact` offers exactly WhatsApp (`https://wa.me/` from the BFF config), e-mail

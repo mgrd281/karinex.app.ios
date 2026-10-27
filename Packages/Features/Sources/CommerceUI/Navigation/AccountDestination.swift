@@ -17,6 +17,8 @@ public enum AccountDestination: Hashable, Sendable {
     case invoices
     /// The license vault, optionally limited to one order (numeric Shopify order ID).
     case licenses(orderID: String?)
+    /// "Treueprogramm": the membership card, reward points and discount codes.
+    case loyalty
     /// "Persönliche Daten": the customer's name, e-mail address and addresses, and the way to
     /// delete the account.
     case profile

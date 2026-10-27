@@ -233,6 +233,12 @@ struct RootView: View {
             AccountSignInGate(sessionStore: container.sessionStore, reason: .invoices) {
                 InvoicesScreen(repository: container.customerRepository, backend: container.backendClient, onRoute: onRoute)
             }
+        case .loyalty:
+            AccountSignInGate(sessionStore: container.sessionStore, reason: .loyalty) {
+                LoyaltyScreen(backend: container.backendClient) { code in
+                    await container.cartStore.applyDiscountCode(code) == .applied
+                }
+            }
         case let .order(id):
             AccountSignInGate(sessionStore: container.sessionStore, reason: .order) {
                 OrderDetailScreen(

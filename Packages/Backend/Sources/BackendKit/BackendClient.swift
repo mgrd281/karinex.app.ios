@@ -61,6 +61,12 @@ public protocol BackendClient: Sendable {
     func invoice(orderID: String) async throws -> InvoiceLink
     /// `POST /v1/app/account/delete`. Returns the backend's request ID.
     func requestAccountDeletion() async throws -> String?
+    /// `GET /v1/app/loyalty`: the customer's level, points and history.
+    func loyalty() async throws -> LoyaltyStatus
+    /// `POST /v1/app/loyalty/redeem`: exchanges reward points for a one-time discount code. The
+    /// same `idempotencyKey` always returns the same code, so a double tap never spends twice.
+    /// Throws ``LoyaltyRedeemError`` when the backend refuses (the points are not spent).
+    func redeemLoyalty(points: Int, idempotencyKey: String) async throws -> LoyaltyRedeemCode
     /// `POST /v1/app/devices`.
     func registerDevice(_ registration: DeviceRegistration) async throws
     /// `DELETE /v1/app/devices/{token}`.
@@ -170,6 +176,31 @@ public final class HTTPBackendClient: BackendClient {
         let body = Data(#"{"confirm":true}"#.utf8)
         let response = try await send(.post, path: "/v1/app/account/delete", authenticated: true, body: body, acceptedStatus: [200, 202])
         return (try? JSONDecoder().decode(Envelope.self, from: response.body))?.requestId
+    }
+
+    public func loyalty() async throws -> LoyaltyStatus {
+        try await decode(send(.get, path: "/v1/app/loyalty", authenticated: true))
+    }
+
+    public func redeemLoyalty(points: Int, idempotencyKey: String) async throws -> LoyaltyRedeemCode {
+        struct Request: Encodable {
+            let points: Int
+            let idempotencyKey: String
+        }
+        struct Rejection: Decodable {
+            let reason: String?
+        }
+        let body: Data
+        do {
+            body = try JSONEncoder().encode(Request(points: points, idempotencyKey: idempotencyKey))
+        } catch {
+            throw BackendError.decoding
+        }
+        let response = try await send(.post, path: "/v1/app/loyalty/redeem", authenticated: true, body: body, acceptedStatus: [200, 409])
+        if response.statusCode == 409 {
+            throw LoyaltyRedeemError(reason: (try? JSONDecoder().decode(Rejection.self, from: response.body))?.reason)
+        }
+        return try decode(response)
     }
 
     public func registerDevice(_ registration: DeviceRegistration) async throws {
@@ -339,6 +370,14 @@ public struct UnavailableBackendClient: BackendClient {
     }
 
     public func requestAccountDeletion() async throws -> String? {
+        throw BackendError.notConfigured
+    }
+
+    public func loyalty() async throws -> LoyaltyStatus {
+        throw BackendError.notConfigured
+    }
+
+    public func redeemLoyalty(points _: Int, idempotencyKey _: String) async throws -> LoyaltyRedeemCode {
         throw BackendError.notConfigured
     }
 

@@ -56,6 +56,14 @@ private actor RecordingBackend: BackendClient {
         nil
     }
 
+    func loyalty() async throws -> LoyaltyStatus {
+        throw BackendError.notConfigured
+    }
+
+    func redeemLoyalty(points _: Int, idempotencyKey _: String) async throws -> LoyaltyRedeemCode {
+        throw BackendError.notConfigured
+    }
+
     func registerDevice(_ registration: DeviceRegistration) async throws {
         registered.append(registration)
     }

@@ -174,6 +174,62 @@ Starts the GDPR erasure workflow (Art. 17 GDPR, App Store guideline 5.1.1(v)). B
 The app then removes the tokens and the key cache from the device. The customer receives a
 confirmation by e-mail; statutory retention of invoices is explained there.
 
+### `GET /v1/app/loyalty`
+
+The customer's standing in the loyalty program. The backend computes every number from an
+append-only ledger; the app shows them and never calculates points. Signed in with the customer
+token like the other routes.
+
+```json
+{
+  "enabled": true,
+  "tier": { "id": "gold", "points": 1573, "pending": 120,
+            "next": { "tier": "platin", "min": 2500, "remaining": 927 },
+            "progress": 0.63, "maxReached": false },
+  "perks": [{ "de": "Früher Zugang zu Aktionen", "en": "Early access to promotions" }],
+  "reward": { "available": 1840, "pending": 120,
+              "expiringSoon": { "points": 500, "at": "2026-12-01T00:00:00.000Z" } },
+  "redeem": { "steps": [{ "points": 1000, "cents": 100, "minSubtotalCents": 1000 }],
+              "maxPercent": 20, "minOrderCents": 1000, "codeValidDays": 30 },
+  "earn": { "tierPerEuro": 10, "rewardPerEuro": 10, "holdDays": 7,
+            "tierWindowMonths": 12, "rewardExpiryMonths": 12 },
+  "history": [{ "id": "e1", "type": "EARN", "status": "CONFIRMED", "tierPoints": 399,
+                "rewardPoints": 399, "orderNumber": "#1042", "at": "2026-10-20T10:00:00.000Z" }]
+}
+```
+
+- Two kinds of points: status points (`tier`, never spent, counted over `tierWindowMonths`) and
+  reward points (`reward`, redeemable, expire `rewardExpiryMonths` after each credit).
+- `tier.id` is `starter`, `silber`, `gold` or `platin`; an unknown id is shown as `starter`.
+  `tier.next` is `null` and `maxReached` true at the top level (the ring is full).
+- `enabled: false` while the program is switched off (nothing is earned or redeemed).
+- Dates are ISO 8601 with or without fractional seconds. `history[].type` is `EARN`, `REFUND`,
+  `REDEEM`, `RELEASE`, `ADJUST` or `EXPIRE`; `status` is `PENDING` or `CONFIRMED`.
+- Points of an order are credited after payment as pending and confirmed `holdDays` after
+  delivery. A refund takes back exactly the linked points.
+
+### `POST /v1/app/loyalty/redeem`
+
+Exchanges reward points for a one-time Shopify discount code (one customer, one use, a fixed
+amount, valid `codeValidDays`). Body:
+
+```json
+{ "points": 1000, "idempotencyKey": "5D1F3C0E-8E5B-4C1C-9B53-0D2A7E2E4C11" }
+```
+
+`idempotencyKey` is 8 to 64 letters, digits, `-` or `_`. The app creates one per attempt and
+reuses it after a failure that may have reached the backend, so a repeated tap returns the same
+code and never spends the points twice. Answer `200`:
+
+```json
+{ "code": "KX-ABCD-1234", "cents": 100, "minSubtotalCents": 1000, "expiresAt": "2026-11-26T10:00:00.000Z" }
+```
+
+`409 { "code": "redeem_rejected", "reason": "insufficient" | "disabled" | "in_progress" }`:
+refused, no points spent (`in_progress` means the same key is still being processed).
+`503` with `Retry-After` when Shopify could not issue the code; the reservation is released.
+Points of a code that expires unused are credited back.
+
 ### `POST /v1/app/devices` and `DELETE /v1/app/devices/{apnsToken}`
 
 Phase 3. Registers an APNs token only after the customer agreed to notifications.

@@ -85,6 +85,8 @@ actor StubBackend: BackendClient {
     var licenseFailure: BackendError?
     var invoiceResult: Result<InvoiceLink, BackendError> = .failure(.notConfigured)
     var deletionResult: Result<String?, BackendError> = .success("r1")
+    var loyaltyResult: Result<LoyaltyStatus, BackendError> = .failure(.notConfigured)
+    var redeemResult: Result<LoyaltyRedeemCode, any Error> = .failure(BackendError.notConfigured)
     private(set) var calls: [String] = []
 
     func setOrders(_ result: Result<[BackendOrderStatus], BackendError>) {
@@ -101,6 +103,14 @@ actor StubBackend: BackendClient {
 
     func setDeletion(_ result: Result<String?, BackendError>) {
         deletionResult = result
+    }
+
+    func setLoyalty(_ result: Result<LoyaltyStatus, BackendError>) {
+        loyaltyResult = result
+    }
+
+    func setRedeem(_ result: Result<LoyaltyRedeemCode, any Error>) {
+        redeemResult = result
     }
 
     func setConfig(_ config: RemoteAppConfig) {
@@ -133,6 +143,16 @@ actor StubBackend: BackendClient {
     func requestAccountDeletion() async throws -> String? {
         calls.append("delete")
         return try deletionResult.get()
+    }
+
+    func loyalty() async throws -> LoyaltyStatus {
+        calls.append("loyalty")
+        return try loyaltyResult.get()
+    }
+
+    func redeemLoyalty(points: Int, idempotencyKey: String) async throws -> LoyaltyRedeemCode {
+        calls.append("redeem:\(points):\(idempotencyKey)")
+        return try redeemResult.get()
     }
 
     func registerDevice(_: DeviceRegistration) async throws {

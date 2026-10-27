@@ -122,9 +122,9 @@ struct AccountMenuTests {
     @Test("Meine Bestellungen leads the list for everyone; only the account rows need a login")
     func rows() {
         #expect(AccountMenuItem.signedOut == [.orders])
-        #expect(AccountMenuItem.signedIn == [.orders, .invoices, .licenses, .profile])
+        #expect(AccountMenuItem.signedIn == [.orders, .invoices, .licenses, .loyalty, .profile])
         #expect(AccountMenuItem.general == [.wishlist, .settings, .support, .legal])
-        #expect(AccountMenuItem.allCases.filter(\.requiresSignIn) == [.orders, .invoices, .licenses, .profile])
+        #expect(AccountMenuItem.allCases.filter(\.requiresSignIn) == [.orders, .invoices, .licenses, .loyalty, .profile])
     }
 
     @Test("German titles and the short lines under them")

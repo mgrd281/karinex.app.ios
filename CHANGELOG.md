@@ -12,6 +12,15 @@ change.
 
 ### Added
 
+- **Loyalty program with membership card** (owner request): the Konto tab has a "Treueprogramm"
+  row. It shows a circular membership card (Starter, Silber, Gold, Platin with the level colors,
+  progress ring, points and "Noch 927 Punkte bis zum Status Platin", full ring and "Höchste Stufe
+  erreicht" at the top), the two point balances (status points never spent, reward points
+  redeemable), pending points, a warning before points expire, the reward steps (1.000 points for
+  1 euro and so on, conditions shown before confirming) and the history. A redemption returns a
+  one-time Shopify discount code that can be copied or applied to the cart. Everything is computed
+  by the KARINEX backend (`GET /v1/app/loyalty`, `POST /v1/app/loyalty/redeem` with an idempotency
+  key, docs/BFF_CONTRACT.md); the app never calculates points. All texts in the 11 languages.
 - **Save counter for everyone** (owner request "like ASOS"): `SaveCountStore` asks the KARINEX
   backend (`/v1/app/save-counts`) instead of the counter host, so the number beside the heart is
   shown without the analytics consent and the device never contacts a third party for it.

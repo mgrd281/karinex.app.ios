@@ -149,6 +149,83 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         default:
           $ref: '#/components/responses/Error'
+  /v1/app/loyalty:
+    get:
+      operationId: getLoyalty
+      summary: The customer's level, points, redemption steps and history
+      parameters:
+        - $ref: '#/components/parameters/AppVersion'
+      responses:
+        '200':
+          description: The loyalty standing, computed by the backend.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoyaltyStatus'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        default:
+          $ref: '#/components/responses/Error'
+  /v1/app/loyalty/redeem:
+    post:
+      operationId: redeemLoyalty
+      summary: Exchanges reward points for a one-time discount code
+      parameters:
+        - $ref: '#/components/parameters/AppVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [points, idempotencyKey]
+              properties:
+                points:
+                  type: integer
+                  description: One of the redeem steps.
+                idempotencyKey:
+                  type: string
+                  pattern: '^[A-Za-z0-9_-]{8,64}$'
+      responses:
+        '200':
+          description: The code. A repeated key returns the same code.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [code, cents, minSubtotalCents, expiresAt]
+                properties:
+                  code:
+                    type: string
+                  cents:
+                    type: integer
+                  minSubtotalCents:
+                    type: integer
+                  expiresAt:
+                    type: string
+                    format: date-time
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          description: Refused, no points were spent.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    const: redeem_rejected
+                  reason:
+                    type: string
+                    enum: [insufficient, disabled, in_progress]
+        '503':
+          description: Shopify could not issue the code; the reservation was released.
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+        default:
+          $ref: '#/components/responses/Error'
   /v1/app/devices:
     post:
       operationId: registerDevice
@@ -361,6 +438,124 @@ components:
         expiresAt:
           type: [string, 'null']
           format: date-time
+    LoyaltyStatus:
+      type: object
+      required: [enabled, tier, reward, redeem, earn, history]
+      properties:
+        enabled:
+          type: boolean
+        tier:
+          type: object
+          required: [id, points, progress]
+          properties:
+            id:
+              type: string
+              enum: [starter, silber, gold, platin]
+            points:
+              type: integer
+              description: Confirmed status points of the last tierWindowMonths.
+            pending:
+              type: integer
+            next:
+              type: [object, 'null']
+              properties:
+                tier:
+                  type: string
+                  enum: [silber, gold, platin]
+                min:
+                  type: integer
+                remaining:
+                  type: integer
+            progress:
+              type: number
+              minimum: 0
+              maximum: 1
+            maxReached:
+              type: boolean
+        perks:
+          type: array
+          items:
+            type: object
+            properties:
+              de:
+                type: string
+              en:
+                type: string
+        reward:
+          type: object
+          required: [available, pending]
+          properties:
+            available:
+              type: integer
+            pending:
+              type: integer
+            expiringSoon:
+              type: [object, 'null']
+              properties:
+                points:
+                  type: integer
+                at:
+                  type: string
+                  format: date-time
+        redeem:
+          type: object
+          required: [steps, maxPercent, minOrderCents, codeValidDays]
+          properties:
+            steps:
+              type: array
+              items:
+                type: object
+                required: [points, cents, minSubtotalCents]
+                properties:
+                  points:
+                    type: integer
+                  cents:
+                    type: integer
+                  minSubtotalCents:
+                    type: integer
+            maxPercent:
+              type: integer
+            minOrderCents:
+              type: integer
+            codeValidDays:
+              type: integer
+        earn:
+          type: object
+          required: [tierPerEuro, rewardPerEuro, holdDays, tierWindowMonths, rewardExpiryMonths]
+          properties:
+            tierPerEuro:
+              type: integer
+            rewardPerEuro:
+              type: integer
+            holdDays:
+              type: integer
+            tierWindowMonths:
+              type: integer
+            rewardExpiryMonths:
+              type: integer
+        history:
+          type: array
+          items:
+            type: object
+            required: [id, type, at]
+            properties:
+              id:
+                type: string
+              type:
+                type: string
+                enum: [EARN, REFUND, REDEEM, RELEASE, ADJUST, EXPIRE]
+              status:
+                type: string
+                enum: [PENDING, CONFIRMED]
+              tierPoints:
+                type: integer
+              rewardPoints:
+                type: integer
+              orderNumber:
+                type: [string, 'null']
+              at:
+                type: string
+                format: date-time
     DeviceRegistration:
       type: object
       required: [apnsToken, locale, country, consent]

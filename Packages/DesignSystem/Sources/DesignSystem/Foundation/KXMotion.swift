@@ -39,6 +39,8 @@ public enum KXMotion {
     public static let heartPopScale = CGFloat(MotionToken.heartPopScale)
     /// How long the small hearts take to burst from the saved heart and fade.
     public static let heartBurstDuration = MotionToken.heartBurstDuration
+    /// How long the membership ring takes to fill to its value.
+    public static let ringFillDuration = MotionToken.ringFillDuration
     /// How long the trend line takes to draw itself.
     public static let trendDrawDuration = MotionToken.trendDrawDuration
     /// How long the arrow head takes to draw after the line.

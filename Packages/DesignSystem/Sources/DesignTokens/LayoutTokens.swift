@@ -88,6 +88,8 @@ public enum MotionToken {
     public static let heartBurstDuration: Double = 0.45
     /// How long the trend line of the "recently sold" row takes to draw itself.
     public static let trendDrawDuration: Double = 0.75
+    /// How long the membership ring takes to fill to its value.
+    public static let ringFillDuration: Double = 0.9
     /// How long the arrow head takes to draw after the line.
     public static let trendArrowDuration: Double = 0.5
     /// How long the drawn trend stays visible.
