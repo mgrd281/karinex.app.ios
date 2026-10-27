@@ -8425,6 +8425,222 @@
         }
       }
     },
+    "account.loyalty.wallet.error.message" : {
+      "comment" : "Message of the alert when the Apple Wallet customer card could not be loaded. Formal address.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kundekortet til Apple Wallet kunne ikke indlæses lige nu. Prøv igen senere."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Kundenkarte für Apple Wallet konnte gerade nicht geladen werden. Bitte versuchen Sie es später erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The customer card for Apple Wallet could not be loaded right now. Please try again later."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se ha podido cargar ahora la tarjeta de cliente para Apple Wallet. Vuelva a intentarlo más tarde."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Walletin asiakaskorttia ei voitu ladata juuri nyt. Yritä myöhemmin uudelleen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La carte client pour Apple Wallet n’a pas pu être chargée pour le moment. Veuillez réessayer plus tard."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non è stato possibile caricare ora la carta cliente per Apple Wallet. Riprovi più tardi."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De klantenkaart voor Apple Wallet kon nu niet worden geladen. Probeer het later opnieuw."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie udało się teraz wczytać karty klienta do Apple Wallet. Spróbuj ponownie później."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível carregar agora o cartão de cliente para a Apple Wallet. Tente novamente mais tarde."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kundkortet för Apple Wallet kunde inte laddas just nu. Försök igen senare."
+          }
+        }
+      }
+    },
+    "account.loyalty.wallet.error.title" : {
+      "comment" : "Title of the alert when the Apple Wallet customer card could not be loaded. Short.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kortet er ikke tilgængeligt"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Karte nicht verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Card not available"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarjeta no disponible"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kortti ei ole saatavilla"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carte indisponible"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carta non disponibile"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaart niet beschikbaar"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Karta niedostępna"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cartão indisponível"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kortet är inte tillgängligt"
+          }
+        }
+      }
+    },
+    "account.loyalty.wallet.note" : {
+      "comment" : "Hint under the official \"Add to Apple Wallet\" button on the loyalty screen: what the card is. Formal address.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dit KARINEX-kundekort med niveau og point. Det opdateres af sig selv i Wallet."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre KARINEX-Kundenkarte mit Stufe und Punkten. Sie aktualisiert sich im Wallet von selbst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your KARINEX customer card with your level and points. It updates itself in Wallet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Su tarjeta de cliente KARINEX con nivel y puntos. Se actualiza sola en Wallet."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KARINEX-asiakaskorttisi tasolla ja pisteillä. Se päivittyy Walletissa itsestään."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre carte client KARINEX avec votre niveau et vos points. Elle se met à jour toute seule dans Wallet."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sua carta cliente KARINEX con livello e punti. Si aggiorna da sola nel Wallet."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uw KARINEX-klantenkaart met niveau en punten. Ze wordt in Wallet vanzelf bijgewerkt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twoja karta klienta KARINEX z poziomem i punktami. W Wallet aktualizuje się sama."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O seu cartão de cliente KARINEX com nível e pontos. Atualiza-se sozinho na Wallet."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ditt KARINEX-kundkort med nivå och poäng. Det uppdateras av sig självt i Wallet."
+          }
+        }
+      }
+    },
     "account.menu.invoices" : {
       "comment" : "Konto menu row that opens all invoices of the customer as PDF files.",
       "extractionState" : "manual",

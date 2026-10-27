@@ -230,6 +230,16 @@ refused, no points spent (`in_progress` means the same key is still being proces
 `503` with `Retry-After` when Shopify could not issue the code; the reservation is released.
 Points of a code that expires unused are credited back.
 
+### `GET /v1/app/wallet-card`
+
+The customer's KARINEX card for Apple Wallet: the same `.pkpass` the customer account on the web
+offers (name, level and points while the loyalty program runs, the license keys on the back). One
+card per e-mail; downloading again returns the same serial number, so Wallet replaces the card
+instead of adding a second one. The customer is the e-mail of the token, never a parameter.
+Answer `200` with `Content-Type: application/vnd.apple.pkpass` (a ZIP archive), `private, no-store`.
+`404 not_found` when the account has no card (marketplace relay addresses) or Apple Wallet is not
+set up on the backend; the app then shows a short note. At most 10 cards per minute and customer.
+
 ### `POST /v1/app/devices` and `DELETE /v1/app/devices/{apnsToken}`
 
 Phase 3. Registers an APNs token only after the customer agreed to notifications.

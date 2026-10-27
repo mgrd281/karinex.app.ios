@@ -64,6 +64,10 @@ private actor RecordingBackend: BackendClient {
         throw BackendError.notConfigured
     }
 
+    func walletPass() async throws -> Data {
+        throw BackendError.notConfigured
+    }
+
     func registerDevice(_ registration: DeviceRegistration) async throws {
         registered.append(registration)
     }

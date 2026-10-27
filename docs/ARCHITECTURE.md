@@ -866,6 +866,11 @@ No Apple In-App Purchase is involved anywhere.
   `CartStore.applyDiscountCode`.
 - The row "Treueprogramm" sits in the signed-in Konto menu (`AccountDestination.loyalty`) behind
   `AccountSignInGate`.
+- Apple Wallet: below the card, Apple's own `PKAddPassButton` (system artwork and wording, only
+  where `PKAddPassesViewController.canAddPasses()`) downloads the KARINEX customer card from
+  `GET /v1/app/wallet-card` (`BackendClient.walletPass`, checked to be a ZIP archive) and shows
+  the system add dialog. The pass updates itself in Wallet through the backend's PassKit web
+  service; the app keeps no copy.
 
 ### Support, legal texts and settings
 

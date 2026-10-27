@@ -2,6 +2,9 @@ import BackendKit
 import CommerceUI
 import DesignSystem
 import DesignTokens
+#if canImport(PassKit) && canImport(UIKit)
+import PassKit
+#endif
 import SwiftUI
 
 // MARK: - LoyaltyFormat
@@ -58,6 +61,9 @@ public struct LoyaltyScreen: View {
     @State private var stepToConfirm: LoyaltyStatus.RedeemStep?
     @State private var isCollectSheetPresented = false
     @State private var cartNote: CartNote?
+    #if canImport(PassKit) && canImport(UIKit)
+    @State private var passToAdd: AddablePass?
+    #endif
 
     @Environment(\.locale) private var locale
 
@@ -133,6 +139,22 @@ public struct LoyaltyScreen: View {
         } message: {
             Text(failureMessage ?? "")
         }
+        .alert(
+            Text("account.loyalty.wallet.error.title", bundle: .module),
+            isPresented: $model.walletPassFailed
+        ) {
+            Button(role: .cancel) {} label: {
+                Text("account.signin.error.close", bundle: .module)
+            }
+        } message: {
+            Text("account.loyalty.wallet.error.message", bundle: .module)
+        }
+        #if canImport(PassKit) && canImport(UIKit)
+        .sheet(item: $passToAdd) { item in
+            AddPassesSheet(pass: item.pass)
+                .ignoresSafeArea()
+        }
+        #endif
     }
 
     // MARK: Content
@@ -184,6 +206,7 @@ public struct LoyaltyScreen: View {
                         .kxFont(.footnote)
                         .foregroundStyle(KXColor.textSecondary)
                     }
+                    walletCard
                     perks(status)
                     balance(status, format)
                     rewards(status, format)
@@ -230,6 +253,38 @@ public struct LoyaltyScreen: View {
     }
 
     // MARK: Sections
+
+    /// "Zu Apple Wallet hinzufügen": the KARINEX customer card with level and points, only where
+    /// the device can add passes.
+    @ViewBuilder
+    private var walletCard: some View {
+        #if canImport(PassKit) && canImport(UIKit)
+        if PKAddPassesViewController.canAddPasses() {
+            VStack(alignment: .leading, spacing: KXSpacing.s) {
+                AddPassButton(isLoading: model.isLoadingWalletPass) {
+                    Task { await addToWallet() }
+                }
+                .frame(maxWidth: .infinity, minHeight: 48, maxHeight: 48)
+                .accessibilityIdentifier("loyalty.wallet")
+                Text("account.loyalty.wallet.note", bundle: .module)
+                    .kxFont(.footnote)
+                    .foregroundStyle(KXColor.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        #endif
+    }
+
+    #if canImport(PassKit) && canImport(UIKit)
+    private func addToWallet() async {
+        guard let data = await model.loadWalletPass() else { return }
+        do {
+            passToAdd = try AddablePass(pass: PKPass(data: data))
+        } catch {
+            model.walletPassFailed = true
+        }
+    }
+    #endif
 
     @ViewBuilder
     private func perks(_ status: LoyaltyStatus) -> some View {
@@ -606,3 +661,98 @@ extension LoyaltyStatus.HistoryKind {
         }
     }
 }
+
+// MARK: - Apple Wallet
+
+#if canImport(PassKit) && canImport(UIKit)
+/// A downloaded pass waiting for the add dialog.
+private struct AddablePass: Identifiable {
+    let id = UUID()
+    let pass: PKPass
+}
+
+/// Apple's own "Add to Apple Wallet" button (artwork and wording come from the system, in the
+/// customer's language), dimmed with a spinner while the card downloads.
+private struct AddPassButton: UIViewRepresentable {
+    let isLoading: Bool
+    let action: @MainActor () -> Void
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(action: action)
+    }
+
+    func makeUIView(context: Context) -> PKAddPassButton {
+        let button = PKAddPassButton(addPassButtonStyle: .black)
+        button.addTarget(context.coordinator, action: #selector(Coordinator.tap), for: .touchUpInside)
+        let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.color = .white
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.tag = Self.spinnerTag
+        button.addSubview(spinner)
+        NSLayoutConstraint.activate([
+            spinner.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: -12),
+            spinner.centerYAnchor.constraint(equalTo: button.centerYAnchor),
+        ])
+        return button
+    }
+
+    func updateUIView(_ button: PKAddPassButton, context: Context) {
+        context.coordinator.action = action
+        button.isEnabled = !isLoading
+        button.alpha = isLoading ? 0.6 : 1
+        if let spinner = button.viewWithTag(Self.spinnerTag) as? UIActivityIndicatorView {
+            isLoading ? spinner.startAnimating() : spinner.stopAnimating()
+        }
+    }
+
+    private static let spinnerTag = 7_301
+
+    @MainActor
+    final class Coordinator: NSObject {
+        var action: @MainActor () -> Void
+
+        init(action: @escaping @MainActor () -> Void) {
+            self.action = action
+        }
+
+        @objc func tap() {
+            action()
+        }
+    }
+}
+
+/// The system dialog that shows the card and adds it to Wallet. "Hinzufügen" and "Abbrechen"
+/// both close it.
+private struct AddPassesSheet: UIViewControllerRepresentable {
+    let pass: PKPass
+    @Environment(\.dismiss) private var dismiss
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(dismiss: { dismiss() })
+    }
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        guard let controller = PKAddPassesViewController(pass: pass) else {
+            return UIViewController()
+        }
+        controller.delegate = context.coordinator
+        return controller
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
+
+    @MainActor
+    final class Coordinator: NSObject, @preconcurrency PKAddPassesViewControllerDelegate {
+        let dismiss: @MainActor () -> Void
+
+        init(dismiss: @escaping @MainActor () -> Void) {
+            self.dismiss = dismiss
+        }
+
+        func addPassesViewControllerDidFinish(_: PKAddPassesViewController) {
+            dismiss()
+        }
+    }
+}
+#endif

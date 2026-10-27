@@ -166,6 +166,26 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         default:
           $ref: '#/components/responses/Error'
+  /v1/app/wallet-card:
+    get:
+      operationId: walletCard
+      summary: The customer's KARINEX card for Apple Wallet
+      parameters:
+        - $ref: '#/components/parameters/AppVersion'
+      responses:
+        '200':
+          description: The signed pass. The same serial number on every download.
+          content:
+            application/vnd.apple.pkpass:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: No card for this account, or Apple Wallet is not set up.
+        default:
+          $ref: '#/components/responses/Error'
   /v1/app/loyalty/redeem:
     post:
       operationId: redeemLoyalty

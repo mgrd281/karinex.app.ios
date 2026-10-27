@@ -64,6 +64,23 @@ private let statusJSON = """
 
 @Suite("Loyalty")
 struct LoyaltyTests {
+    @Test("The Apple Wallet card comes back as pass data; anything else is rejected")
+    func walletPass() async throws {
+        let pass = Data([0x50, 0x4B, 0x03, 0x04, 0x01, 0x02])
+        let http = QueueHTTPClient([
+            HTTPResponse(statusCode: 200, headers: [:], body: pass),
+            reply("<html>no</html>"),
+            reply(#"{"code":"not_found","message":"x","requestId":"r"}"#, status: 404),
+        ])
+        let client = makeClient(http)
+        #expect(try await client.walletPass() == pass)
+        #expect(http.requests.first?.url.path == "/v1/app/wallet-card")
+        #expect(http.requests.first?.headers["Accept"] == "application/vnd.apple.pkpass")
+        #expect(http.requests.first?.headers["Authorization"] == "Bearer shcat_token")
+        await #expect(throws: BackendError.decoding) { try await client.walletPass() }
+        await #expect(throws: BackendError.notFound) { try await client.walletPass() }
+    }
+
     @Test("The status decodes: level, ring, rewards, rules and history")
     func status() async throws {
         let http = QueueHTTPClient([reply(statusJSON)])

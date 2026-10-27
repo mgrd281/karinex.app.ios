@@ -67,6 +67,9 @@ public protocol BackendClient: Sendable {
     /// same `idempotencyKey` always returns the same code, so a double tap never spends twice.
     /// Throws ``LoyaltyRedeemError`` when the backend refuses (the points are not spent).
     func redeemLoyalty(points: Int, idempotencyKey: String) async throws -> LoyaltyRedeemCode
+    /// `GET /v1/app/wallet-card`: the customer's KARINEX card for Apple Wallet as `.pkpass` data.
+    /// `.notFound` when the account has no card or Apple Wallet is not set up on the backend.
+    func walletPass() async throws -> Data
     /// `POST /v1/app/devices`.
     func registerDevice(_ registration: DeviceRegistration) async throws
     /// `DELETE /v1/app/devices/{token}`.
@@ -203,6 +206,21 @@ public final class HTTPBackendClient: BackendClient {
         return try decode(response)
     }
 
+    public func walletPass() async throws -> Data {
+        let response = try await send(
+            .get,
+            path: "/v1/app/wallet-card",
+            authenticated: true,
+            headers: ["Accept": "application/vnd.apple.pkpass"]
+        )
+        // A pass is a ZIP archive; anything else is not what the contract promises.
+        guard response.body.starts(with: [0x50, 0x4B, 0x03, 0x04]) else {
+            logger.error("Backend wallet card is not a pass archive")
+            throw BackendError.decoding
+        }
+        return response.body
+    }
+
     public func registerDevice(_ registration: DeviceRegistration) async throws {
         let body: Data
         do {
@@ -230,7 +248,7 @@ public final class HTTPBackendClient: BackendClient {
     ) async throws -> HTTPResponse {
         guard let url = URL(string: path, relativeTo: baseURL)?.absoluteURL else { throw BackendError.notFound }
         var headers = extraHeaders
-        headers["Accept"] = "application/json"
+        headers["Accept"] = extraHeaders["Accept"] ?? "application/json"
         headers["X-KX-App-Version"] = appVersion
         headers["Accept-Language"] = languageCode()
         if body != nil {
@@ -378,6 +396,10 @@ public struct UnavailableBackendClient: BackendClient {
     }
 
     public func redeemLoyalty(points _: Int, idempotencyKey _: String) async throws -> LoyaltyRedeemCode {
+        throw BackendError.notConfigured
+    }
+
+    public func walletPass() async throws -> Data {
         throw BackendError.notConfigured
     }
 

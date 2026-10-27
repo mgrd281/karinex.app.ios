@@ -12,6 +12,10 @@ change.
 
 ### Added
 
+- **KARINEX card in Apple Wallet from the app** (owner request): the loyalty screen has Apple's
+  "Add to Apple Wallet" button. It loads the same customer card as the web account (level and
+  points while the program runs, license keys on the back) from `GET /v1/app/wallet-card` and
+  opens the system dialog. The card then updates itself in Wallet. Texts in the 11 languages.
 - **Loyalty program with membership card** (owner request): the Konto tab has a "Treueprogramm"
   row. It shows a circular membership card (Starter, Silber, Gold, Platin with the level colors,
   progress ring, points and "Noch 927 Punkte bis zum Status Platin", full ring and "Höchste Stufe

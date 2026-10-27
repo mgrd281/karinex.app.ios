@@ -30,6 +30,10 @@ final class LoyaltyViewModel {
     private(set) var redeeming: Int?
     /// The result of the last redemption, shown until dismissed.
     var outcome: Outcome?
+    /// Whether the Apple Wallet card is being downloaded.
+    private(set) var isLoadingWalletPass = false
+    /// Whether the last attempt to get the Apple Wallet card failed; shown until dismissed.
+    var walletPassFailed = false
 
     @ObservationIgnored private let backend: any BackendClient
     @ObservationIgnored private let makeKey: @Sendable () -> String
@@ -92,6 +96,22 @@ final class LoyaltyViewModel {
             await load()
         } catch {
             outcome = .failed(UserFacingError(error) ?? UserFacingError(kind: .unknown))
+        }
+    }
+
+    /// Downloads the customer's KARINEX card for Apple Wallet. Returns the `.pkpass` data, or `nil`
+    /// when it is already loading, was cancelled or failed (then `walletPassFailed` is set).
+    func loadWalletPass() async -> Data? {
+        guard !isLoadingWalletPass else { return nil }
+        isLoadingWalletPass = true
+        defer { isLoadingWalletPass = false }
+        do {
+            return try await backend.walletPass()
+        } catch {
+            if UserFacingError(error) != nil {
+                walletPassFailed = true
+            }
+            return nil
         }
     }
 

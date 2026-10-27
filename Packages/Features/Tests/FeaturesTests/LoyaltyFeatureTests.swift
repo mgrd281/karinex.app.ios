@@ -61,6 +61,23 @@ struct LoyaltyViewModelTests {
         return LoyaltyViewModel(backend: backend, makeKey: { counter.next() })
     }
 
+    @Test("The Apple Wallet card is downloaded once; a failure shows the alert")
+    func walletPass() async {
+        let backend = StubBackend()
+        let data = Data([0x50, 0x4B, 0x03, 0x04])
+        await backend.setWalletPass(.success(data))
+        let model = model(backend)
+
+        #expect(await model.loadWalletPass() == data)
+        #expect(!model.walletPassFailed)
+        #expect(!model.isLoadingWalletPass)
+
+        await backend.setWalletPass(.failure(.notFound))
+        #expect(await model.loadWalletPass() == nil)
+        #expect(model.walletPassFailed)
+        #expect(await backend.calls == ["walletPass", "walletPass"])
+    }
+
     @Test("The status is loaded from the backend")
     func load() async {
         let backend = StubBackend()
