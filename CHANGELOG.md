@@ -12,6 +12,9 @@ change.
 
 ### Added
 
+- **Save counter for everyone** (owner request "like ASOS"): `SaveCountStore` asks the KARINEX
+  backend (`/v1/app/save-counts`) instead of the counter host, so the number beside the heart is
+  shown without the analytics consent and the device never contacts a third party for it.
 - **Trend icon in the "recently sold" row** (owner request): a green arrow pointing up and to
   the right on a soft green disc replaces the chart line; every few seconds it rises a little and
   settles (`ProductTrendIcon`, timings `MotionToken.trend*`), still with Reduce Motion.

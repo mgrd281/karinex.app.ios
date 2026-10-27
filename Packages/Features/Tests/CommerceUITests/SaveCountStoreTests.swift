@@ -6,89 +6,95 @@ import Testing
 // MARK: - Stubs
 
 private final class CounterServer: HTTPClient, @unchecked Sendable {
-    private let state = Locked((count: Int?.none, requests: [HTTPRequest]()))
+    private let state = Locked((count: 0, requests: [HTTPRequest](), fails: false))
 
-    init(count: Int?) {
-        state.withLock { $0.count = count }
+    init(count: Int, fails: Bool = false) {
+        state.withLock {
+            $0.count = count
+            $0.fails = fails
+        }
     }
 
     var requests: [HTTPRequest] {
         state.value.requests
     }
 
-    var stored: Int? {
+    var stored: Int {
         state.value.count
     }
 
     func send(_ request: HTTPRequest) async throws -> HTTPResponse {
         state.withLock { $0.requests.append(request) }
-        if request.method == .put {
-            let value = try JSONDecoder().decode([String: Int].self, from: request.body ?? Data())["count"]
-            state.withLock { $0.count = value }
-            return HTTPResponse(statusCode: 200, body: request.body ?? Data())
+        if state.value.fails {
+            return HTTPResponse(statusCode: 503)
         }
-        guard let count = state.value.count else {
-            return HTTPResponse(statusCode: 200, body: Data("null".utf8))
+        if request.method == .post {
+            let change = try JSONDecoder().decode([String: CodableValue].self, from: request.body ?? Data())
+            state.withLock { $0.count = change["saved"] == .bool(true) ? $0.count + 1 : max(0, $0.count - 1) }
         }
-        return HTTPResponse(statusCode: 200, body: Data("{\"count\":\(count)}".utf8))
+        return HTTPResponse(statusCode: 200, body: Data("{\"count\":\(state.value.count)}".utf8))
     }
 }
 
-private final class AnalyticsConsent: ConsentStoring, @unchecked Sendable {
-    private let consent: PrivacyConsent
+private enum CodableValue: Decodable, Equatable {
+    case bool(Bool)
+    case string(String)
 
-    init(analytics: Bool) {
-        consent = PrivacyConsent(analytics: analytics)
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(Bool.self) {
+            self = .bool(value)
+        } else {
+            self = try .string(container.decode(String.self))
+        }
     }
-
-    func load() -> PrivacyConsent {
-        consent
-    }
-
-    func save(_ consent: PrivacyConsent) {}
 }
+
+private let backend = URL(string: "https://backend.example")
 
 // MARK: - Tests
 
 @Suite("Save counter")
 @MainActor
 struct SaveCountStoreTests {
-    @Test("Without analytics consent nothing is requested")
-    func noConsentNoRequest() async {
+    @Test("Without a backend nothing is requested")
+    func noBackendNoRequest() async {
         let server = CounterServer(count: 7)
-        let store = SaveCountStore(http: server, consentStore: AnalyticsConsent(analytics: false))
+        let store = SaveCountStore(http: server, backendBaseURL: nil)
         await store.refresh(handle: "windows-11-pro")
         await store.didChange(handle: "windows-11-pro", isSaved: true)
         #expect(server.requests.isEmpty)
         #expect(store.displayCount(for: "windows-11-pro") == nil)
     }
 
-    @Test("Reading shows the shared number and an empty counter shows none")
+    @Test("Reading asks the backend for the handle and shows the number")
     func reads() async {
         let server = CounterServer(count: 12)
-        let store = SaveCountStore(http: server, consentStore: AnalyticsConsent(analytics: true))
+        let store = SaveCountStore(http: server, backendBaseURL: backend)
         await store.refresh(handle: "windows-11-pro")
         #expect(store.displayCount(for: "windows-11-pro") == 12)
-        #expect(server.requests.first?.url.path == "/wishlist/windows-11-pro.json")
+        let url = server.requests.first?.url
+        #expect(url?.path == "/v1/app/save-counts")
+        #expect(url?.query == "handle=windows-11-pro")
 
-        let empty = SaveCountStore(http: CounterServer(count: nil), consentStore: AnalyticsConsent(analytics: true))
+        let empty = SaveCountStore(http: CounterServer(count: 0), backendBaseURL: backend)
         await empty.refresh(handle: "windows-11-pro")
         #expect(empty.displayCount(for: "windows-11-pro") == nil)
     }
 
-    @Test("Saving counts up, removing counts down and never below zero")
+    @Test("Saving counts up, removing counts down, a failure shows no number")
     func writes() async {
         let server = CounterServer(count: 4)
-        let store = SaveCountStore(http: server, consentStore: AnalyticsConsent(analytics: true))
+        let store = SaveCountStore(http: server, backendBaseURL: backend)
         await store.didChange(handle: "office", isSaved: true)
         #expect(server.stored == 5)
         #expect(store.displayCount(for: "office") == 5)
+        #expect(server.requests.first?.method == .post)
         await store.didChange(handle: "office", isSaved: false)
         #expect(server.stored == 4)
 
-        let zero = CounterServer(count: 0)
-        let low = SaveCountStore(http: zero, consentStore: AnalyticsConsent(analytics: true))
-        await low.didChange(handle: "office", isSaved: false)
-        #expect(zero.stored == 0)
+        let failing = SaveCountStore(http: CounterServer(count: 9, fails: true), backendBaseURL: backend)
+        await failing.refresh(handle: "office")
+        #expect(failing.displayCount(for: "office") == nil)
     }
 }

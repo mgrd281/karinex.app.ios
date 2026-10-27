@@ -220,7 +220,7 @@ final class AppContainer {
         self.sessionStore = sessionStore
         settingsStore = AppSettingsStore(store: services.preferences)
         savedProductsStore = SavedProductsStore(store: services.preferences)
-        saveCountStore = SaveCountStore(http: services.httpClient, consentStore: consentStore)
+        saveCountStore = SaveCountStore(http: services.httpClient, backendBaseURL: resolution.configuration.backendBaseURL)
         paymentMethodsStore = PaymentMethodsStore(catalog: catalogRepository)
         let pushCoordinator = PushRegistrationCoordinator(
             system: SystemRemoteNotifications(),
