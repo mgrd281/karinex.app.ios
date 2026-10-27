@@ -9,6 +9,13 @@ public enum LoyaltyTier: String, Sendable, Hashable, Codable, CaseIterable {
     case silber
     case gold
     case platin
+    case diamant
+    case elite
+
+    public init(from decoder: any Decoder) throws {
+        let raw = try decoder.singleValueContainer().decode(String.self)
+        self = LoyaltyTier(rawValue: raw) ?? .starter
+    }
 }
 
 // MARK: - LoyaltyStatus
@@ -235,18 +242,90 @@ public struct LoyaltyStatus: Sendable, Hashable, Decodable {
         }
     }
 
+    /// The permanent discount of the level. Shopify applies it to every order of a signed-in
+    /// customer; the backend only reports it while it is switched on.
+    public struct Discount: Sendable, Hashable, Decodable {
+        /// A level with its discount, for the overview of all levels.
+        public struct Step: Sendable, Hashable, Decodable {
+            public let tier: LoyaltyTier
+            /// Status points needed for the level.
+            public let min: Int
+            public let percent: Int
+
+            public init(tier: LoyaltyTier, min: Int, percent: Int) {
+                self.tier = tier
+                self.min = min
+                self.percent = percent
+            }
+        }
+
+        /// The next level and its larger discount.
+        public struct Next: Sendable, Hashable, Decodable {
+            public let tier: LoyaltyTier
+            public let percent: Int
+
+            public init(tier: LoyaltyTier, percent: Int) {
+                self.tier = tier
+                self.percent = percent
+            }
+        }
+
+        /// Whether the permanent discount is switched on in the store.
+        public let active: Bool
+        /// The discount of the current level in percent, 0 for none.
+        public let percent: Int
+        public let next: Next?
+        public let ladder: [Step]
+
+        private enum CodingKeys: String, CodingKey {
+            case active, percent, next, ladder
+        }
+
+        public init(from decoder: any Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            active = try container.decodeIfPresent(Bool.self, forKey: .active) ?? false
+            percent = try max(0, container.decodeIfPresent(Int.self, forKey: .percent) ?? 0)
+            next = try container.decodeIfPresent(Next.self, forKey: .next)
+            ladder = try container.decodeIfPresent([Step].self, forKey: .ladder) ?? []
+        }
+
+        public init(active: Bool, percent: Int, next: Next?, ladder: [Step]) {
+            self.active = active
+            self.percent = percent
+            self.next = next
+            self.ladder = ladder
+        }
+
+        /// Whether the customer saves on every order now.
+        public var applies: Bool {
+            active && percent > 0
+        }
+    }
+
     /// Whether the program is switched on.
     public let enabled: Bool
     public let tier: Level
+    /// `nil` from a backend without permanent discounts.
+    public let discount: Discount?
     public let perks: [Perk]
     public let reward: Reward
     public let redeem: Redeem
     public let earn: Earn
     public let history: [HistoryItem]
 
-    public init(enabled: Bool, tier: Level, perks: [Perk], reward: Reward, redeem: Redeem, earn: Earn, history: [HistoryItem]) {
+    public init(
+        enabled: Bool,
+        tier: Level,
+        discount: Discount? = nil,
+        perks: [Perk],
+        reward: Reward,
+        redeem: Redeem,
+        earn: Earn,
+        history: [HistoryItem]
+    ) {
         self.enabled = enabled
         self.tier = tier
+        self.discount = discount
         self.perks = perks
         self.reward = reward
         self.redeem = redeem

@@ -7,13 +7,15 @@ public enum LoyaltyTierStyle: String, CaseIterable, Sendable {
     case silber
     case gold
     case platin
+    case diamant
+    case elite
 }
 
 /// The colors of the membership card: a calm gradient per level with light text, the same in
 /// light and dark mode (like the store color panels of ``TintToken``).
 ///
-/// Petrol is the brand level, silver is a graphite silver, gold a deep antique gold and platinum
-/// a dark charcoal. Every level meets WCAG AA for text (4.5:1) on both ends of its gradient,
+/// Petrol is the brand level, silver is a graphite silver, gold a deep antique gold, platinum
+/// a dark charcoal, diamond a deep ink blue and elite the store's darkest emerald. Every level meets WCAG AA for text (4.5:1) on both ends of its gradient,
 /// which `LoyaltyPaletteTests` checks.
 public struct LoyaltyPanelColors: Hashable, Sendable {
     /// The upper end of the gradient.
@@ -74,6 +76,10 @@ public enum LoyaltyPalette {
             return LoyaltyPanelColors(top: RGBAColor(hex: 0x806440), bottom: RGBAColor(hex: 0x66502E), text: white)
         case .platin:
             return LoyaltyPanelColors(top: RGBAColor(hex: 0x2E343B), bottom: RGBAColor(hex: 0x1A1E23), text: white)
+        case .diamant:
+            return LoyaltyPanelColors(top: RGBAColor(hex: 0x23455E), bottom: RGBAColor(hex: 0x142C3E), text: white)
+        case .elite:
+            return LoyaltyPanelColors(top: RGBAColor(hex: 0x0D2E22), bottom: RGBAColor(hex: 0x061A13), text: white)
         }
     }
 }

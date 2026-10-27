@@ -105,9 +105,39 @@ struct LoyaltyTests {
         #expect(status.perks[0].text(languageCode: "fr") == "Early access to sales")
     }
 
+    @Test("A backend without permanent discounts decodes; the discount is nil")
+    func noDiscount() async throws {
+        let status = try await makeClient(QueueHTTPClient([reply(statusJSON)])).loyalty()
+        #expect(status.discount == nil)
+    }
+
+    @Test("The permanent discount decodes with the next level and all levels")
+    func discount() throws {
+        let json = #"""
+            {"active": true, "percent": 5, "next": {"tier": "platin", "percent": 8},
+             "ladder": [{"tier": "silber", "min": 1000, "percent": 3}, {"tier": "elite", "min": 25000, "percent": 15},
+                        {"tier": "someday", "min": 99000, "percent": 20}]}
+            """#
+        let discount = try JSONDecoder().decode(LoyaltyStatus.Discount.self, from: Data(json.utf8))
+        #expect(discount.applies)
+        #expect(discount.percent == 5)
+        #expect(discount.next == .init(tier: .platin, percent: 8))
+        #expect(discount.ladder.map(\.tier) == [.silber, .elite, .starter])
+        let off = try JSONDecoder().decode(LoyaltyStatus.Discount.self, from: Data(#"{"active": false}"#.utf8))
+        #expect(!off.applies)
+        #expect(off.ladder.isEmpty)
+    }
+
+    @Test("A next level unknown to this app does not break the status")
+    func unknownNextLevel() throws {
+        let json = #"{"id": "gold", "points": 12, "next": {"tier": "legend", "min": 90000, "remaining": 1}, "progress": 0.1}"#
+        let level = try JSONDecoder().decode(LoyaltyStatus.Level.self, from: Data(json.utf8))
+        #expect(level.next?.tier == .starter)
+    }
+
     @Test("An unknown level shows as starter and the ring stays within 0 to 1")
     func unknownLevel() throws {
-        let json = #"{"id": "diamant", "points": 12, "progress": 7.5}"#
+        let json = #"{"id": "legend", "points": 12, "progress": 7.5}"#
         let level = try JSONDecoder().decode(LoyaltyStatus.Level.self, from: Data(json.utf8))
         #expect(level.tier == .starter)
         #expect(level.progress == 1)

@@ -12,6 +12,11 @@ change.
 
 ### Added
 
+- **Permanent discount per loyalty level** (owner decision 27.10.2026): two new levels, Diamant and
+  Elite (with their own card colors), and a section "Ihr Dauerrabatt" on the loyalty screen with the
+  discount of the current level ("5 % auf jede Bestellung") and of the next one. The backend sends it
+  in `discount` of `GET /v1/app/loyalty`; Shopify deducts it at checkout. An unknown level from a
+  newer backend no longer breaks the status. Texts in the 11 languages.
 - **KARINEX card in Apple Wallet from the app** (owner request): the loyalty screen has Apple's
   "Add to Apple Wallet" button. It loads the same customer card as the web account (level and
   points while the program runs, license keys on the back) from `GET /v1/app/wallet-card` and

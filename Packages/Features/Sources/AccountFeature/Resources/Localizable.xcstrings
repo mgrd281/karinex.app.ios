@@ -5977,6 +5977,438 @@
         }
       }
     },
+    "account.loyalty.discount.current %lld" : {
+      "comment" : "Row title: the permanent discount of the current level. %lld is the percentage.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %% på hver bestilling"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %% auf jede Bestellung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %% off every order"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %% en cada pedido"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %% jokaisesta tilauksesta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %% sur chaque commande"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %% su ogni ordine"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %% op elke bestelling"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %% na każde zamówienie"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %% em cada encomenda"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %% på varje beställning"
+          }
+        }
+      }
+    },
+    "account.loyalty.discount.current.detail" : {
+      "comment" : "Row detail under the permanent discount: how it is applied.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trækkes automatisk fra ved kassen, når du er logget ind."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird an der Kasse automatisch abgezogen, wenn Sie angemeldet einkaufen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taken off automatically at checkout when you are signed in."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se descuenta automáticamente al pagar cuando ha iniciado sesión."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vähennetään kassalla automaattisesti, kun olet kirjautunut sisään."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déduite automatiquement au paiement lorsque vous êtes connecté."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viene detratto automaticamente alla cassa quando ha effettuato l’accesso."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wordt bij het afrekenen automatisch afgetrokken als u bent ingelogd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odliczany automatycznie przy kasie, gdy jesteś zalogowany."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "É descontado automaticamente no checkout quando tem sessão iniciada."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dras av automatiskt i kassan när du är inloggad."
+          }
+        }
+      }
+    },
+    "account.loyalty.discount.footer %lld" : {
+      "comment" : "Footer of the permanent discount section. %lld is the number of months.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dit niveau følger dine køb fra de seneste %lld måneder. Rabatten gælder også sammen med en kode fra dine bonuspoint."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihre Stufe richtet sich nach Ihren Einkäufen der letzten %lld Monate. Der Rabatt gilt zusätzlich zu einem Code aus Ihren Prämienpunkten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your level follows your purchases of the last %lld months. The discount also works together with a code from your reward points."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Su nivel depende de sus compras de los últimos %lld meses. El descuento también se suma a un código de sus puntos de premio."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasosi määräytyy viimeisten %lld kuukauden ostojesi mukaan. Alennus toimii myös yhdessä palkintopisteistä saadun koodin kanssa."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre niveau dépend de vos achats des %lld derniers mois. La remise s’ajoute aussi à un code issu de vos points de récompense."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il suo livello dipende dagli acquisti degli ultimi %lld mesi. Lo sconto vale anche insieme a un codice dai suoi punti premio."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uw niveau volgt uw aankopen van de afgelopen %lld maanden. De korting geldt ook samen met een code uit uw beloningspunten."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twój poziom zależy od zakupów z ostatnich %lld miesięcy. Rabat działa także razem z kodem z punktów nagród."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O seu nível depende das suas compras dos últimos %lld meses. O desconto também funciona com um código dos seus pontos de recompensa."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din nivå följer dina köp de senaste %lld månaderna. Rabatten gäller även tillsammans med en kod från dina bonuspoäng."
+          }
+        }
+      }
+    },
+    "account.loyalty.discount.next %@ %lld" : {
+      "comment" : "Row title: the discount of the next level. %1$@ is the level name, %2$lld the percentage.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fra %1$@: %2$lld %% på hver bestilling"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ab %1$@: %2$lld %% auf jede Bestellung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From %1$@: %2$lld %% off every order"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desde %1$@: %2$lld %% en cada pedido"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasolta %1$@: %2$lld %% jokaisesta tilauksesta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dès %1$@ : %2$lld %% sur chaque commande"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Da %1$@: %2$lld %% su ogni ordine"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vanaf %1$@: %2$lld %% op elke bestelling"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Od poziomu %1$@: %2$lld %% na każde zamówienie"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A partir de %1$@: %2$lld %% em cada encomenda"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Från %1$@: %2$lld %% på varje beställning"
+          }
+        }
+      }
+    },
+    "account.loyalty.discount.none" : {
+      "comment" : "Row title when the current level has no permanent discount yet.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endnu ingen fast rabat"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch kein Dauerrabatt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No permanent discount yet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún sin descuento permanente"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ei vielä pysyvää alennusta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas encore de remise permanente"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ancora nessuno sconto permanente"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nog geen vaste korting"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeszcze bez stałego rabatu"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ainda sem desconto permanente"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen permanent rabatt än"
+          }
+        }
+      }
+    },
+    "account.loyalty.discount.title" : {
+      "comment" : "Section title on the loyalty screen: the permanent discount of the customer's level.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din faste rabat"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihr Dauerrabatt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your permanent discount"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Su descuento permanente"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pysyvä alennuksesi"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre remise permanente"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il suo sconto permanente"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uw vaste korting"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twój stały rabat"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O seu desconto permanente"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din permanenta rabatt"
+          }
+        }
+      }
+    },
     "account.loyalty.error.disabled" : {
       "comment" : "Alert text: the program is switched off.",
       "extractionState" : "manual",
@@ -8281,6 +8713,150 @@
         }
       }
     },
+    "account.loyalty.tier.diamant" : {
+      "comment" : "Name of the fifth membership level (diamond).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diamant"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diamant"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diamond"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diamante"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timantti"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diamant"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diamante"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diamant"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diament"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diamante"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diamant"
+          }
+        }
+      }
+    },
+    "account.loyalty.tier.elite" : {
+      "comment" : "Name of the highest membership level (elite).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elite"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elite"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elite"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Élite"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliitti"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Élite"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Élite"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elite"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elita"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elite"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elit"
+          }
+        }
+      }
+    },
     "account.loyalty.tier.gold" : {
       "comment" : "Name of the third membership level (gold).",
       "extractionState" : "manual",
@@ -8354,7 +8930,7 @@
       }
     },
     "account.loyalty.tier.platin" : {
-      "comment" : "Name of the highest membership level (platinum).",
+      "comment" : "Name of the fourth membership level (platinum).",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {

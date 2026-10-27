@@ -186,6 +186,9 @@ token like the other routes.
   "tier": { "id": "gold", "points": 1573, "pending": 120,
             "next": { "tier": "platin", "min": 2500, "remaining": 927 },
             "progress": 0.63, "maxReached": false },
+  "discount": { "active": true, "percent": 5, "next": { "tier": "platin", "percent": 8 },
+                "ladder": [{ "tier": "silber", "min": 1000, "percent": 3 },
+                           { "tier": "gold", "min": 2500, "percent": 5 }] },
   "perks": [{ "de": "Früher Zugang zu Aktionen", "en": "Early access to promotions" }],
   "reward": { "available": 1840, "pending": 120,
               "expiringSoon": { "points": 500, "at": "2026-12-01T00:00:00.000Z" } },
@@ -200,7 +203,12 @@ token like the other routes.
 
 - Two kinds of points: status points (`tier`, never spent, counted over `tierWindowMonths`) and
   reward points (`reward`, redeemable, expire `rewardExpiryMonths` after each credit).
-- `tier.id` is `starter`, `silber`, `gold` or `platin`; an unknown id is shown as `starter`.
+- `tier.id` is `starter`, `silber`, `gold`, `platin`, `diamant` or `elite`; an unknown id (also in
+  `tier.next` and `discount`) is shown as `starter`.
+- `discount` is the permanent discount of the level. Shopify applies it as an automatic discount to
+  every order of a signed-in customer of that level; it combines with a reward code. `active` is
+  false (and `percent` 0, `ladder` empty) while the store has it switched off. Older backends omit
+  the field.
   `tier.next` is `null` and `maxReached` true at the top level (the ring is full).
 - `enabled: false` while the program is switched off (nothing is earned or redeemed).
 - Dates are ISO 8601 with or without fractional seconds. `history[].type` is `EARN`, `REFUND`,

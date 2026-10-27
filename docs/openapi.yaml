@@ -470,7 +470,7 @@ components:
           properties:
             id:
               type: string
-              enum: [starter, silber, gold, platin]
+              enum: [starter, silber, gold, platin, diamant, elite]
             points:
               type: integer
               description: Confirmed status points of the last tierWindowMonths.
@@ -481,7 +481,7 @@ components:
               properties:
                 tier:
                   type: string
-                  enum: [silber, gold, platin]
+                  enum: [silber, gold, platin, diamant, elite]
                 min:
                   type: integer
                 remaining:
@@ -492,6 +492,33 @@ components:
               maximum: 1
             maxReached:
               type: boolean
+        discount:
+          type: object
+          description: Permanent discount of the level (Shopify automatic discount for signed-in customers). Omitted by older backends.
+          properties:
+            active:
+              type: boolean
+            percent:
+              type: integer
+              minimum: 0
+            next:
+              type: [object, 'null']
+              properties:
+                tier:
+                  type: string
+                percent:
+                  type: integer
+            ladder:
+              type: array
+              items:
+                type: object
+                properties:
+                  tier:
+                    type: string
+                  min:
+                    type: integer
+                  percent:
+                    type: integer
         perks:
           type: array
           items:

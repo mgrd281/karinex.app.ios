@@ -45,6 +45,8 @@ extension LoyaltyTier {
         case .silber: String(localized: "account.loyalty.tier.silber", bundle: .module)
         case .gold: String(localized: "account.loyalty.tier.gold", bundle: .module)
         case .platin: String(localized: "account.loyalty.tier.platin", bundle: .module)
+        case .diamant: String(localized: "account.loyalty.tier.diamant", bundle: .module)
+        case .elite: String(localized: "account.loyalty.tier.elite", bundle: .module)
         }
     }
 }
@@ -207,6 +209,7 @@ public struct LoyaltyScreen: View {
                         .foregroundStyle(KXColor.textSecondary)
                     }
                     walletCard
+                    discount(status)
                     perks(status)
                     balance(status, format)
                     rewards(status, format)
@@ -285,6 +288,35 @@ public struct LoyaltyScreen: View {
         }
     }
     #endif
+
+    /// "Ihr Dauerrabatt": the permanent discount of the level and the next one, only while the
+    /// store has it switched on.
+    @ViewBuilder
+    private func discount(_ status: LoyaltyStatus) -> some View {
+        if let discount = status.discount, discount.active {
+            KXListGroup(Text("account.loyalty.discount.title", bundle: .module)) {
+                if discount.percent > 0 {
+                    KXListRow(
+                        systemImage: "percent",
+                        title: Text("account.loyalty.discount.current \(discount.percent)", bundle: .module),
+                        detail: Text("account.loyalty.discount.current.detail", bundle: .module)
+                    )
+                } else {
+                    KXListRow(systemImage: "percent", title: Text("account.loyalty.discount.none", bundle: .module))
+                }
+                if let next = discount.next {
+                    KXListDivider()
+                    KXListRow(
+                        systemImage: "arrow.up.circle",
+                        title: Text("account.loyalty.discount.next \(next.tier.name) \(next.percent)", bundle: .module)
+                    )
+                }
+            } footer: {
+                Text("account.loyalty.discount.footer \(status.earn.tierWindowMonths)", bundle: .module)
+            }
+            .accessibilityIdentifier("loyalty.discount")
+        }
+    }
 
     @ViewBuilder
     private func perks(_ status: LoyaltyStatus) -> some View {

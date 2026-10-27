@@ -27,7 +27,7 @@ struct LoyaltyPaletteTests {
 
     @Test("The level IDs match the backend's")
     func rawValues() {
-        #expect(LoyaltyTierStyle.allCases.map(\.rawValue) == ["starter", "silber", "gold", "platin"])
+        #expect(LoyaltyTierStyle.allCases.map(\.rawValue) == ["starter", "silber", "gold", "platin", "diamant", "elite"])
     }
 
     @Test("The ring track and tiles are the text color at a low opacity")

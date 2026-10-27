@@ -861,6 +861,12 @@ No Apple In-App Purchase is involved anywhere.
   The ring line names the next level with its threshold ("Platin ab 2.500", never "x / y", which
   reads like a balance), and each history line names the pool that moved, because a manual
   adjustment changes only one of the two.
+- Permanent discount per level (`discount` in the status, optional so older backends still decode):
+  the backend runs it as one Shopify automatic discount per level, limited to a customer segment
+  that the backend keeps in step with each customer's level. The app only shows "Ihr Dauerrabatt"
+  (current and next level) while `discount.active` is true; Shopify deducts it at checkout for a
+  signed-in customer, so the app does nothing at checkout. Six levels: Starter, Silber, Gold,
+  Platin, Diamant, Elite; `LoyaltyTier` decodes an unknown id as `starter` wherever it appears.
 - Redeeming is a deliberate flow: the confirmation dialog states the conditions first, then
   `LoyaltyViewModel.redeem` posts the step with one idempotency key per attempt. After a failure
   that may have reached the server the next tap reuses the key, so the backend returns the same
