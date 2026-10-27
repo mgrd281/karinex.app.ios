@@ -227,7 +227,7 @@ public struct LoyaltyScreen: View {
     private func pointsLine(_ level: LoyaltyStatus.Level, _ format: LoyaltyFormat) -> String {
         if let next = level.next {
             return String(
-                localized: "account.loyalty.points.line \(format.points(level.points)) \(format.points(next.min))",
+                localized: "account.loyalty.points.line.next \(format.points(level.points)) \(next.tier.name) \(format.points(next.min))",
                 bundle: .module
             )
         }
@@ -418,8 +418,19 @@ public struct LoyaltyScreen: View {
         if let order = item.orderNumber, !order.isEmpty {
             parts.append(order)
         }
-        if item.statusPoints != 0, item.rewardPoints != 0, item.statusPoints != item.rewardPoints {
+        // Which points moved, so a manual adjustment of one pool is not read as a change of the other.
+        switch (item.statusPoints != 0, item.rewardPoints != 0) {
+        case (true, true) where item.statusPoints == item.rewardPoints:
+            parts.append(String(localized: "account.loyalty.history.pool.both", bundle: .module))
+        case (true, true):
+            parts.append(String(localized: "account.loyalty.history.pool.reward", bundle: .module))
             parts.append(String(localized: "account.loyalty.history.status \(format.signedPoints(item.statusPoints))", bundle: .module))
+        case (true, false):
+            parts.append(String(localized: "account.loyalty.history.pool.status", bundle: .module))
+        case (false, true):
+            parts.append(String(localized: "account.loyalty.history.pool.reward", bundle: .module))
+        case (false, false):
+            break
         }
         return parts.joined(separator: " · ")
     }

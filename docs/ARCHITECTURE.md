@@ -858,6 +858,9 @@ No Apple In-App Purchase is involved anywhere.
   points are redeemed. `LoyaltyScreen` shows the membership card (`KXLoyaltyCard` in the design
   system: gradient and ring per level from `LoyaltyPalette`, ring open at the bottom, fills once,
   still with Reduce Motion), the balances, the reward steps and the history.
+  The ring line names the next level with its threshold ("Platin ab 2.500", never "x / y", which
+  reads like a balance), and each history line names the pool that moved, because a manual
+  adjustment changes only one of the two.
 - Redeeming is a deliberate flow: the confirmation dialog states the conditions first, then
   `LoyaltyViewModel.redeem` posts the step with one idempotency key per attempt. After a failure
   that may have reached the server the next tap reuses the key, so the backend returns the same

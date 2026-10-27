@@ -51,6 +51,10 @@ change.
 
 ### Changed
 
+- **Loyalty screen says which points are meant** (owner was unsure whether "1.000 / 2.500" was her
+  balance): the ring line reads "1.000 Statuspunkte · Platin ab 2.500", so the second number is
+  clearly the threshold of the next level, and every history line names the points that moved
+  (Prämienpunkte, Statuspunkte or both). 11 languages.
 - **New look, "KARINEX Clean"** (owner decision after the first TestFlight build): the green,
   cream and gold "Editorial Luxe" design is replaced by a monochrome, photo-first design in the
   style of fashion retail apps. White pages, black type and capsule buttons, flat light grey
