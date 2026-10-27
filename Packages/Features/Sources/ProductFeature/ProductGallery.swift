@@ -132,37 +132,42 @@ struct ProductWishlistButton: View {
         .accessibilityIdentifier("product.wishlist")
     }
 
+    /// One white surface: a round disc with the heart, or, once there is a count, a capsule with
+    /// the heart and the number side by side. The shape grows from the disc to the capsule.
     private var label: some View {
         let size = min(discSize, ProductWishlistMetrics.maximumDiscSize)
+        let shape = RoundedRectangle(cornerRadius: size / 2, style: .continuous)
         return HStack(spacing: KXSpacing.xxs) {
+            heart(size: size * ProductWishlistMetrics.heartToDisc)
+                .frame(width: size * ProductWishlistMetrics.heartToDisc + KXSpacing.xxs)
             if let count {
                 Text(verbatim: count.formatted())
-                    .kxFont(.footnote)
+                    .kxFont(.subheadline)
+                    .fontWeight(.semibold)
+                    .monospacedDigit()
                     .foregroundStyle(KXColor.textPrimary)
-                    .padding(.horizontal, KXSpacing.xs)
-                    .padding(.vertical, KXSpacing.xxs)
-                    .background(KXColor.surface, in: Capsule())
+                    .contentTransition(.numericText(value: Double(count)))
+                    .lineLimit(1)
+                    .fixedSize()
                     .accessibilityHidden(true)
+                    .transition(.opacity.combined(with: .scale(scale: 0.6, anchor: .leading)))
             }
-            disc(size: size)
         }
-    }
-
-    private func disc(size: CGFloat) -> some View {
-        Circle()
-            .fill(KXColor.surface)
-            .shadow(
-                color: KXColor.scrim.opacity(ProductWishlistMetrics.shadowOpacity),
-                radius: ProductWishlistMetrics.shadowRadius,
-                x: 0,
-                y: ProductWishlistMetrics.shadowOffset
-            )
-            .frame(width: size, height: size)
-            .overlay {
-                heart(size: size * ProductWishlistMetrics.heartToDisc)
-            }
-            .frame(minWidth: KXSpacing.minimumTapTarget, minHeight: KXSpacing.minimumTapTarget)
-            .contentShape(Circle())
+        .padding(.horizontal, count == nil ? 0 : size * ProductWishlistMetrics.capsuleInset)
+        .frame(minWidth: size, minHeight: size, maxHeight: size)
+        .background {
+            shape
+                .fill(KXColor.surface)
+                .shadow(
+                    color: KXColor.scrim.opacity(ProductWishlistMetrics.shadowOpacity),
+                    radius: ProductWishlistMetrics.shadowRadius,
+                    x: 0,
+                    y: ProductWishlistMetrics.shadowOffset
+                )
+        }
+        .animation(KXMotion.animation(.snappy, reduceMotion: reduceMotion), value: count)
+        .frame(minWidth: KXSpacing.minimumTapTarget, minHeight: KXSpacing.minimumTapTarget)
+        .contentShape(shape)
     }
 
     /// The outline, the filled heart and the burst, driven by one keyframe animation per save.
@@ -206,6 +211,8 @@ private enum ProductWishlistMetrics {
     static let maximumDiscSize: CGFloat = 64
     /// The heart's size relative to the disc.
     static let heartToDisc: CGFloat = 0.5
+    /// The side padding of the capsule with a count, relative to its height.
+    static let capsuleInset: CGFloat = 0.3
     static let shadowOpacity = 0.12
     static let shadowRadius: CGFloat = 4
     static let shadowOffset: CGFloat = 1

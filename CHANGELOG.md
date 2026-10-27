@@ -15,6 +15,9 @@ change.
 - **Save counter for everyone** (owner request "like ASOS"): `SaveCountStore` asks the KARINEX
   backend (`/v1/app/save-counts`) instead of the counter host, so the number beside the heart is
   shown without the analytics consent and the device never contacts a third party for it.
+- **Heart with count in one capsule** (owner request): the white disc of the heart grows into a
+  capsule that holds the heart and the save count side by side, in semibold tabular digits that
+  roll when the number changes; without a count it stays a round disc.
 - **Trend icon in the "recently sold" row** (owner request, "the icon in my shop is much
   better"): the web shop's icon, a rising trend line with an arrow head in green, that draws
   itself, holds, erases and starts again (`ProductTrendIcon`, timings `MotionToken.trend*`); drawn
