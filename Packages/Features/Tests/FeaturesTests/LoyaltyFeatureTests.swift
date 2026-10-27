@@ -84,7 +84,12 @@ struct LoyaltyViewModelTests {
         let backend = StubBackend()
         let on = LoyaltyStatus.Referral(active: true, friendPercent: 10, rewardPoints: 5000, rewardCents: 500, maxPerYear: 20)
         await backend.setLoyalty(.success(LoyaltyFixtures.status(referral: on)))
-        let code = LoyaltyReferralCode(code: "FREUND-AB23CD", link: URL(string: "https://www.karinex.de/discount/FREUND-AB23CD"), friendPercent: 10, rewardPoints: 5000)
+        let code = LoyaltyReferralCode(
+            code: "FREUND-AB23CD",
+            link: URL(string: "https://www.karinex.de/discount/FREUND-AB23CD"),
+            friendPercent: 10,
+            rewardPoints: 5000
+        )
         await backend.setReferral(.success(code))
         let model = model(backend)
         await model.load()

@@ -15,8 +15,8 @@ public enum LoyaltyTierStyle: String, CaseIterable, Sendable {
 /// light and dark mode (like the store color panels of ``TintToken``).
 ///
 /// Petrol is the brand level, silver is a graphite silver, gold a deep antique gold, platinum
-/// a dark charcoal, diamond a deep ink blue and elite the store's darkest emerald. Every level meets WCAG AA for text (4.5:1) on both ends of its gradient,
-/// which `LoyaltyPaletteTests` checks.
+/// a dark charcoal, diamond a deep ink blue and elite the store's darkest emerald. Every level
+/// meets WCAG AA for text (4.5:1) on both ends of its gradient, which `LoyaltyPaletteTests` checks.
 public struct LoyaltyPanelColors: Hashable, Sendable {
     /// The upper end of the gradient.
     public let top: RGBAColor

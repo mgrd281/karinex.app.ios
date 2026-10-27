@@ -117,7 +117,8 @@ struct LoyaltyTests {
         #expect(referral.link?.absoluteString == "https://www.karinex.de/discount/FREUND-AB23CD")
         #expect(referral.rewardCents == 500)
         #expect(referral.rewarded == 2 && referral.pending == 1)
-        let bare = try JSONDecoder().decode(LoyaltyStatus.Referral.self, from: Data(#"{"active": true, "code": "", "link": "javascript:alert(1)"}"#.utf8))
+        let bareJSON = #"{"active": true, "code": "", "link": "javascript:alert(1)"}"#
+        let bare = try JSONDecoder().decode(LoyaltyStatus.Referral.self, from: Data(bareJSON.utf8))
         #expect(bare.code == nil)
         #expect(bare.link == nil)
     }
@@ -125,7 +126,10 @@ struct LoyaltyTests {
     @Test("Creating the referral code posts to the route; a refusal maps to an error")
     func createReferral() async throws {
         let http = QueueHTTPClient([
-            reply(#"{"code":"FREUND-AB23CD","link":"https://www.karinex.de/discount/FREUND-AB23CD","friendPercent":10,"rewardPoints":5000,"rewardCents":500}"#),
+            reply(
+                #"{"code":"FREUND-AB23CD","link":"https://www.karinex.de/discount/FREUND-AB23CD","#
+                    + #""friendPercent":10,"rewardPoints":5000,"rewardCents":500}"#
+            ),
             reply(#"{"code":"referral_rejected","reason":"disabled","message":"x","requestId":"r"}"#, status: 409),
             reply(#"{"code":"referral_rejected","reason":"in_progress","message":"x","requestId":"r"}"#, status: 409),
         ])
