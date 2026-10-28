@@ -876,8 +876,10 @@ No Apple In-App Purchase is involved anywhere.
 - Invite friends (`referral` in the status, optional): the backend keeps one Shopify discount code
   per customer and decides every reward (first order of a new customer only, never the customer
   themself, a yearly cap). The app only creates the code on a tap (`LoyaltyViewModel.createReferral`)
-  and shares it with `ShareLink` (only https links from the backend are shared). The section
-  (`LoyaltyReferralSection.swift`, owner request 28.10.2026 "more modern") is a dark card in the
+  and shares it with `ShareLink` (only https links from the backend are shared). The screen
+  (`ReferralScreen`, its own row "Freunde einladen" in the Konto tab and `AccountDestination.referral`, no
+  longer a section of the Treueprogramm; it reuses `LoyaltyViewModel` and `GET /v1/app/loyalty`) shows
+  `LoyaltyReferralSection.swift` (owner request 28.10.2026 "more modern"), a dark card in the
   license key card colors: headline, both benefits as two tiles (the friend's percent, the
   customer's reward in euros and points), the code as a dashed ticket that copies on a tap
   ("Kopiert" with a check mark and a haptic for two seconds), a white "Code teilen" capsule,

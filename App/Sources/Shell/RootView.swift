@@ -239,6 +239,10 @@ struct RootView: View {
                     await container.cartStore.applyDiscountCode(code) == .applied
                 }
             }
+        case .referral:
+            AccountSignInGate(sessionStore: container.sessionStore, reason: .referral) {
+                ReferralScreen(backend: container.backendClient)
+            }
         case let .order(id):
             AccountSignInGate(sessionStore: container.sessionStore, reason: .order) {
                 OrderDetailScreen(

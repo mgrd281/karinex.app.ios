@@ -4,7 +4,7 @@ import SwiftUI
 
 // MARK: - LoyaltyReferralSection
 
-/// "Freunde einladen": a dark invitation card with both benefits side by side (the friend's
+/// The content of "Freunde einladen": a dark invitation card with both benefits side by side (the friend's
 /// discount, the customer's reward), the customer's code as a ticket that copies on a tap and
 /// the share button, then three short steps. The code is created on the first tap
 /// (`onCreate`) and shared with the system share sheet (message and the shop link that puts
@@ -18,14 +18,7 @@ struct LoyaltyReferralSection: View {
     var body: some View {
         if let referral = status.referral, referral.active {
             VStack(alignment: .leading, spacing: KXSpacing.l) {
-                VStack(alignment: .leading, spacing: KXSpacing.s) {
-                    Text("account.loyalty.referral.title", bundle: .module)
-                        .kxFont(.subheadline)
-                        .foregroundStyle(KXColor.textSecondary)
-                        .padding(.horizontal, KXSpacing.m)
-                        .accessibilityAddTraits(.isHeader)
-                    ReferralInviteCard(referral: referral, format: format, isCreating: isCreating, onCreate: onCreate)
-                }
+                ReferralInviteCard(referral: referral, format: format, isCreating: isCreating, onCreate: onCreate)
                 steps(referral)
             }
             .accessibilityIdentifier("loyalty.referral")

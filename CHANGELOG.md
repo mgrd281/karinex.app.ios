@@ -17,6 +17,14 @@ change.
   `SupportHours.standard`, the mock backend, the App Store descriptions, the contract and the
   docs. The live value comes from `GET /v1/app/config` of the KARINEX backend (changed there too).
 
+### Changed
+
+- **Freunde einladen is its own screen** (owner request 28.10.2026): no longer a section at the
+  bottom of the Treueprogramm but its own row "Freunde einladen" in the Konto tab (after the
+  Treueprogramm) with its own screen (`ReferralScreen`, destination `AccountDestination.referral`).
+  The Treueprogramm screen shows the card, discount, points, rewards and history only. While the
+  store has the referral program switched off, the new screen says so. Texts in the 13 languages.
+
 ### Added
 
 - **Romanian and Greek** (owner request 28.10.2026): the app speaks all 13 content languages of the

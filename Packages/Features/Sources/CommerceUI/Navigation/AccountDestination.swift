@@ -19,6 +19,8 @@ public enum AccountDestination: Hashable, Sendable {
     case licenses(orderID: String?)
     /// "Treueprogramm": the membership card, reward points and discount codes.
     case loyalty
+    /// "Freunde einladen": the customer's referral code, shared with friends.
+    case referral
     /// "Persönliche Daten": the customer's name, e-mail address and addresses, and the way to
     /// delete the account.
     case profile

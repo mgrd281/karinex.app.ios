@@ -86,6 +86,10 @@ struct AccountStringTests {
             "account.invoices.error.title",
             "account.gate.invoices.message",
             "account.menu.licenses.subtitle",
+            "account.menu.referral",
+            "account.menu.referral.subtitle",
+            "account.gate.referral.message",
+            "account.referral.unavailable",
             "account.menu.profile",
             "account.menu.profile.subtitle",
             "account.profile.screen.title",
@@ -122,9 +126,16 @@ struct AccountMenuTests {
     @Test("Meine Bestellungen leads the list for everyone; only the account rows need a login")
     func rows() {
         #expect(AccountMenuItem.signedOut == [.orders])
-        #expect(AccountMenuItem.signedIn == [.orders, .invoices, .licenses, .loyalty, .profile])
+        #expect(AccountMenuItem.signedIn == [.orders, .invoices, .licenses, .loyalty, .referral, .profile])
         #expect(AccountMenuItem.general == [.wishlist, .settings, .support, .legal])
-        #expect(AccountMenuItem.allCases.filter(\.requiresSignIn) == [.orders, .invoices, .licenses, .loyalty, .profile])
+        #expect(AccountMenuItem.allCases.filter(\.requiresSignIn) == [.orders, .invoices, .licenses, .loyalty, .referral, .profile])
+    }
+
+    @Test("Freunde einladen is its own row with its own screen, after the Treueprogramm")
+    func referralRow() {
+        #expect(AccountMenuItem.referral.destination == .referral)
+        #expect(AccountMenuItem.referral.requiresSignIn)
+        #expect(AccountMenuItem.referral.systemImage == "person.2")
     }
 
     @Test("German titles and the short lines under them")

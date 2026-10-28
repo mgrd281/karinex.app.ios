@@ -142,16 +142,6 @@ public struct LoyaltyScreen: View {
             Text(failureMessage ?? "")
         }
         .alert(
-            Text("account.loyalty.referral.error.title", bundle: .module),
-            isPresented: $model.referralFailed
-        ) {
-            Button(role: .cancel) {} label: {
-                Text("account.signin.error.close", bundle: .module)
-            }
-        } message: {
-            Text("account.loyalty.referral.error.message", bundle: .module)
-        }
-        .alert(
             Text("account.loyalty.wallet.error.title", bundle: .module),
             isPresented: $model.walletPassFailed
         ) {
@@ -224,9 +214,6 @@ public struct LoyaltyScreen: View {
                     balance(status, format)
                     rewards(status, format)
                         .id(Anchor.rewards)
-                    LoyaltyReferralSection(status: status, format: format, isCreating: model.isCreatingReferral) {
-                        Task { await model.createReferral() }
-                    }
                     history(status, format)
                         .id(Anchor.history)
                 }
