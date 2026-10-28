@@ -332,6 +332,7 @@ public struct OrderDetailScreen: View {
     @State private var isReordering = false
 
     @Environment(\.locale) private var locale
+    @Environment(\.productLookup) private var productLookup
     @State private var invoicePreview: URL?
 
     /// Creates the screen.
@@ -421,7 +422,19 @@ public struct OrderDetailScreen: View {
             KXCard {
                 VStack(alignment: .leading, spacing: KXSpacing.m) {
                     ForEach(order.lineItems) { line in
-                        OrderLineRow(line: line, locale: locale)
+                        if let productID = line.productID {
+                            Button {
+                                Task { await openProduct(productID) }
+                            } label: {
+                                OrderLineRow(line: line, locale: locale, opensProduct: true)
+                                    .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityHint(Text("account.order.line.open", bundle: .module))
+                            .accessibilityIdentifier("account.order.line")
+                        } else {
+                            OrderLineRow(line: line, locale: locale, opensProduct: false)
+                        }
                         if line.id != order.lineItems.last?.id {
                             KXDivider()
                         }
@@ -429,6 +442,15 @@ public struct OrderDetailScreen: View {
                 }
             }
         }
+    }
+
+    /// Opens the product screen of a line: the product is looked up by its ID in the current
+    /// market; a product that no longer exists leaves the order as it is.
+    private func openProduct(_ id: ShopifyID) async {
+        guard let lookup = productLookup,
+              let product = try? await lookup.products(ids: [id]).first
+        else { return }
+        onRoute(.product(handle: product.handle))
     }
 
     private func totals(_ order: CustomerOrder) -> some View {
@@ -541,6 +563,8 @@ enum OrderReorder {
 private struct OrderLineRow: View {
     let line: OrderLineItem
     let locale: Locale
+    /// Whether a tap opens the product: the row then ends with a chevron.
+    let opensProduct: Bool
 
     private static let imageSize: CGFloat = 56
 
@@ -579,6 +603,13 @@ private struct OrderLineRow: View {
                             .foregroundStyle(KXColor.textPrimary)
                     }
                 }
+            }
+            if opensProduct {
+                Image(systemName: "chevron.right")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(KXColor.iconSecondary)
+                    .padding(.top, KXSpacing.xs)
+                    .accessibilityHidden(true)
             }
         }
         .accessibilityElement(children: .combine)

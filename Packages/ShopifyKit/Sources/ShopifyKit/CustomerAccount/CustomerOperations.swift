@@ -67,6 +67,7 @@ public enum CustomerFragments {
               name
               presentmentTitle
               variantId
+              productId
               quantity
               price {
                 ...CustomerMoneyFields

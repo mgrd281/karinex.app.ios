@@ -10,6 +10,13 @@ change.
 
 ## [Unreleased]
 
+### Changed
+
+- **Order lines open the product** (owner request 28.10.2026): in the order details a tap on an
+  article opens its product screen (chevron at the end of the line). The line carries the
+  product ID from the Customer Account API (`productId`); the screen looks the product up in
+  the current market and does nothing for a product that no longer exists.
+
 ### Added
 
 - **Neuigkeiten behind a bell** (owner request 28.10.2026, as at About You): a bell next to the

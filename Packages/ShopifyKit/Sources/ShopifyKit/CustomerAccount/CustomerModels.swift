@@ -386,6 +386,8 @@ public struct OrderLineItem: Sendable, Hashable, Decodable, Identifiable {
     /// The variant GID, `nil` for custom lines or variants deleted since; "Erneut kaufen" puts
     /// it back into the cart.
     public let variantID: ShopifyID?
+    /// The product GID, `nil` for custom lines; used to open the product from the order.
+    public let productID: ShopifyID?
 
     /// Creates a line item.
     public init(
@@ -396,7 +398,8 @@ public struct OrderLineItem: Sendable, Hashable, Decodable, Identifiable {
         price: MoneyV2?,
         total: MoneyV2?,
         image: ShopifyImage?,
-        variantID: ShopifyID? = nil
+        variantID: ShopifyID? = nil,
+        productID: ShopifyID? = nil
     ) {
         self.id = id
         self.name = name
@@ -406,10 +409,11 @@ public struct OrderLineItem: Sendable, Hashable, Decodable, Identifiable {
         self.total = total
         self.image = image
         self.variantID = variantID
+        self.productID = productID
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, name, presentmentTitle, variantId, quantity, price, currentTotalPrice, image
+        case id, name, presentmentTitle, variantId, productId, quantity, price, currentTotalPrice, image
     }
 
     /// Decodes `presentmentTitle` as the variant title and `currentTotalPrice` as the total.
@@ -424,6 +428,7 @@ public struct OrderLineItem: Sendable, Hashable, Decodable, Identifiable {
         total = try container.decodeIfPresent(MoneyV2.self, forKey: .currentTotalPrice)
         image = try container.decodeIfPresent(ShopifyImage.self, forKey: .image)
         variantID = try container.decodeIfPresent(ShopifyID.self, forKey: .variantId)
+        productID = try container.decodeIfPresent(ShopifyID.self, forKey: .productId)
     }
 }
 
