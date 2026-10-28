@@ -7,7 +7,13 @@ import Foundation
 /// The parser is small, pure Swift and safe for untrusted input:
 /// - it never crashes or fails, whatever the input (truncated, malformed or deeply nested),
 /// - scripts, styles, iframes, forms, embedded media, comments and every attribute except
-///   `href`, `src` and `alt` are dropped, so no store markup can execute or style anything,
+///   `href`, `src` and `alt` are dropped, so no store markup can execute or style anything.
+///   Inline `style` attributes are only read as layout hints: a grid of label and value pairs
+///   becomes ``HTMLBlock/facts(layout:items:)``, a grid of titled boxes ``HTMLBlock/cards(_:)``,
+///   rows numbered "01", "02" ``HTMLBlock/steps(_:)``, a box with a leading border
+///   ``HTMLBlock/callout(_:)``, and uppercase, large or small paragraphs become
+///   ``HTMLBlock/eyebrow(_:)``, ``HTMLBlock/lead(_:)`` and ``HTMLBlock/note(_:)``. No style is
+///   ever applied; the app draws these blocks with its own design tokens,
 /// - only `http` and `https` links are kept (relative ones are resolved against `baseURL`).
 ///   Links with any other scheme, such as `mailto:`, `sms:` or `javascript:`, become plain
 ///   text, so store content never triggers an action on the device,
@@ -64,6 +70,72 @@ public indirect enum HTMLBlock: Sendable, Hashable {
     case image(url: URL, alt: String?)
     /// A horizontal rule.
     case rule
+    /// A short line above a title, uppercase in the store ("eyebrow").
+    case eyebrow([HTMLInline])
+    /// An introductory paragraph, set larger than body text in the store.
+    case lead([HTMLInline])
+    /// A quiet side note, set small or italic in the store.
+    case note([HTMLInline])
+    /// Label and value pairs: short ones as tiles (a grid in the store), long ones as rows.
+    case facts(layout: HTMLFactLayout, items: [HTMLFact])
+    /// Boxes with a title and a short text (a grid of headed boxes in the store).
+    case cards([HTMLCard])
+    /// Numbered rows ("01", "02", ...), each with its content.
+    case steps([HTMLStep])
+    /// A highlighted box (a box with a border on its leading edge in the store).
+    case callout([HTMLBlock])
+}
+
+// MARK: - Structured blocks
+
+/// How ``HTMLBlock/facts(layout:items:)`` is laid out.
+public enum HTMLFactLayout: Sendable, Hashable {
+    /// Short facts as tiles side by side.
+    case tiles
+    /// Facts with longer values as rows, label above value.
+    case rows
+}
+
+/// One label and value pair of ``HTMLBlock/facts(layout:items:)``.
+public struct HTMLFact: Sendable, Hashable {
+    /// The label, e.g. "Lizenztyp".
+    public let label: [HTMLInline]
+    /// The value, e.g. "Dauerlizenz (LTSC)".
+    public let value: [HTMLBlock]
+
+    /// Creates a fact.
+    public init(label: [HTMLInline], value: [HTMLBlock]) {
+        self.label = label
+        self.value = value
+    }
+}
+
+/// One box of ``HTMLBlock/cards(_:)``.
+public struct HTMLCard: Sendable, Hashable {
+    /// The title of the box.
+    public let title: [HTMLInline]
+    /// The content below the title.
+    public let body: [HTMLBlock]
+
+    /// Creates a card.
+    public init(title: [HTMLInline], body: [HTMLBlock]) {
+        self.title = title
+        self.body = body
+    }
+}
+
+/// One row of ``HTMLBlock/steps(_:)``.
+public struct HTMLStep: Sendable, Hashable {
+    /// The number as written in the store, e.g. "01".
+    public let number: String
+    /// The content of the row.
+    public let body: [HTMLBlock]
+
+    /// Creates a step.
+    public init(number: String, body: [HTMLBlock]) {
+        self.number = number
+        self.body = body
+    }
 }
 
 // MARK: - HTMLTableCell
@@ -191,8 +263,10 @@ struct HTMLBlockBuilder {
             return [.rule]
         case "col", "colgroup":
             return []
+        case "p":
+            return styledParagraph(element)
         default:
-            return blocks(from: element.children)
+            return structuredBlocks(element) ?? blocks(from: element.children)
         }
     }
 
@@ -262,7 +336,7 @@ struct HTMLBlockBuilder {
     // MARK: Inlines
 
     /// The inline pieces of all children of `element`.
-    private func childPieces(of element: HTMLElementNode, hoistedImages: inout [HTMLBlock]) -> [InlinePiece] {
+    func childPieces(of element: HTMLElementNode, hoistedImages: inout [HTMLBlock]) -> [InlinePiece] {
         var pieces: [InlinePiece] = []
         for child in element.children {
             switch child {
@@ -371,7 +445,7 @@ struct HTMLBlockBuilder {
     // MARK: Text helpers
 
     /// The text of an element's subtree with white space collapsed, for inline code.
-    private static func collapsedText(of element: HTMLElementNode) -> String {
+    static func collapsedText(of element: HTMLElementNode) -> String {
         var text = ""
         appendText(of: element, to: &text, lineBreak: " ")
         return text.split(whereSeparator: { $0 == " " || $0 == "\t" || $0 == "\n" || $0 == "\r" || $0 == "\u{0C}" })

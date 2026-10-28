@@ -19,8 +19,13 @@ private func text(_ inlines: [HTMLInline]) -> String {
 private func text(_ blocks: [HTMLBlock]) -> String {
     blocks.map { block in
         switch block {
-        case let .heading(_, inlines), let .paragraph(inlines): text(inlines)
+        case let .heading(_, inlines), let .paragraph(inlines), let .eyebrow(inlines), let .lead(inlines), let .note(inlines):
+            text(inlines)
         case let .list(_, items): items.map(text).joined(separator: "\n")
+        case let .facts(_, facts): facts.map { text($0.label) + "\n" + text($0.value) }.joined(separator: "\n")
+        case let .cards(cards): cards.map { text($0.title) + "\n" + text($0.body) }.joined(separator: "\n")
+        case let .steps(steps): steps.map { $0.number + "\n" + text($0.body) }.joined(separator: "\n")
+        case let .callout(children): text(children)
         case let .table(rows): rows.map { $0.map { text($0.inlines) }.joined(separator: " | ") }.joined(separator: "\n")
         case let .quote(children): text(children)
         case let .image(_, alt): alt ?? ""
@@ -42,8 +47,13 @@ private func links(_ blocks: [HTMLBlock]) -> [(url: URL, text: String)] {
     }
     return blocks.flatMap { block -> [(url: URL, text: String)] in
         switch block {
-        case let .heading(_, inlines), let .paragraph(inlines): inlineLinks(inlines)
+        case let .heading(_, inlines), let .paragraph(inlines), let .eyebrow(inlines), let .lead(inlines), let .note(inlines):
+            inlineLinks(inlines)
         case let .list(_, items): items.flatMap(links)
+        case let .facts(_, facts): facts.flatMap { inlineLinks($0.label) + links($0.value) }
+        case let .cards(cards): cards.flatMap { inlineLinks($0.title) + links($0.body) }
+        case let .steps(steps): steps.flatMap { links($0.body) }
+        case let .callout(children): links(children)
         case let .table(rows): rows.flatMap { $0.flatMap { inlineLinks($0.inlines) } }
         case let .quote(children): links(children)
         case .image, .rule: []
@@ -56,7 +66,10 @@ private func allBlocks(_ blocks: [HTMLBlock]) -> [HTMLBlock] {
     blocks.flatMap { block -> [HTMLBlock] in
         switch block {
         case let .list(_, items): [block] + items.flatMap(allBlocks)
-        case let .quote(children): [block] + allBlocks(children)
+        case let .quote(children), let .callout(children): [block] + allBlocks(children)
+        case let .facts(_, facts): [block] + facts.flatMap { allBlocks($0.value) }
+        case let .cards(cards): [block] + cards.flatMap { allBlocks($0.body) }
+        case let .steps(steps): [block] + steps.flatMap { allBlocks($0.body) }
         default: [block]
         }
     }
@@ -95,10 +108,14 @@ struct HTMLDocumentFixtureTests {
             if case let .heading(level, inlines) = block { return (level, text(inlines)) }
             return nil
         }
-        #expect(headings.count == matches(#"<h[1-6][\s>]"#, in: html).count)
+        let cardTitles = blocks.flatMap { block -> [String] in
+            if case let .cards(cards) = block { return cards.map { text($0.title) } }
+            return []
+        }
+        #expect(headings.count + cardTitles.count == matches(#"<h[1-6][\s>]"#, in: html).count)
         #expect(headings.first?.0 == 1)
         #expect(headings.first?.1.contains("Office 2024 Professional Plus") == true)
-        #expect(Set(headings.map(\.0)) == [1, 2, 3])
+        #expect(Set(headings.map(\.0)) == [1, 2])
 
         let lists = blocks.compactMap { block -> [[HTMLBlock]]? in
             if case let .list(false, items) = block { return items }
@@ -117,6 +134,53 @@ struct HTMLDocumentFixtureTests {
             #expect(plain.contains("Dauerlizenz (LTSC)"))
         }
         #expect(document == HTMLDocument(html: html, baseURL: baseURL))
+    }
+
+    @Test("Office 2024 description: the store layout becomes eyebrow, leads, facts, callout, steps and cards")
+    func officeStructure() throws {
+        let (html, baseURL) = try description(Fixture.productDE)
+        let blocks = HTMLDocument(html: html, baseURL: baseURL).blocks
+
+        guard case let .eyebrow(eyebrow) = blocks.first else {
+            Issue.record("The description must start with the eyebrow")
+            return
+        }
+        #expect(text(eyebrow) == "Microsoft Office 2024 Professional Plus")
+        #expect(blocks.contains { if case .lead = $0 { true } else { false } })
+
+        let tiles = blocks.compactMap { block -> [HTMLFact]? in
+            if case let .facts(.tiles, facts) = block { return facts }
+            return nil
+        }
+        #expect(tiles.first?.map { text($0.label) } == ["Lizenztyp", "Plattform", "Laufzeit", "Lieferung"])
+        #expect(tiles.first.map { text($0[0].value) } == "Dauerlizenz (LTSC)")
+
+        let callouts = blocks.compactMap { block -> [HTMLBlock]? in
+            if case let .callout(children) = block { return children }
+            return nil
+        }
+        #expect(callouts.count == 1)
+        #expect(callouts.first?.contains { if case .list = $0 { true } else { false } } == true)
+
+        let steps = blocks.compactMap { block -> [HTMLStep]? in
+            if case let .steps(steps) = block { return steps }
+            return nil
+        }
+        #expect(steps.count >= 2)
+        #expect(steps.first?.map(\.number).prefix(3) == ["01", "02", "03"])
+
+        let cards = blocks.compactMap { block -> [HTMLCard]? in
+            if case let .cards(cards) = block { return cards }
+            return nil
+        }
+        #expect(cards.first?.first.map { text($0.title) } == "Word 2024")
+
+        let rows = blocks.compactMap { block -> [HTMLFact]? in
+            if case let .facts(.rows, facts) = block { return facts }
+            return nil
+        }
+        #expect(rows.flatMap { $0.map { text($0.label) } }.contains("Betriebssystem"))
+        #expect(blocks.contains { if case .note = $0 { true } else { false } })
     }
 
     @Test("Links: only http(s); relative ones resolved; other schemes become plain text", arguments: productFixtures)
@@ -420,5 +484,34 @@ struct HTMLDocumentConstructTests {
         #expect(text(HTMLDocument(html: html).blocks) == "deep")
         let unclosed = String(repeating: "<blockquote><ul><li><strong>", count: 5000) + "x"
         #expect(text(HTMLDocument(html: unclosed).blocks).contains("x"))
+    }
+}
+
+// MARK: - Layout hints
+
+extension HTMLDocumentConstructTests {
+    @Test("Layout hints: only exact layouts are structured, others stay plain")
+    func layoutHints() {
+        let facts = #"<div style="display: grid"><div><p>A</p><p>1</p></div><div><p>B</p><p>2</p></div></div>"#
+        #expect(blocks(facts) == [.facts(layout: .tiles, items: [
+            HTMLFact(label: [.text("A")], value: [.paragraph([.text("1")])]),
+            HTMLFact(label: [.text("B")], value: [.paragraph([.text("2")])]),
+        ])])
+        func row(_ number: String, _ body: String) -> String {
+            #"<div style="display:flex"><div>"# + number + "</div><div>" + body + "</div></div>"
+        }
+        let steps = "<div>" + row("01", "x") + row("02", "y") + "</div>"
+        #expect(blocks(steps) == [.steps([
+            HTMLStep(number: "01", body: [.paragraph([.text("x")])]),
+            HTMLStep(number: "02", body: [.paragraph([.text("y")])]),
+        ])])
+        #expect(blocks(#"<div style="border-left: 2px solid #000"><p>c</p></div>"#) == [.callout([.paragraph([.text("c")])])])
+        #expect(blocks(#"<div style="border-left: none"><p>c</p></div>"#) == [.paragraph([.text("c")])])
+        #expect(blocks(#"<p style="text-transform: uppercase">e</p><p style="font-size: 18px">l</p><p style="font-size:13px">n</p>"#)
+            == [.eyebrow([.text("e")]), .lead([.text("l")]), .note([.text("n")])])
+        let mixed = #"<div style="display: grid"><div><p>A</p><p>1</p></div><div>loose text</div></div>"#
+        #expect(blocks(mixed) == [.paragraph([.text("A")]), .paragraph([.text("1")]), .paragraph([.text("loose text")])])
+        #expect(HTMLBlockBuilder.isStepNumber("3."))
+        #expect(!HTMLBlockBuilder.isStepNumber("Professional Plus 2024"))
     }
 }

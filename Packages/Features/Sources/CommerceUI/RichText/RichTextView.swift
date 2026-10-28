@@ -11,6 +11,11 @@ import SwiftUI
 /// grids that scroll horizontally when they are wider than the screen, quotes with an ink rule,
 /// images through ``ProductImage`` and hairline rules.
 ///
+/// The structured blocks the parser recognizes in the store layout get their own calm
+/// presentation: an uppercase eyebrow, larger lead paragraphs, key facts as tiles or label and
+/// value rows, titled cards, numbered steps with a round number, highlighted callouts on a grey
+/// panel and small notes. Section headings get extra air above them.
+///
 /// Inline formatting keeps bold, italic and code. Only `http` and `https` links are tappable
 /// (opened through the `openURL` environment action); the parser already turned every other
 /// scheme into plain text. Everything scales with Dynamic Type and wraps instead of clipping.
@@ -63,8 +68,37 @@ private struct RichTextBlockView: View {
             RichTextInlineText(inlines: inlines)
                 .kxFont(RichTextStyle.headingStyle(level: level))
                 .foregroundStyle(KXColor.textPrimary)
-                .padding(.top, level <= 2 ? KXSpacing.xs : 0)
+                .padding(.top, level == 2 ? KXSpacing.m : 0)
                 .accessibilityAddTraits(.isHeader)
+        case let .eyebrow(inlines):
+            RichTextInlineText(inlines: inlines)
+                .kxFont(.eyebrow)
+                .textCase(.uppercase)
+                .foregroundStyle(KXColor.textTertiary)
+        case let .lead(inlines):
+            RichTextInlineText(inlines: inlines)
+                .kxFont(.title3)
+                .fontWeight(.regular)
+                .foregroundStyle(KXColor.textPrimary)
+        case let .note(inlines):
+            RichTextInlineText(inlines: inlines)
+                .kxFont(.footnote)
+                .foregroundStyle(KXColor.textTertiary)
+        case let .facts(layout, facts):
+            switch layout {
+            case .tiles:
+                RichTextFactTiles(facts: facts)
+            case .rows:
+                RichTextFactRows(facts: facts)
+            }
+        case let .cards(cards):
+            RichTextCards(cards: cards)
+        case let .steps(steps):
+            RichTextSteps(steps: steps)
+        case let .callout(blocks):
+            KXCard {
+                RichTextBlockList(blocks: blocks)
+            }
         case let .paragraph(inlines):
             if !RichTextStyle.isBlank(inlines) {
                 RichTextInlineText(inlines: inlines)
@@ -121,6 +155,151 @@ private struct RichTextList: View {
             }
         }
         .padding(.leading, KXSpacing.xxs)
+    }
+}
+
+// MARK: - Facts, cards and steps
+
+/// Short facts as tiles in two columns (one column at large text sizes).
+private struct RichTextFactTiles: View {
+    let facts: [HTMLFact]
+
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    var body: some View {
+        let columns = Array(
+            repeating: GridItem(.flexible(), spacing: KXSpacing.xs, alignment: .top),
+            count: dynamicTypeSize.isAccessibilitySize ? 1 : 2
+        )
+        LazyVGrid(columns: columns, alignment: .leading, spacing: KXSpacing.xs) {
+            ForEach(Array(facts.enumerated()), id: \.offset) { _, fact in
+                VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+                    RichTextInlineText(inlines: fact.label)
+                        .kxFont(.caption)
+                        .foregroundStyle(KXColor.textTertiary)
+                    RichTextValue(blocks: fact.value)
+                        .kxFont(.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(KXColor.textPrimary)
+                }
+                .frame(maxWidth: .infinity, minHeight: 64, alignment: .topLeading)
+                .padding(KXSpacing.s)
+                .background(KXColor.surface, in: RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous))
+                .accessibilityElement(children: .combine)
+            }
+        }
+    }
+}
+
+/// Facts with longer values: label above value, rows separated by hairlines on a grey panel.
+private struct RichTextFactRows: View {
+    let facts: [HTMLFact]
+
+    var body: some View {
+        KXCard(padding: 0) {
+            VStack(alignment: .leading, spacing: 0) {
+                ForEach(Array(facts.enumerated()), id: \.offset) { index, fact in
+                    VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+                        RichTextInlineText(inlines: fact.label)
+                            .kxFont(.footnote)
+                            .fontWeight(.medium)
+                            .foregroundStyle(KXColor.textTertiary)
+                        RichTextValue(blocks: fact.value)
+                            .kxFont(.subheadline)
+                            .foregroundStyle(KXColor.textPrimary)
+                    }
+                    .padding(.horizontal, KXSpacing.m)
+                    .padding(.vertical, KXSpacing.s)
+                    .accessibilityElement(children: .combine)
+                    if index < facts.count - 1 {
+                        KXDivider()
+                            .padding(.leading, KXSpacing.m)
+                    }
+                }
+            }
+        }
+    }
+}
+
+/// Titled boxes: one column on the phone, two side by side when there is room.
+private struct RichTextCards: View {
+    let cards: [HTMLCard]
+
+    var body: some View {
+        LazyVGrid(
+            columns: [GridItem(.adaptive(minimum: 260), spacing: KXSpacing.xs, alignment: .top)],
+            alignment: .leading,
+            spacing: KXSpacing.xs
+        ) {
+            ForEach(Array(cards.enumerated()), id: \.offset) { _, card in
+                VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+                    RichTextInlineText(inlines: card.title)
+                        .kxFont(.headline)
+                        .foregroundStyle(KXColor.textPrimary)
+                        .accessibilityAddTraits(.isHeader)
+                    RichTextValue(blocks: card.body)
+                        .kxFont(.subheadline)
+                        .foregroundStyle(KXColor.textSecondary)
+                }
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+                .padding(KXSpacing.m)
+                .background(KXColor.surface, in: RoundedRectangle(cornerRadius: KXRadius.card, style: .continuous))
+                .accessibilityElement(children: .combine)
+            }
+        }
+    }
+}
+
+/// Numbered rows: the store's number in a round ink badge, the text beside it.
+private struct RichTextSteps: View {
+    let steps: [HTMLStep]
+
+    var body: some View {
+        KXCard(padding: 0) {
+            VStack(alignment: .leading, spacing: 0) {
+                ForEach(Array(steps.enumerated()), id: \.offset) { index, step in
+                    HStack(alignment: .top, spacing: KXSpacing.s) {
+                        Text(verbatim: step.number)
+                            .kxFont(.caption)
+                            .fontWeight(.semibold)
+                            .monospacedDigit()
+                            .foregroundStyle(KXColor.textOnBrand)
+                            .frame(minWidth: 28, minHeight: 28)
+                            .background(KXColor.brand, in: Circle())
+                        RichTextValue(blocks: step.body)
+                            .kxFont(.subheadline)
+                            .foregroundStyle(KXColor.textPrimary)
+                            .padding(.top, KXSpacing.xxs)
+                    }
+                    .padding(.horizontal, KXSpacing.m)
+                    .padding(.vertical, KXSpacing.s)
+                    .accessibilityElement(children: .combine)
+                    if index < steps.count - 1 {
+                        KXDivider()
+                            .padding(.leading, KXSpacing.m + 28 + KXSpacing.s)
+                    }
+                }
+            }
+        }
+    }
+}
+
+/// The blocks of a value or card text, taking the font and color of the surrounding view:
+/// paragraphs as plain text, anything else (lists, links in paragraphs) as regular blocks.
+private struct RichTextValue: View {
+    let blocks: [HTMLBlock]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+            ForEach(Array(blocks.enumerated()), id: \.offset) { _, block in
+                switch block {
+                case let .paragraph(inlines), let .lead(inlines), let .note(inlines), let .eyebrow(inlines):
+                    RichTextInlineText(inlines: inlines)
+                default:
+                    RichTextBlockView(block: block)
+                }
+            }
+        }
     }
 }
 
@@ -287,6 +466,23 @@ enum RichTextStyle {
 // A shortened excerpt of the recorded Office 2024 Professional Plus description (DE/DE), as
 // blocks so the preview does not depend on the parser.
 private let richTextPreviewBlocks: [HTMLBlock] = [
+    .eyebrow([.text("Microsoft Office 2024 Professional Plus")]),
+    .heading(level: 1, inlines: [.text("Office 2024 Professional Plus kaufen")]),
+    .lead([.text("Die aktuelle Office-Suite mit Word, Excel, PowerPoint und Outlook als Dauerlizenz.")]),
+    .facts(layout: .tiles, items: [
+        HTMLFact(label: [.text("Lizenztyp")], value: [.paragraph([.text("Dauerlizenz (LTSC)")])]),
+        HTMLFact(label: [.text("Lieferung")], value: [.paragraph([.text("Sofort per E-Mail")])]),
+    ]),
+    .steps([
+        HTMLStep(number: "01", body: [.paragraph([.strong([.text("E-Mail prüfen")]), .text(" und den Schlüssel kopieren.")])]),
+        HTMLStep(number: "02", body: [.paragraph([.strong([.text("Installer laden")]), .text(" vom Microsoft-Server.")])]),
+    ]),
+    .cards([
+        HTMLCard(title: [.text("Word 2024")], body: [.paragraph([.text("Textverarbeitung mit Dark Mode.")])]),
+        HTMLCard(title: [.text("Excel 2024")], body: [.paragraph([.text("Tabellen mit dynamischen Arrays.")])]),
+    ]),
+    .callout([.paragraph([.strong([.text("Lizenzart")])]), .paragraph([.text("Vollversion zur dauerhaften Nutzung.")])]),
+    .note([.text("Es erfolgt kein physischer Versand.")]),
     .heading(level: 2, inlines: [.text("Microsoft Office 2024 Professional Plus")]),
     .paragraph([
         .text("Die "), .strong([.text("Dauerlizenz")]), .text(" für einen PC. Mehr dazu im "),

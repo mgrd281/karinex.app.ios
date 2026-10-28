@@ -720,7 +720,15 @@ found, rejected, unknown).
 **Rich text.** `RichTextView` renders `HTMLDocument` (ShopifyKit's dependency-free HTML parser)
 natively: headings, paragraphs, lists, tables as grids that scroll sideways, quotes, images and
 rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped to plain text
-(PROMPT.md 3.4).
+(PROMPT.md 3.4). The parser also reads inline `style` attributes, only as layout hints and
+never applied (`HTMLStructure.swift`): the store's description template becomes structured
+blocks, so the "Beschreibung" row reads like a product page and not like a long text. An
+uppercase line becomes `eyebrow`, a 17 px or larger paragraph `lead`, a 13 px or italic one
+`note`; a grid of label and value pairs `facts(.tiles)` (two-column tiles), a grid of headed boxes
+`cards`, rows of two flex columns `facts(.rows)` or, when every first column is a number such
+as "01", `steps` (round ink number badge), and a box with only a leading border `callout`
+(grey panel). A container that matches no layout exactly falls back to the plain blocks, so
+unusual markup only loses structure, never content.
 
 **Features built on it.**
 - `ProductFeature`: gallery with full-screen zoom, variant selector, price in the sale look

@@ -12,6 +12,17 @@ change.
 
 ### Changed
 
+- **Product description in a clear structure** (owner request 28.10.2026): the "Beschreibung" row
+  no longer shows the store text as one long column. The parser recognizes the layout of the
+  store's description template (inline styles are read as hints only, never applied): the key
+  facts (Lizenztyp, Plattform, Laufzeit, Lieferung) as tiles, comparison and system requirement
+  rows with the label above the value, the numbered advantages and installation steps with a round
+  number badge, the included programs as cards, the legal box as a grey panel, the uppercase line
+  above the title, larger intro paragraphs and small notes. The text itself is unchanged from
+  Shopify. Markup that matches no known layout is shown as before.
+
+### Changed
+
 - **Support hours 08:00 to 23:00** (owner decision 28.10.2026, same as the web shop since
   19.09.2026): the texts in all 13 languages (support card and trust strip), the default of
   `SupportHours.standard`, the mock backend, the App Store descriptions, the contract and the
