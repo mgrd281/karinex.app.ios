@@ -234,22 +234,20 @@ struct ProductVariantTests {
         #expect(model.selectedVariantID == ShopifyID("gid://shopify/ProductVariant/2"))
     }
 
-    @Test("Digital variants: order, pay, key by e-mail, and the right of withdrawal notice")
+    @Test("Digital variants: order, pay, key by e-mail")
     func digital() async {
         let model = await load(ProductFixtures.product())
 
         #expect(model.fulfillment == .digital)
         #expect(model.fulfillment.steps == [.order, .pay, .emailDelivery])
-        #expect(model.fulfillment.showsDigitalContentNotice)
     }
 
-    @Test("Physical variants: order, pay, shipping, and no digital content notice")
+    @Test("Physical variants: order, pay, shipping")
     func physical() async {
         let model = await load(ProductFixtures.product(variants: [ProductFixtures.variant(1, requiresShipping: true)]))
 
         #expect(model.fulfillment == .physical)
         #expect(model.fulfillment.steps == [.order, .pay, .shipping])
-        #expect(!model.fulfillment.showsDigitalContentNotice)
     }
 
     @Test("The gallery finds the image of a variant by URL")
@@ -497,7 +495,7 @@ struct ProductStringTests {
         "product.process.email.detail", "product.process.shipping.title", "product.process.shipping.detail",
         "product.description.title", "product.activation.title", "product.comparison.title", "product.comparison.eyebrow",
         "product.faq.title", "product.refund.title", "product.refund.scope", "product.refund.unactivated",
-        "product.refund.statutory", "product.notice.title", "product.notice.digital",
+        "product.refund.statutory", "product.description.more", "product.description.less",
         "product.cart.add", "product.cart.buy_now", "product.cart.added", "product.cart.show",
         "product.gallery.position %lld %lld",
     ]
@@ -541,17 +539,6 @@ struct ProductStringTests {
         #expect(clauses[1].contains("nicht aktivierte Lizenzschlüssel werden nicht freiwillig erstattet"))
         #expect(clauses[2].contains("gesetzlichen Gewährleistungsrechte"))
         #expect(clauses[2].contains("unberührt"))
-    }
-
-    @Test("The German digital-content notice cites § 356 Abs. 5 BGB; English describes the rule without it")
-    func digitalNotice() throws {
-        let german = try LocalizedStrings(language: "de", in: ProductFeatureResources.bundle)
-        let english = try LocalizedStrings(language: "en", in: ProductFeatureResources.bundle)
-
-        #expect(german("product.notice.digital").contains("§ 356 Abs. 5 BGB"))
-        #expect(german("product.notice.digital").contains("Widerrufsrecht"))
-        #expect(english("product.notice.digital").contains("right of withdrawal"))
-        #expect(!english("product.notice.digital").contains("BGB"))
     }
 
     @Test("Fact labels exist for every fact kind")

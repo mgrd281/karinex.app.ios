@@ -78,6 +78,8 @@ struct CommerceHelpersTests {
         let links = string.runs.compactMap(\.link)
         #expect(links == [web])
         #expect(String(string.characters) == "Siehe Ratgeber oder E-Mail")
+        #expect(string.runs.allSatisfy { $0.underlineStyle == nil })
+        #expect(string.runs.contains { $0.link == web && $0.inlinePresentationIntent == .stronglyEmphasized })
     }
 
     @Test("Rich text keeps bold, italic and code as presentation intents")

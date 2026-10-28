@@ -419,7 +419,7 @@ enum RichTextStyle {
     }
 
     /// The attributed string of the inlines: bold, italic and code as inline presentation
-    /// intents, `http`/`https` links as tappable, underlined links, every other link as text.
+    /// intents, `http`/`https` links as tappable bold links without underline (owner decision 2026-10-28), every other link as text.
     static func attributedString(for inlines: [HTMLInline], intent: InlinePresentationIntent = []) -> AttributedString {
         var result = AttributedString()
         for inline in inlines {
@@ -433,10 +433,10 @@ enum RichTextStyle {
             case let .code(text):
                 result += styled(text, intent: intent.union(.code))
             case let .link(url, children):
-                var linked = attributedString(for: children, intent: intent)
-                if isTappable(url) {
+                let tappable = isTappable(url)
+                var linked = attributedString(for: children, intent: tappable ? intent.union(.stronglyEmphasized) : intent)
+                if tappable {
                     linked.link = url
-                    linked.underlineStyle = .single
                 }
                 result += linked
             case .lineBreak:

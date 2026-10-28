@@ -259,17 +259,11 @@ private struct ProductDetailBody: View {
                     if !content.facts.isEmpty {
                         ProductFactsSection(facts: content.facts)
                     }
-                    ProductMoreInformationSection(
-                        description: content.description,
-                        fulfillment: model.fulfillment,
-                        activation: content.activation
-                    )
-                    VStack(alignment: .leading, spacing: KXSpacing.l) {
-                        ProductRefundSection()
-                        if model.fulfillment.showsDigitalContentNotice {
-                            ProductDigitalNoticeSection()
-                        }
+                    if !content.description.isEmpty {
+                        ProductDescriptionSection(description: content.description)
                     }
+                    ProductMoreInformationSection(fulfillment: model.fulfillment, activation: content.activation)
+                    ProductRefundSection()
                 }
                 .padding(.horizontal, KXSpacing.gutter)
 

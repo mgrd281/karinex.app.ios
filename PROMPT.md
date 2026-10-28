@@ -32,7 +32,7 @@ Target outcome: an App Store–approved app that measurably increases repeat pur
 
 **Refund policy (exact wording logic):** "14 Tage Geld-zurück" applies only to **activated** license keys and to physical goods. Delivered but **not activated** keys are not refunded voluntarily (the key could be used later). Statutory warranty rights for defective keys remain untouched. Wherever the app shows the 100-day promise, the condition must be visible next to it.
 
-**Right of withdrawal:** For digital content the right of withdrawal expires once delivery begins with the customer's express consent (§ 356 Abs. 5 BGB). Shopify checkout collects that consent; the app shows the notice on product pages and in the cart.
+**Right of withdrawal:** For digital content the right of withdrawal expires once delivery begins with the customer's express consent (§ 356 Abs. 5 BGB). Shopify checkout collects that consent; the app shows the notice in the cart (owner decision 2026-10-28: no longer on product pages).
 
 **Activation:** Activation instructions differ per product and come from Shopify product content (metafields / description). Do not hardcode activation steps. Typical example: Office 2024 Pro Plus activates via "File > Account > Enter product key", not via office.com/setup.
 
@@ -161,7 +161,7 @@ Laid out like the home screen of the About You app (owner request of 2026-10-25)
 - **Activation** section from `custom.details_content` or linked blog guide.
 - **Comparison** module: sibling products from the same collection (e.g., Office 2024 Home vs Standard vs Pro Plus) with thumbnails, key specs and price.
 - **FAQ accordion** from `karinex.faq` with chevron toggles.
-- Refund conditions block (exact policy logic from section 2) and digital-content notice (§ 356 Abs. 5 BGB).
+- Refund conditions block (exact policy logic from section 2). The digital-content notice (§ 356 Abs. 5 BGB) is shown in the cart only (owner decision 2026-10-28).
 - Sticky bottom bar: price + "In den Warenkorb" (haptic on success) + secondary "Jetzt kaufen" (adds and opens checkout). Share sheet, wishlist heart.
 
 ### 6.4 Suche (Search)

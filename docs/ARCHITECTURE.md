@@ -720,7 +720,7 @@ found, rejected, unknown).
 **Rich text.** `RichTextView` renders `HTMLDocument` (ShopifyKit's dependency-free HTML parser)
 natively: headings, paragraphs, lists, tables as grids that scroll sideways, quotes, images and
 rules. Only `http` and `https` links stay tappable, and `tel:` links are dropped to plain text
-(PROMPT.md 3.4). The parser also reads inline `style` attributes, only as layout hints and
+(PROMPT.md 3.4). Links are bold, not underlined (owner decision 2026-10-28). The parser also reads inline `style` attributes, only as layout hints and
 never applied (`HTMLStructure.swift`): the store's description template becomes structured
 blocks, so the "Beschreibung" row reads like a product page and not like a long text. An
 uppercase line becomes `eyebrow`, a 17 px or larger paragraph `lead`, a 13 px or italic one
@@ -734,10 +734,12 @@ unusual markup only loses structure, never content.
 - `ProductFeature`: gallery with full-screen zoom, variant selector, price in the sale look
   (with the store's lowest price of 30 days for single-variant products), the linked products
   row (`ProductLinkedProductsRow`, from `Product.linkedProducts`), the payment marks below the
-  buy buttons, key facts from metafields, the collapsible rows "Beschreibung" (the full
-  description), "So läuft es ab" and "Aktivierung", the "Passend dazu" row (Shopify's `COMPLEMENTARY`
+  buy buttons, key facts from metafields, the section "Beschreibung" (`ProductDescriptionSection`:
+  a long description is shortened to 420 points with a fade and a "Mehr anzeigen" capsule whose
+  chevron turns when it opens), the collapsible rows "So läuft es ab" and "Aktivierung", the "Passend dazu" row (Shopify's `COMPLEMENTARY`
   recommendations, loaded in parallel with the comparison row of `RELATED` recommendations),
-  FAQ, the 14-day promise with its condition, the withdrawal notice for digital goods, and a
+  FAQ, the 14-day promise with its condition (the withdrawal notice for digital goods is shown in
+  the cart only, owner decision 2026-10-28), and a
   sticky purchase bar. Sections without data are omitted, never faked. `ProductToolbar` puts the
   share arrow and the shopping bag with the cart's item count (`CartBagIcon`, opens the cart)
   into the navigation bar as plain symbols (no glass circle on iOS 26). The bag is

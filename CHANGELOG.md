@@ -12,6 +12,17 @@ change.
 
 ### Changed
 
+- **Product page polish** (owner request 28.10.2026, with a screenshot):
+  - The description is its own section "Beschreibung" on the page instead of a collapsed row. A
+    long text shows its beginning, fading out, with a round "Mehr anzeigen" button below; its
+    chevron turns when the text opens, "Weniger anzeigen" shortens it again. Texts in 13 languages.
+  - Links in store texts are bold instead of underlined.
+  - The withdrawal notice for digital content is no longer on the product page (it stays in the
+    cart and in the store's legal texts; PROMPT.md updated).
+  - The clause on the statutory warranty rights in the refund card has a shield icon.
+
+### Changed
+
 - **Product description in a clear structure** (owner request 28.10.2026): the "Beschreibung" row
   no longer shows the store text as one long column. The parser recognizes the layout of the
   store's description template (inline styles are read as hints only, never applied): the key

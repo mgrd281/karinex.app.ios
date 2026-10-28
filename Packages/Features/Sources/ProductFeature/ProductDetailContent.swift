@@ -176,11 +176,6 @@ enum ProductFulfillment: String, CaseIterable, Sendable {
         }
     }
 
-    /// Whether the right of withdrawal notice for digital content applies (§ 356 Abs. 5 BGB).
-    var showsDigitalContentNotice: Bool {
-        self == .digital
-    }
-
     /// The short delivery note next to the availability, in the user's language.
     var deliveryNote: String {
         deliveryNote(in: ProductFeatureResources.bundle)
@@ -283,7 +278,7 @@ enum ProductRefundClause: String, CaseIterable, Identifiable, Sendable {
         switch self {
         case .scope: "checkmark.seal"
         case .unactivatedKeys: "key"
-        case .statutoryRights: "scalemass"
+        case .statutoryRights: "checkmark.shield"
         }
     }
 
