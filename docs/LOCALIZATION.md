@@ -54,7 +54,7 @@ catalog value and on forbidden words.
 1. Calm, precise, premium retail. Short sentences. No filler ("einfach", "ganz bequem",
    "super"), no exclamation marks, no emoji.
 2. **No em dash (—) or en dash (–)** in any language. Use a comma, colon, period, or the local
-   word for "to" in ranges ("06:00 bis 23:00 Uhr", "6:00 to 23:00").
+   word for "to" in ranges ("08:00 bis 23:00 Uhr", "8:00 to 23:00").
 3. No claims the app cannot prove: never "100 % legal", "original licence", "verified",
    "guaranteed genuine", "cheapest" or equivalents in any language. Product texts from Shopify
    are shown as they are; the app adds nothing to them.

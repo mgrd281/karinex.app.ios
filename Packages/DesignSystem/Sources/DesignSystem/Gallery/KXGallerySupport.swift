@@ -168,8 +168,8 @@ enum KXGallerySamples {
     static let deliveryFact = "Lieferung per E-Mail in Minuten"
     static let paymentFact = "Apple Pay, Kreditkarte, Klarna"
     static let refundFact = "14 Tage Geld-zurück"
-    static let supportFact = "Support Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit"
-    static let supportChannels = "WhatsApp, E-Mail und Live-Chat, Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit"
+    static let supportFact = "Support Mo. bis So., 08:00 bis 23:00 Uhr deutscher Zeit"
+    static let supportChannels = "WhatsApp, E-Mail und Live-Chat, Mo. bis So., 08:00 bis 23:00 Uhr deutscher Zeit"
     static let refundCondition = """
         Gilt nur für aktivierte Lizenzschlüssel und physische Ware. Zugestellte, nicht aktivierte \
         Schlüssel werden nicht freiwillig erstattet. Ihre gesetzlichen Gewährleistungsrechte \

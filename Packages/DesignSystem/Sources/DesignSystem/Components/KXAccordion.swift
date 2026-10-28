@@ -273,7 +273,7 @@ private struct KXAccordionPreviewGallery: View {
                         ),
                         KXAccordionItem(
                             title: "Wann ist der Support erreichbar?",
-                            text: "Montag bis Sonntag, 06:00 bis 23:00 Uhr deutscher Zeit, per WhatsApp, E-Mail und Live-Chat."
+                            text: "Montag bis Sonntag, 08:00 bis 23:00 Uhr deutscher Zeit, per WhatsApp, E-Mail und Live-Chat."
                         ),
                     ],
                     expansion: .single,

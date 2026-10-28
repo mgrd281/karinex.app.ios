@@ -145,12 +145,12 @@ struct SnapshotCopy: Sendable {
         deliveryValue: "Download",
         licenseKeyLabel: "Lizenzschlüssel",
         supportTitle: "Support",
-        supportChannels: "WhatsApp, E-Mail und Live-Chat, Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit",
+        supportChannels: "WhatsApp, E-Mail und Live-Chat, Mo. bis So., 08:00 bis 23:00 Uhr deutscher Zeit",
         email: "E-Mail",
         deliveryFact: "Lieferung per E-Mail in Minuten",
         paymentFact: "Apple Pay, Kreditkarte, Klarna",
         refundFact: "100 Tage Geld-zurück",
-        supportFact: "Support Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit",
+        supportFact: "Support Mo. bis So., 08:00 bis 23:00 Uhr deutscher Zeit",
         emptyCartTitle: "Ihr Warenkorb ist leer",
         emptyCartMessage: "Legen Sie Produkte in den Warenkorb, um sie hier zu sehen.",
         noResultsTitle: "Keine Treffer",
@@ -171,7 +171,7 @@ struct SnapshotCopy: Sendable {
         paymentQuestion: "Welche Zahlungsarten stehen zur Verfügung?",
         paymentAnswer: "Apple Pay, Kreditkarte und Klarna.",
         supportQuestion: "Wann ist der Support erreichbar?",
-        supportAnswer: "Montag bis Sonntag, 06:00 bis 23:00 Uhr deutscher Zeit, per WhatsApp, E-Mail und Live-Chat."
+        supportAnswer: "Montag bis Sonntag, 08:00 bis 23:00 Uhr deutscher Zeit, per WhatsApp, E-Mail und Live-Chat."
     )
 
     /// Finnish, with long compound words.

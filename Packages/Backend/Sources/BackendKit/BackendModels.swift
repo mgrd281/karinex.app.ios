@@ -98,7 +98,7 @@ public struct SupportHours: Sendable, Hashable, Codable {
     public let timeZoneIdentifier: String
     /// ISO weekdays (1 Monday to 7 Sunday) on which support answers.
     public let weekdays: [Int]
-    /// Opening time in minutes after midnight, e.g. 360 for 06:00.
+    /// Opening time in minutes after midnight, e.g. 480 for 08:00.
     public let opensAtMinute: Int
     /// Closing time in minutes after midnight, e.g. 1380 for 23:00.
     public let closesAtMinute: Int
@@ -111,11 +111,11 @@ public struct SupportHours: Sendable, Hashable, Codable {
         self.closesAtMinute = closesAtMinute
     }
 
-    /// Monday to Sunday, 06:00 to 23:00 Europe/Berlin (PROMPT.md 2).
+    /// Monday to Sunday, 08:00 to 23:00 Europe/Berlin (PROMPT.md 2).
     public static let standard = SupportHours(
         timeZoneIdentifier: "Europe/Berlin",
         weekdays: [1, 2, 3, 4, 5, 6, 7],
-        opensAtMinute: 6 * 60,
+        opensAtMinute: 8 * 60,
         closesAtMinute: 23 * 60
     )
 
@@ -137,7 +137,7 @@ public struct SupportHours: Sendable, Hashable, Codable {
     }
 
     /// The opening and closing time on `date`'s day as dates, for locale-aware formatting
-    /// (`06:00` in Germany, `6:00 AM` in an English locale with a 12-hour clock).
+    /// (`08:00` in Germany, `8:00 AM` in an English locale with a 12-hour clock).
     public func interval(on date: Date) -> (opens: Date, closes: Date)? {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(identifier: timeZoneIdentifier) ?? TimeZone(secondsFromGMT: 3600) ?? .current
@@ -152,7 +152,7 @@ public struct SupportHours: Sendable, Hashable, Codable {
         case timeZone, weekdays, opensAt, closesAt
     }
 
-    /// Decodes `{"timeZone": "Europe/Berlin", "weekdays": [1, ...], "opensAt": "06:00", "closesAt": "23:00"}`.
+    /// Decodes `{"timeZone": "Europe/Berlin", "weekdays": [1, ...], "opensAt": "08:00", "closesAt": "23:00"}`.
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         timeZoneIdentifier = try container.decodeIfPresent(String.self, forKey: .timeZone) ?? Self.standard.timeZoneIdentifier

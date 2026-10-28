@@ -2,7 +2,7 @@
 // totals come from Shopify only. The keys are obviously fake placeholders.
 
 export const config = {
-  supportHours: { timeZone: 'Europe/Berlin', weekdays: [1, 2, 3, 4, 5, 6, 7], opensAt: '06:00', closesAt: '23:00' },
+  supportHours: { timeZone: 'Europe/Berlin', weekdays: [1, 2, 3, 4, 5, 6, 7], opensAt: '08:00', closesAt: '23:00' },
   whatsappNumber: null,
   liveChatUrl: null,
   supportEmail: 'kundenservice@karinex.de',

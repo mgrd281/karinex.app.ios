@@ -22,7 +22,7 @@ To test a purchase without being charged, use the discount code <REVIEWER_DISCOU
 Konto > Bestellungen, with its invoice and license key.
 
 Account deletion: Konto > Persönliche Daten > Konto und Daten löschen (guideline 5.1.1(v)).
-Support: WhatsApp, e-mail and live chat from Konto > Hilfe und Support, daily 06:00 to 23:00 German time.
+Support: WhatsApp, e-mail and live chat from Konto > Hilfe und Support, daily 08:00 to 23:00 German time.
 Tracking: none. Analytics and notifications start only after explicit consent.
 Languages: German (primary), English, Polish, Dutch, Portuguese (Portugal), Swedish, Danish,
 Spanish, French, Italian, Finnish.

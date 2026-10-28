@@ -106,7 +106,7 @@ private struct KXCardPreviewGallery: View {
                         Text(verbatim: "Support")
                             .kxFont(.title3)
                             .foregroundStyle(KXColor.textPrimary)
-                        Text(verbatim: "WhatsApp, E-Mail und Live-Chat, Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit")
+                        Text(verbatim: "WhatsApp, E-Mail und Live-Chat, Mo. bis So., 08:00 bis 23:00 Uhr deutscher Zeit")
                             .kxFont(.body)
                             .foregroundStyle(KXColor.textSecondary)
                     }

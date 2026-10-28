@@ -3866,85 +3866,85 @@
       }
     },
     "home.support.hours.value" : {
-      "comment" : "Service hours in the support card: Monday to Sunday, 06:00 to 23:00 German time (Europe/Berlin). Always say that the hours are German time, because customers in other time zones read it. Keep the 24-hour times \"06:00\" and \"23:00\" exactly; use the customary weekday abbreviations and the word for \"to\" in ranges, never a dash. Max ~50 characters.",
+      "comment" : "Service hours in the support card: Monday to Sunday, 08:00 to 23:00 German time (Europe/Berlin). Always say that the hours are German time, because customers in other time zones read it. Keep the 24-hour times \"08:00\" and \"23:00\" exactly; use the customary weekday abbreviations and the word for \"to\" in ranges, never a dash. Max ~50 characters.",
       "extractionState" : "manual",
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Man. til søn., 06:00 til 23:00 tysk tid"
+            "value" : "Man. til søn., 08:00 til 23:00 tysk tid"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit"
+            "value" : "Mo. bis So., 08:00 bis 23:00 Uhr deutscher Zeit"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mon to Sun, 06:00 to 23:00 German time"
+            "value" : "Mon to Sun, 08:00 to 23:00 German time"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lun. a dom., de 06:00 a 23:00, hora alemana"
+            "value" : "Lun. a dom., de 08:00 a 23:00, hora alemana"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Päivittäin klo 06:00 ja 23:00 välillä Saksan aikaa"
+            "value" : "Päivittäin klo 08:00 ja 23:00 välillä Saksan aikaa"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Du lun. au dim., de 06:00 à 23:00, heure allemande"
+            "value" : "Du lun. au dim., de 08:00 à 23:00, heure allemande"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Da lun. a dom., dalle 06:00 alle 23:00, ora tedesca"
+            "value" : "Da lun. a dom., dalle 08:00 alle 23:00, ora tedesca"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ma t/m zo, 06:00 tot 23:00 uur Duitse tijd"
+            "value" : "Ma t/m zo, 08:00 tot 23:00 uur Duitse tijd"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Od pon. do niedz., od 06:00 do 23:00 czasu niemieckiego"
+            "value" : "Od pon. do niedz., od 08:00 do 23:00 czasu niemieckiego"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Seg. a dom., das 06:00 às 23:00, hora da Alemanha"
+            "value" : "Seg. a dom., das 08:00 às 23:00, hora da Alemanha"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mån till sön, 06:00 till 23:00 tysk tid"
+            "value" : "Mån till sön, 08:00 till 23:00 tysk tid"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lun. - Dum., 06:00 - 23:00, ora Germaniei"
+            "value" : "Lun. - Dum., 08:00 - 23:00, ora Germaniei"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Δευ. έως Κυρ., 06:00 έως 23:00 ώρα Γερμανίας"
+            "value" : "Δευ. έως Κυρ., 08:00 έως 23:00 ώρα Γερμανίας"
           }
         }
       }
@@ -4790,85 +4790,85 @@
       }
     },
     "home.trust.support" : {
-      "comment" : "Trust fact on the Start tab, in a half-width tile with a clock icon: support hours, Monday to Sunday, 06:00 to 23:00 German time (Europe/Berlin). Always say that the hours are German time. Keep \"06:00\" and \"23:00\" exactly; customary weekday abbreviations; the word for \"to\" in ranges, never a dash. Wraps to at most three short lines: max ~60 characters.",
+      "comment" : "Trust fact on the Start tab, in a half-width tile with a clock icon: support hours, Monday to Sunday, 08:00 to 23:00 German time (Europe/Berlin). Always say that the hours are German time. Keep \"08:00\" and \"23:00\" exactly; customary weekday abbreviations; the word for \"to\" in ranges, never a dash. Wraps to at most three short lines: max ~60 characters.",
       "extractionState" : "manual",
       "localizations" : {
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Support man. til søn., 06:00 til 23:00 tysk tid"
+            "value" : "Support man. til søn., 08:00 til 23:00 tysk tid"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Support Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit"
+            "value" : "Support Mo. bis So., 08:00 bis 23:00 Uhr deutscher Zeit"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Support Mon to Sun, 06:00 to 23:00 German time"
+            "value" : "Support Mon to Sun, 08:00 to 23:00 German time"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Asistencia de lun. a dom., de 06:00 a 23:00, hora alemana"
+            "value" : "Asistencia de lun. a dom., de 08:00 a 23:00, hora alemana"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tuki päivittäin klo 06:00 ja 23:00 välillä Saksan aikaa"
+            "value" : "Tuki päivittäin klo 08:00 ja 23:00 välillä Saksan aikaa"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Assistance du lun. au dim., de 06:00 à 23:00, heure allemande"
+            "value" : "Assistance du lun. au dim., de 08:00 à 23:00, heure allemande"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Assistenza da lun. a dom., dalle 06:00 alle 23:00, ora tedesca"
+            "value" : "Assistenza da lun. a dom., dalle 08:00 alle 23:00, ora tedesca"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klantenservice ma t/m zo, 06:00 tot 23:00 uur Duitse tijd"
+            "value" : "Klantenservice ma t/m zo, 08:00 tot 23:00 uur Duitse tijd"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pomoc: od pon. do niedz., od 06:00 do 23:00 czasu niemieckiego"
+            "value" : "Pomoc: od pon. do niedz., od 08:00 do 23:00 czasu niemieckiego"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apoio de seg. a dom., das 06:00 às 23:00, hora da Alemanha"
+            "value" : "Apoio de seg. a dom., das 08:00 às 23:00, hora da Alemanha"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Support mån till sön, 06:00 till 23:00 tysk tid"
+            "value" : "Support mån till sön, 08:00 till 23:00 tysk tid"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Asistență Lun. - Dum., 06:00 - 23:00, ora Germaniei"
+            "value" : "Asistență Lun. - Dum., 08:00 - 23:00, ora Germaniei"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Υποστήριξη Δευ. έως Κυρ., 06:00 έως 23:00 ώρα Γερμανίας"
+            "value" : "Υποστήριξη Δευ. έως Κυρ., 08:00 έως 23:00 ώρα Γερμανίας"
           }
         }
       }

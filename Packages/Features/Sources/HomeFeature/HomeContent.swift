@@ -14,7 +14,7 @@ enum HomeTrustFact: String, CaseIterable, Identifiable, Sendable {
     case paymentMethods
     /// "14 Tage Geld-zurück*". Tapping it presents the conditions.
     case moneyBack
-    /// "Support Mo. bis So., 06:00 bis 23:00 Uhr".
+    /// "Support Mo. bis So., 08:00 bis 23:00 Uhr".
     case supportHours
 
     /// The marker that links the money-back promise to its condition, in the tile and in the

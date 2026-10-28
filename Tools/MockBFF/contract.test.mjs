@@ -22,7 +22,7 @@ test('config is public and supports ETag', async () => {
   const first = await fetch(`${base}/v1/app/config`);
   assert.equal(first.status, 200);
   const body = await first.json();
-  assert.deepEqual(body.supportHours, { timeZone: 'Europe/Berlin', weekdays: [1, 2, 3, 4, 5, 6, 7], opensAt: '06:00', closesAt: '23:00' });
+  assert.deepEqual(body.supportHours, { timeZone: 'Europe/Berlin', weekdays: [1, 2, 3, 4, 5, 6, 7], opensAt: '08:00', closesAt: '23:00' });
   assert.equal(body.supportEmail, 'kundenservice@karinex.de');
   const etag = first.headers.get('etag');
   assert.ok(etag);

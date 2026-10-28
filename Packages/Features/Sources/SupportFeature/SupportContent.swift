@@ -53,7 +53,7 @@ struct SupportContact: Sendable, Equatable {
 
 /// The support hours as text in the user's locale, computed from times in Europe/Berlin.
 enum SupportHoursText {
-    /// "Montag bis Sonntag, 6:00 bis 23:00 Uhr (deutsche Zeit)" for the standard hours, or the
+    /// "Montag bis Sonntag, 8:00 bis 23:00 Uhr (deutsche Zeit)" for the standard hours, or the
     /// times alone with the days left out when support is not open every day.
     static func text(for hours: SupportHours, on date: Date, locale: Locale) -> String {
         guard let interval = hours.interval(on: date) else { return "" }

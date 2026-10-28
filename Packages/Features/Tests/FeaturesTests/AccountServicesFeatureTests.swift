@@ -542,13 +542,13 @@ struct SupportTests {
         #expect(SupportContact.mailtoURL(address: "a@b.de?cc=c@d.de", subject: "Frage") == nil)
     }
 
-    @Test("The hours show 6:00 and 23:00 in German time")
+    @Test("The hours show 8:00 and 23:00 in German time")
     func hours() throws {
         let date = try #require(ISO8601DateFormatter().date(from: "2026-10-26T12:00:00Z"))
 
         let text = SupportHoursText.text(for: .standard, on: date, locale: Locale(identifier: "de_DE"))
 
-        #expect(text.contains("6:00"))
+        #expect(text.contains("8:00"))
         #expect(text.contains("23:00"))
         #expect(!containsForbiddenDash(text))
     }

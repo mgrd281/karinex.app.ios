@@ -10,6 +10,13 @@ change.
 
 ## [Unreleased]
 
+### Changed
+
+- **Support hours 08:00 to 23:00** (owner decision 28.10.2026, same as the web shop since
+  19.09.2026): the texts in all 13 languages (support card and trust strip), the default of
+  `SupportHours.standard`, the mock backend, the App Store descriptions, the contract and the
+  docs. The live value comes from `GET /v1/app/config` of the KARINEX backend (changed there too).
+
 ### Added
 
 - **Romanian and Greek** (owner request 28.10.2026): the app speaks all 13 content languages of the

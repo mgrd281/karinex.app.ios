@@ -34,7 +34,7 @@ struct HomeTrustFactTests {
             "Lieferung per E-Mail in Minuten",
             "Apple Pay, Kreditkarte, Klarna",
             "14 Tage Geld-zurück",
-            "Support Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit",
+            "Support Mo. bis So., 08:00 bis 23:00 Uhr deutscher Zeit",
         ])
     }
 
@@ -108,11 +108,11 @@ struct HomeSupportTests {
         #expect(SupportChannel.allCases.map { $0.name(in: german.bundle) } == ["WhatsApp", "E-Mail", "Live-Chat"])
     }
 
-    @Test("The service hours are Monday to Sunday, 06:00 to 23:00 German time")
+    @Test("The service hours are Monday to Sunday, 08:00 to 23:00 German time")
     func hours() throws {
         let german = try LocalizedStrings(language: "de", in: HomeResources.bundle)
 
-        #expect(german("home.support.hours.value") == "Mo. bis So., 06:00 bis 23:00 Uhr deutscher Zeit")
+        #expect(german("home.support.hours.value") == "Mo. bis So., 08:00 bis 23:00 Uhr deutscher Zeit")
     }
 
     @Test("Every mention of the service hours says they are German time", arguments: appLanguages)
@@ -127,7 +127,7 @@ struct HomeSupportTests {
         let timeZoneName = try #require(timeZoneNames[language])
 
         for text in [strings("home.support.hours.value"), HomeTrustFact.supportHours.text(in: strings.bundle)] {
-            #expect(text.contains("06:00"), "\(text)")
+            #expect(text.contains("08:00"), "\(text)")
             #expect(text.contains("23:00"), "\(text)")
             #expect(text.contains(timeZoneName), "\(text) does not say that the hours are German time")
         }

@@ -51,7 +51,7 @@ private func makeClient(_ http: QueueHTTPClient, token: String? = "shcat_token")
 }
 
 private let configJSON = """
-    {"supportHours": {"timeZone": "Europe/Berlin", "weekdays": [1, 2, 3, 4, 5, 6, 7], "opensAt": "06:00", "closesAt": "23:00"},
+    {"supportHours": {"timeZone": "Europe/Berlin", "weekdays": [1, 2, 3, 4, 5, 6, 7], "opensAt": "08:00", "closesAt": "23:00"},
      "whatsappNumber": "+49 40 1234567", "liveChatUrl": "https://www.karinex.de/pages/live-chat",
      "supportEmail": "kundenservice@karinex.de", "featureFlags": {"licenseVault": true}, "homeBanners": [],
      "minSupportedAppVersion": "0.2.0"}
@@ -106,7 +106,7 @@ struct BackendConfigTests {
         #expect(!RemoteAppConfig.fallback.requiresUpdate(appVersion: "0.0.1"))
     }
 
-    @Test("Support is open Monday to Sunday from 06:00 to 23:00 Berlin time")
+    @Test("Support is open Monday to Sunday from 08:00 to 23:00 Berlin time")
     func openingHours() throws {
         let hours = SupportHours.standard
         var calendar = Calendar(identifier: .gregorian)
@@ -114,14 +114,14 @@ struct BackendConfigTests {
         func date(_ day: Int, _ hour: Int, _ minute: Int) throws -> Date {
             try #require(calendar.date(from: DateComponents(year: 2026, month: 10, day: day, hour: hour, minute: minute)))
         }
-        #expect(try hours.isOpen(at: date(25, 6, 0)))
+        #expect(try hours.isOpen(at: date(25, 8, 0)))
         #expect(try hours.isOpen(at: date(25, 22, 59)))
         #expect(try !hours.isOpen(at: date(25, 23, 0)))
-        #expect(try !hours.isOpen(at: date(26, 5, 59)))
+        #expect(try !hours.isOpen(at: date(26, 7, 59)))
         #expect(try hours.isOpen(at: date(26, 12, 0)))
         #expect(hours.isEveryDay)
         let interval = try #require(try hours.interval(on: date(26, 12, 0)))
-        #expect(interval.closes.timeIntervalSince(interval.opens) == 17 * 3600)
+        #expect(interval.closes.timeIntervalSince(interval.opens) == 15 * 3600)
     }
 
     @Test("Weekday-only hours are closed on Sunday")

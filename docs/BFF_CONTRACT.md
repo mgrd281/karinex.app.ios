@@ -82,7 +82,7 @@ Answer with an `ETag`; the app sends `If-None-Match` and accepts `304 Not Modifi
 
 ```json
 {
-  "supportHours": { "timeZone": "Europe/Berlin", "weekdays": [1, 2, 3, 4, 5, 6, 7], "opensAt": "06:00", "closesAt": "23:00" },
+  "supportHours": { "timeZone": "Europe/Berlin", "weekdays": [1, 2, 3, 4, 5, 6, 7], "opensAt": "08:00", "closesAt": "23:00" },
   "whatsappNumber": "4940123456",
   "liveChatUrl": "https://karinex.de/pages/live-chat",
   "supportEmail": "kundenservice@karinex.de",
@@ -93,7 +93,7 @@ Answer with an `ETag`; the app sends `If-None-Match` and accepts `304 Not Modifi
 
 | Field | Type | Notes |
 | --- | --- | --- |
-| `supportHours` | object | `weekdays` are ISO weekdays (1 Monday to 7 Sunday); `opensAt` before `closesAt`, `HH:mm` in `timeZone`. Missing: Monday to Sunday 06:00 to 23:00 Europe/Berlin |
+| `supportHours` | object | `weekdays` are ISO weekdays (1 Monday to 7 Sunday); `opensAt` before `closesAt`, `HH:mm` in `timeZone`. Missing: Monday to Sunday 08:00 to 23:00 Europe/Berlin |
 | `whatsappNumber` | string or null | International format, digits only. Used exclusively to build a `https://wa.me/` link; the app never displays it as a number to dial. Missing or fewer than six digits: no WhatsApp button |
 | `liveChatUrl` | string or null | `https` only. Missing: no live chat button |
 | `supportEmail` | string | Missing: `kundenservice@karinex.de` |
