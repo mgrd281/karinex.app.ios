@@ -899,10 +899,13 @@ No Apple In-App Purchase is involved anywhere.
   (`ReferralScreen`, its own row "Freunde einladen" in the Konto tab and `AccountDestination.referral`, no
   longer a section of the Treueprogramm; it reuses `LoyaltyViewModel` and `GET /v1/app/loyalty`) shows
   `LoyaltyReferralSection.swift` (owner request 28.10.2026 "more modern"), a dark card in the
-  license key card colors: headline, both benefits as two tiles (the friend's percent, the
-  customer's reward in euros and points), the code as a dashed ticket that copies on a tap
-  ("Kopiert" with a check mark and a haptic for two seconds), a white "Code teilen" capsule,
-  then three steps as `KXList` rows and the yearly cap below them.
+  license key card colors: headline, both benefits as two tiles with a round symbol (the friend's
+  percent, the customer's reward in euros and points), the code as a voucher (`TicketShape`: a
+  notch cut out of either edge, a dashed perforation, a round white copy button with
+  `square.on.square` that turns into a check mark; the whole voucher copies on a tap, the label
+  reads "Kopiert" with a haptic for two seconds), a white "Code teilen" capsule, then the three
+  steps as a numbered timeline (`ReferralStepRow`: dark number dots joined by a thin line) and the
+  yearly cap below them (owner request 28.10.2026: better copy icon, more modern).
 - Redeeming is a deliberate flow: the confirmation dialog states the conditions first, then
   `LoyaltyViewModel.redeem` posts the step with one idempotency key per attempt. After a failure
   that may have reached the server the next tap reuses the key, so the backend returns the same

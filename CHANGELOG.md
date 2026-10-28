@@ -12,6 +12,11 @@ change.
 
 ### Changed
 
+- **Freunde einladen, more modern** (owner request 28.10.2026: "better copy icon, modern
+  design"): the code is a voucher with notched edges and a perforation; copying is one round
+  white button with a clean two-square symbol instead of the two-line "Code kopieren" capsule,
+  and turns into a check mark. Both benefit tiles carry a small round symbol, and "So
+  funktioniert es" is a numbered timeline instead of a plain list.
 - **Share arrow next to the bag** (owner request 28.10.2026, as at About You): on the product
   screen the share arrow and the bag form one group at the trailing edge with no gap between
   their tap areas, so the arrow no longer floats in the middle of the bar.
