@@ -52,7 +52,6 @@ public struct ReferralScreen: View {
 
     // MARK: Content
 
-    @ViewBuilder
     private func content(_ status: LoyaltyStatus) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: KXSpacing.xl) {
