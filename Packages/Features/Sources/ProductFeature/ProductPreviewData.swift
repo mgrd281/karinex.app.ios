@@ -200,7 +200,6 @@ struct PreviewCartRepository: CartRepository {
                 activation: nil
             )
             ProductMoreInformationSection(description: HTMLDocument(blocks: []), fulfillment: .physical, activation: nil)
-            ProductPaymentMethods()
             ProductRefundSection()
         }
         .padding(KXSpacing.gutter)

@@ -421,23 +421,6 @@ struct ProductMoreInformationSection: View {
     }
 }
 
-// MARK: - ProductPaymentMethods
-
-/// The acceptance marks of the store's payment methods below the buy buttons, from the app's
-/// ``PaymentMethodsStore`` (the business facts while it loads and in previews).
-struct ProductPaymentMethods: View {
-    @Environment(PaymentMethodsStore.self) private var paymentMethods: PaymentMethodsStore?
-
-    var body: some View {
-        PaymentMethodsRow(methods: paymentMethods?.methods ?? PaymentMethod.fallback)
-            .padding(.top, KXSpacing.xxs)
-            .accessibilityIdentifier("product.payment")
-            .task {
-                await paymentMethods?.loadIfNeeded()
-            }
-    }
-}
-
 // MARK: - ProductFAQSection
 
 /// "Häufige Fragen": the questions of `karinex.faq` in an accordion with chevron toggles.

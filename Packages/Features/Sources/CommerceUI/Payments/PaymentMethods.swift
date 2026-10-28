@@ -13,7 +13,7 @@ import SwiftUI
 /// card brands Shopify reports as accepted. UnionPay (not part of the card brands of Storefront
 /// API 2026-10), Klarna, Rechnung and Vorkasse are not in Shopify's payment settings and always
 /// appear, as in the web shop. Rechnung and Vorkasse have no brand mark of their own; the app
-/// ships its own marks for them (a document with a euro sign, a bank), drawn like the others.
+/// ships its own marks for them (a document with a euro sign, a cheque with a pen), drawn like the others.
 /// When Shopify reports nothing (previews, a failed request) the app shows Apple Pay, a neutral
 /// card symbol and those fixed methods, without naming a card brand.
 public enum PaymentMethod: String, CaseIterable, Sendable, Hashable, Identifiable {
@@ -41,7 +41,7 @@ public enum PaymentMethod: String, CaseIterable, Sendable, Hashable, Identifiabl
     case klarna
     /// Purchase on invoice ("Rechnung"): the app's own mark, a document with a euro sign.
     case invoice
-    /// Payment in advance by bank transfer ("Vorkasse"): the app's own mark, a bank.
+    /// Payment in advance by bank transfer ("Vorkasse"): the app's own mark, a cheque with a pen.
     case prepayment
 
     /// Stable identity, also used in accessibility identifiers (`payment.method.visa`).

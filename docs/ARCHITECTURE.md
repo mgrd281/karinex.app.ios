@@ -742,8 +742,7 @@ by `AccountServices` on first launch) and add the customer's token when there is
 **Features built on it.**
 - `ProductFeature`: gallery with full-screen zoom, variant selector, price in the sale look
   (with the store's lowest price of 30 days for single-variant products), the linked products
-  row (`ProductLinkedProductsRow`, from `Product.linkedProducts`), the payment marks below the
-  buy buttons, key facts from metafields, the collapsible rows "Beschreibung" (the full
+  row (`ProductLinkedProductsRow`, from `Product.linkedProducts`), key facts from metafields, the collapsible rows "Beschreibung" (the full
   description, ending with a "Weniger anzeigen" button that closes the row), "So läuft es ab"
   and "Aktivierung", the "Passend dazu" row (Shopify's `COMPLEMENTARY`
   recommendations, loaded in parallel with the comparison row of `RELATED` recommendations),
@@ -824,8 +823,9 @@ by `AccountServices` on first launch) and add the customer's token when there is
   `Layout` that keeps the 38 by 24 shape and shrinks all marks together when the line would not
   fit; owner request 28.10.2026) and draws the PDF marks of `PaymentMethods.xcassets` (sources and
   MIT license in `Tools/Brand/payment-icons`). Rechnung and Vorkasse have the app's own marks in
-  the same set (`invoice.svg`: a white document with a euro sign, `prepayment.svg`: a white bank,
-  both on a dark graphite gradient card); only the neutral card is drawn in SwiftUI.
+  the same set (`invoice.svg`: a document with a euro sign, `prepayment.svg`: a cheque with a pen and a euro
+  sign, both as black line drawings on a white card like the Apple Pay mark, after the owner's
+  reference icons); the marks appear in the cart only, no longer on the product page; only the neutral card is drawn in SwiftUI.
 - `CheckoutFeature`: see below.
 
 **Checkout.** `CheckoutCoordinator` is the state machine, free of Checkout Kit so it is testable:

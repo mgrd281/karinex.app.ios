@@ -223,7 +223,6 @@ private struct ProductDetailBody: View {
                             onSelectVariant: { model.selectVariant($0) },
                             onTitleVisibilityChange: onTitleVisibilityChange
                         )
-                        ProductPaymentMethods()
                     }
                     .padding(.horizontal, KXSpacing.gutter)
                 }

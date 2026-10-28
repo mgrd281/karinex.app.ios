@@ -13,4 +13,4 @@ CairoSVG, vector data preserved). The brand marks themselves belong to their own
 used to show which payment methods the shop accepts. Only the methods of PROMPT.md section 2
 are included. `unionpay.svg` and `google_pay.svg` (added 2026-10-26) declare no Display P3
 colours and are unchanged. Rechnung and Vorkasse have no brand mark; `invoice.svg` and `prepayment.svg` are the app's own
-marks for them (drawn for KARINEX on 28.10.2026, not part of the MIT set), converted the same way.
+marks for them (drawn for KARINEX on 28.10.2026 after the owner's reference icons (document with euro sign, cheque with pen), not part of the MIT set), converted the same way.
