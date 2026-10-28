@@ -27,29 +27,29 @@ struct ProductToolbar: ViewModifier {
         if #available(iOS 26, *) {
             content.toolbar {
                 titleItem
-                if let shareURL {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        shareButton(shareURL)
-                    }
-                    .sharedBackgroundVisibility(.hidden)
-                }
                 ToolbarItem(placement: .topBarTrailing) {
-                    cartButton
+                    trailingButtons
                 }
                 .sharedBackgroundVisibility(.hidden)
             }
         } else {
             content.toolbar {
                 titleItem
-                if let shareURL {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        shareButton(shareURL)
-                    }
-                }
                 ToolbarItem(placement: .topBarTrailing) {
-                    cartButton
+                    trailingButtons
                 }
             }
+        }
+    }
+
+    /// Share arrow and bag in one group with a small gap, as at About You: the arrow sits right
+    /// next to the bag instead of floating in the middle of the bar.
+    private var trailingButtons: some View {
+        HStack(spacing: 0) {
+            if let shareURL {
+                shareButton(shareURL)
+            }
+            cartButton
         }
     }
 
@@ -76,6 +76,9 @@ struct ProductToolbar: ViewModifier {
             }
         }
         .foregroundStyle(KXColor.textPrimary)
+        .labelStyle(.iconOnly)
+        .frame(minWidth: KXSpacing.minimumTapTarget, minHeight: KXSpacing.minimumTapTarget)
+        .contentShape(Rectangle())
         .accessibilityIdentifier("product.share")
     }
 

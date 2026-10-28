@@ -12,6 +12,12 @@ change.
 
 ### Changed
 
+- **Share arrow next to the bag** (owner request 28.10.2026, as at About You): on the product
+  screen the share arrow and the bag form one group at the trailing edge with no gap between
+  their tap areas, so the arrow no longer floats in the middle of the bar.
+
+### Changed
+
 - **Order lines open the product** (owner request 28.10.2026): in the order details a tap on an
   article opens its product screen (chevron at the end of the line). The line carries the
   product ID from the Customer Account API (`productId`); the screen looks the product up in
