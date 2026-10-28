@@ -564,7 +564,7 @@ light, dark and an accessibility text size, and snapshot tests:
 | `KXButton`, `KXButtonStyle` (`.kx(...)`) | Capsules: primary (black fill), secondary (thin ink outline), tertiary; regular and compact; loading, disabled, full width |
 | `KXCard`, `KXCardStyle` | Flat light grey panel (standard or elevated), radius 12, no border; `isOutlined` draws it white with a thin ink outline for the money-back promise |
 | `KXBadge` | Accent (ink), urgency (sale red), neutral and success capsules |
-| `KXPriceTag` | Price (sale red when reduced), struck-through compare-at price, savings badge (above the price in the regular size), optional tax note and lowest price of 30 days, combined accessibility label |
+| `KXPriceTag` | Price (sale red when reduced; regular size: red "SALE" badge above and the line "Ursprünglich: …" below, compact size: struck-through compare-at price and savings badge), optional tax note and lowest price of 30 days, combined accessibility label |
 | `KXSectionHeader` | Bold title, optional eyebrow, optional trailing action |
 | `KXSpecRow` | Label and value with open space between them (no dot leader); stacks at large text sizes |
 | `KXList` | iOS-style grouped rows: `KXListGroup` (header, panel, footer), `KXListRow` (icon tile, title, detail, value, accessory), `KXListToggleRow`, `KXListDivider` |

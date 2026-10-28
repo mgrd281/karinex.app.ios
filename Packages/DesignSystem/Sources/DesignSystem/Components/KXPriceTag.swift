@@ -11,9 +11,10 @@ import SwiftUI
 /// ("inkl. MwSt.") only for markets whose prices include tax.
 ///
 /// Sale look, as in fashion retail apps: a reduced price (one with a compare-at price) is sale
-/// red, next to the grey struck-through compare-at price. The savings badge is sale red too;
-/// in the ``Size/regular`` size of the product page it sits above the price, in the
-/// ``Size/compact`` size next to it. Sale red is the one color accent of the otherwise
+/// red. In the ``Size/regular`` size of the product page a red "SALE" badge sits above the
+/// price and the former price follows below as "Ursprünglich: 149,99 €", then the lowest price
+/// of 30 days. In the ``Size/compact`` size of cards the compare-at price is struck through
+/// next to the price, with the savings badge. Sale red is the one color accent of the otherwise
 /// monochrome interface.
 ///
 /// Layout: price and compare-at price (and the compact badge) sit on one baseline. When they
@@ -74,8 +75,8 @@ public struct KXPriceTag: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: KXSpacing.xxs) {
-            if size == .regular, let savings {
-                KXBadge(savings, style: .urgency)
+            if showsSaleBadge {
+                KXBadge(String(localized: "kx.price.sale", bundle: .module), style: .urgency)
                     .padding(.bottom, KXSpacing.xxs)
             }
             ViewThatFits(in: .horizontal) {
@@ -103,6 +104,13 @@ public struct KXPriceTag: View {
                     .foregroundStyle(KXColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
+            if size == .regular, let compareAtPrice {
+                Text("kx.price.original \(compareAtPrice)", bundle: .module)
+                    .monospacedDigit()
+                    .kxFont(.footnote)
+                    .foregroundStyle(KXColor.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             if let lowestPrice {
                 Text("kx.price.lowest_30_days \(lowestPrice)", bundle: .module)
                     .monospacedDigit()
@@ -126,8 +134,14 @@ public struct KXPriceTag: View {
             .contentTransition(.numericText())
     }
 
+    /// The red "SALE" badge above the price in the regular size, as at About You: a reduced
+    /// price shows the word, the former price follows below as "Ursprünglich: …".
+    private var showsSaleBadge: Bool {
+        size == .regular && compareAtPrice != nil
+    }
+
     @ViewBuilder private var compareAtText: some View {
-        if let compareAtPrice {
+        if size == .compact, let compareAtPrice {
             Text(compareAtPrice)
                 .strikethrough(true, color: KXColor.textTertiary)
                 .monospacedDigit()

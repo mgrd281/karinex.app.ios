@@ -12,6 +12,10 @@ change.
 
 ### Changed
 
+- **SALE like About You** (owner request 28.10.2026): on the product page a reduced price shows a
+  red "SALE" badge (13 languages) above the red price instead of the percentage badge, and the
+  former price is the line "Ursprünglich: 149,99 €" instead of a struck-through number, followed by
+  the store's lowest price of 30 days. Product cards keep the struck-through price.
 - **Bell and heart closer together** (owner request 28.10.2026): in the Start header the bell and
   the heart form one group with no gap between their tap areas.
 - **Freunde einladen, more modern** (owner request 28.10.2026: "better copy icon, modern
