@@ -66,6 +66,8 @@ public enum DeepLinkParser {
             return .search(query: searchQuery(components))
         case ("cart", 0):
             return .cart
+        case ("notifications", 0):
+            return .notifications
         case ("account", _):
             return accountRoute(Array(path))
         default:

@@ -74,6 +74,7 @@ struct RootView: View {
         .offlineBanner(monitor: container.networkMonitor)
         .commerceCountry(container.marketStore.selection.country)
         .environment(container.savedProductsStore)
+        .environment(container.inboxStore)
         .environment(container.saveCountStore)
         .environment(container.paymentMethodsStore)
         .environment(\.productLookup, container.productLookup)
@@ -214,6 +215,11 @@ struct RootView: View {
             cartScreen(in: tab)
         case let .account(destination):
             accountScreen(for: destination, in: tab)
+        case .notifications:
+            NotificationsScreen(
+                showsPushHint: !container.consentStore.load().allowsPushRegistration,
+                onRoute: { router.open($0, from: tab) }
+            )
         }
     }
 

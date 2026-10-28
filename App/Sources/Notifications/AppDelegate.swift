@@ -57,3 +57,19 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
         }
     }
 }
+
+// MARK: - PushAlertKeys
+
+/// The keys the KARINEX backend sends as `title-loc-key` and `loc-key` in notifications of
+/// "Neuigkeiten" (back in stock, order paid, keys delivered). iOS looks them up in the App's
+/// String Catalog when the notification arrives, so the text appears in the customer's language;
+/// `loc-args` fill the `%@` (product name or order number). The backend contract lists the same
+/// keys (docs/BFF_CONTRACT.md, "Push payloads").
+enum PushAlertKeys {
+    /// Title and text of each notification kind, in the order title, text.
+    static let all: [(title: String, body: String)] = [
+        ("push.restock.title", "push.restock.body"),
+        ("push.order.paid.title", "push.order.paid.body"),
+        ("push.license.delivered.title", "push.license.delivered.body"),
+    ]
+}

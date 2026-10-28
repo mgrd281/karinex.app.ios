@@ -20,4 +20,6 @@ public enum CommerceRoute: Hashable, Sendable {
     case cart
     /// A screen of the account area.
     case account(AccountDestination)
+    /// "Neuigkeiten": the messages behind the bell of the Start tab.
+    case notifications
 }

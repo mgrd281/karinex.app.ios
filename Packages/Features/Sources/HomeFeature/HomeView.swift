@@ -7,7 +7,7 @@ import SwiftUI
 
 /// The Start tab, laid out like a fashion retail app (PROMPT.md section 6.1):
 ///
-/// - On top the KARINEX logo with the Merkliste heart, which scroll away, and the search field,
+/// - On top the KARINEX logo with the bell ("Neuigkeiten") and the Merkliste heart, which scroll away, and the search field,
 ///   which stays pinned and opens the Suche tab.
 /// - Below: the story carousel of featured collections in the store color,
 ///   the trust facts (the money-back promise opens its conditions), the category showcase with
@@ -77,6 +77,8 @@ public struct HomeView: View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 0, pinnedViews: [.sectionHeaders]) {
                 HomeBrandBar {
+                    onRoute(.notifications)
+                } onWishlist: {
                     onRoute(.account(.wishlist))
                 }
                 .onGeometryChange(for: CGFloat.self) { geometry in

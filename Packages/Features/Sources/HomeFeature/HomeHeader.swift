@@ -8,21 +8,57 @@ import SwiftUI
 /// the Merkliste, with the number of saved products beside it. It scrolls away while the search
 /// field stays pinned.
 struct HomeBrandBar: View {
+    /// Opens "Neuigkeiten".
+    let onNotifications: @MainActor () -> Void
     /// Opens the Merkliste.
     let onWishlist: @MainActor () -> Void
 
     @Environment(SavedProductsStore.self) private var savedProducts: SavedProductsStore?
+    @Environment(InboxStore.self) private var inbox: InboxStore?
 
     var body: some View {
         HStack(spacing: KXSpacing.m) {
             KXWordmark(size: .regular)
                 .accessibilityAddTraits(.isHeader)
             Spacer(minLength: 0)
+            if inbox != nil {
+                notificationsButton
+            }
             wishlistButton
         }
         .padding(.leading, KXSpacing.gutter)
         .padding(.trailing, KXSpacing.xs)
         .padding(.top, KXSpacing.xxs)
+    }
+
+    /// The bell, as at About You: a red dot while there are new messages.
+    private var notificationsButton: some View {
+        let unread = inbox?.unreadCount ?? 0
+        return Button {
+            onNotifications()
+        } label: {
+            Image(systemName: "bell")
+                .kxFont(.title3)
+                .foregroundStyle(KXColor.textPrimary)
+                .overlay(alignment: .topTrailing) {
+                    if unread > 0 {
+                        Circle()
+                            .fill(KXColor.urgency)
+                            .frame(width: 9, height: 9)
+                            .offset(x: 2, y: -1)
+                            .transition(.scale.combined(with: .opacity))
+                    }
+                }
+                .frame(minWidth: KXSpacing.minimumTapTarget, minHeight: KXSpacing.minimumTapTarget)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text("home.notifications.title", bundle: .module))
+        .accessibilityValue(unread > 0 ? Text("home.notifications.unread", bundle: .module) : Text(verbatim: ""))
+        .accessibilityIdentifier("home.notifications")
+        .task {
+            await inbox?.refresh()
+        }
     }
 
     private var wishlistButton: some View {

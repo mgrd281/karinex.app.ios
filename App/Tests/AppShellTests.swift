@@ -119,3 +119,18 @@ struct AppShellTests {
         #expect(container.storefrontClient.isTokenless)
     }
 }
+
+// MARK: - Push alert keys
+
+@Suite("Push alert keys")
+struct PushAlertKeysTests {
+    @Test("Every key the backend sends exists in the App catalog, the text with one %@")
+    func keysExist() {
+        for pair in PushAlertKeys.all {
+            let title = Bundle.main.localizedString(forKey: pair.title, value: "missing", table: nil)
+            let body = Bundle.main.localizedString(forKey: pair.body, value: "missing", table: nil)
+            #expect(title != "missing" && title != pair.title, "\(pair.title)")
+            #expect(body.components(separatedBy: "%@").count == 2, "\(pair.body)")
+        }
+    }
+}

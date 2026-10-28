@@ -423,12 +423,136 @@ public struct DeviceRegistration: Sendable, Hashable, Encodable {
     /// The consents.
     public let consent: Consent
 
+    /// `production` for TestFlight and App Store builds, `sandbox` for debug builds.
+    public let environment: String
+
     /// Creates a registration.
-    public init(apnsToken: String, locale: String, country: String, consent: Consent) {
+    public init(apnsToken: String, locale: String, country: String, consent: Consent, environment: String = "production") {
         self.apnsToken = apnsToken
         self.locale = locale
         self.country = country
         self.consent = consent
+        self.environment = environment
+    }
+}
+
+// MARK: - Inbox
+
+/// One message of "Neuigkeiten" (`GET /v1/app/notifications`).
+///
+/// Messages of the store owner carry their own title and text. Automatic messages (back in
+/// stock, order paid, keys delivered) carry only parameters; the app writes their text in the
+/// customer's language.
+public struct InboxMessage: Sendable, Hashable, Identifiable, Decodable {
+    /// The kind of message.
+    public enum Kind: Sendable, Hashable {
+        /// Written by the store owner for all customers.
+        case broadcast
+        /// A product the customer asked about is available again.
+        case restock
+        /// An order of the customer was paid.
+        case orderPaid
+        /// The keys of an order were delivered.
+        case licenseDelivered
+        /// A kind this app version does not know; not shown.
+        case unknown
+
+        init(raw: String) {
+            switch raw {
+            case "broadcast": self = .broadcast
+            case "restock": self = .restock
+            case "order_paid": self = .orderPaid
+            case "license_delivered": self = .licenseDelivered
+            default: self = .unknown
+            }
+        }
+    }
+
+    /// Stable identity.
+    public let id: String
+    /// The kind.
+    public let kind: Kind
+    /// The short line above the card, set by the store owner.
+    public let label: String?
+    /// The title (empty for automatic messages).
+    public let title: String
+    /// The text (empty for automatic messages).
+    public let body: String
+    /// An `https` product image.
+    public let imageURL: URL?
+    /// The product the message is about, if any.
+    public let productHandle: String?
+    /// Parameters of automatic messages: `productTitle`, `orderName`, `orderId`.
+    public let params: [String: String]
+    /// When the message was created.
+    public let createdAt: Date
+
+    /// Creates a message, e.g. for previews and tests.
+    public init(
+        id: String,
+        kind: Kind,
+        label: String? = nil,
+        title: String = "",
+        body: String = "",
+        imageURL: URL? = nil,
+        productHandle: String? = nil,
+        params: [String: String] = [:],
+        createdAt: Date
+    ) {
+        self.id = id
+        self.kind = kind
+        self.label = label
+        self.title = title
+        self.body = body
+        self.imageURL = imageURL
+        self.productHandle = productHandle
+        self.params = params
+        self.createdAt = createdAt
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, kind, label, title, body, imageUrl, productHandle, params, createdAt
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        kind = try Kind(raw: container.decode(String.self, forKey: .kind))
+        label = try container.decodeIfPresent(String.self, forKey: .label)
+        title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
+        body = try container.decodeIfPresent(String.self, forKey: .body) ?? ""
+        imageURL = try container.decodeIfPresent(String.self, forKey: .imageUrl)
+            .flatMap(URL.init(string:))
+            .flatMap { $0.scheme == "https" ? $0 : nil }
+        productHandle = try container.decodeIfPresent(String.self, forKey: .productHandle)
+        params = try container.decodeIfPresent([String: String].self, forKey: .params) ?? [:]
+        let created = try container.decode(String.self, forKey: .createdAt)
+        guard let date = BackendDate.parse(created) else {
+            throw DecodingError.dataCorruptedError(forKey: .createdAt, in: container, debugDescription: "Invalid date")
+        }
+        createdAt = date
+    }
+}
+
+/// The body of `GET /v1/app/notifications`.
+struct InboxPage: Decodable {
+    let items: [InboxMessage]
+}
+
+/// `POST /v1/app/restock`: "Benachrichtigen, wenn verfügbar".
+public struct RestockWatch: Sendable, Hashable, Encodable {
+    /// The product handle.
+    public let productHandle: String
+    /// The variant ID (a Shopify GID or the number).
+    public let variantId: String
+    /// The product title, for the message in the customer's language.
+    public let productTitle: String
+
+    /// Creates a watch.
+    public init(productHandle: String, variantID: String, productTitle: String) {
+        self.productHandle = productHandle
+        variantId = variantID
+        self.productTitle = productTitle
     }
 }
 

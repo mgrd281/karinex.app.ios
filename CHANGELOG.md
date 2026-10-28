@@ -10,6 +10,22 @@ change.
 
 ## [Unreleased]
 
+### Added
+
+- **Neuigkeiten behind a bell** (owner request 28.10.2026, as at About You): a bell next to the
+  heart on the Start tab with a red dot for new messages opens "Neuigkeiten": white cards on a
+  grey page (label, day, product photo, bold title and text), "Neu" and "Gesehen", and a note
+  that messages disappear after 30 days. Messages come from the KARINEX backend
+  (`GET /v1/app/notifications`): the owner's messages to all customers, "Wieder verfügbar" and,
+  signed in, "Zahlung erhalten" and "Ihr Schlüssel ist da" (written in the customer's language
+  from parameters). Read state stays on the device (`InboxStore`).
+- **Benachrichtigen, wenn verfügbar**: a sold-out variant shows this button instead of
+  "In den Warenkorb" (`POST`/`DELETE /v1/app/restock`); the backend sends the message once the
+  variant is back. Notifications use `loc-key`s from the App catalog (`PushAlertKeys`).
+- The device endpoints identify the installation by a random ID (`X-KX-Install`) and work for
+  guests; the push registration no longer requires a sign-in and reports the APNs environment.
+  Texts in the 13 languages.
+
 ### Changed
 
 - **Product page polish** (owner request 28.10.2026, with a screenshot):

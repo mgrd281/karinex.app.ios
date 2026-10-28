@@ -106,6 +106,8 @@ final class AppContainer {
     let settingsStore: AppSettingsStore
     /// The wishlist and the recently viewed products, on this device only.
     let savedProductsStore: SavedProductsStore
+    /// "Neuigkeiten": messages behind the bell and restock requests.
+    let inboxStore: InboxStore
     let saveCountStore: SaveCountStore
     /// The accepted payment methods (Shopify's payment settings plus Klarna), shown with their
     /// acceptance marks in the cart and on the product page.
@@ -224,6 +226,8 @@ final class AppContainer {
         self.sessionStore = sessionStore
         settingsStore = AppSettingsStore(store: services.preferences)
         savedProductsStore = SavedProductsStore(store: services.preferences)
+        let inboxStore = InboxStore(backend: account.backend, store: services.preferences)
+        self.inboxStore = inboxStore
         saveCountStore = SaveCountStore(http: services.httpClient, backendBaseURL: resolution.configuration.backendBaseURL)
         paymentMethodsStore = PaymentMethodsStore(catalog: catalogRepository)
         let pushCoordinator = PushRegistrationCoordinator(
@@ -236,6 +240,9 @@ final class AppContainer {
         let liveActivities = LiveActivityController(consentStore: consentStore, backend: account.backend)
         pushCoordinator.onLicenseDelivered = { [liveActivities] in
             await liveActivities.markAllDelivered()
+        }
+        pushCoordinator.onNotification = { [inboxStore] in
+            await inboxStore.refresh()
         }
         self.pushCoordinator = pushCoordinator
         self.liveActivities = liveActivities

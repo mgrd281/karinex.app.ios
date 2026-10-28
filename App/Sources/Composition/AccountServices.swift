@@ -21,6 +21,10 @@ struct AccountServices {
     /// Whether the Keychain holds tokens from an earlier launch.
     let hasStoredTokens: Bool
 
+    /// Preferences key of the random installation ID (`X-KX-Install`): it identifies this app
+    /// installation for "Neuigkeiten" and restock requests, never a person.
+    static let installationIDKey = "app.installation.id"
+
     init(configuration: AppConfiguration, services: AppServices) {
         let discovery = CustomerAccountDiscovery(
             openIDConfigurationURL: configuration.openIDConfigurationURL,
@@ -58,11 +62,22 @@ struct AccountServices {
                     return try await session.accessToken()
                 },
                 appVersion: configuration.appVersion,
-                languageCode: { Bundle.main.preferredLocalizations.first ?? "de" }
+                languageCode: { Bundle.main.preferredLocalizations.first ?? "de" },
+                installationID: Self.installationID(in: services.preferences)
             )
         } else {
             backend = UnavailableBackendClient()
         }
         hasStoredTokens = session != nil && (try? services.secureStore.data(for: CustomerAccountSession.tokenStorageKey)) != nil
+    }
+
+    /// The installation ID, created on first use.
+    private static func installationID(in preferences: any KeyValueStore) -> String {
+        if let stored = preferences.string(forKey: installationIDKey), UUID(uuidString: stored) != nil {
+            return stored.lowercased()
+        }
+        let created = UUID().uuidString.lowercased()
+        preferences.set(created, forKey: installationIDKey)
+        return created
     }
 }

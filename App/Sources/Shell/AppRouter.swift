@@ -58,7 +58,7 @@ final class AppRouter {
             .selectTab(.search)
         case .account(.overview):
             .selectTab(.account)
-        case .product, .collection, .article, .search, .account:
+        case .product, .collection, .article, .search, .account, .notifications:
             .push(route)
         }
     }
@@ -92,7 +92,7 @@ final class AppRouter {
         switch route {
         case .product, .collection:
             .shop
-        case .article:
+        case .article, .notifications:
             .home
         case .search:
             .search

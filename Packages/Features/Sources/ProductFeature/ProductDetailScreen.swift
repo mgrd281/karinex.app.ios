@@ -100,6 +100,8 @@ public struct ProductDetailScreen: View {
             if let variant = model.selectedVariant {
                 ProductPurchaseBar(
                     variant: variant,
+                    productHandle: model.product?.handle ?? model.handle,
+                    productTitle: model.product?.title ?? "",
                     isAdding: model.isAddingToCart,
                     onAddToCart: addToCart
                 )

@@ -281,6 +281,17 @@ Phase 3. Registers an APNs token only after the customer agreed to notifications
 `201` or `204`. `DELETE` answers `204`, and `404` for an unknown token (the app treats both as
 success).
 
+### Neuigkeiten: `GET /v1/app/notifications`, `POST`/`DELETE /v1/app/restock`
+
+Device endpoints (also `POST /v1/app/devices` and `DELETE /v1/app/devices/{apnsToken}`) require
+`X-KX-Install: <uuid>` (a random ID per installation) and accept an optional bearer token; a
+rejected token makes the request a guest request. `GET /v1/app/notifications` answers
+`{ "items": [{ "id", "kind": "broadcast|restock|order_paid|license_delivered", "label", "title",
+"body", "imageUrl", "productHandle", "params": { "productTitle", "orderName", "orderId" },
+"createdAt" }] }`, newest first, 30 days. `POST /v1/app/restock`
+`{ "productHandle", "variantId", "productTitle" }` and `DELETE /v1/app/restock?variantId=<number>`
+answer `204`.
+
 ## Push payloads (Phase 3)
 
 Sent by the BFF through APNs, only for the categories the device consented to.
@@ -290,6 +301,11 @@ Sent by the BFF through APNs, only for the categories the device consented to.
 | `order.paid` | `orderUpdates` | `{ "type": "order.paid", "orderId": "5678", "name": "#1042" }` | Starts the delivery Live Activity |
 | `license.delivered` | `orderUpdates` | `{ "type": "license.delivered", "orderId": "5678" }` | Ends the Live Activity, opens `karinex://account/licenses` |
 | `deal.started` | `deals` | `{ "type": "deal.started", "collection": "blitzangebote" }` | Opens the collection |
+| `inbox.message` | `deals` | `{ "type": "inbox.message", "messageId": "…", "handle": "office-2024" }` | Opens the product, else Neuigkeiten |
+| `restock` | requested by the customer | `{ "type": "restock", "handle": "office-2024" }`, `loc-key` `push.restock.*` | Opens the product |
+
+`order.paid` and `license.delivered` use `loc-key`s `push.order.paid.*` and `push.license.delivered.*`
+with the order number as `loc-args`, so iOS shows them in the app's language.
 
 Alert texts are localized on the server with the device's `locale`; they never contain keys,
 prices or personal data beyond the order name.

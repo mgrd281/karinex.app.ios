@@ -730,6 +730,15 @@ as "01", `steps` (round ink number badge), and a box with only a leading border 
 (grey panel). A container that matches no layout exactly falls back to the plain blocks, so
 unusual markup only loses structure, never content.
 
+**Neuigkeiten.** `InboxStore` (CommerceUI, injected into the environment like
+`SavedProductsStore`) loads `GET /v1/app/notifications`, keeps the read state (time of the last
+visit) and the restock watches in the preferences, and is refreshed by every KARINEX push
+(`PushRegistrationCoordinator.onNotification`). `NotificationsScreen` (HomeFeature) is reached
+from the bell of `HomeBrandBar` and through the route `CommerceRoute.notifications`
+(`karinex://notifications`); automatic messages carry only parameters and are written from the
+String Catalog (`NotificationText`). The device endpoints send `X-KX-Install` (a random UUID made
+by `AccountServices` on first launch) and add the customer's token when there is a session.
+
 **Features built on it.**
 - `ProductFeature`: gallery with full-screen zoom, variant selector, price in the sale look
   (with the store's lowest price of 30 days for single-variant products), the linked products

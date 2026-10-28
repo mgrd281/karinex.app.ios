@@ -77,6 +77,27 @@ public protocol BackendClient: Sendable {
     func registerDevice(_ registration: DeviceRegistration) async throws
     /// `DELETE /v1/app/devices/{token}`.
     func unregisterDevice(apnsToken: String) async throws
+    /// `GET /v1/app/notifications`: the messages of "Neuigkeiten" for this installation, and for
+    /// the signed-in customer when there is a session. Newest first.
+    func notifications() async throws -> [InboxMessage]
+    /// `POST /v1/app/restock`: "Benachrichtigen, wenn verfügbar" for a sold-out variant.
+    func watchRestock(_ watch: RestockWatch) async throws
+    /// `DELETE /v1/app/restock?variantId=`: cancels a restock watch.
+    func unwatchRestock(variantID: String) async throws
+}
+
+extension BackendClient {
+    public func notifications() async throws -> [InboxMessage] {
+        throw BackendError.notConfigured
+    }
+
+    public func watchRestock(_: RestockWatch) async throws {
+        throw BackendError.notConfigured
+    }
+
+    public func unwatchRestock(variantID _: String) async throws {
+        throw BackendError.notConfigured
+    }
 }
 
 // MARK: - HTTPBackendClient
@@ -95,6 +116,7 @@ public final class HTTPBackendClient: BackendClient {
     private let accessToken: @Sendable () async throws -> String
     private let appVersion: String
     private let languageCode: @Sendable () -> String
+    private let installationID: String?
     private let retryExecutor: RetryExecutor
     private let logger: KXLogger
     private let configCache = Locked<(etag: String, config: RemoteAppConfig)?>(nil)
@@ -107,6 +129,8 @@ public final class HTTPBackendClient: BackendClient {
     ///   - accessToken: The customer's current access token (`CustomerAccountSession.accessToken()`).
     ///   - appVersion: The marketing version, e.g. `0.2.0`.
     ///   - languageCode: The UI language for `Accept-Language`, e.g. `de`.
+    ///   - installationID: The random ID of this app installation (`X-KX-Install`) for the
+    ///     device endpoints (notifications, restock, push registration); `nil` disables them.
     ///   - retryPolicy: Bounds for GET retries.
     ///   - sleeper: Waits between retries.
     ///   - logger: Logs outcomes, never bodies.
@@ -116,6 +140,7 @@ public final class HTTPBackendClient: BackendClient {
         accessToken: @escaping @Sendable () async throws -> String,
         appVersion: String,
         languageCode: @escaping @Sendable () -> String,
+        installationID: String? = nil,
         retryPolicy: RetryPolicy = .default,
         sleeper: any Sleeper = TaskSleeper(),
         logger: KXLogger = KXLogger(category: .networking)
@@ -125,6 +150,7 @@ public final class HTTPBackendClient: BackendClient {
         self.accessToken = accessToken
         self.appVersion = appVersion
         self.languageCode = languageCode
+        self.installationID = installationID
         retryExecutor = RetryExecutor(policy: retryPolicy, sleeper: sleeper)
         self.logger = logger
     }
@@ -243,12 +269,33 @@ public final class HTTPBackendClient: BackendClient {
         } catch {
             throw BackendError.decoding
         }
-        _ = try await send(.post, path: "/v1/app/devices", authenticated: true, body: body, acceptedStatus: [200, 201, 204])
+        _ = try await send(.post, path: "/v1/app/devices", authenticated: false, device: true, body: body, acceptedStatus: [200, 201, 204])
     }
 
     public func unregisterDevice(apnsToken: String) async throws {
         let path = try "/v1/app/devices/\(Self.pathSegment(apnsToken))"
-        _ = try await send(.delete, path: path, authenticated: true, acceptedStatus: [200, 204, 404])
+        _ = try await send(.delete, path: path, authenticated: false, device: true, acceptedStatus: [200, 204, 404])
+    }
+
+    public func notifications() async throws -> [InboxMessage] {
+        let page: InboxPage = try decode(send(.get, path: "/v1/app/notifications", authenticated: false, device: true))
+        return page.items
+    }
+
+    public func watchRestock(_ watch: RestockWatch) async throws {
+        let body: Data
+        do {
+            body = try JSONEncoder().encode(watch)
+        } catch {
+            throw BackendError.decoding
+        }
+        _ = try await send(.post, path: "/v1/app/restock", authenticated: false, device: true, body: body, acceptedStatus: [200, 204])
+    }
+
+    public func unwatchRestock(variantID: String) async throws {
+        let number = String(variantID.split(separator: "/").last ?? "")
+        let path = try "/v1/app/restock?variantId=\(Self.pathSegment(number))"
+        _ = try await send(.delete, path: path, authenticated: false, device: true, acceptedStatus: [200, 204, 404])
     }
 
     // MARK: Transport
@@ -257,6 +304,7 @@ public final class HTTPBackendClient: BackendClient {
         _ method: HTTPMethod,
         path: String,
         authenticated: Bool,
+        device: Bool = false,
         headers extraHeaders: [String: String] = [:],
         body: Data? = nil,
         acceptedStatus: Set<Int> = [200]
@@ -274,6 +322,13 @@ public final class HTTPBackendClient: BackendClient {
                 headers["Authorization"] = try await "Bearer \(accessToken())"
             } catch {
                 throw BackendError.unauthorized
+            }
+        } else if device {
+            // Device endpoints work for guests; a session only adds the customer's own messages.
+            guard let installationID else { throw BackendError.notConfigured }
+            headers["X-KX-Install"] = installationID
+            if let token = try? await accessToken() {
+                headers["Authorization"] = "Bearer \(token)"
             }
         }
         let request = HTTPRequest(method: method, url: url, headers: headers, body: body, timeout: 20)

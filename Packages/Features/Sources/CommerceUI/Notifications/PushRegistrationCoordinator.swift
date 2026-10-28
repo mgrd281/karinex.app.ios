@@ -42,6 +42,8 @@ public final class PushRegistrationCoordinator {
     public private(set) var isPermissionDenied = false
     /// Called when a `license.delivered` push arrives or is tapped; the App ends the Live Activity.
     @ObservationIgnored public var onLicenseDelivered: (@MainActor () async -> Void)?
+    /// Called for every KARINEX push that arrives or is tapped; the App reloads "Neuigkeiten".
+    @ObservationIgnored public var onNotification: (@MainActor () async -> Void)?
 
     @ObservationIgnored private let system: any RemoteNotificationRegistering
     @ObservationIgnored private let backend: any BackendClient
@@ -127,6 +129,7 @@ public final class PushRegistrationCoordinator {
 
     /// Called when a notification with a KARINEX payload arrives while the app is open.
     public func didReceive(_ payload: PushPayload) async {
+        await onNotification?()
         if case .licenseDelivered = payload {
             await onLicenseDelivered?()
         }
@@ -149,7 +152,8 @@ public final class PushRegistrationCoordinator {
             consent: DeviceRegistration.Consent(
                 orderUpdates: consent.orderUpdateNotifications,
                 deals: consent.dealNotifications
-            )
+            ),
+            environment: Self.apnsEnvironment
         )
         do {
             try await backend.registerDevice(registration)
@@ -170,6 +174,16 @@ public final class PushRegistrationCoordinator {
         }
     }
 
+    /// Debug builds get their tokens from the APNs sandbox; TestFlight and App Store builds
+    /// from production.
+    private static var apnsEnvironment: String {
+        #if DEBUG
+            "sandbox"
+        #else
+            "production"
+        #endif
+    }
+
     private static func logName(_ error: any Error) -> String {
         (error as? BackendError)?.logDescription ?? String(describing: type(of: error))
     }
@@ -185,6 +199,10 @@ public enum PushPayload: Equatable, Sendable {
     case licenseDelivered(orderID: String)
     /// A deal started in a collection.
     case dealStarted(collection: String)
+    /// A product the customer asked about is available again.
+    case restock(productHandle: String)
+    /// A new message in "Neuigkeiten", optionally about a product.
+    case inboxMessage(productHandle: String?)
 
     /// Reads `type` and its fields from the notification's `userInfo`; `nil` for anything else.
     public init?(userInfo: [AnyHashable: Any]) {
@@ -199,6 +217,11 @@ public enum PushPayload: Equatable, Sendable {
         case "deal.started":
             guard let handle = (userInfo["collection"] as? String).flatMap(DeepLinkParser.handle) else { return nil }
             self = .dealStarted(collection: handle)
+        case "restock":
+            guard let handle = (userInfo["handle"] as? String).flatMap(DeepLinkParser.handle) else { return nil }
+            self = .restock(productHandle: handle)
+        case "inbox.message":
+            self = .inboxMessage(productHandle: (userInfo["handle"] as? String).flatMap(DeepLinkParser.handle))
         default:
             return nil
         }
@@ -213,6 +236,11 @@ public enum PushPayload: Equatable, Sendable {
             URL(string: "\(DeepLinkParser.scheme)://account/licenses")
         case let .dealStarted(collection):
             URL(string: "\(DeepLinkParser.scheme)://collection/\(collection)")
+        case let .restock(handle):
+            URL(string: "\(DeepLinkParser.scheme)://product/\(handle)")
+        case let .inboxMessage(handle):
+            handle.flatMap { URL(string: "\(DeepLinkParser.scheme)://product/\($0)") }
+                ?? URL(string: "\(DeepLinkParser.scheme)://notifications")
         }
     }
 
