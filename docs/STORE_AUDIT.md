@@ -37,7 +37,7 @@ Nothing in the store was changed during the audit.
 | --- | --- | --- | --- |
 | Countries | 30 markets incl. NO and USA | 28 enabled: AT BE BG CH CY CZ DE DK EE ES FI FR GR HR HU IE IT LT LU LV MT NL PL PT RO SE SI SK. Norway exists but is **disabled**. There is **no USA market**. | Countries come from `localization.availableCountries` at runtime, so the app follows the store automatically. Region not sold (for example US or NO): falls back to DE and says so once. |
 | Currencies | | EUR, CHF, CZK, DKK, HUF, PLN, RON, SEK | Prices are shown exactly as returned (`MoneyV2`). |
-| Content languages | 11 | 13: the 11 app languages plus **EL** (Greek) and **RO** (Romanian) | The app UI ships in the 11 languages of PROMPT.md. A user whose device is Greek or Romanian gets the English UI and English content (nearest supported pair). Adding EL/RO later only needs two more String Catalog columns. |
+| Content languages | 11 | 13: DE, EN, PL, NL, PT-PT, SV, DA, ES, FR, IT, FI, **EL** (Greek) and **RO** (Romanian) | The app UI ships in all 13 languages since 28.10.2026 (EL and RO added to every String Catalog). Greek product texts that are not translated in Shopify yet appear in German. |
 
 ## Collections (handles)
 

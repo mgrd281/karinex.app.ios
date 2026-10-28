@@ -70,6 +70,18 @@
             "state" : "translated",
             "value" : "Jotta voit avata lisenssiavaimesi Face ID:llä."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pentru ca dvs. să puteți debloca cheile de licență cu Face ID."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ώστε να μπορείτε να ξεκλειδώνετε τα κλειδιά άδειας χρήσης σας με Face ID."
+          }
         }
       }
     }

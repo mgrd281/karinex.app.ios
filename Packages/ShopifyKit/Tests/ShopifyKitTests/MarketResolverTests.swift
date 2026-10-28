@@ -53,17 +53,25 @@ struct MarketResolverTests {
         #expect(try resolve("PT", ["pt_PT"]).selection.language == .ptPT)
     }
 
-    @Test("Greek UI: EL is a store language but not an app language, so EN")
-    func greek() throws {
-        let resolution = try resolve("GR", ["el-GR"])
-        #expect(resolution.selection == MarketSelection(country: .gr, language: .en))
-        #expect(resolution.reason == .languageUnavailable)
-        #expect(resolution.wasAdjusted)
+    @Test("Greek and Romanian devices get their own language")
+    func greekAndRomanian() throws {
+        let greek = try resolve("GR", ["el-GR"])
+        #expect(greek.selection == MarketSelection(country: .gr, language: .el))
+        #expect(greek.reason == .deviceMatch)
+        #expect(!greek.wasAdjusted)
+        #expect(try resolve("RO", ["ro-RO"]).selection == MarketSelection(country: .ro, language: .ro))
+    }
+
+    @Test("A language the app does not ship gets EN")
+    func unsupportedLanguage() throws {
+        let resolution = try resolve("NO", ["nb-NO"])
+        #expect(resolution.selection.language == .en)
+        #expect(resolution.reason != .deviceMatch)
     }
 
     @Test("The first usable preferred language wins")
     func preferenceOrder() throws {
-        let resolution = try resolve("CH", ["el-GR", "ro-RO", "it-CH", "de-CH"])
+        let resolution = try resolve("CH", ["nb-NO", "cs-CZ", "it-CH", "de-CH"])
         #expect(resolution.selection == MarketSelection(country: .ch, language: .it))
         #expect(!resolution.wasAdjusted)
     }
@@ -83,7 +91,7 @@ struct MarketResolverTests {
 
     @Test("Neither region nor language usable: DE/EN")
     func nothingUsable() throws {
-        let resolution = try resolve("US", ["el", "zh-Hans-US"])
+        let resolution = try resolve("US", ["nb", "zh-Hans-US"])
         #expect(resolution.selection == MarketSelection(country: .de, language: .en))
         #expect(resolution.reason == .countryAndLanguageUnavailable)
     }
@@ -104,7 +112,7 @@ struct MarketResolverTests {
     @Test("A custom default country and fallback order are honored")
     func customFallbacks() throws {
         let custom = MarketResolver(defaultCountry: .at, fallbackLanguages: [.de])
-        let resolution = try custom.resolve(regionCode: "US", preferredLanguages: ["el"], localization: localization())
+        let resolution = try custom.resolve(regionCode: "US", preferredLanguages: ["nb"], localization: localization())
         #expect(resolution.selection == MarketSelection(country: .at, language: .de))
     }
 

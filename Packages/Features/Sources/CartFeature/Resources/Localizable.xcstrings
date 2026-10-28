@@ -70,6 +70,18 @@
             "state" : "translated",
             "value" : "Kassalle"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finalizare comandă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ολοκλήρωση αγοράς"
+          }
         }
       }
     },
@@ -141,6 +153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sopii tähän"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se potrivește cu"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ταιριάζει με"
           }
         }
       }
@@ -214,6 +238,18 @@
             "state" : "translated",
             "value" : "Käytössä"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activ"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ενεργός"
+          }
         }
       }
     },
@@ -285,6 +321,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Koodi %@ on otettu käyttöön."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codul %@ a fost aplicat."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ο κωδικός %@ εφαρμόστηκε."
           }
         }
       }
@@ -358,6 +406,18 @@
             "state" : "translated",
             "value" : "Käytä"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplică"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εφαρμογή"
+          }
         }
       }
     },
@@ -429,6 +489,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ei kelpaa"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nevalid"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μη έγκυρος"
           }
         }
       }
@@ -502,6 +574,18 @@
             "state" : "translated",
             "value" : "Tämä koodi ei koske ostoskoriasi."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acest cod nu este valabil pentru coșul dumneavoastră."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτός ο κωδικός δεν ισχύει για το καλάθι σας."
+          }
         }
       }
     },
@@ -573,6 +657,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anna koodi"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Introduceți codul"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εισαγάγετε κωδικό"
           }
         }
       }
@@ -646,6 +742,18 @@
             "state" : "translated",
             "value" : "Poista alennuskoodi %@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimină codul de reducere %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αφαίρεση κωδικού έκπτωσης %@"
+          }
         }
       }
     },
@@ -717,6 +825,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alennuskoodi"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cod de reducere"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κωδικός έκπτωσης"
           }
         }
       }
@@ -790,6 +910,18 @@
             "state" : "translated",
             "value" : "Se sortimentet"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sortiment"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Στα προϊόντα"
+          }
         }
       }
     },
@@ -861,6 +993,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Produkter som du lägger i varukorgen visas här."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produsele pe care le adăugați în coș apar aici."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα προϊόντα που προσθέτετε στο καλάθι εμφανίζονται εδώ."
           }
         }
       }
@@ -934,6 +1078,18 @@
             "state" : "translated",
             "value" : "Din varukorg är tom"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coșul dumneavoastră este gol"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το καλάθι σας είναι άδειο"
+          }
         }
       }
     },
@@ -1005,6 +1161,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vähennä määrää"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scade cantitatea"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μείωση ποσότητας"
           }
         }
       }
@@ -1078,6 +1246,18 @@
             "state" : "translated",
             "value" : "Lisää määrää"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crește cantitatea"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αύξηση ποσότητας"
+          }
         }
       }
     },
@@ -1149,6 +1329,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Öppnar produkten."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deschide produsul."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανοίγει το προϊόν."
           }
         }
       }
@@ -1222,6 +1414,18 @@
             "state" : "translated",
             "value" : "Ursprungligen: %@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preț inițial: %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αρχική τιμή: %@"
+          }
         }
       }
     },
@@ -1293,6 +1497,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Määrä: %lld"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cantitate: %lld"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ποσότητα: %lld"
           }
         }
       }
@@ -1366,6 +1582,18 @@
             "state" : "translated",
             "value" : "Poista %@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimină %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αφαίρεση %@"
+          }
         }
       }
     },
@@ -1437,6 +1665,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tuotetta poistetaan…"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se elimină produsul…"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το προϊόν αφαιρείται…"
           }
         }
       }
@@ -1510,6 +1750,18 @@
             "state" : "translated",
             "value" : "Peruuta"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anulează"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ακύρωση"
+          }
         }
       }
     },
@@ -1581,6 +1833,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Poista"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimină"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αφαίρεση"
           }
         }
       }
@@ -1654,6 +1918,18 @@
             "state" : "translated",
             "value" : "Yhteensä: %@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total: %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σύνολο: %@"
+          }
         }
       }
     },
@@ -1725,6 +2001,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ei tällä hetkellä saatavilla"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Momentan indisponibil"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προς το παρόν μη διαθέσιμο"
           }
         }
       }
@@ -1798,6 +2086,18 @@
             "state" : "translated",
             "value" : "Ostoskoria ladataan"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se încarcă coșul"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φόρτωση καλαθιού"
+          }
         }
       }
     },
@@ -1869,6 +2169,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "För digitalt innehåll upphör din ångerrätt så snart leveransen påbörjas med ditt uttryckliga samtycke."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pentru conținutul digital, dreptul dumneavoastră de retragere încetează odată ce livrarea începe cu acordul dumneavoastră expres (§ 356 alin. 5 BGB)."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Για το ψηφιακό περιεχόμενο, το δικαίωμα υπαναχώρησής σας λήγει μόλις ξεκινήσει η παράδοση με τη ρητή συγκατάθεσή σας (§ 356 παρ. 5 BGB)."
           }
         }
       }
@@ -1942,6 +2254,18 @@
             "state" : "translated",
             "value" : "Ångerrätt"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drept de retragere"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δικαίωμα υπαναχώρησης"
+          }
         }
       }
     },
@@ -2013,6 +2337,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Betalningssätt"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metode de plată"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τρόποι πληρωμής"
           }
         }
       }
@@ -2086,6 +2422,18 @@
             "state" : "translated",
             "value" : "Alennus"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reducere"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Έκπτωση"
+          }
         }
       }
     },
@@ -2154,6 +2502,18 @@
           }
         },
         "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-%@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-%@"
+          }
+        },
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-%@"
@@ -2230,6 +2590,18 @@
             "state" : "translated",
             "value" : "Välisumma"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subtotal"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Υποσύνολο"
+          }
         }
       }
     },
@@ -2302,6 +2674,18 @@
             "state" : "translated",
             "value" : "Yhteensä"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σύνολο"
+          }
         }
       }
     },
@@ -2373,6 +2757,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Varukorg"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coș"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Καλάθι"
           }
         }
       }

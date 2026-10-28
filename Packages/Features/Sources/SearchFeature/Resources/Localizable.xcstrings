@@ -70,6 +70,18 @@
             "state" : "translated",
             "value" : "Kategoriat"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categorii"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κατηγορίες"
+          }
         }
       }
     },
@@ -141,6 +153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tarjoukset"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oferte"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προσφορές"
           }
         }
       }
@@ -214,6 +238,18 @@
             "state" : "translated",
             "value" : "Kehitys"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dezvoltare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανάπτυξη"
+          }
         }
       }
     },
@@ -282,6 +318,18 @@
           }
         },
         "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office"
+          }
+        },
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Office"
@@ -358,6 +406,18 @@
             "state" : "translated",
             "value" : "Palvelimet"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server"
+          }
         }
       }
     },
@@ -426,6 +486,18 @@
           }
         },
         "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows"
+          }
+        },
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Windows"
@@ -502,6 +574,18 @@
             "state" : "translated",
             "value" : "Lisää tuloksia ei voitu ladata."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nu s-au putut încărca mai multe rezultate."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν ήταν δυνατή η φόρτωση περισσότερων αποτελεσμάτων."
+          }
         }
       }
     },
@@ -573,6 +657,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ladataan"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se încarcă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φόρτωση"
           }
         }
       }
@@ -646,6 +742,18 @@
             "state" : "translated",
             "value" : "Ladataan lisää tuloksia"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se încarcă mai multe rezultate"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φόρτωση περισσότερων αποτελεσμάτων"
+          }
         }
       }
     },
@@ -717,6 +825,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Haulla ”%@” ei löytynyt mitään. Kokeile toista hakusanaa tai valitse kategoria."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nu am găsit nimic pentru „%@”. Încercați un alt termen sau alegeți o categorie."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν βρέθηκε τίποτα για «%@». Δοκιμάστε έναν άλλο όρο ή επιλέξτε μια κατηγορία."
           }
         }
       }
@@ -790,6 +910,18 @@
             "state" : "translated",
             "value" : "Ei tuloksia"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niciun rezultat"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κανένα αποτέλεσμα"
+          }
         }
       }
     },
@@ -861,6 +993,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tuotteet, kategoriat, oppaat"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produse, categorii, ghiduri"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προϊόντα, κατηγορίες, οδηγοί"
           }
         }
       }
@@ -934,6 +1078,18 @@
             "state" : "translated",
             "value" : "Tyhjennä"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Șterge"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διαγραφή"
+          }
         }
       }
     },
@@ -1006,6 +1162,18 @@
             "state" : "translated",
             "value" : "Poista historiasta"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimină din istoric"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αφαίρεση από το ιστορικό"
+          }
         }
       }
     },
@@ -1077,6 +1245,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Viimeisimmät haut"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Căutări recente"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πρόσφατες αναζητήσεις"
           }
         }
       }
@@ -1318,6 +1498,48 @@
               }
             }
           }
+        },
+        "ro" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld rezultat"
+                }
+              },
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld rezultate"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld de rezultate"
+                }
+              }
+            }
+          }
+        },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld αποτέλεσμα"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld αποτελέσματα"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -1389,6 +1611,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Oppaat"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ghiduri"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οδηγοί"
           }
         }
       }
@@ -1462,6 +1696,18 @@
             "state" : "translated",
             "value" : "Kategoriat"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categorii"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κατηγορίες"
+          }
         }
       }
     },
@@ -1533,6 +1779,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tuotteet"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produse"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προϊόντα"
           }
         }
       }
@@ -1606,6 +1864,18 @@
             "state" : "translated",
             "value" : "Hakuehdotukset"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sugestii de căutare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προτάσεις αναζήτησης"
+          }
         }
       }
     },
@@ -1677,6 +1947,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kaikki tulokset"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toate rezultatele"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Όλα τα αποτελέσματα"
           }
         }
       }
@@ -1750,6 +2032,18 @@
             "state" : "translated",
             "value" : "Hinta: pienin ensin"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preț crescător"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τιμή αύξουσα"
+          }
         }
       }
     },
@@ -1821,6 +2115,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hinta: suurin ensin"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preț descrescător"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τιμή φθίνουσα"
           }
         }
       }
@@ -1894,6 +2200,18 @@
             "state" : "translated",
             "value" : "Osuvuus"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relevanță"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συνάφεια"
+          }
         }
       }
     },
@@ -1965,6 +2283,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lajittele"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ταξινόμηση"
           }
         }
       }
@@ -2038,6 +2368,18 @@
             "state" : "translated",
             "value" : "Ehdotukset"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sugestii"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προτάσεις"
+          }
         }
       }
     },
@@ -2106,6 +2448,18 @@
           }
         },
         "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office 2024"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office 2024"
+          }
+        },
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Office 2024"
@@ -2182,6 +2536,18 @@
             "state" : "translated",
             "value" : "Visual Studio"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visual Studio"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visual Studio"
+          }
         }
       }
     },
@@ -2250,6 +2616,18 @@
           }
         },
         "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows 11 Pro"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows 11 Pro"
+          }
+        },
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Windows 11 Pro"
@@ -2326,6 +2704,18 @@
             "state" : "translated",
             "value" : "Windows Server"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows Server"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows Server"
+          }
         }
       }
     },
@@ -2397,6 +2787,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sök"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Căutare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αναζήτηση"
           }
         }
       }

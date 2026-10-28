@@ -122,6 +122,7 @@ struct HomeSupportTests {
             "de": "deutscher Zeit", "en": "German time", "pl": "czasu niemieckiego", "nl": "Duitse tijd",
             "pt-PT": "hora da Alemanha", "sv": "tysk tid", "da": "tysk tid", "es": "hora alemana",
             "fr": "heure allemande", "it": "ora tedesca", "fi": "Saksan aikaa",
+            "ro": "ora Germaniei", "el": "ώρα Γερμανίας",
         ]
         let timeZoneName = try #require(timeZoneNames[language])
 

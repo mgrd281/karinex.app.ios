@@ -70,6 +70,18 @@
             "state" : "translated",
             "value" : "Tämä teksti ei ole tällä hetkellä saatavilla. Yritä myöhemmin uudelleen."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acest text nu este disponibil momentan. Vă rugăm să încercați mai târziu."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτό το κείμενο δεν είναι διαθέσιμο αυτή τη στιγμή. Δοκιμάστε ξανά αργότερα."
+          }
         }
       }
     },
@@ -141,6 +153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Teksti ei saatavilla"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text indisponibil"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το κείμενο δεν είναι διαθέσιμο"
           }
         }
       }
@@ -214,6 +238,18 @@
             "state" : "translated",
             "value" : "Tekstit ladataan suoraan KARINEX-kaupasta."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Textele sunt încărcate direct din magazinul KARINEX."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα κείμενα φορτώνονται απευθείας από το κατάστημα KARINEX."
+          }
         }
       }
     },
@@ -285,6 +321,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avaa tekstin."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deschide textul."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανοίγει το κείμενο."
           }
         }
       }
@@ -358,6 +406,18 @@
             "state" : "translated",
             "value" : "Oikeudelliset tiedot"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informații juridice"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Νομικά"
+          }
         }
       }
     },
@@ -430,6 +490,18 @@
             "state" : "translated",
             "value" : "Sisällys"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuprins"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πίνακας περιεχομένων"
+          }
         }
       }
     },
@@ -501,6 +573,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Päivitetty: %@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ultima actualizare: %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τελευταία ενημέρωση: %@"
           }
         }
       }

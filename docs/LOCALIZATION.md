@@ -18,9 +18,12 @@ product surface, not a translation afterthought (PROMPT.md section 8).
 | Français | `fr` | `FR` | vous | Non-breaking space before `: ; ? !` and inside « » |
 | Italiano | `it` | `IT` | tu | |
 | Suomi | `fi` | `FI` | implicit 2nd person / passive | Watch length: Finnish compounds are long |
+| Română | `ro` | `RO` | **dumneavoastră** (formal plural: Puteți, contul dumneavoastră) | Plurals: one, few, other; from 20 on with "de" (20 de produse) |
+| Ελληνικά | `el` | `EL` | formal plural (σας, Μπορείτε) | Plurals: one, other. Terms follow karinex.de (καλάθι, Ολοκλήρωση αγοράς) |
 
-The store also has Greek (`EL`) and Romanian (`RO`) content. The app UI does not support them
-in v1; such devices get the English UI and English store content.
+Romanian and Greek were added on 28.10.2026 so that the app speaks all 13 content languages of
+the store. Product content is only as complete as the translations in Shopify (Translate & Adapt);
+untranslated Greek product texts appear in German.
 
 ## How strings work in code
 
@@ -41,7 +44,7 @@ in v1; such devices get the English UI and English store content.
 - Dates and support hours are computed in `Europe/Berlin` and formatted for the user's locale.
 
 `make check` (and CI) runs `scripts/check_strings.py`, which fails when a key is missing in any
-of the 11 languages, a translation is empty, plural categories are incomplete, format
+of the 13 languages, a translation is empty, plural categories are incomplete, format
 specifiers differ between languages, code references a key that does not exist, or a catalog
 contains a key no code uses. `scripts/check_copy_rules.py` fails on em or en dashes in any
 catalog value and on forbidden words.

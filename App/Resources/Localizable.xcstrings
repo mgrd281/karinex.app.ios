@@ -70,6 +70,18 @@
             "state" : "translated",
             "value" : "Avaimesi on valmiina kohdassa Omat lisenssit."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheia dvs. este disponibilă în Licențele mele."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το κλειδί σας είναι διαθέσιμο στις Άδειές μου."
+          }
         }
       }
     },
@@ -141,6 +153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisenssi toimitettu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licență livrată"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η άδεια παραδόθηκε"
           }
         }
       }
@@ -214,6 +238,18 @@
             "state" : "translated",
             "value" : "Saat avaimesi sähköpostitse ja tilillesi."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veți primi cheia prin e-mail și în contul dvs."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Θα λάβετε το κλειδί σας με email και στον λογαριασμό σας."
+          }
         }
       }
     },
@@ -285,6 +321,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisenssi on matkalla"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licența este în curs de livrare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η άδεια είναι καθ' οδόν"
           }
         }
       }
@@ -358,6 +406,18 @@
             "state" : "translated",
             "value" : "Konto"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cont"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λογαριασμός"
+          }
         }
       }
     },
@@ -429,6 +489,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Varukorg"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coș"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Καλάθι"
           }
         }
       }
@@ -670,6 +742,48 @@
               }
             }
           }
+        },
+        "ro" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld articol"
+                }
+              },
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld articole"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld de articole"
+                }
+              }
+            }
+          }
+        },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld προϊόν"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld προϊόντα"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -741,6 +855,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hem"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acasă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αρχική"
           }
         }
       }
@@ -814,6 +940,18 @@
             "state" : "translated",
             "value" : "Sök"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Căutare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αναζήτηση"
+          }
         }
       }
     },
@@ -885,6 +1023,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Butik"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magazin"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κατάστημα"
           }
         }
       }
@@ -958,6 +1108,18 @@
             "state" : "translated",
             "value" : "Kaupan suosituimmat tuotteet ajantasaisin hinnoin."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cele mai cumpărate produse din magazin, cu prețuri actuale."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα προϊόντα του καταστήματος με τις περισσότερες πωλήσεις, με τρέχουσες τιμές."
+          }
         }
       }
     },
@@ -1029,6 +1191,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Myydyimmät"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestselleruri"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bestseller"
           }
         }
       }
@@ -1102,6 +1276,18 @@
             "state" : "translated",
             "value" : "Tuotteita ladataan."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se încarcă produsele."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φόρτωση προϊόντων."
+          }
         }
       }
     },
@@ -1174,6 +1360,18 @@
             "state" : "translated",
             "value" : "KARINEXin myydyimmät"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KARINEX Bestselleruri"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KARINEX Bestseller"
+          }
         }
       }
     },
@@ -1245,6 +1443,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avaa sovellus nähdäksesi ajantasaiset tuotteet."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deschideți aplicația pentru a vedea produsele actuale."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανοίξτε την εφαρμογή για να δείτε τα τρέχοντα προϊόντα."
           }
         }
       }

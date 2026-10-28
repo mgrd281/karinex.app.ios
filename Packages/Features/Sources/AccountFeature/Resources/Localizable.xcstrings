@@ -70,6 +70,18 @@
             "state" : "translated",
             "value" : "Version"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versiune"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Έκδοση"
+          }
         }
       }
     },
@@ -141,6 +153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Katuosoite"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stradă și număr"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οδός και αριθμός"
           }
         }
       }
@@ -214,6 +238,18 @@
             "state" : "translated",
             "value" : "Osoitteen lisärivi"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informații suplimentare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συμπληρωματικά στοιχεία"
+          }
         }
       }
     },
@@ -285,6 +321,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Peruuta"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anulează"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ακύρωση"
           }
         }
       }
@@ -358,6 +406,18 @@
             "state" : "translated",
             "value" : "Paikkakunta"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Localitate"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πόλη"
+          }
         }
       }
     },
@@ -429,6 +489,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yritys (valinnainen)"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firmă (opțional)"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εταιρεία (προαιρετικά)"
           }
         }
       }
@@ -502,6 +574,18 @@
             "state" : "translated",
             "value" : "Maa"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Țară"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χώρα"
+          }
         }
       }
     },
@@ -573,6 +657,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Käytä oletusosoitteena"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Folosește ca adresă implicită"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χρήση ως προεπιλεγμένης διεύθυνσης"
           }
         }
       }
@@ -646,6 +742,18 @@
             "state" : "translated",
             "value" : "Muokkaa osoitetta"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editează adresa"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επεξεργασία διεύθυνσης"
+          }
         }
       }
     },
@@ -717,6 +825,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Etunimi"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prenume"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Όνομα"
           }
         }
       }
@@ -790,6 +910,18 @@
             "state" : "translated",
             "value" : "Sukunimi"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nume"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επώνυμο"
+          }
         }
       }
     },
@@ -861,6 +993,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uusi osoite"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adresă nouă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Νέα διεύθυνση"
           }
         }
       }
@@ -934,6 +1078,18 @@
             "state" : "translated",
             "value" : "Tallenna"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salvează"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αποθήκευση"
+          }
         }
       }
     },
@@ -1005,6 +1161,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Postinumero"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cod poștal"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ταχυδρομικός κώδικας"
           }
         }
       }
@@ -1078,6 +1246,18 @@
             "state" : "translated",
             "value" : "Lisää osoite"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adaugă adresă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προσθήκη διεύθυνσης"
+          }
         }
       }
     },
@@ -1149,6 +1329,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Oletusosoite"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adresă implicită"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προεπιλεγμένη"
           }
         }
       }
@@ -1222,6 +1414,18 @@
             "state" : "translated",
             "value" : "Poista"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Șterge"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διαγραφή"
+          }
         }
       }
     },
@@ -1293,6 +1497,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Poistetaanko tämä osoite?"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ștergeți această adresă?"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Να διαγραφεί αυτή η διεύθυνση;"
           }
         }
       }
@@ -1366,6 +1582,18 @@
             "state" : "translated",
             "value" : "Aseta oletukseksi"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setează ca implicită"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ορισμός ως προεπιλογής"
+          }
         }
       }
     },
@@ -1437,6 +1665,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Osoitteet"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adrese"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διευθύνσεις"
           }
         }
       }
@@ -1510,6 +1750,18 @@
             "state" : "translated",
             "value" : "Snabbare till kassan"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finalizare mai rapidă a comenzii"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πιο γρήγορη ολοκλήρωση αγοράς"
+          }
         }
       }
     },
@@ -1581,6 +1833,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Förvara dina licensnycklar säkert på den här enheten"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Păstrați în siguranță cheile de licență pe acest dispozitiv"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φυλάξτε με ασφάλεια τα κλειδιά άδειας σε αυτή τη συσκευή"
           }
         }
       }
@@ -1654,6 +1918,18 @@
             "state" : "translated",
             "value" : "Se dina beställningar och fakturor när som helst"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accesați oricând comenzile și facturile"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δείτε ανά πάσα στιγμή παραγγελίες και τιμολόγια"
+          }
         }
       }
     },
@@ -1725,6 +2001,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pyydä poistamista"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solicită ștergerea"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αίτημα διαγραφής"
           }
         }
       }
@@ -1798,6 +2086,18 @@
             "state" : "translated",
             "value" : "Poista tili pysyvästi"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Șterge definitiv contul"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οριστική διαγραφή λογαριασμού"
+          }
         }
       }
     },
@@ -1869,6 +2169,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Asiakastietosi poistetaan. Saat vahvistuksen sähköpostitse."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datele dumneavoastră de client vor fi șterse. Veți primi o confirmare prin e-mail."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα στοιχεία πελάτη σας θα διαγραφούν. Θα λάβετε επιβεβαίωση μέσω email."
           }
         }
       }
@@ -1942,6 +2254,18 @@
             "state" : "translated",
             "value" : "Poistetaanko tili varmasti?"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sigur doriți să ștergeți contul?"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Να διαγραφεί οριστικά ο λογαριασμός;"
+          }
         }
       }
     },
@@ -2013,6 +2337,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Olemme vastaanottaneet pyyntösi. Saat vahvistuksen sähköpostitse. Sinut on kirjattu ulos tällä laitteella."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Am primit solicitarea dumneavoastră. Veți primi o confirmare prin e-mail. Pe acest dispozitiv ați fost deconectat."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λάβαμε το αίτημά σας. Θα λάβετε επιβεβαίωση μέσω email. Έχετε αποσυνδεθεί από αυτή τη συσκευή."
           }
         }
       }
@@ -2086,6 +2422,18 @@
             "state" : "translated",
             "value" : "Pyyntö lähetetty"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solicitare trimisă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το αίτημα στάλθηκε"
+          }
         }
       }
     },
@@ -2157,6 +2505,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kirjoita sähköposti"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrie un e-mail"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σύνταξη email"
           }
         }
       }
@@ -2230,6 +2590,18 @@
             "state" : "translated",
             "value" : "Lähetä tilin poistopyyntö osoitteeseen %@. Vahvistamme poiston sähköpostitse."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vă rugăm să trimiteți solicitarea de ștergere a contului la %@. Vom confirma ștergerea prin e-mail."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Στείλτε το αίτημα διαγραφής λογαριασμού στη διεύθυνση %@. Θα επιβεβαιώσουμε τη διαγραφή μέσω email."
+          }
         }
       }
     },
@@ -2301,6 +2673,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Asiakastilini poistaminen"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ștergerea contului meu de client"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διαγραφή του λογαριασμού πελάτη μου"
           }
         }
       }
@@ -2374,6 +2758,18 @@
             "state" : "translated",
             "value" : "Jos poistat tilisi, asiakastietosi poistetaan KARINEXilta ja sinut kirjataan ulos."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dacă ștergeți contul, datele dumneavoastră de client de la KARINEX vor fi șterse, iar dumneavoastră veți fi deconectat."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αν διαγράψετε τον λογαριασμό σας, τα στοιχεία πελάτη σας στην KARINEX θα διαγραφούν και θα αποσυνδεθείτε."
+          }
         }
       }
     },
@@ -2445,6 +2841,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kirjoita lisenssiavaimesi ensin muistiin. Ne löytyvät myös sähköposteista, joilla ne toimitettiin."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notați-vă mai întâi cheile de licență. Le găsiți și în e-mailurile cu care v-au fost livrate."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σημειώστε πρώτα τα κλειδιά άδειας. Θα τα βρείτε και στα email με τα οποία παραδόθηκαν."
           }
         }
       }
@@ -2518,6 +2926,18 @@
             "state" : "translated",
             "value" : "Tiedot, jotka meidän on säilytettävä lain vuoksi, kuten laskut, poistetaan vasta säilytysaikojen päätyttyä."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datele pe care trebuie să le păstrăm din motive legale, de exemplu facturile, sunt șterse abia după expirarea termenelor."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα δεδομένα που οφείλουμε να τηρούμε βάσει νόμου, όπως τα τιμολόγια, διαγράφονται μόνο μετά τη λήξη των προθεσμιών."
+          }
         }
       }
     },
@@ -2589,6 +3009,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Poista tili"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Șterge contul"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διαγραφή λογαριασμού"
           }
         }
       }
@@ -2662,6 +3094,18 @@
             "state" : "translated",
             "value" : "Löydät sitten täältä kaikkien tilaustesi laskut PDF-muodossa."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atunci veți găsi aici toate facturile comenzilor dumneavoastră în format PDF."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τότε θα βρείτε εδώ όλα τα τιμολόγια των παραγγελιών σας σε PDF."
+          }
         }
       }
     },
@@ -2733,6 +3177,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kirjaudu sisään nähdäksesi pisteesi ja tasosi."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectați-vă pentru a vedea punctele și statusul dumneavoastră."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συνδεθείτε για να δείτε τους πόντους και το επίπεδό σας."
           }
         }
       }
@@ -2806,6 +3262,18 @@
             "state" : "translated",
             "value" : "Näet sitten täällä kaikki tilauksesi ja niiden tilan."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atunci veți vedea aici toate comenzile dumneavoastră și starea lor."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τότε θα δείτε εδώ όλες τις παραγγελίες σας και την κατάστασή τους."
+          }
         }
       }
     },
@@ -2877,6 +3345,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Voit sitten katsella ja muuttaa nimeäsi ja osoitteitasi täällä."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atunci puteți vedea și modifica aici numele și adresele dumneavoastră."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τότε μπορείτε να δείτε και να αλλάξετε εδώ το όνομα και τις διευθύνσεις σας."
           }
         }
       }
@@ -2950,6 +3430,18 @@
             "state" : "translated",
             "value" : "Kirjaudu sisään"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vă rugăm să vă conectați"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παρακαλούμε συνδεθείτε"
+          }
         }
       }
     },
@@ -3021,6 +3513,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ditt konto"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contul dumneavoastră"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ο λογαριασμός σας"
           }
         }
       }
@@ -3094,6 +3598,18 @@
             "state" : "translated",
             "value" : "Dina köp samlade på ett ställe"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achizițiile dumneavoastră, într-un singur loc"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι αγορές σας, σε ένα μέρος"
+          }
         }
       }
     },
@@ -3165,6 +3681,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kun tilaus on maksettu, löydät laskun täältä. Saat sen myös sähköpostiisi."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De îndată ce o comandă este plătită, factura apare aici. O primiți și prin e-mail."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μόλις πληρωθεί μια παραγγελία, το τιμολόγιο εμφανίζεται εδώ. Το λαμβάνετε επίσης μέσω email."
           }
         }
       }
@@ -3238,6 +3766,18 @@
             "state" : "translated",
             "value" : "Ei vielä laskuja"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Încă nu există facturi"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν υπάρχουν ακόμη τιμολόγια"
+          }
         }
       }
     },
@@ -3309,6 +3849,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lasku ei ole saatavilla"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Factură indisponibilă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το τιμολόγιο δεν είναι διαθέσιμο"
           }
         }
       }
@@ -3382,6 +3934,18 @@
             "state" : "translated",
             "value" : "Laskut avautuvat PDF-muodossa. Voit jakaa, tulostaa tai tallentaa ne Tiedostot-appiin."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Facturile se deschid ca PDF. Le puteți partaja, tipări sau salva în Fișiere."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα τιμολόγια ανοίγουν ως PDF. Μπορείτε να τα μοιραστείτε, να τα εκτυπώσετε ή να τα αποθηκεύσετε στα Αρχεία."
+          }
         }
       }
     },
@@ -3453,6 +4017,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avaa laskun PDF-muodossa."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deschide factura ca PDF."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανοίγει το τιμολόγιο ως PDF."
           }
         }
       }
@@ -3526,6 +4102,18 @@
             "state" : "translated",
             "value" : "Lasku tilaukselle %@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Factură pentru %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τιμολόγιο για %@"
+          }
         }
       }
     },
@@ -3597,6 +4185,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Laskut"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Facturi"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τιμολόγια"
           }
         }
       }
@@ -3670,6 +4270,18 @@
             "state" : "translated",
             "value" : "Kerää pisteitä"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strânge puncte"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συλλογή πόντων"
+          }
         }
       }
     },
@@ -3741,6 +4353,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Historia"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Istoric"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ιστορικό"
           }
         }
       }
@@ -3814,6 +4438,18 @@
             "state" : "translated",
             "value" : "Palkinnot"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recompense"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανταμοιβές"
+          }
         }
       }
     },
@@ -3885,6 +4521,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Käytettävissä olevat palkintopisteet"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puncte de recompensă disponibile"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διαθέσιμοι πόντοι ανταμοιβής"
           }
         }
       }
@@ -3958,6 +4606,18 @@
             "state" : "translated",
             "value" : "%@ pistettä vanhenee %@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ puncte expiră la %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ πόντοι λήγουν στις %@"
+          }
         }
       }
     },
@@ -4029,6 +4689,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Statuspisteet määräävät tasosi, eikä niitä kuluteta. Palkintopisteet voit vaihtaa alennuksiin."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punctele de status determină nivelul dumneavoastră și nu se cheltuiesc niciodată. Punctele de recompensă le puteți schimba pe reduceri."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι πόντοι κατάστασης καθορίζουν το επίπεδό σας και δεν ξοδεύονται ποτέ. Τους πόντους ανταμοιβής μπορείτε να τους εξαργυρώσετε με εκπτώσεις."
           }
         }
       }
@@ -4102,6 +4774,18 @@
             "state" : "translated",
             "value" : "Odottavat pisteet"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puncte în așteptare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πόντοι σε αναμονή"
+          }
         }
       }
     },
@@ -4173,6 +4857,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hyvitetään %lld päivää toimituksen jälkeen"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creditare la %lld zile după livrare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πίστωση %lld ημέρες μετά την παράδοση"
           }
         }
       }
@@ -4246,6 +4942,18 @@
             "state" : "translated",
             "value" : "Pisteesi"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punctele dumneavoastră"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι πόντοι σας"
+          }
         }
       }
     },
@@ -4317,6 +5025,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Käytä ostoskorissa"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplică în coș"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εφαρμογή στο καλάθι"
           }
         }
       }
@@ -4390,6 +5110,18 @@
             "state" : "translated",
             "value" : "Kopioitu"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiat"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αντιγράφηκε"
+          }
         }
       }
     },
@@ -4461,6 +5193,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kopioi koodi"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiază codul"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αντιγραφή κωδικού"
           }
         }
       }
@@ -4534,6 +5278,18 @@
             "state" : "translated",
             "value" : "Valmis"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gata"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τέλος"
+          }
         }
       }
     },
@@ -4605,6 +5361,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Koodi kuuluu tilillesi ja sen voi käyttää kerran. Kirjoita se muistiin, jos haluat käyttää sitä myöhemmin."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codul aparține contului dumneavoastră și poate fi folosit o singură dată. Notați-l dacă doriți să îl folosiți mai târziu."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ο κωδικός ανήκει στον λογαριασμό σας και μπορεί να χρησιμοποιηθεί μία φορά. Σημειώστε τον, αν θέλετε να τον χρησιμοποιήσετε αργότερα."
           }
         }
       }
@@ -4678,6 +5446,18 @@
             "state" : "translated",
             "value" : "%@ alennus"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reducere de %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Έκπτωση %@"
+          }
         }
       }
     },
@@ -4749,6 +5529,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Koodi on käytössä ostoskorissasi."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codul a fost aplicat în coș."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ο κωδικός εφαρμόστηκε στο καλάθι."
           }
         }
       }
@@ -4822,6 +5614,18 @@
             "state" : "translated",
             "value" : "Koodia ei voitu ottaa käyttöön. Voit kopioida sen ja syöttää sen ostoskorissa."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codul nu a putut fi aplicat. Îl puteți copia și introduce în coș."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ο κωδικός δεν μπόρεσε να εφαρμοστεί. Μπορείτε να τον αντιγράψετε και να τον εισαγάγετε στο καλάθι."
+          }
         }
       }
     },
@@ -4893,6 +5697,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Voimassa vähintään %@ tuotteille, %@ asti."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valabil de la o valoare a produselor de %@, până la %@."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ισχύει από αξία προϊόντων %@, έως %@."
           }
         }
       }
@@ -4966,6 +5782,18 @@
             "state" : "translated",
             "value" : "Alennuskoodisi"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codul dumneavoastră de reducere"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ο κωδικός έκπτωσής σας"
+          }
         }
       }
     },
@@ -5037,6 +5865,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Statuspisteet määräävät tasosi, palkintopisteet vaihdat alennuksiin."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punctele de status determină nivelul dumneavoastră, punctele de recompensă le schimbați pe reduceri."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι πόντοι κατάστασης καθορίζουν το επίπεδό σας, τους πόντους ανταμοιβής τους εξαργυρώνετε με εκπτώσεις."
           }
         }
       }
@@ -5110,6 +5950,18 @@
             "state" : "translated",
             "value" : "Hyvitetään %lld päivää toimituksen jälkeen"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creditare la %lld zile după livrare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πίστωση %lld ημέρες μετά την παράδοση"
+          }
         }
       }
     },
@@ -5181,6 +6033,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Siihen asti pisteet odottavat. Palautuksen tai hyvityksen yhteydessä ne vähennetään vastaavasti."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Până atunci punctele sunt în așteptare. În caz de retur sau rambursare, ele se scad corespunzător."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μέχρι τότε οι πόντοι είναι σε αναμονή. Σε περίπτωση επιστροφής ή αποζημίωσης αφαιρούνται αναλόγως."
           }
         }
       }
@@ -5254,6 +6118,18 @@
             "state" : "translated",
             "value" : "%@ statuspistettä ja %@ palkintopistettä euroa kohti"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ puncte de status și %@ puncte de recompensă pe euro"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ πόντοι κατάστασης και %@ πόντοι ανταμοιβής ανά ευρώ"
+          }
         }
       }
     },
@@ -5325,6 +6201,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jokaisesta täydestä eurosta tuotteissa alennusten jälkeen, ilman toimituskuluja."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pentru fiecare euro întreg din valoarea produselor după reducere, fără livrare."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Για κάθε ολόκληρο ευρώ αξίας προϊόντων μετά την έκπτωση, χωρίς τα έξοδα αποστολής."
           }
         }
       }
@@ -5398,6 +6286,18 @@
             "state" : "translated",
             "value" : "Palkintopisteet vanhenevat %lld kuukauden kuluttua"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punctele de recompensă expiră după %lld luni"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι πόντοι ανταμοιβής λήγουν μετά από %lld μήνες"
+          }
         }
       }
     },
@@ -5469,6 +6369,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jokaisella hyvityksellä on oma määräaikansa. Näytämme sen tässä ennen vanhenemista."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiecare creditare are termenul ei. Vă anunțăm aici înainte de expirare."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κάθε πίστωση έχει τη δική της προθεσμία. Θα σας ενημερώσουμε εδώ πριν από τη λήξη."
           }
         }
       }
@@ -5542,6 +6454,18 @@
             "state" : "translated",
             "value" : "Taso viimeisten %lld kuukauden ajalta"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nivel din ultimele %lld luni"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επίπεδο από τους τελευταίους %lld μήνες"
+          }
         }
       }
     },
@@ -5613,6 +6537,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tasosi määräytyy tämän ajanjakson vahvistetuista statuspisteistä."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nivelul dumneavoastră depinde de punctele de status confirmate din această perioadă."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το επίπεδό σας εξαρτάται από τους επιβεβαιωμένους πόντους κατάστασης αυτής της περιόδου."
           }
         }
       }
@@ -5686,6 +6622,18 @@
             "state" : "translated",
             "value" : "Kerää pisteitä"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strânge puncte"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συλλογή πόντων"
+          }
         }
       }
     },
@@ -5757,6 +6705,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vaihda"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Folosește"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εξαργύρωση"
           }
         }
       }
@@ -5830,6 +6790,18 @@
             "state" : "translated",
             "value" : "Voimassa vähintään %@ tuotteille, enintään %lld %% tuotteista ja ilman toimituskuluja. Koodi on voimassa %lld päivää ja vain sinulle. Pisteet vähennetään nyt. Jos koodi vanhenee käyttämättä, pisteet palautetaan."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valabil de la o valoare a produselor de %@, pentru cel mult %lld %% din produse și fără livrare. Codul este valabil %lld zile și doar pentru dumneavoastră. Punctele se scad acum. Dacă codul expiră nefolosit, punctele vă sunt returnate."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ισχύει από αξία προϊόντων %@, για έως %lld %% των προϊόντων και χωρίς τα έξοδα αποστολής. Ο κωδικός ισχύει %lld ημέρες και μόνο για εσάς. Οι πόντοι αφαιρούνται τώρα. Αν ο κωδικός λήξει αχρησιμοποίητος, οι πόντοι πιστώνονται ξανά."
+          }
         }
       }
     },
@@ -5901,6 +6873,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vaihdetaanko %@ alennus %@ pisteellä?"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Folosiți %@ reducere pentru %@ puncte?"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εξαργύρωση έκπτωσης %@ με %@ πόντους;"
           }
         }
       }
@@ -5974,6 +6958,18 @@
             "state" : "translated",
             "value" : "Kanta-asiakasohjelma ei ole tällä hetkellä käytössä."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programul de fidelitate nu este activ momentan."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το πρόγραμμα επιβράβευσης δεν είναι ενεργό αυτή τη στιγμή."
+          }
         }
       }
     },
@@ -6045,6 +7041,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld %% på varje beställning"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %% la fiecare comandă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %% σε κάθε παραγγελία"
           }
         }
       }
@@ -6118,6 +7126,18 @@
             "state" : "translated",
             "value" : "Dras av automatiskt i kassan när du är inloggad."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se scade automat la finalizarea comenzii, dacă cumpărați conectat."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αφαιρείται αυτόματα κατά την ολοκλήρωση αγοράς, όταν αγοράζετε συνδεδεμένοι."
+          }
         }
       }
     },
@@ -6189,6 +7209,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Din nivå följer dina köp de senaste %lld månaderna. Rabatten gäller även tillsammans med en kod från dina bonuspoäng."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nivelul dumneavoastră depinde de achizițiile din ultimele %lld luni. Reducerea se aplică în plus față de un cod obținut din punctele de recompensă."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το επίπεδό σας εξαρτάται από τις αγορές των τελευταίων %lld μηνών. Η έκπτωση ισχύει επιπλέον ενός κωδικού από τους πόντους ανταμοιβής σας."
           }
         }
       }
@@ -6262,6 +7294,18 @@
             "state" : "translated",
             "value" : "Från %1$@: %2$lld %% på varje beställning"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De la %1$@: %2$lld %% la fiecare comandă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Από %1$@: %2$lld %% σε κάθε παραγγελία"
+          }
         }
       }
     },
@@ -6333,6 +7377,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ingen permanent rabatt än"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Încă nu există reducere permanentă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν υπάρχει ακόμη μόνιμη έκπτωση"
           }
         }
       }
@@ -6406,6 +7462,18 @@
             "state" : "translated",
             "value" : "Din permanenta rabatt"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reducerea dumneavoastră permanentă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η μόνιμη έκπτωσή σας"
+          }
         }
       }
     },
@@ -6477,6 +7545,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kanta-asiakasohjelma ei ole tällä hetkellä käytössä."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programul de fidelitate nu este activ momentan."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το πρόγραμμα επιβράβευσης δεν είναι ενεργό αυτή τη στιγμή."
           }
         }
       }
@@ -6550,6 +7630,18 @@
             "state" : "translated",
             "value" : "Yhteys epäonnistui. Pisteesi ovat turvassa, yritä uudelleen."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conexiunea nu a reușit. Punctele dumneavoastră sunt în siguranță, vă rugăm să încercați din nou."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η σύνδεση δεν πέτυχε. Οι πόντοι σας είναι ασφαλείς, δοκιμάστε ξανά."
+          }
         }
       }
     },
@@ -6621,6 +7713,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vaihto on jo käynnissä. Odota hetki."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valorificarea este deja în curs. Vă rugăm să așteptați un moment."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η εξαργύρωση βρίσκεται ήδη σε εξέλιξη. Περιμένετε λίγο."
           }
         }
       }
@@ -6694,6 +7798,18 @@
             "state" : "translated",
             "value" : "Pisteesi eivät riitä tähän palkintoon."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nu aveți suficiente puncte pentru această recompensă."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν έχετε αρκετούς πόντους για αυτή την ανταμοιβή."
+          }
         }
       }
     },
@@ -6765,6 +7881,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vaihto hylättiin. Pisteitäsi ei vähennetty."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valorificarea a fost respinsă. Punctele dumneavoastră nu au fost scăzute."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η εξαργύρωση απορρίφθηκε. Οι πόντοι σας δεν αφαιρέθηκαν."
           }
         }
       }
@@ -6838,6 +7966,18 @@
             "state" : "translated",
             "value" : "Vaihto ei onnistu"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valorificare imposibilă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η εξαργύρωση δεν είναι δυνατή"
+          }
         }
       }
     },
@@ -6909,6 +8049,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "KARINEXin oikaisu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustare de către KARINEX"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προσαρμογή από την KARINEX"
           }
         }
       }
@@ -6982,6 +8134,18 @@
             "state" : "translated",
             "value" : "Pisteitä kerätty"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puncte acumulate"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πόντοι που συλλέχθηκαν"
+          }
         }
       }
     },
@@ -7053,6 +8217,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pisteet odottavat"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puncte în așteptare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πόντοι σε αναμονή"
           }
         }
       }
@@ -7126,6 +8302,18 @@
             "state" : "translated",
             "value" : "Ei vielä tapahtumia. Pisteesi näkyvät tässä ensimmäisen tilauksesi jälkeen."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Încă nu există mișcări. După prima comandă, punctele dumneavoastră vor apărea aici."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν υπάρχουν ακόμη κινήσεις. Μετά την πρώτη παραγγελία οι πόντοι σας θα εμφανιστούν εδώ."
+          }
         }
       }
     },
@@ -7197,6 +8385,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pisteet vanhentuivat"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puncte expirate"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πόντοι που έληξαν"
           }
         }
       }
@@ -7270,6 +8470,18 @@
             "state" : "translated",
             "value" : "Tapahtuma"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mișcare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κίνηση"
+          }
         }
       }
     },
@@ -7341,6 +8553,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Palkinto- ja statuspisteet"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puncte de recompensă și de status"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πόντοι ανταμοιβής και κατάστασης"
           }
         }
       }
@@ -7414,6 +8638,18 @@
             "state" : "translated",
             "value" : "Palkintopisteet"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puncte de recompensă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πόντοι ανταμοιβής"
+          }
         }
       }
     },
@@ -7485,6 +8721,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Statuspisteet"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puncte de status"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πόντοι κατάστασης"
           }
         }
       }
@@ -7558,6 +8806,18 @@
             "state" : "translated",
             "value" : "Palkinto vaihdettu"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recompensă valorificată"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εξαργυρώθηκε ανταμοιβή"
+          }
         }
       }
     },
@@ -7629,6 +8889,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ystävä kutsuttu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prieten recomandat"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πρόσκληση φίλου"
           }
         }
       }
@@ -7702,6 +8974,18 @@
             "state" : "translated",
             "value" : "Hyvitys"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rambursare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επιστροφή χρημάτων"
+          }
         }
       }
     },
@@ -7773,6 +9057,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pisteet palautettu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puncte returnate"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πόντοι που επιστράφηκαν"
           }
         }
       }
@@ -7846,6 +9142,18 @@
             "state" : "translated",
             "value" : "Status %@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κατάσταση %@"
+          }
         }
       }
     },
@@ -7917,6 +9225,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Historia"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Istoric"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ιστορικό"
           }
         }
       }
@@ -7990,6 +9310,18 @@
             "state" : "translated",
             "value" : "Korkein taso saavutettu"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cel mai înalt nivel atins"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Έχετε φτάσει στο ανώτατο επίπεδο"
+          }
         }
       }
     },
@@ -8061,6 +9393,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ pistettä jäljellä tasolle %@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Încă %@ puncte până la statusul %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ακόμη %@ πόντοι μέχρι το επίπεδο %@"
           }
         }
       }
@@ -8134,6 +9478,18 @@
             "state" : "translated",
             "value" : "Etusi"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avantajele dumneavoastră"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα προνόμιά σας"
+          }
         }
       }
     },
@@ -8205,6 +9561,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ statuspistettä"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ puncte de status"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ πόντοι κατάστασης"
           }
         }
       }
@@ -8278,6 +9646,18 @@
             "state" : "translated",
             "value" : "%1$@ statuspistettä · %2$@ alkaen %3$@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ puncte de status · %2$@ de la %3$@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ πόντοι κατάστασης · %2$@ από %3$@"
+          }
         }
       }
     },
@@ -8349,6 +9729,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kutsukoodisi"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codul dumneavoastră de invitație"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ο κωδικός πρόσκλησής σας"
           }
         }
       }
@@ -8422,6 +9814,18 @@
             "state" : "translated",
             "value" : "Kutsuttu: %1$lld, tarkistuksessa: %2$lld"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomandați: %1$lld, în verificare: %2$lld"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προσκλήσεις: %1$lld, υπό έλεγχο: %2$lld"
+          }
         }
       }
     },
@@ -8493,6 +9897,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Luo kutsukoodini"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creează codul meu de invitație"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δημιουργία του κωδικού πρόσκλησής μου"
           }
         }
       }
@@ -8566,6 +9982,18 @@
             "state" : "translated",
             "value" : "Yritä hetken kuluttua uudelleen."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vă rugăm să încercați din nou în scurt timp."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δοκιμάστε ξανά σε λίγο."
+          }
         }
       }
     },
@@ -8637,6 +10065,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Koodia ei luotu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codul nu a fost creat"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ο κωδικός δεν δημιουργήθηκε"
           }
         }
       }
@@ -8710,6 +10150,18 @@
             "state" : "translated",
             "value" : "alennus ystäväsi ensimmäisestä tilauksesta"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "reducere pentru prietenul dumneavoastră la prima comandă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "έκπτωση για τον φίλο σας στην πρώτη παραγγελία"
+          }
         }
       }
     },
@@ -8778,6 +10230,18 @@
           }
         },
         "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %%"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld %%"
+          }
+        },
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld %%"
@@ -8854,6 +10318,18 @@
             "state" : "translated",
             "value" : "Säästäkää yhdessä"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Economisiți împreună"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εξοικονομήστε μαζί"
+          }
         }
       }
     },
@@ -8925,6 +10401,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kutsu ystäväsi KARINEXiin."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invitați prieteni la KARINEX."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προσκαλέστε φίλους στην KARINEX."
           }
         }
       }
@@ -8998,6 +10486,18 @@
             "state" : "translated",
             "value" : "Vain uuden asiakkaan ensimmäiseen tilaukseen. Enintään %lld ystävää 12 kuukaudessa."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se aplică doar la prima comandă a unui client nou. Cel mult %lld prieteni în 12 luni."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ισχύει μόνο για την πρώτη παραγγελία νέου πελάτη. Έως %lld φίλοι σε 12 μήνες."
+          }
         }
       }
     },
@@ -9069,6 +10569,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jaa koodi"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trimite codul"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κοινοποίηση κωδικού"
           }
         }
       }
@@ -9142,6 +10654,18 @@
             "state" : "translated",
             "value" : "Koodilla %1$@ saat %2$lld %% alennuksen ensimmäisestä tilauksesta KARINEXilla:"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cu codul %1$@ primiți %2$lld %% reducere la prima comandă la KARINEX:"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Με τον κωδικό %1$@ έχετε %2$lld %% έκπτωση στην πρώτη παραγγελία στην KARINEX:"
+          }
         }
       }
     },
@@ -9213,6 +10737,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alennus KARINEXilla"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reducere la KARINEX"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Έκπτωση στην KARINEX"
           }
         }
       }
@@ -9286,6 +10822,18 @@
             "state" : "translated",
             "value" : "Ystäväsi säästää %lld %% ensimmäisestä tilauksestaan"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prietenul dumneavoastră economisește %lld %% la prima comandă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ο φίλος σας εξοικονομεί %lld %% στην πρώτη του παραγγελία"
+          }
         }
       }
     },
@@ -9357,6 +10905,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Toimituksen jälkeen saat %@ palkintopistettä"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "După livrare primiți %@ puncte de recompensă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μετά την παράδοση λαμβάνετε %@ πόντους ανταμοιβής"
           }
         }
       }
@@ -9430,6 +10990,18 @@
             "state" : "translated",
             "value" : "Jaat koodisi ystävillesi"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Împărtășiți codul cu prietenii"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μοιράζεστε τον κωδικό σας με φίλους"
+          }
         }
       }
     },
@@ -9501,6 +11073,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Näin se toimii"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cum funcționează"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πώς λειτουργεί"
           }
         }
       }
@@ -9574,6 +11158,18 @@
             "state" : "translated",
             "value" : "Kutsu ystäviä"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invită prieteni"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πρόσκληση φίλων"
+          }
         }
       }
     },
@@ -9645,6 +11241,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "sinulle %@ palkintopisteenä"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pentru dumneavoastră, ca %@ puncte de recompensă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "για εσάς, ως %@ πόντοι ανταμοιβής"
           }
         }
       }
@@ -9718,6 +11326,18 @@
             "state" : "translated",
             "value" : "Alennus kattaa enintään %lld %% tuotteiden arvosta ja koskee vähintään %@ tuotteita (ilman toimituskuluja). Koodi on voimassa %lld päivää."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reducerea acoperă cel mult %lld %% din valoarea produselor și se aplică de la o valoare a produselor de %@ (fără livrare). Codul este valabil %lld zile."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η έκπτωση καλύπτει έως %lld %% της αξίας των προϊόντων και ισχύει από αξία προϊόντων %@ (χωρίς τα έξοδα αποστολής). Ο κωδικός ισχύει %lld ημέρες."
+          }
         }
       }
     },
@@ -9789,6 +11409,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vaihda palkintoja"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valorifică recompense"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εξαργύρωση ανταμοιβών"
           }
         }
       }
@@ -9862,6 +11494,18 @@
             "state" : "translated",
             "value" : "%@ pistettä, tuotteita vähintään %@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ puncte, de la o valoare a produselor de %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ πόντοι, από αξία προϊόντων %@"
+          }
         }
       }
     },
@@ -9933,6 +11577,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tarvitaan vielä %@ pistettä"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mai lipsesc %@ puncte"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λείπουν ακόμη %@ πόντοι"
           }
         }
       }
@@ -10006,6 +11662,18 @@
             "state" : "translated",
             "value" : "%@ alennus"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reducere de %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Έκπτωση %@"
+          }
         }
       }
     },
@@ -10077,6 +11745,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@, %@ / %@ statuspistettä"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %@ din %@ puncte de status"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %@ από %@ πόντους κατάστασης"
           }
         }
       }
@@ -10150,6 +11830,18 @@
             "state" : "translated",
             "value" : "%@, %@ statuspistettä, korkein taso saavutettu"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %@ puncte de status, cel mai înalt nivel atins"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %@ πόντοι κατάστασης, έχετε φτάσει στο ανώτατο επίπεδο"
+          }
         }
       }
     },
@@ -10221,6 +11913,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Diamant"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diamant"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διαμαντένιο"
           }
         }
       }
@@ -10294,6 +11998,18 @@
             "state" : "translated",
             "value" : "Elit"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elită"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elite"
+          }
         }
       }
     },
@@ -10365,6 +12081,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kulta"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aur"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χρυσό"
           }
         }
       }
@@ -10438,6 +12166,18 @@
             "state" : "translated",
             "value" : "Platina"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platină"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πλατινένιο"
+          }
         }
       }
     },
@@ -10510,6 +12250,18 @@
             "state" : "translated",
             "value" : "Hopea"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Argint"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ασημένιο"
+          }
         }
       }
     },
@@ -10578,6 +12330,18 @@
           }
         },
         "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starter"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starter"
+          }
+        },
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Starter"
@@ -10654,6 +12418,18 @@
             "state" : "translated",
             "value" : "Kanta-asiakasohjelma"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program de fidelitate"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πρόγραμμα επιβράβευσης"
+          }
         }
       }
     },
@@ -10725,6 +12501,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kundkortet för Apple Wallet kunde inte laddas just nu. Försök igen senare."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cardul de client pentru Apple Wallet nu a putut fi încărcat acum. Vă rugăm să încercați din nou mai târziu."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η κάρτα πελάτη για το Apple Wallet δεν μπόρεσε να φορτωθεί αυτή τη στιγμή. Δοκιμάστε ξανά αργότερα."
           }
         }
       }
@@ -10798,6 +12586,18 @@
             "state" : "translated",
             "value" : "Kortet är inte tillgängligt"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Card indisponibil"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η κάρτα δεν είναι διαθέσιμη"
+          }
         }
       }
     },
@@ -10869,6 +12669,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ditt KARINEX-kundkort med nivå och poäng. Det uppdateras av sig självt i Wallet."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cardul dumneavoastră de client KARINEX cu nivel și puncte. Se actualizează singur în Wallet."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η κάρτα πελάτη KARINEX με το επίπεδο και τους πόντους σας. Ενημερώνεται αυτόματα στο Wallet."
           }
         }
       }
@@ -10942,6 +12754,18 @@
             "state" : "translated",
             "value" : "Laskut"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Facturi"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τιμολόγια"
+          }
         }
       }
     },
@@ -11013,6 +12837,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kaikki laskut PDF-muodossa"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toate facturile în format PDF"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Όλα τα τιμολόγια σε PDF"
           }
         }
       }
@@ -11086,6 +12922,18 @@
             "state" : "translated",
             "value" : "Oikeudelliset tiedot"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informații juridice"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Νομικά"
+          }
         }
       }
     },
@@ -11157,6 +13005,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yritystiedot, ehdot, tietosuoja ja peruuttaminen"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date de identificare, T&C, confidențialitate și retragere"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Στοιχεία εταιρείας, όροι, απόρρητο και υπαναχώρηση"
           }
         }
       }
@@ -11230,6 +13090,18 @@
             "state" : "translated",
             "value" : "Omat lisenssit"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licențele mele"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι άδειές μου"
+          }
         }
       }
     },
@@ -11301,6 +13173,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisenssiavaimesi turvassa tällä laitteella"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheile dumneavoastră de licență, în siguranță pe acest dispozitiv"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα κλειδιά άδειάς σας, με ασφάλεια σε αυτή τη συσκευή"
           }
         }
       }
@@ -11374,6 +13258,18 @@
             "state" : "translated",
             "value" : "Kanta-asiakasohjelma"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program de fidelitate"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πρόγραμμα επιβράβευσης"
+          }
         }
       }
     },
@@ -11445,6 +13341,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kerää ja käytä pisteitä"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strângeți și valorificați puncte"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συλλέξτε και εξαργυρώστε πόντους"
           }
         }
       }
@@ -11518,6 +13426,18 @@
             "state" : "translated",
             "value" : "Omat tilaukset"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comenzile mele"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι παραγγελίες μου"
+          }
         }
       }
     },
@@ -11589,6 +13509,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seuraa tilaa ja katso laskut"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Urmăriți starea și descărcați facturile"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παρακολούθηση κατάστασης και τιμολόγια"
           }
         }
       }
@@ -11662,6 +13594,18 @@
             "state" : "translated",
             "value" : "Henkilötiedot"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date personale"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προσωπικά στοιχεία"
+          }
         }
       }
     },
@@ -11733,6 +13677,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nimi, sähköposti ja osoitteet"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nume, e-mail și adrese"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Όνομα, email και διευθύνσεις"
           }
         }
       }
@@ -11806,6 +13762,18 @@
             "state" : "translated",
             "value" : "Asetukset"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setări"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ρυθμίσεις"
+          }
         }
       }
     },
@@ -11877,6 +13845,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kieli, maa, ulkoasu ja ilmoitukset"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limbă, țară, aspect și notificări"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Γλώσσα, χώρα, εμφάνιση και ειδοποιήσεις"
           }
         }
       }
@@ -11950,6 +13930,18 @@
             "state" : "translated",
             "value" : "Apua ja tukea"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajutor și asistență"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Βοήθεια και υποστήριξη"
+          }
         }
       }
     },
@@ -12021,6 +14013,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vastauksia usein kysyttyihin kysymyksiin ja yhteystiedot"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Răspunsuri la întrebări frecvente și contact"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απαντήσεις σε συχνές ερωτήσεις και επικοινωνία"
           }
         }
       }
@@ -12094,6 +14098,18 @@
             "state" : "translated",
             "value" : "Toivelista"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listă de dorințe"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λίστα επιθυμιών"
+          }
         }
       }
     },
@@ -12165,6 +14181,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tallentamasi tuotteet"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produsele dumneavoastră salvate"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα προϊόντα που αποθηκεύσατε"
           }
         }
       }
@@ -12238,6 +14266,18 @@
             "state" : "translated",
             "value" : "Vahvistusnumero: %@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Număr de confirmare: %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αριθμός επιβεβαίωσης: %@"
+          }
         }
       }
     },
@@ -12309,6 +14349,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tämä tilaus ei ole enää saatavilla."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Această comandă nu mai este disponibilă."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτή η παραγγελία δεν είναι πλέον διαθέσιμη."
           }
         }
       }
@@ -12382,6 +14434,18 @@
             "state" : "translated",
             "value" : "Tilausta ei löytynyt"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comandă negăsită"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η παραγγελία δεν βρέθηκε"
+          }
         }
       }
     },
@@ -12453,6 +14517,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apua tähän tilaukseen"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajutor pentru această comandă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Βοήθεια για αυτή την παραγγελία"
           }
         }
       }
@@ -12526,6 +14602,18 @@
             "state" : "translated",
             "value" : "Lasku (PDF)"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Factură (PDF)"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τιμολόγιο (PDF)"
+          }
         }
       }
     },
@@ -12597,6 +14685,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Löydät laskun sähköpostista, jolla toimitimme lisenssiavaimesi."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Factura dumneavoastră se află în e-mailul cu care v-am livrat cheia de licență."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το τιμολόγιό σας βρίσκεται στο email με το οποίο σας παραδώσαμε το κλειδί άδειας."
           }
         }
       }
@@ -12670,6 +14770,18 @@
             "state" : "translated",
             "value" : "Näytä lisenssiavaimet"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afișează cheile de licență"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εμφάνιση κλειδιών άδειας"
+          }
         }
       }
     },
@@ -12741,6 +14853,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tuotteet"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Articole"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προϊόντα"
           }
         }
       }
@@ -12814,6 +14938,18 @@
             "state" : "translated",
             "value" : "Määrä: %lld"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cantitate: %lld"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ποσότητα: %lld"
+          }
         }
       }
     },
@@ -12885,6 +15021,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Osta uudelleen"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cumpără din nou"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αγορά ξανά"
           }
         }
       }
@@ -12958,6 +15106,18 @@
             "state" : "translated",
             "value" : "Toimitus"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Livrare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αποστολή"
+          }
         }
       }
     },
@@ -13029,6 +15189,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Peruttu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anulată"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ακυρώθηκε"
           }
         }
       }
@@ -13102,6 +15274,18 @@
             "state" : "translated",
             "value" : "Toimitettu"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Livrată"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παραδόθηκε"
+          }
         }
       }
     },
@@ -13173,6 +15357,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Maksettu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plătită"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πληρώθηκε"
           }
         }
       }
@@ -13246,6 +15442,18 @@
             "state" : "translated",
             "value" : "Käsittelyssä"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "În procesare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σε επεξεργασία"
+          }
         }
       }
     },
@@ -13317,6 +15525,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hyvitetty"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rambursată"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επιστράφηκαν χρήματα"
           }
         }
       }
@@ -13390,6 +15610,18 @@
             "state" : "translated",
             "value" : "Lähetetty"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expediată"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απεστάλη"
+          }
         }
       }
     },
@@ -13461,6 +15693,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Välisumma"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subtotal"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Υποσύνολο"
           }
         }
       }
@@ -13534,6 +15778,18 @@
             "state" : "translated",
             "value" : "Verot"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taxe"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φόροι"
+          }
         }
       }
     },
@@ -13605,6 +15861,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisenssi lähetetty"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licență trimisă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η άδεια στάλθηκε"
           }
         }
       }
@@ -13678,6 +15946,18 @@
             "state" : "translated",
             "value" : "Sähköpostitse, yleensä muutaman minuutin kuluttua maksusta"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prin e-mail, de regulă la câteva minute după plată"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μέσω email, συνήθως λίγα λεπτά μετά την πληρωμή"
+          }
         }
       }
     },
@@ -13749,6 +16029,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tilattu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comandată"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παραγγέλθηκε"
           }
         }
       }
@@ -13822,6 +16114,18 @@
             "state" : "translated",
             "value" : "Maksettu"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plătită"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πληρώθηκε"
+          }
         }
       }
     },
@@ -13893,6 +16197,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lähetetty"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expediată"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απεστάλη"
           }
         }
       }
@@ -13966,6 +16282,18 @@
             "state" : "translated",
             "value" : "Tilaus"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comandă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παραγγελία"
+          }
         }
       }
     },
@@ -14037,6 +16365,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yhteensä"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total general"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Γενικό σύνολο"
           }
         }
       }
@@ -14110,6 +16450,18 @@
             "state" : "translated",
             "value" : "Tilauksesi näkyvät täällä heti, kun olet ostanut jotain."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comenzile dumneavoastră vor apărea aici de îndată ce cumpărați ceva."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι παραγγελίες σας θα εμφανιστούν εδώ μόλις κάνετε μια αγορά."
+          }
         }
       }
     },
@@ -14181,6 +16533,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ei vielä tilauksia"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Încă nu există comenzi"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν υπάρχουν ακόμη παραγγελίες"
           }
         }
       }
@@ -14254,6 +16618,18 @@
             "state" : "translated",
             "value" : "Tilaukset"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comenzi"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παραγγελίες"
+          }
         }
       }
     },
@@ -14325,6 +16701,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pyydä poistamaan asiakastilisi ja tallennetut tietosi"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solicitați ștergerea contului de client și a datelor salvate"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ζητήστε την αφαίρεση του λογαριασμού πελάτη και των αποθηκευμένων δεδομένων σας"
           }
         }
       }
@@ -14398,6 +16786,18 @@
             "state" : "translated",
             "value" : "Poista tili ja tiedot"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Șterge contul și datele"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διαγραφή λογαριασμού και δεδομένων"
+          }
         }
       }
     },
@@ -14469,6 +16869,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Saat jokaisella kirjautumiskerralla koodin sähköpostiisi. Näin ei ole salasanaa, jonka joku voisi arvata tai varastaa."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La fiecare conectare primiți un cod pe adresa dumneavoastră de e-mail. Astfel nu există o parolă pe care cineva să o ghicească sau să o fure."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σε κάθε σύνδεση λαμβάνετε έναν κωδικό στη διεύθυνση email σας. Έτσι δεν υπάρχει κωδικός πρόσβασης που κάποιος θα μπορούσε να μαντέψει ή να κλέψει."
           }
         }
       }
@@ -14542,6 +16954,18 @@
             "state" : "translated",
             "value" : "Kirjautuminen ilman salasanaa"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectare fără parolă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σύνδεση χωρίς κωδικό πρόσβασης"
+          }
         }
       }
     },
@@ -14613,6 +17037,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Muuta nimeä"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifică numele"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αλλαγή ονόματος"
           }
         }
       }
@@ -14686,6 +17122,18 @@
             "state" : "translated",
             "value" : "Sähköpostiosoitteesi on kirjautumistunnuksesi, eikä se muutu."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adresa dumneavoastră de e-mail este elementul de conectare și rămâne neschimbată."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η διεύθυνση email σας είναι το στοιχείο σύνδεσής σας και παραμένει αμετάβλητη."
+          }
         }
       }
     },
@@ -14757,6 +17205,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Asiakasnumero %@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Număr de client %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αριθμός πελάτη %@"
           }
         }
       }
@@ -14830,6 +17290,18 @@
             "state" : "translated",
             "value" : "Kopioi asiakasnumeron esimerkiksi asiakaspalvelulle lähetettävää kysymystä varten."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiază numărul de client, de exemplu pentru o solicitare către serviciul clienți."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αντιγράφει τον αριθμό πελάτη, για παράδειγμα για αίτημα προς την εξυπηρέτηση πελατών."
+          }
         }
       }
     },
@@ -14901,6 +17373,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Näytä henkilötiedot"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vezi datele personale"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προβολή προσωπικών στοιχείων"
           }
         }
       }
@@ -14974,6 +17458,18 @@
             "state" : "translated",
             "value" : "Henkilötiedot"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date personale"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προσωπικά στοιχεία"
+          }
         }
       }
     },
@@ -15045,6 +17541,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tilisi"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contul dumneavoastră"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ο λογαριασμός σας"
           }
         }
       }
@@ -15118,6 +17626,18 @@
             "state" : "translated",
             "value" : "Kirjaudu"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectează-te"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σύνδεση"
+          }
         }
       }
     },
@@ -15189,6 +17709,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sulje"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Închide"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κλείσιμο"
           }
         }
       }
@@ -15262,6 +17794,18 @@
             "state" : "translated",
             "value" : "Kirjautuminen ei onnistunut"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectare imposibilă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η σύνδεση δεν είναι δυνατή"
+          }
         }
       }
     },
@@ -15333,6 +17877,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Det går ännu inte att logga in i den här versionen."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectarea nu este încă disponibilă în această versiune."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η σύνδεση δεν είναι ακόμη διαθέσιμη σε αυτή την έκδοση."
           }
         }
       }
@@ -15406,6 +17962,18 @@
             "state" : "translated",
             "value" : "Saat koodin sähköpostitse. Salasanaa ei tarvita."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primiți un cod prin e-mail. Nu aveți nevoie de parolă."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Θα λάβετε έναν κωδικό μέσω email. Δεν χρειάζεστε κωδικό πρόσβασης."
+          }
         }
       }
     },
@@ -15477,6 +18045,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kirjaudu ulos"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deconectează-te"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αποσύνδεση"
           }
         }
       }
@@ -15550,6 +18130,18 @@
             "state" : "translated",
             "value" : "Haluatko kirjautua ulos? Tallennetut lisenssiavaimet poistetaan tästä laitteesta."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doriți să vă deconectați? Cheile de licență salvate vor fi eliminate de pe acest dispozitiv."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Θέλετε να αποσυνδεθείτε; Τα αποθηκευμένα κλειδιά άδειας θα αφαιρεθούν από αυτή τη συσκευή."
+          }
         }
       }
     },
@@ -15621,6 +18213,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Konto"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cont"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λογαριασμός"
           }
         }
       }
@@ -15694,6 +18298,18 @@
             "state" : "translated",
             "value" : "Tallenna tuote tänne napauttamalla tuotesivun sydäntä. Toivelista säilyy tällä laitteella."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atingeți inima de pe pagina unui produs pentru a-l salva aici. Lista de dorințe rămâne pe acest dispozitiv."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πατήστε την καρδιά στη σελίδα ενός προϊόντος για να το αποθηκεύσετε εδώ. Η λίστα επιθυμιών παραμένει σε αυτή τη συσκευή."
+          }
         }
       }
     },
@@ -15765,6 +18381,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Toivelistasi on tyhjä"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lista dumneavoastră de dorințe este goală"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η λίστα επιθυμιών σας είναι κενή"
           }
         }
       }
@@ -15838,6 +18466,18 @@
             "state" : "translated",
             "value" : "Poista toivelistalta"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimină din lista de dorințe"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αφαίρεση από τη λίστα επιθυμιών"
+          }
         }
       }
     },
@@ -15909,6 +18549,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Toivelista"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listă de dorințe"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λίστα επιθυμιών"
           }
         }
       }

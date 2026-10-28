@@ -180,7 +180,7 @@ public struct LanguageCode: RawRepresentable, Sendable, Hashable, Codable, Compa
     }
 
     /// The app UI language for this content language, or `nil` when the app is not localized
-    /// into it (for example `EL` or `RO`). Every Portuguese variant maps to `.ptPT`.
+    /// into it (for example `NB`). Every Portuguese variant maps to `.ptPT`.
     public var appLanguage: AppLanguage? {
         AppLanguage(bcp47: rawValue.replacingOccurrences(of: "_", with: "-"))
     }
@@ -197,7 +197,7 @@ public struct LanguageCode: RawRepresentable, Sendable, Hashable, Codable, Compa
     public static let da: LanguageCode = "DA"
     /// German, the store's primary language.
     public static let de: LanguageCode = "DE"
-    /// Greek (a store content language, not an app UI language).
+    /// Greek.
     public static let el: LanguageCode = "EL"
     /// English.
     public static let en: LanguageCode = "EN"
@@ -215,7 +215,7 @@ public struct LanguageCode: RawRepresentable, Sendable, Hashable, Codable, Compa
     public static let pl: LanguageCode = "PL"
     /// European Portuguese.
     public static let ptPT: LanguageCode = "PT_PT"
-    /// Romanian (a store content language, not an app UI language).
+    /// Romanian.
     public static let ro: LanguageCode = "RO"
     /// Swedish.
     public static let sv: LanguageCode = "SV"

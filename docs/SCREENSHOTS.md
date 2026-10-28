@@ -1,6 +1,6 @@
 # Screenshot shot list
 
-Screenshots for App Store Connect, the same set in all 11 languages. They are taken from the
+Screenshots for App Store Connect, the same set in all 13 languages. They are taken from the
 running app against the live store, so every product, price and text on them is real store
 content in the market of the language. Nothing is retouched in: no invented prices, ratings,
 badges or claims, and no device frames with marketing text that the app does not show.
@@ -19,7 +19,7 @@ badges or claims, and no device frames with marketing text that the app does not
 | --- | --- |
 | de | Deutschland |
 | en | Deutschland (English UI) |
-| pl, nl, pt-PT, sv, da, es, fr, it, fi | PL, NL, PT, SE, DK, ES, FR, IT, FI |
+| pl, nl, pt-PT, sv, da, es, fr, it, fi, ro, el | PL, NL, PT, SE, DK, ES, FR, IT, FI, RO, GR |
 
 ## Shots
 

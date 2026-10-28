@@ -70,6 +70,18 @@
             "state" : "translated",
             "value" : "Sulje"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Închide"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κλείσιμο"
+          }
         }
       }
     },
@@ -141,6 +153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kassaistunto on vanhentunut. Yritä uudelleen."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sesiunea de finalizare a comenzii a expirat. Vă rugăm să încercați din nou."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η συνεδρία πληρωμής έληξε. Παρακαλούμε δοκιμάστε ξανά."
           }
         }
       }
@@ -214,6 +238,18 @@
             "state" : "translated",
             "value" : "Kassaa ei voitu ladata. Ostoskorisi säilyy."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finalizarea comenzii nu a putut fi încărcată. Coșul dumneavoastră a fost păstrat."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η ολοκλήρωση αγοράς δεν μπόρεσε να φορτωθεί. Το καλάθι σας διατηρείται."
+          }
         }
       }
     },
@@ -285,6 +321,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yritä uudelleen"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Încercați din nou"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δοκιμάστε ξανά"
           }
         }
       }
@@ -358,6 +406,18 @@
             "state" : "translated",
             "value" : "Kassa ei ole käytettävissä"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finalizarea comenzii indisponibilă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η ολοκλήρωση αγοράς δεν είναι διαθέσιμη"
+          }
         }
       }
     },
@@ -429,6 +489,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kassaa valmistellaan"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se pregătește finalizarea comenzii"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προετοιμασία ολοκλήρωσης αγοράς"
           }
         }
       }
@@ -502,6 +574,18 @@
             "state" : "translated",
             "value" : "Jatka ostoksia"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuați cumpărăturile"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συνέχεια αγορών"
+          }
         }
       }
     },
@@ -573,6 +657,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kiitos"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vă mulțumim"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ευχαριστούμε"
           }
         }
       }
@@ -646,6 +742,18 @@
             "state" : "translated",
             "value" : "Lisenssiavaimesi toimitetaan sähköpostitse."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheia dumneavoastră de licență va fi livrată prin e-mail."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το κλειδί άδειας χρήσης σας θα παραδοθεί μέσω email."
+          }
         }
       }
     },
@@ -717,6 +825,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tilaus vastaanotettu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comandă primită"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η παραγγελία παρελήφθη"
           }
         }
       }
@@ -790,6 +910,18 @@
             "state" : "translated",
             "value" : "Kokonaissumma"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total comandă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συνολικό ποσό"
+          }
         }
       }
     },
@@ -861,6 +993,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kassa"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plată"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ταμείο"
           }
         }
       }

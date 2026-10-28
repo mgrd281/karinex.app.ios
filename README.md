@@ -74,7 +74,7 @@ Run `make help` for the list. Most targets need macOS with Xcode; `test-packages
 | `make test-packages` | Builds with warnings as errors and tests Core, ShopifyKit and DesignTokens with `swift test` |
 | `make lint` | SwiftFormat `--lint` and SwiftLint `--strict`, exactly as CI |
 | `make format` | Applies SwiftLint autocorrections and SwiftFormat |
-| `make check` | Validates the String Catalogs (11 languages) and the copy rules |
+| `make check` | Validates the String Catalogs (13 languages) and the copy rules |
 | `make fixtures` | Re-records the Storefront fixtures from the live store (tokenless unless `KX_STOREFRONT_TOKEN` is set) |
 | `make snapshots` | Records DesignSystem snapshot references locally (commit the ones from the CI workflow) |
 | `make clean` | Removes derived data, results and SwiftPM build directories |

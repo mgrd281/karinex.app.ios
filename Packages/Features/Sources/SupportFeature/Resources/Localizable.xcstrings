@@ -70,6 +70,18 @@
             "state" : "translated",
             "value" : "Avaa live-chat"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deschideți chatul live"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Άνοιγμα ζωντανής συνομιλίας"
+          }
         }
       }
     },
@@ -141,6 +153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lähetä sähköpostia"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrieți-ne un e-mail"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Στείλτε μας email"
           }
         }
       }
@@ -214,6 +238,18 @@
             "state" : "translated",
             "value" : "Lähetä viesti WhatsAppissa"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrieți-ne pe WhatsApp"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Στείλτε μας μήνυμα στο WhatsApp"
+          }
         }
       }
     },
@@ -285,6 +321,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Näin tavoitat meidät"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cum ne contactați"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πώς να επικοινωνήσετε μαζί μας"
           }
         }
       }
@@ -358,6 +406,18 @@
             "state" : "translated",
             "value" : "Sähköposti: %@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail: %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email: %@"
+          }
         }
       }
     },
@@ -429,6 +489,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kysymys KARINEX-sovelluksesta"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solicitare prin aplicația KARINEX"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αίτημα μέσω της εφαρμογής KARINEX"
           }
         }
       }
@@ -502,6 +574,18 @@
             "state" : "translated",
             "value" : "Kysymys tilauksesta %@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solicitare privind comanda %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αίτημα σχετικά με την παραγγελία %@"
+          }
         }
       }
     },
@@ -573,6 +657,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Oppaat"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ghiduri"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οδηγοί"
           }
         }
       }
@@ -646,6 +742,18 @@
             "state" : "translated",
             "value" : "Ohjeet ja vastaukset"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instrucțiuni și răspunsuri"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οδηγίες και απαντήσεις"
+          }
         }
       }
     },
@@ -717,6 +825,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kello %1$@ ja %2$@ välillä (Saksan aikaa)"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De la %1$@ până la %2$@ (ora Germaniei)"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Από %1$@ έως %2$@ (ώρα Γερμανίας)"
           }
         }
       }
@@ -790,6 +910,18 @@
             "state" : "translated",
             "value" : "Maanantaista sunnuntaihin kello %1$@ ja %2$@ välillä (Saksan aikaa)"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luni până duminică, de la %1$@ până la %2$@ (ora Germaniei)"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δευτέρα έως Κυριακή, από %1$@ έως %2$@ (ώρα Γερμανίας)"
+          }
         }
       }
     },
@@ -861,6 +993,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apua ja tukea"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajutor și asistență"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Βοήθεια και υποστήριξη"
           }
         }
       }
@@ -934,6 +1078,18 @@
             "state" : "translated",
             "value" : "Olemme tukenasi"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suntem aici pentru dumneavoastră"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Είμαστε εδώ για εσάς"
+          }
         }
       }
     },
@@ -1005,6 +1161,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Viestissäsi on jo tilausnumero %@."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesajul dumneavoastră conține deja numărul comenzii %@."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το μήνυμά σας περιλαμβάνει ήδη τον αριθμό παραγγελίας %@."
           }
         }
       }
@@ -1078,6 +1246,18 @@
             "state" : "translated",
             "value" : "Emme ole nyt tavoitettavissa"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Momentan indisponibil"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προς το παρόν μη διαθέσιμοι"
+          }
         }
       }
     },
@@ -1149,6 +1329,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tavoitettavissa nyt"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disponibili acum"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διαθέσιμοι τώρα"
           }
         }
       }
@@ -1222,6 +1414,18 @@
             "state" : "translated",
             "value" : "Apua ja tukea"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajutor și asistență"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Βοήθεια και υποστήριξη"
+          }
         }
       }
     },
@@ -1294,6 +1498,18 @@
             "state" : "translated",
             "value" : "Hei KARINEX, minulla on kysymys."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bună ziua, KARINEX, am o întrebare."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Γεια σας KARINEX, έχω μια ερώτηση."
+          }
         }
       }
     },
@@ -1365,6 +1581,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hei KARINEX, minulla on kysymys tilauksestani %@."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bună ziua, KARINEX, am o întrebare despre comanda mea %@."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Γεια σας KARINEX, έχω μια ερώτηση για την παραγγελία μου %@."
           }
         }
       }

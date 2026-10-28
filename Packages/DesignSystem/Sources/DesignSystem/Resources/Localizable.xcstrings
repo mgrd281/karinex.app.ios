@@ -70,6 +70,18 @@
             "state" : "translated",
             "value" : "Hopfälld"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restrâns"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συμπτυγμένο"
+          }
         }
       }
     },
@@ -141,6 +153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utfälld"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extins"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αναπτυγμένο"
           }
         }
       }
@@ -214,6 +238,18 @@
             "state" : "translated",
             "value" : "Döljer innehållet."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ascunde conținutul."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αποκρύπτει το περιεχόμενο."
+          }
         }
       }
     },
@@ -285,6 +321,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Visar innehållet."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afișează conținutul."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εμφανίζει το περιεχόμενο."
           }
         }
       }
@@ -358,6 +406,18 @@
             "state" : "translated",
             "value" : "Stäng meddelandet"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Închideți notificarea"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κλείσιμο ειδοποίησης"
+          }
         }
       }
     },
@@ -429,6 +489,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Det gick inte att slutföra åtgärden. Försök igen."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Operațiunea nu a putut fi finalizată. Vă rugăm să încercați din nou."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η ενέργεια δεν ολοκληρώθηκε. Παρακαλούμε δοκιμάστε ξανά."
           }
         }
       }
@@ -502,6 +574,18 @@
             "state" : "translated",
             "value" : "Meddelande"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ενημέρωση"
+          }
         }
       }
     },
@@ -573,6 +657,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Du är offline. Kontrollera din internetanslutning."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunteți offline. Vă rugăm să verificați conexiunea la internet."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Είστε εκτός σύνδεσης. Παρακαλούμε ελέγξτε τη σύνδεσή σας στο διαδίκτυο."
           }
         }
       }
@@ -646,6 +742,18 @@
             "state" : "translated",
             "value" : "Försök igen"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Încercați din nou"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δοκιμάστε ξανά"
+          }
         }
       }
     },
@@ -718,6 +826,18 @@
             "state" : "translated",
             "value" : "Åtgärden har slutförts."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Operațiune finalizată."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η ενέργεια ολοκληρώθηκε."
+          }
         }
       }
     },
@@ -789,6 +909,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pågår"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se execută"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σε εξέλιξη"
           }
         }
       }
@@ -1024,6 +1156,48 @@
               }
             }
           }
+        },
+        "ro" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld zi"
+                }
+              },
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld zile"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld de zile"
+                }
+              }
+            }
+          }
+        },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld ημέρα"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld ημέρες"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -1095,6 +1269,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avslutat"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Încheiată"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Έληξε"
           }
         }
       }
@@ -1326,6 +1512,48 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "%lld timmar"
+                }
+              }
+            }
+          }
+        },
+        "ro" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld oră"
+                }
+              },
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld ore"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld de ore"
+                }
+              }
+            }
+          }
+        },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld ώρα"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld ώρες"
                 }
               }
             }
@@ -1564,6 +1792,48 @@
               }
             }
           }
+        },
+        "ro" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld minut"
+                }
+              },
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld minute"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld de minute"
+                }
+              }
+            }
+          }
+        },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld λεπτό"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld λεπτά"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -1635,6 +1905,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Slutar om %@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se încheie în %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λήγει σε %@"
           }
         }
       }
@@ -1708,6 +1990,18 @@
             "state" : "translated",
             "value" : "Slutar om mindre än en minut"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se încheie în mai puțin de un minut"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λήγει σε λιγότερο από ένα λεπτό"
+          }
         }
       }
     },
@@ -1779,6 +2073,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dag"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zi"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ημέρα"
           }
         }
       }
@@ -1852,6 +2158,18 @@
             "state" : "translated",
             "value" : "Dagar"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zile"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ημέρες"
+          }
         }
       }
     },
@@ -1923,6 +2241,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tim"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ore"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ώρες"
           }
         }
       }
@@ -1996,6 +2326,18 @@
             "state" : "translated",
             "value" : "Min"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Min."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λεπτ."
+          }
         }
       }
     },
@@ -2067,6 +2409,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sek"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sec."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δευτ."
           }
         }
       }
@@ -2140,6 +2494,18 @@
             "state" : "translated",
             "value" : "Licensnyckeln är dold"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheie de licență ascunsă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το κλειδί άδειας χρήσης είναι κρυφό"
+          }
         }
       }
     },
@@ -2211,6 +2577,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kopierad"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiat"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αντιγράφηκε"
           }
         }
       }
@@ -2284,6 +2662,18 @@
             "state" : "translated",
             "value" : "Licensnyckeln har kopierats"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheia de licență a fost copiată"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το κλειδί άδειας χρήσης αντιγράφηκε"
+          }
         }
       }
     },
@@ -2355,6 +2745,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kopiera"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiați"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αντιγραφή"
           }
         }
       }
@@ -2428,6 +2830,18 @@
             "state" : "translated",
             "value" : "Kopierar licensnyckeln till urklipp. Efter två minuter raderas den automatiskt därifrån."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiază cheia de licență în clipboard. După două minute, aceasta este ștearsă automat de acolo."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αντιγράφει το κλειδί άδειας χρήσης στο πρόχειρο. Μετά από δύο λεπτά διαγράφεται αυτόματα από εκεί."
+          }
         }
       }
     },
@@ -2499,6 +2913,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Licensnyckel"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheie de licență"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κλειδί άδειας χρήσης"
           }
         }
       }
@@ -2572,6 +2998,18 @@
             "state" : "translated",
             "value" : "Instruktioner"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instrucțiuni"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οδηγίες"
+          }
         }
       }
     },
@@ -2643,6 +3081,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dölj"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ascundeți"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απόκρυψη"
           }
         }
       }
@@ -2716,6 +3166,18 @@
             "state" : "translated",
             "value" : "Visa"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afișați"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εμφάνιση"
+          }
         }
       }
     },
@@ -2787,6 +3249,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Support för denna licens"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asistență pentru această licență"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Υποστήριξη για αυτή την άδεια"
           }
         }
       }
@@ -2860,6 +3334,18 @@
             "state" : "translated",
             "value" : "Näytä napauttamalla"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atingeți pentru a afișa"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πατήστε για εμφάνιση"
+          }
         }
       }
     },
@@ -2931,6 +3417,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pris %1$@, tidigare %2$@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preț %1$@, în loc de %2$@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τιμή %1$@, αντί για %2$@"
           }
         }
       }
@@ -3004,6 +3502,18 @@
             "state" : "translated",
             "value" : "Pris %@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preț %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τιμή %@"
+          }
         }
       }
     },
@@ -3075,6 +3585,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lägsta pris de senaste 30 dagarna: %@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cel mai mic preț din ultimele 30 de zile: %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χαμηλότερη τιμή των τελευταίων 30 ημερών: %@"
           }
         }
       }
@@ -3148,6 +3670,18 @@
             "state" : "translated",
             "value" : "Visa alla"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vezi tot"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εμφάνιση όλων"
+          }
         }
       }
     },
@@ -3219,6 +3753,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Innehållet läses in"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se încarcă conținutul"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φόρτωση περιεχομένου"
           }
         }
       }
@@ -3292,6 +3838,18 @@
             "state" : "translated",
             "value" : "Pågående steg"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pasul curent"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τρέχον βήμα"
+          }
         }
       }
     },
@@ -3363,6 +3921,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Slutfört"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finalizat"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ολοκληρώθηκε"
           }
         }
       }
@@ -3436,6 +4006,18 @@
             "state" : "translated",
             "value" : "Väntar"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "În așteptare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σε αναμονή"
+          }
         }
       }
     },
@@ -3508,6 +4090,18 @@
             "state" : "translated",
             "value" : "Steg %1$lld av %2$lld: %3$@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pasul %1$lld din %2$lld: %3$@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Βήμα %1$lld από %2$lld: %3$@"
+          }
         }
       }
     },
@@ -3579,6 +4173,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Visar mer information."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afișează mai multe informații."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εμφανίζει περισσότερες πληροφορίες."
           }
         }
       }

@@ -42,7 +42,7 @@ The architecture serves four goals:
   never replayed, and money is shown exactly as Shopify returns it.
 - **Privacy and safety by default.** No tracking, no PII in logs, secrets only in the Keychain,
   consent off until the user opts in.
-- **A premium, localized UI.** One design system with tested tokens, 11 UI languages, Dynamic
+- **A premium, localized UI.** One design system with tested tokens, 13 UI languages, Dynamic
   Type and dark mode everywhere.
 - **A codebase a senior engineer can take over in an afternoon.** Small modules with enforced
   boundaries, protocol-typed dependencies, deterministic tests, and CI that fails on warnings.

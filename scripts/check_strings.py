@@ -5,11 +5,11 @@ Every catalog under ``App/`` and ``Packages/`` is checked for:
 
 * well-formed JSON with ``sourceLanguage`` ``de``;
 * a translator ``comment`` on every key and lowercase dot-path key names;
-* a translated, non-empty value (``state`` ``translated``) in all 11 app languages
-  (de en pl nl pt-PT sv da es fr it fi), including every plural, device and substitution
+* a translated, non-empty value (``state`` ``translated``) in all 13 app languages
+  (de en pl nl pt-PT sv da es fr it fi ro el), including every plural, device and substitution
   variation;
 * complete plural variations for each language's CLDR cardinal categories (pl: one, few,
-  many, other; pt-PT, es, fr, it may add many; everything else one, other; zero is always
+  many, other; ro: one, few, other; pt-PT, es, fr, it may add many; everything else one, other; zero is always
   allowed);
 * format-specifier parity with the German source (``%lld``, ``%@``, ``%d``, positional
   ``%1$@`` and ``%#@name@`` substitutions): the same arguments with the same types at the
@@ -50,12 +50,15 @@ from pathlib import Path
 # MARK: - Configuration
 
 SOURCE_LANGUAGE = "de"
-APP_LANGUAGES = ("de", "en", "pl", "nl", "pt-PT", "sv", "da", "es", "fr", "it", "fi")
+APP_LANGUAGES = ("de", "en", "pl", "nl", "pt-PT", "sv", "da", "es", "fr", "it", "fi", "ro", "el")
 MINIMUM_LANGUAGES = ("de", "en")
 
 PLURAL_CATEGORY_NAMES = frozenset({"zero", "one", "two", "few", "many", "other"})
 DEFAULT_REQUIRED_PLURALS = frozenset({"one", "other"})
-REQUIRED_PLURALS = {"pl": frozenset({"one", "few", "many", "other"})}
+REQUIRED_PLURALS = {
+    "pl": frozenset({"one", "few", "many", "other"}),
+    "ro": frozenset({"one", "few", "other"}),
+}
 # CLDR cardinal categories per language. `zero` is accepted everywhere because Apple's
 # plural rules support an explicit zero case in every language.
 ALLOWED_PLURALS = {
@@ -70,6 +73,8 @@ ALLOWED_PLURALS = {
     "fr": frozenset({"one", "many", "other"}),
     "it": frozenset({"one", "many", "other"}),
     "fi": frozenset({"one", "other"}),
+    "ro": frozenset({"one", "few", "other"}),
+    "el": frozenset({"one", "other"}),
 }
 
 SEARCH_ROOTS = ("App", "Packages")

@@ -89,14 +89,14 @@ jobs:
         id: checkout
         uses: actions/checkout@v7
 
-      - name: String Catalogs (11 languages, keys used by code)
+      - name: String Catalogs (13 languages, keys used by code)
         run: python3 scripts/check_strings.py
 
       - name: Copy rules (no dashes, no PayPal, no phone, no license claims)
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
         run: python3 scripts/check_copy_rules.py
 
-      - name: App Store metadata (11 languages, limits, copy rules)
+      - name: App Store metadata (13 languages, limits, copy rules)
         if: ${{ !cancelled() && steps.checkout.outcome == 'success' }}
         run: python3 scripts/check_metadata.py
 

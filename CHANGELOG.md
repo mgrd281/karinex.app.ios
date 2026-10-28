@@ -12,6 +12,13 @@ change.
 
 ### Added
 
+- **Romanian and Greek** (owner request 28.10.2026): the app speaks all 13 content languages of the
+  web shop. Every String Catalog (637 texts, including the plurals: Romanian one, few, other; Greek
+  one, other) and the App Store metadata have `ro` and `el`; the language picker, the login page
+  and the market resolver follow the device language. `check_strings.py` and `check_metadata.py`
+  now require both languages. Terms follow karinex.de. Greek product texts that are not translated
+  in Shopify yet appear in German.
+
 - **Invite friends, new design** (owner request 28.10.2026): the section is now a dark invitation
   card. Both benefits stand side by side as large numbers (10 % for the friend, 5,00 € for the
   customer with the points below), the code is a dashed ticket that copies on a tap, and "Code

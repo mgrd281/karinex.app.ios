@@ -150,8 +150,10 @@ struct CodeTests {
     func mappings() {
         #expect(LanguageCode(appLanguage: .ptPT).rawValue == "PT_PT")
         #expect(LanguageCode(appLanguage: .de).rawValue == "DE")
-        #expect(LanguageCode.el.appLanguage == nil)
-        #expect(LanguageCode.ro.appLanguage == nil)
+        #expect(LanguageCode.el.appLanguage == .el)
+        #expect(LanguageCode.ro.appLanguage == .ro)
+        #expect(LanguageCode(appLanguage: .el) == .el)
+        #expect(LanguageCode(rawValue: "NB").appLanguage == nil)
         #expect(LanguageCode(rawValue: "PT").appLanguage == .ptPT)
         #expect(LanguageCode(rawValue: "PT_BR").appLanguage == .ptPT)
     }

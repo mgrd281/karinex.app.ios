@@ -477,6 +477,7 @@
 				Base,
 				da,
 				de,
+				el,
 				en,
 				es,
 				fi,
@@ -485,6 +486,7 @@
 				nl,
 				pl,
 				"pt-PT",
+				ro,
 				sv,
 			);
 			mainGroup = D5B559EBE32A5CB9481FA406;

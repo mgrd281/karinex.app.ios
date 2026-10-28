@@ -2,7 +2,7 @@
 """Checks the App Store metadata in `fastlane/metadata` against App Store Connect limits and the
 KARINEX copy rules (PROMPT.md sections 2 and 3).
 
-* Every locale has every file, and the 11 app languages are all present.
+* Every locale has every file, and the 13 app languages are all present.
 * Limits: name and subtitle 30 characters, keywords 100, promotional text 170, description
   and release notes 4000.
 * No en or em dashes, no PayPal, Hotline, Telefon, phone number or `tel:`, and no license
@@ -19,7 +19,7 @@ import re
 import sys
 from pathlib import Path
 
-LOCALES = ["de-DE", "en-GB", "pl", "nl-NL", "pt-PT", "sv", "da", "es-ES", "fr-FR", "it", "fi"]
+LOCALES = ["de-DE", "en-GB", "pl", "nl-NL", "pt-PT", "sv", "da", "es-ES", "fr-FR", "it", "fi", "ro", "el"]
 LIMITS = {
     "name.txt": 30,
     "subtitle.txt": 30,

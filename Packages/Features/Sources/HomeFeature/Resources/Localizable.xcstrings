@@ -70,6 +70,18 @@
             "state" : "translated",
             "value" : "Avaa artikkelin."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deschide articolul."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανοίγει το άρθρο."
+          }
         }
       }
     },
@@ -141,6 +153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Önskelista"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lista de dorințe"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λίστα επιθυμιών"
           }
         }
       }
@@ -214,6 +238,18 @@
             "state" : "translated",
             "value" : "För macOS"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pentru macOS"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Για macOS"
+          }
         }
       }
     },
@@ -285,6 +321,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Office för Mac"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office pentru Mac"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office για Mac"
           }
         }
       }
@@ -358,6 +406,18 @@
             "state" : "translated",
             "value" : "Som prenumeration"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prin abonament"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Με συνδρομή"
+          }
         }
       }
     },
@@ -429,6 +489,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ladataan"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se încarcă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φόρτωση"
           }
         }
       }
@@ -502,6 +574,18 @@
             "state" : "translated",
             "value" : "Löftet gäller endast för aktiverade licensnycklar och för fysiska varor."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Angajamentul se aplică numai cheilor de licență activate și produselor fizice."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η δέσμευση ισχύει μόνο για ενεργοποιημένα κλειδιά άδειας και για φυσικά προϊόντα."
+          }
         }
       }
     },
@@ -573,6 +657,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Din lagstadgade reklamationsrätt, till exempel vid en felaktig nyckel, påverkas inte."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drepturile dumneavoastră legale de garanție, de exemplu în cazul unei chei defecte, rămân neafectate."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα νόμιμα δικαιώματά σας εγγύησης, για παράδειγμα σε περίπτωση ελαττωματικού κλειδιού, παραμένουν ανεπηρέαστα."
           }
         }
       }
@@ -646,6 +742,18 @@
             "state" : "translated",
             "value" : "För levererade men inte aktiverade licensnycklar görs ingen frivillig återbetalning, eftersom nyckeln fortfarande skulle kunna användas senare."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheile de licență livrate, dar neactivate, nu se rambursează voluntar, deoarece cheia ar mai putea fi folosită ulterior."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα κλειδιά άδειας που έχουν παραδοθεί αλλά δεν έχουν ενεργοποιηθεί δεν επιστρέφονται οικειοθελώς, καθώς το κλειδί θα μπορούσε να χρησιμοποιηθεί αργότερα."
+          }
         }
       }
     },
@@ -717,6 +825,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Klar"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gata"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τέλος"
           }
         }
       }
@@ -790,6 +910,18 @@
             "state" : "translated",
             "value" : "För löftet om pengarna tillbaka gäller följande villkor."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pentru angajamentul de returnare a banilor se aplică următoarele condiții."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Για τη δέσμευση επιστροφής χρημάτων ισχύουν οι παρακάτω όροι."
+          }
         }
       }
     },
@@ -861,6 +993,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pengarna tillbaka i 14 dagar"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "14 zile retur bani"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "14 ημέρες επιστροφή χρημάτων"
           }
         }
       }
@@ -934,6 +1078,18 @@
             "state" : "translated",
             "value" : "Visa alla"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afișează tot"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εμφάνιση όλων"
+          }
         }
       }
     },
@@ -1005,6 +1161,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Öppnar sökningen."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deschide căutarea."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανοίγει την αναζήτηση."
           }
         }
       }
@@ -1078,6 +1246,18 @@
             "state" : "translated",
             "value" : "Vad letar du efter?"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ce căutați?"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τι αναζητάτε;"
+          }
         }
       }
     },
@@ -1149,6 +1329,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Valikoimastamme"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din sortiment"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Από τη γκάμα μας"
           }
         }
       }
@@ -1222,6 +1414,18 @@
             "state" : "translated",
             "value" : "Myydyimmät"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cele mai vândute"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δημοφιλέστερα"
+          }
         }
       }
     },
@@ -1293,6 +1497,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nyt alennettu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reduse acum"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μόλις μειώθηκαν"
           }
         }
       }
@@ -1366,6 +1582,18 @@
             "state" : "translated",
             "value" : "Tarjoukset"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oferte"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προσφορές"
+          }
         }
       }
     },
@@ -1437,6 +1665,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Visual Studio ja työkalut"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visual Studio și instrumente"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visual Studio και εργαλεία"
           }
         }
       }
@@ -1510,6 +1750,18 @@
             "state" : "translated",
             "value" : "Kehitys"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dezvoltare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανάπτυξη"
+          }
         }
       }
     },
@@ -1581,6 +1833,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ohjeet ja vinkit"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ghiduri și sfaturi"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οδηγοί και συμβουλές"
           }
         }
       }
@@ -1654,6 +1918,18 @@
             "state" : "translated",
             "value" : "Oppaat"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ghiduri"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οδηγοί"
+          }
         }
       }
     },
@@ -1726,6 +2002,18 @@
             "state" : "translated",
             "value" : "Tuottavuus"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Productivitate"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παραγωγικότητα"
+          }
         }
       }
     },
@@ -1794,6 +2082,18 @@
           }
         },
         "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office"
+          }
+        },
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Office"
@@ -1870,6 +2170,18 @@
             "state" : "translated",
             "value" : "Yrityksille"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pentru companii"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Για επιχειρήσεις"
+          }
         }
       }
     },
@@ -1941,6 +2253,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Palvelimet"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server"
           }
         }
       }
@@ -2014,6 +2338,18 @@
             "state" : "translated",
             "value" : "Käyttöjärjestelmät"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sisteme de operare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λειτουργικά συστήματα"
+          }
         }
       }
     },
@@ -2082,6 +2418,18 @@
           }
         },
         "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows"
+          }
+        },
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Windows"
@@ -2158,6 +2506,18 @@
             "state" : "translated",
             "value" : "Service"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servicii"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εξυπηρέτηση"
+          }
         }
       }
     },
@@ -2229,6 +2589,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mina licenser"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licențele mele"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι άδειές μου"
           }
         }
       }
@@ -2302,6 +2674,18 @@
             "state" : "translated",
             "value" : "Mina beställningar"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comenzile mele"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι παραγγελίες μου"
+          }
         }
       }
     },
@@ -2373,6 +2757,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hjälp och support"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajutor și asistență"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Βοήθεια και υποστήριξη"
           }
         }
       }
@@ -2446,6 +2842,18 @@
             "state" : "translated",
             "value" : "Allt om din beställning"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Despre comanda dumneavoastră"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Για την παραγγελία σας"
+          }
         }
       }
     },
@@ -2517,6 +2925,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alla kategorier"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toate categoriile"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Όλες οι κατηγορίες"
           }
         }
       }
@@ -2590,6 +3010,18 @@
             "state" : "translated",
             "value" : "Utforska sortimentet"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descoperiți sortimentul"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανακαλύψτε τη γκάμα"
+          }
         }
       }
     },
@@ -2661,6 +3093,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Våra kategorier"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categoriile noastre"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι κατηγορίες μας"
           }
         }
       }
@@ -2734,6 +3178,18 @@
             "state" : "translated",
             "value" : "Upptäck kategorin"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descoperiți categoria"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανακαλύψτε την κατηγορία"
+          }
         }
       }
     },
@@ -2805,6 +3261,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Öppnar kategorin."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deschide categoria."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανοίγει την κατηγορία."
           }
         }
       }
@@ -2878,6 +3346,18 @@
             "state" : "translated",
             "value" : "Våra bästsäljare"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cele mai vândute"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα δημοφιλέστερά μας"
+          }
         }
       }
     },
@@ -2949,6 +3429,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ur vårt sortiment"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din sortimentul nostru"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Από τη γκάμα μας"
           }
         }
       }
@@ -3022,6 +3514,18 @@
             "state" : "translated",
             "value" : "E-post"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
         }
       }
     },
@@ -3094,6 +3598,18 @@
             "state" : "translated",
             "value" : "Livechatt"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chat live"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live chat"
+          }
         }
       }
     },
@@ -3162,6 +3678,18 @@
           }
         },
         "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WhatsApp"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WhatsApp"
+          }
+        },
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "WhatsApp"
@@ -3238,6 +3766,18 @@
             "state" : "translated",
             "value" : "Support"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asistență"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Υποστήριξη"
+          }
         }
       }
     },
@@ -3309,6 +3849,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Öppettider"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Program"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ώρες εξυπηρέτησης"
           }
         }
       }
@@ -3382,6 +3934,18 @@
             "state" : "translated",
             "value" : "Mån till sön, 06:00 till 23:00 tysk tid"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lun. - Dum., 06:00 - 23:00, ora Germaniei"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δευ. έως Κυρ., 06:00 έως 23:00 ώρα Γερμανίας"
+          }
         }
       }
     },
@@ -3453,6 +4017,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vid frågor om din beställning, leverans eller aktivering når du oss via följande kanaler."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pentru întrebări despre comanda, livrarea sau activarea dumneavoastră, ne puteți contacta prin aceste canale."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Για ερωτήσεις σχετικά με την παραγγελία, την παράδοση ή την ενεργοποίησή σας, μπορείτε να επικοινωνήσετε μαζί μας μέσω αυτών των καναλιών."
           }
         }
       }
@@ -3526,6 +4102,18 @@
             "state" : "translated",
             "value" : "Så når du oss"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cum ne contactați"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πώς να επικοινωνήσετε μαζί μας"
+          }
         }
       }
     },
@@ -3597,6 +4185,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hem"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acasă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αρχική"
           }
         }
       }
@@ -3670,6 +4270,18 @@
             "state" : "translated",
             "value" : "Visa villkor"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afișați condițiile"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εμφάνιση όρων"
+          }
         }
       }
     },
@@ -3741,6 +4353,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Leverans via e-post på minuter"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Livrare prin e-mail în câteva minute"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παράδοση με email σε λίγα λεπτά"
           }
         }
       }
@@ -3814,6 +4438,18 @@
             "state" : "translated",
             "value" : "Bra att veta"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bine de știut"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Καλό να γνωρίζετε"
+          }
         }
       }
     },
@@ -3885,6 +4521,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gäller endast aktiverade licensnycklar och fysiska varor. För levererade men inte aktiverade nycklar görs ingen frivillig återbetalning. Lagstadgad reklamationsrätt påverkas inte."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se aplică numai cheilor de licență activate și produselor fizice. Cheile livrate, dar neactivate, nu se rambursează voluntar. Drepturile legale de garanție rămân neafectate."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ισχύει μόνο για ενεργοποιημένα κλειδιά άδειας και φυσικά προϊόντα. Τα κλειδιά που έχουν παραδοθεί αλλά δεν έχουν ενεργοποιηθεί δεν επιστρέφονται οικειοθελώς. Τα νόμιμα δικαιώματα εγγύησης παραμένουν ανεπηρέαστα."
           }
         }
       }
@@ -3958,6 +4606,18 @@
             "state" : "translated",
             "value" : "Pengarna tillbaka i 14 dagar"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "14 zile retur bani"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "14 ημέρες επιστροφή χρημάτων"
+          }
         }
       }
     },
@@ -4029,6 +4689,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Visar villkoren för löftet om pengarna tillbaka."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afișează condițiile angajamentului de returnare a banilor."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εμφανίζει τους όρους της δέσμευσης επιστροφής χρημάτων."
           }
         }
       }
@@ -4102,6 +4774,18 @@
             "state" : "translated",
             "value" : "Apple Pay, kreditkort, Klarna"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, card de credit, Klarna"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pay, πιστωτική κάρτα, Klarna"
+          }
         }
       }
     },
@@ -4173,6 +4857,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Support mån till sön, 06:00 till 23:00 tysk tid"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asistență Lun. - Dum., 06:00 - 23:00, ora Germaniei"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Υποστήριξη Δευ. έως Κυρ., 06:00 έως 23:00 ώρα Γερμανίας"
           }
         }
       }
@@ -4246,6 +4942,18 @@
             "state" : "translated",
             "value" : "Handla hos KARINEX"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cumpărați de la KARINEX"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αγορές στο KARINEX"
+          }
         }
       }
     },
@@ -4318,6 +5026,18 @@
             "state" : "translated",
             "value" : "Windows och Office"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows și Office"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Windows και Office"
+          }
         }
       }
     },
@@ -4389,6 +5109,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hitta efter version"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Găsiți după versiune"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εύρεση ανά έκδοση"
           }
         }
       }

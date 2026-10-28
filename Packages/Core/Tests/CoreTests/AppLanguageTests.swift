@@ -4,9 +4,12 @@ import Testing
 
 @Suite("AppLanguage")
 struct AppLanguageTests {
-    @Test("Covers exactly the 11 UI languages in catalog order")
+    @Test("Covers exactly the 13 UI languages in catalog order")
     func allCases() {
-        #expect(AppLanguage.allCases.map(\.rawValue) == ["de", "en", "pl", "nl", "pt-PT", "sv", "da", "es", "fr", "it", "fi"])
+        #expect(
+            AppLanguage.allCases.map(\.rawValue)
+                == ["de", "en", "pl", "nl", "pt-PT", "sv", "da", "es", "fr", "it", "fi", "ro", "el"]
+        )
         #expect(AppLanguage.source == .de)
     }
 
@@ -18,22 +21,24 @@ struct AppLanguageTests {
             ("pt", .ptPT), ("pt-BR", .ptPT), ("pt_PT", .ptPT), ("PT-pt", .ptPT),
             ("pl-PL", .pl), ("nl-BE", .nl), ("sv-FI", .sv), ("da", .da), ("es-419", .es),
             ("fr-CH", .fr), ("it-CH", .it), ("fi-FI", .fi), (" fr ", .fr),
+            ("ro", .ro), ("ro-RO", .ro), ("ro_MD", .ro), ("el", .el), ("el-GR", .el), ("el_CY", .el),
         ]
     )
     func normalizes(identifier: String, expected: AppLanguage) {
         #expect(AppLanguage(bcp47: identifier) == expected)
     }
 
-    @Test("Rejects languages the app does not ship", arguments: ["el", "el-GR", "nb", "no", "ro", "cs", "zh-Hans", "", "-", "_"])
+    @Test("Rejects languages the app does not ship", arguments: ["nb", "no", "cs", "zh-Hans", "", "-", "_"])
     func rejectsUnsupported(identifier: String) {
         #expect(AppLanguage(bcp47: identifier) == nil)
     }
 
     @Test("Picks the first supported preferred language")
     func preferred() {
-        #expect(AppLanguage.preferred(from: ["el-GR", "de-AT", "en-US"]) == .de)
+        #expect(AppLanguage.preferred(from: ["nb-NO", "de-AT", "en-US"]) == .de)
         #expect(AppLanguage.preferred(from: ["pt-BR", "en"]) == .ptPT)
-        #expect(AppLanguage.preferred(from: ["el", "ro"]) == nil)
+        #expect(AppLanguage.preferred(from: ["el", "ro"]) == .el)
+        #expect(AppLanguage.preferred(from: ["nb", "cs"]) == nil)
         #expect(AppLanguage.preferred(from: []) == nil)
     }
 
@@ -50,6 +55,8 @@ struct AppLanguageTests {
         #expect(AppLanguage.fr.endonym == "Français")
         #expect(AppLanguage.it.endonym == "Italiano")
         #expect(AppLanguage.fi.endonym == "Suomi")
+        #expect(AppLanguage.ro.endonym == "Română")
+        #expect(AppLanguage.el.endonym == "Ελληνικά")
     }
 
     @Test("Locales and language codes")

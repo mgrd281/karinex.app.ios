@@ -70,6 +70,18 @@
             "state" : "translated",
             "value" : "Utvecklingsverktyg"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instrumente pentru dezvoltatori"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εργαλεία ανάπτυξης"
+          }
         }
       }
     },
@@ -141,6 +153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Office för macOS"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office pentru macOS"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Office για macOS"
           }
         }
       }
@@ -214,6 +238,18 @@
             "state" : "translated",
             "value" : "Som prenumeration"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prin abonament"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Με συνδρομή"
+          }
         }
       }
     },
@@ -285,6 +321,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Word, Excel, PowerPoint och mer"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Word, Excel, PowerPoint și multe altele"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Word, Excel, PowerPoint και άλλα"
           }
         }
       }
@@ -358,6 +406,18 @@
             "state" : "translated",
             "value" : "För företag"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pentru companii"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Για επιχειρήσεις"
+          }
         }
       }
     },
@@ -429,6 +489,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Project, Visio och SQL Server"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Project, Visio și SQL Server"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Project, Visio και SQL Server"
           }
         }
       }
@@ -502,6 +574,18 @@
             "state" : "translated",
             "value" : "Operativsystem för din dator"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sisteme de operare pentru PC-ul dumneavoastră"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λειτουργικά συστήματα για τον υπολογιστή σας"
+          }
         }
       }
     },
@@ -573,6 +657,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tässä kokoelmassa ei ole tuotteita tällä hetkellä."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "În prezent, nu există produse disponibile în această colecție."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτή τη στιγμή δεν υπάρχουν διαθέσιμα προϊόντα σε αυτή τη συλλογή."
           }
         }
       }
@@ -646,6 +742,18 @@
             "state" : "translated",
             "value" : "Ei tuotteita"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niciun produs"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κανένα προϊόν"
+          }
         }
       }
     },
@@ -717,6 +825,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ · Suodattimet: %2$lld"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · Filtre: %2$lld"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · Φίλτρα: %2$lld"
           }
         }
       }
@@ -790,6 +910,18 @@
             "state" : "translated",
             "value" : "Valituilla suodattimilla ei löytynyt tuotteita."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nu au fost găsite produse pentru filtrele selectate."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν βρέθηκαν προϊόντα για τα επιλεγμένα φίλτρα."
+          }
         }
       }
     },
@@ -861,6 +993,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ei sopivia tuotteita"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niciun produs potrivit"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κανένα αντίστοιχο προϊόν"
           }
         }
       }
@@ -934,6 +1078,18 @@
             "state" : "translated",
             "value" : "Avaa kokoelman."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deschide colecția."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανοίγει τη συλλογή."
+          }
         }
       }
     },
@@ -1005,6 +1161,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kategorioita ei ole tällä hetkellä saatavilla. Yritä myöhemmin uudelleen."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "În prezent, nu există categorii disponibile. Vă rugăm să încercați din nou mai târziu."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτή τη στιγμή δεν υπάρχουν διαθέσιμες κατηγορίες. Δοκιμάστε ξανά αργότερα."
           }
         }
       }
@@ -1078,6 +1246,18 @@
             "state" : "translated",
             "value" : "Ei kategorioita saatavilla"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicio categorie disponibilă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν υπάρχουν διαθέσιμες κατηγορίες"
+          }
         }
       }
     },
@@ -1149,6 +1329,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Valikoima"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortiment"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σειρά προϊόντων"
           }
         }
       }
@@ -1222,6 +1414,18 @@
             "state" : "translated",
             "value" : "Kategoriat"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categorii"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κατηγορίες"
+          }
         }
       }
     },
@@ -1293,6 +1497,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aktiiviset suodattimet: %lld"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtre active: %lld"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ενεργά φίλτρα: %lld"
           }
         }
       }
@@ -1366,6 +1582,18 @@
             "state" : "translated",
             "value" : "Näytä tulokset"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afișați rezultatele"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εμφάνιση αποτελεσμάτων"
+          }
         }
       }
     },
@@ -1437,6 +1665,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Peruuta"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anulare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ακύρωση"
           }
         }
       }
@@ -1678,6 +1918,48 @@
               }
             }
           }
+        },
+        "ro" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld produs"
+                }
+              },
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld produse"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld de produse"
+                }
+              }
+            }
+          }
+        },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld προϊόν"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld προϊόντα"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -1749,6 +2031,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hinta enintään"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preț până la"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τιμή έως"
           }
         }
       }
@@ -1822,6 +2116,18 @@
             "state" : "translated",
             "value" : "Hinta vähintään"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preț de la"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τιμή από"
+          }
         }
       }
     },
@@ -1893,6 +2199,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nollaa"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resetare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επαναφορά"
           }
         }
       }
@@ -1966,6 +2284,18 @@
             "state" : "translated",
             "value" : "Nollaa suodattimet"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resetați filtrele"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επαναφορά φίλτρων"
+          }
         }
       }
     },
@@ -2037,6 +2367,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Suodattimet"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtre"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φίλτρα"
           }
         }
       }
@@ -2110,6 +2452,18 @@
             "state" : "translated",
             "value" : "Tälle kokoelmalle ei ole saatavilla suodattimia."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nu există filtre disponibile pentru această colecție."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν υπάρχουν διαθέσιμα φίλτρα για αυτή τη συλλογή."
+          }
         }
       }
     },
@@ -2181,6 +2535,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Upptäck nu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descoperiți acum"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανακαλύψτε τώρα"
           }
         }
       }
@@ -2254,6 +2620,18 @@
             "state" : "translated",
             "value" : "Sänkta priser"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prețuri reduse"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μειωμένες τιμές"
+          }
         }
       }
     },
@@ -2325,6 +2703,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisää tuotteita ei voitu ladata."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nu s-au putut încărca mai multe produse."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν ήταν δυνατή η φόρτωση περισσότερων προϊόντων."
           }
         }
       }
@@ -2398,6 +2788,18 @@
             "state" : "translated",
             "value" : "Ladataan"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se încarcă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φόρτωση"
+          }
         }
       }
     },
@@ -2469,6 +2871,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ladataan lisää tuotteita"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se încarcă mai multe produse"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φόρτωση περισσότερων προϊόντων"
           }
         }
       }
@@ -2542,6 +2956,18 @@
             "state" : "translated",
             "value" : "Kaikki kokoelmat"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toate colecțiile"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Όλες οι συλλογές"
+          }
         }
       }
     },
@@ -2613,6 +3039,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisää kokoelmia"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alte colecții"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Περισσότερες συλλογές"
           }
         }
       }
@@ -2686,6 +3124,18 @@
             "state" : "translated",
             "value" : "Myydyimmät"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cele mai vândute"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μπεστ σέλερ"
+          }
         }
       }
     },
@@ -2757,6 +3207,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uusimmat"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cele mai noi"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Νεότερα"
           }
         }
       }
@@ -2830,6 +3292,18 @@
             "state" : "translated",
             "value" : "Hinta: pienin ensin"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preț crescător"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τιμή αύξουσα"
+          }
         }
       }
     },
@@ -2901,6 +3375,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hinta: suurin ensin"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preț descrescător"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τιμή φθίνουσα"
           }
         }
       }
@@ -2974,6 +3460,18 @@
             "state" : "translated",
             "value" : "Suositellut"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomandate"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προτεινόμενα"
+          }
         }
       }
     },
@@ -3045,6 +3543,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lajittele"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ταξινόμηση"
           }
         }
       }
@@ -3118,6 +3628,18 @@
             "state" : "translated",
             "value" : "Butik"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magazin"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κατάστημα"
+          }
         }
       }
     },
@@ -3190,6 +3712,18 @@
             "state" : "translated",
             "value" : "Hitta snabbare"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Găsiți mai repede"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Βρείτε πιο γρήγορα"
+          }
         }
       }
     },
@@ -3261,6 +3795,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Efter version"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "După versiune"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανά έκδοση"
           }
         }
       }

@@ -70,6 +70,18 @@
             "state" : "translated",
             "value" : "%1$@, kirjoittanut %2$@"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, de %2$@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, από %2$@"
+          }
         }
       }
     },
@@ -141,6 +153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tämä artikkeli ei ole enää saatavilla."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acest articol nu mai este disponibil."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτό το άρθρο δεν είναι πλέον διαθέσιμο."
           }
         }
       }
@@ -214,6 +238,18 @@
             "state" : "translated",
             "value" : "Artikkelia ei löytynyt"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Articol negăsit"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το άρθρο δεν βρέθηκε"
+          }
         }
       }
     },
@@ -285,6 +321,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jaa"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distribuiți"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κοινοποίηση"
           }
         }
       }
@@ -358,6 +406,18 @@
             "state" : "translated",
             "value" : "Ostoskorisi on vanhentunut. Lisää tuotteet ostoskoriin uudelleen."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coșul dumneavoastră a expirat. Vă rugăm să adăugați din nou articolele în coș."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το καλάθι σας έχει λήξει. Παρακαλούμε προσθέστε ξανά τα προϊόντα στο καλάθι."
+          }
         }
       }
     },
@@ -429,6 +489,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bästsäljare"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cele mai vândute"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δημοφιλέστερα"
           }
         }
       }
@@ -502,6 +574,18 @@
             "state" : "translated",
             "value" : "Rea"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reduceri"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εκπτώσεις"
+          }
         }
       }
     },
@@ -573,6 +657,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Täällä ei ole tällä hetkellä mitään saatavilla."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Momentan nu este disponibil nimic aici."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προς το παρόν δεν υπάρχει τίποτα διαθέσιμο εδώ."
           }
         }
       }
@@ -646,6 +742,18 @@
             "state" : "translated",
             "value" : "Mitään ei löytynyt"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nu s-a găsit nimic"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν βρέθηκε τίποτα"
+          }
         }
       }
     },
@@ -717,6 +825,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tämä sisältö ei ole enää saatavilla."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acest conținut nu mai este disponibil."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτό το περιεχόμενο δεν είναι πλέον διαθέσιμο."
           }
         }
       }
@@ -790,6 +910,18 @@
             "state" : "translated",
             "value" : "Ei löytynyt"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Negăsit"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν βρέθηκε"
+          }
         }
       }
     },
@@ -861,6 +993,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tarkista yhteytesi ja yritä uudelleen."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vă rugăm să verificați conexiunea și să încercați din nou."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά."
           }
         }
       }
@@ -934,6 +1078,18 @@
             "state" : "translated",
             "value" : "Ei internetyhteyttä"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fără conexiune la internet"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χωρίς σύνδεση στο διαδίκτυο"
+          }
         }
       }
     },
@@ -1005,6 +1161,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ei onnistu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nu este posibil"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν είναι δυνατό"
           }
         }
       }
@@ -1078,6 +1246,18 @@
             "state" : "translated",
             "value" : "Yritä uudelleen"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Încercați din nou"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δοκιμή ξανά"
+          }
         }
       }
     },
@@ -1149,6 +1329,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kauppaan ei saada yhteyttä juuri nyt. Yritä myöhemmin uudelleen."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magazinul nu poate fi accesat momentan. Vă rugăm să încercați mai târziu."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το κατάστημα δεν είναι προσβάσιμο αυτή τη στιγμή. Δοκιμάστε ξανά αργότερα."
           }
         }
       }
@@ -1222,6 +1414,18 @@
             "state" : "translated",
             "value" : "Kauppaan ei saada yhteyttä"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magazin indisponibil"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το κατάστημα δεν είναι διαθέσιμο"
+          }
         }
       }
     },
@@ -1293,6 +1497,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kirjaudu uudelleen sisään."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vă rugăm să vă autentificați din nou."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παρακαλούμε συνδεθείτε ξανά."
           }
         }
       }
@@ -1366,6 +1582,18 @@
             "state" : "translated",
             "value" : "Et ole kirjautunut"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neautentificat"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν έχετε συνδεθεί"
+          }
         }
       }
     },
@@ -1437,6 +1665,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kaupalla on juuri nyt paljon kuormitusta. Yritä hetken kuluttua uudelleen."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magazinul este foarte solicitat în acest moment. Vă rugăm să încercați din nou imediat."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το κατάστημα έχει μεγάλη κίνηση αυτή τη στιγμή. Δοκιμάστε ξανά σε λίγο."
           }
         }
       }
@@ -1510,6 +1750,18 @@
             "state" : "translated",
             "value" : "Vilkasta liikennettä"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magazin aglomerat"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μεγάλη κίνηση"
+          }
         }
       }
     },
@@ -1581,6 +1833,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kauppa ei vastannut ajoissa. Yritä uudelleen."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magazinul nu a răspuns la timp. Vă rugăm să încercați din nou."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το κατάστημα δεν απάντησε εγκαίρως. Δοκιμάστε ξανά."
           }
         }
       }
@@ -1654,6 +1918,18 @@
             "state" : "translated",
             "value" : "Aikakatkaisu"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timp expirat"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λήξη χρόνου αναμονής"
+          }
         }
       }
     },
@@ -1725,6 +2001,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yritä uudelleen."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vă rugăm să încercați din nou."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δοκιμάστε ξανά."
           }
         }
       }
@@ -1798,6 +2086,18 @@
             "state" : "translated",
             "value" : "Jokin meni pieleen"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ceva nu a funcționat"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κάτι πήγε στραβά"
+          }
         }
       }
     },
@@ -1869,6 +2169,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Oikeudelliset tiedot"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informații legale"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Νομικές πληροφορίες"
           }
         }
       }
@@ -1942,6 +2254,18 @@
             "state" : "translated",
             "value" : "Tietosuojakäytäntö"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confidențialitate"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απόρρητο"
+          }
         }
       }
     },
@@ -2013,6 +2337,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Toimitus"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expediere și livrare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αποστολή και παράδοση"
           }
         }
       }
@@ -2086,6 +2422,18 @@
             "state" : "translated",
             "value" : "Myyntiehdot"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Termeni și condiții"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Όροι και προϋποθέσεις"
+          }
         }
       }
     },
@@ -2157,6 +2505,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Peruuttamisoikeus"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informații privind retragerea"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οδηγίες υπαναχώρησης"
           }
         }
       }
@@ -2230,6 +2590,18 @@
             "state" : "translated",
             "value" : "Ladataan"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se încarcă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φόρτωση"
+          }
         }
       }
     },
@@ -2301,6 +2673,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sulje"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Închide"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κλείσιμο"
           }
         }
       }
@@ -2374,6 +2758,18 @@
             "state" : "translated",
             "value" : "Jatka"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuați"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συνέχεια"
+          }
         }
       }
     },
@@ -2445,6 +2841,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Maa"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Țară"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χώρα"
           }
         }
       }
@@ -2518,6 +2926,18 @@
             "state" : "translated",
             "value" : "Valuutta"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monedă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Νόμισμα"
+          }
         }
       }
     },
@@ -2589,6 +3009,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Itse sovelluksen kieli noudattaa iPhonesi asetuksia."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limba aplicației în sine depinde de setările iPhone-ului dumneavoastră."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η γλώσσα της ίδιας της εφαρμογής ακολουθεί τις ρυθμίσεις του iPhone σας."
           }
         }
       }
@@ -2662,6 +3094,18 @@
             "state" : "translated",
             "value" : "Sisältöjen kieli"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limba conținutului"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Γλώσσα περιεχομένου"
+          }
         }
       }
     },
@@ -2733,6 +3177,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hinnat, valuutta ja tuotetekstit määräytyvät tässä valitsemasi maan ja kielen mukaan."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prețurile, moneda și textele produselor depind de țara și limba pe care le alegeți aici."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι τιμές, το νόμισμα και τα κείμενα των προϊόντων ακολουθούν τη χώρα και τη γλώσσα που επιλέγετε εδώ."
           }
         }
       }
@@ -2806,6 +3262,18 @@
             "state" : "translated",
             "value" : "Emme tällä hetkellä toimita alueellesi. Olemme esivalinneet toisen maan, jonka voit vaihtaa alla."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "În prezent nu livrăm în regiunea dumneavoastră. Am preselectat o altă țară, pe care o puteți modifica mai jos."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προς το παρόν δεν παραδίδουμε στην περιοχή σας. Έχουμε προεπιλέξει μια άλλη χώρα, την οποία μπορείτε να αλλάξετε παρακάτω."
+          }
         }
       }
     },
@@ -2877,6 +3345,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alueesi ja kielesi eivät ole saatavilla. Olemme esivalinneet maan ja kielen, jotka voit vaihtaa alla."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regiunea și limba dumneavoastră nu sunt disponibile. Am preselectat o țară și o limbă, pe care le puteți modifica mai jos."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η περιοχή και η γλώσσα σας δεν είναι διαθέσιμες. Έχουμε προεπιλέξει μια χώρα και μια γλώσσα, τις οποίες μπορείτε να αλλάξετε παρακάτω."
           }
         }
       }
@@ -2950,6 +3430,18 @@
             "state" : "translated",
             "value" : "Kielesi ei ole saatavilla tälle maalle. Näytämme sisällön käytettävissä olevalla kielellä."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limba dumneavoastră nu este disponibilă pentru această țară. Afișăm conținutul într-o limbă disponibilă."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η γλώσσα σας δεν είναι διαθέσιμη για αυτή τη χώρα. Εμφανίζουμε το περιεχόμενο σε μια διαθέσιμη γλώσσα."
+          }
         }
       }
     },
@@ -3021,6 +3513,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hae"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Căutare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αναζήτηση"
           }
         }
       }
@@ -3094,6 +3598,18 @@
             "state" : "translated",
             "value" : "Kauppamaasi"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Țara magazinului"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η χώρα του καταστήματός σας"
+          }
         }
       }
     },
@@ -3165,6 +3681,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Luottokortti"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Card de credit"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πιστωτική κάρτα"
           }
         }
       }
@@ -3238,6 +3766,18 @@
             "state" : "translated",
             "value" : "Faktura"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Factură"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τιμολόγιο"
+          }
         }
       }
     },
@@ -3309,6 +3849,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Banköverföring"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plată în avans"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προπληρωμή"
           }
         }
       }
@@ -3382,6 +3934,18 @@
             "state" : "translated",
             "value" : "Maksutavat"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metode de plată"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τρόποι πληρωμής"
+          }
         }
       }
     },
@@ -3453,6 +4017,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "-%lld %%"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-%lld %%"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-%lld %%"
           }
         }
       }
@@ -3526,6 +4102,18 @@
             "state" : "translated",
             "value" : "sis. ALV"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TVA inclus"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "με ΦΠΑ"
+          }
         }
       }
     },
@@ -3597,6 +4185,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "sis. ALV, lisäksi toimituskulut"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TVA inclus, plus transport"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "με ΦΠΑ, χωρίς μεταφορικά"
           }
         }
       }
@@ -3670,6 +4270,18 @@
             "state" : "translated",
             "value" : "lisäksi toimituskulut"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "plus transport"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "χωρίς μεταφορικά"
+          }
         }
       }
     },
@@ -3741,6 +4353,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Myydyin"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top vânzări"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δημοφιλές"
           }
         }
       }
@@ -3814,6 +4438,18 @@
             "state" : "translated",
             "value" : "Tarjous"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ofertă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προσφορά"
+          }
         }
       }
     },
@@ -3886,6 +4522,18 @@
             "state" : "translated",
             "value" : "Ei tällä hetkellä saatavilla"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Momentan indisponibil"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προς το παρόν μη διαθέσιμο"
+          }
         }
       }
     },
@@ -3957,6 +4605,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Viimeksi katsotut"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vizualizate recent"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προβλήθηκαν πρόσφατα"
           }
         }
       }

@@ -70,7 +70,7 @@ public struct MarketResolution: Sendable, Equatable {
 /// - Country: the device region when the store sells there, else `defaultCountry` (`DE`). If
 ///   the store does not sell to `defaultCountry` either, the first country it sells to, so the
 ///   result is always a market that exists.
-/// - Language: the first preferred language that is one of the 11 app languages and available
+/// - Language: the first preferred language that is one of the 13 app languages and available
 ///   for that country in the store (`pt` and `pt-BR` count as `PT_PT`, `de-AT` as `DE`).
 ///   Otherwise the first of `fallbackLanguages` (`EN`, then `DE`) available in the country,
 ///   then the first app language the country offers, then the country's first language. A

@@ -70,6 +70,18 @@
             "state" : "translated",
             "value" : "Tietoja sovelluksesta"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Despre aplicație"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σχετικά με την εφαρμογή"
+          }
         }
       }
     },
@@ -141,6 +153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Versio"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versiune"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Έκδοση"
           }
         }
       }
@@ -214,6 +238,18 @@
             "state" : "translated",
             "value" : "Tumma"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Întunecat"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σκοτεινή"
+          }
         }
       }
     },
@@ -285,6 +321,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vaalea"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luminos"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φωτεινή"
           }
         }
       }
@@ -358,6 +406,18 @@
             "state" : "translated",
             "value" : "Järjestelmä"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sistem"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σύστημα"
+          }
         }
       }
     },
@@ -429,6 +489,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ulkoasu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aspect"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εμφάνιση"
           }
         }
       }
@@ -502,6 +574,18 @@
             "state" : "translated",
             "value" : "Sovelluksen kieli valitaan iOS-asetuksista. Tuotetekstien kieli valitaan yllä."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limba aplicației o setați din setările iOS. Limba textelor produselor o alegeți mai sus."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τη γλώσσα της εφαρμογής την ορίζετε στις ρυθμίσεις iOS. Τη γλώσσα των κειμένων των προϊόντων την επιλέγετε παραπάνω."
+          }
         }
       }
     },
@@ -573,6 +657,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avaa iOS-asetukset"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deschideți setările iOS"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Άνοιγμα ρυθμίσεων iOS"
           }
         }
       }
@@ -646,6 +742,18 @@
             "state" : "translated",
             "value" : "Sovelluksen kieli"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limba aplicației"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Γλώσσα της εφαρμογής"
+          }
         }
       }
     },
@@ -717,6 +825,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Oikeudelliset tiedot"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informații juridice"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Νομικά"
           }
         }
       }
@@ -790,6 +910,18 @@
             "state" : "translated",
             "value" : "Lukitse lisenssiavaimet"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blocați cheile de licență"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κλείδωμα κλειδιών άδειας"
+          }
         }
       }
     },
@@ -861,6 +993,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ennen näyttämistä sovellus pyytää Face ID:tä, Touch ID:tä tai laitteen pääsykoodia."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Înainte de afișare, aplicația solicită Face ID, Touch ID sau codul dispozitivului dumneavoastră."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πριν από την εμφάνιση, η εφαρμογή ζητά Face ID, Touch ID ή τον κωδικό της συσκευής σας."
           }
         }
       }
@@ -934,6 +1078,18 @@
             "state" : "translated",
             "value" : "Omat lisenssit"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licențele mele"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι άδειές μου"
+          }
         }
       }
     },
@@ -1005,6 +1161,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Muuta"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modificare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αλλαγή"
           }
         }
       }
@@ -1078,6 +1246,18 @@
             "state" : "translated",
             "value" : "Kauppamaa"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Țara magazinului"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χώρα καταστήματος"
+          }
         }
       }
     },
@@ -1149,6 +1329,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sisältöjen kieli"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limba conținutului"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Γλώσσα περιεχομένου"
           }
         }
       }
@@ -1222,6 +1414,18 @@
             "state" : "translated",
             "value" : "Kauppamaa ja sisällöt"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Țara magazinului și conținut"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χώρα καταστήματος και περιεχόμενο"
+          }
         }
       }
     },
@@ -1293,6 +1497,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tarjoukset"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oferte"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προσφορές"
           }
         }
       }
@@ -1366,6 +1582,18 @@
             "state" : "translated",
             "value" : "Satunnainen ilmoitus, kun uusi tarjous alkaa. Voit poistaa sen käytöstä milloin tahansa."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din când în când, o notificare la începerea unei noi oferte. Puteți dezactiva oricând."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μια ειδοποίηση πού και πού, όταν ξεκινά μια νέα προσφορά. Μπορείτε να την απενεργοποιήσετε ανά πάσα στιγμή."
+          }
         }
       }
     },
@@ -1437,6 +1665,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ilmoitukset on poistettu käytöstä iOS-asetuksissa. Avaa asetukset"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificările sunt dezactivate în setările iOS. Mergeți la setări"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι ειδοποιήσεις είναι απενεργοποιημένες στις ρυθμίσεις iOS. Μετάβαση στις ρυθμίσεις"
           }
         }
       }
@@ -1510,6 +1750,18 @@
             "state" : "translated",
             "value" : "Tilauksen tila"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stare comandă"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κατάσταση παραγγελίας"
+          }
         }
       }
     },
@@ -1581,6 +1833,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ilmoitus, kun maksusi on vastaanotettu ja lisenssiavaimesi toimitettu."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O notificare imediat ce plata dumneavoastră a fost primită și cheia de licență a fost livrată."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μια ειδοποίηση μόλις ληφθεί η πληρωμή σας και παραδοθεί το κλειδί άδειάς σας."
           }
         }
       }
@@ -1654,6 +1918,18 @@
             "state" : "translated",
             "value" : "Ilmoitukset"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificări"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ειδοποιήσεις"
+          }
         }
       }
     },
@@ -1725,6 +2001,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Käyttöanalytiikka"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analiza utilizării"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανάλυση χρήσης"
           }
         }
       }
@@ -1798,6 +2086,18 @@
             "state" : "translated",
             "value" : "Auttaa meitä parantamaan sovellusta. Ilman suostumustasi käyttötietoja ei kerätä."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ne ajută să îmbunătățim aplicația. Fără acordul dumneavoastră, nu se colectează date de utilizare."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μας βοηθά να βελτιώνουμε την εφαρμογή. Χωρίς τη συγκατάθεσή σας δεν συλλέγονται δεδομένα χρήσης."
+          }
         }
       }
     },
@@ -1869,6 +2169,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kaatumisraportit"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rapoarte de eroare"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αναφορές σφαλμάτων"
           }
         }
       }
@@ -1942,6 +2254,18 @@
             "state" : "translated",
             "value" : "Tekniset raportit, jos sovellus kaatuu. Ilman suostumustasi raportteja ei lähetetä."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rapoarte tehnice atunci când aplicația se oprește neașteptat. Fără acordul dumneavoastră, nu se trimit rapoarte."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τεχνικές αναφορές όταν η εφαρμογή διακόπτει απροσδόκητα τη λειτουργία της. Χωρίς τη συγκατάθεσή σας δεν αποστέλλονται αναφορές."
+          }
         }
       }
     },
@@ -2013,6 +2337,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Valintasi koskee myös Shopifyn kassaa. Voit muuttaa sitä milloin tahansa."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alegerea dumneavoastră se aplică și pentru finalizarea comenzii prin Shopify. O puteți modifica oricând."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η επιλογή σας ισχύει και για το ταμείο του Shopify. Μπορείτε να την αλλάξετε ανά πάσα στιγμή."
           }
         }
       }
@@ -2086,6 +2422,18 @@
             "state" : "translated",
             "value" : "Tietosuoja"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confidențialitate"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απόρρητο"
+          }
         }
       }
     },
@@ -2157,6 +2505,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Asetukset"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setări"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ρυθμίσεις"
           }
         }
       }

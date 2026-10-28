@@ -70,6 +70,18 @@
             "state" : "translated",
             "value" : "Lisenssiavaimesi on toimitettu sähköpostitse. Katso tilaustasi koskeva sähköposti."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheia dumneavoastră de licență a fost livrată prin e-mail. Vă rugăm să consultați e-mailul comenzii dumneavoastră."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το κλειδί άδειας χρήσης σας έχει παραδοθεί μέσω email. Παρακαλούμε ελέγξτε το email της παραγγελίας σας."
+          }
         }
       }
     },
@@ -141,6 +153,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisenssiavaimesi näkyvät täällä, kun ne on toimitettu."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheile dumneavoastră de licență apar aici imediat ce au fost livrate."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα κλειδιά άδειας χρήσης σας εμφανίζονται εδώ μόλις παραδοθούν."
           }
         }
       }
@@ -214,6 +238,18 @@
             "state" : "translated",
             "value" : "Ei lisenssiavaimia"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicio cheie de licență"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κανένα κλειδί άδειας"
+          }
         }
       }
     },
@@ -285,6 +321,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisenssiavaimet tallennetaan vain tähän laitteeseen ja poistetaan uloskirjautuessa. Kopioidut avaimet poistetaan leikepöydältä kahden minuutin kuluttua."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheile de licență sunt salvate doar pe acest dispozitiv și sunt eliminate la deconectare. La copiere, ele sunt șterse din clipboard după două minute."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα κλειδιά άδειας χρήσης αποθηκεύονται μόνο σε αυτή τη συσκευή και αφαιρούνται κατά την αποσύνδεση. Όταν αντιγραφούν, διαγράφονται από το πρόχειρο μετά από δύο λεπτά."
           }
         }
       }
@@ -358,6 +406,18 @@
             "state" : "translated",
             "value" : "Lisenssiavaimia ladataan"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se încarcă cheile de licență"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φόρτωση κλειδιών άδειας"
+          }
         }
       }
     },
@@ -429,6 +489,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avaa lisenssiavaimesi Face ID:llä, Touch ID:llä tai laitteen pääsykoodilla."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deblocați cheile dumneavoastră de licență cu Face ID, Touch ID sau codul dispozitivului."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ξεκλειδώστε τα κλειδιά άδειας χρήσης σας με Face ID, Touch ID ή τον κωδικό της συσκευής σας."
           }
         }
       }
@@ -502,6 +574,18 @@
             "state" : "translated",
             "value" : "Näytä lisenssiavaimet"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afișează cheile de licență"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εμφάνιση κλειδιών άδειας"
+          }
         }
       }
     },
@@ -573,6 +657,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lukittu"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blocat"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κλειδωμένο"
           }
         }
       }
@@ -646,6 +742,18 @@
             "state" : "translated",
             "value" : "Avaa lukitus"
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deblochează"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ξεκλείδωμα"
+          }
         }
       }
     },
@@ -717,6 +825,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tilaus %@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comanda %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παραγγελία %@"
           }
         }
       }
@@ -790,6 +910,18 @@
             "state" : "translated",
             "value" : "Lisenssiavaimia tilaukselle %@ toimitetaan parhaillaan."
           }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheile de licență pentru %@ sunt în curs de livrare."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τα κλειδιά άδειας για %@ παραδίδονται αυτή τη στιγμή."
+          }
         }
       }
     },
@@ -861,6 +993,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Omat lisenssit"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licențele mele"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι άδειές μου"
           }
         }
       }

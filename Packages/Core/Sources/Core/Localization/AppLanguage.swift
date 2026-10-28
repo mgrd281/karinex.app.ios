@@ -27,6 +27,10 @@ public enum AppLanguage: String, CaseIterable, Sendable, Codable {
     case it
     /// Finnish.
     case fi
+    /// Romanian.
+    case ro
+    /// Greek.
+    case el
 
     // MARK: - Constants
 
@@ -65,6 +69,8 @@ public enum AppLanguage: String, CaseIterable, Sendable, Codable {
         case .fr: "Français"
         case .it: "Italiano"
         case .fi: "Suomi"
+        case .ro: "Română"
+        case .el: "Ελληνικά"
         }
     }
 

@@ -1,0 +1,1 @@
+Prima versiune a aplicației KARINEX: magazin, coș, checkout securizat, cont de client cu comenzi, facturi și chei de licență, plus asistență clienți prin WhatsApp, e-mail și chat live.

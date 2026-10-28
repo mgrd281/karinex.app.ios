@@ -17,7 +17,7 @@ Guidance for AI coding agents (and humans) working in this repository.
 - Shopify is the only source of product truth; never hardcode prices, specs, ratings or claims.
 - No Apple In-App Purchase. Checkout only through Shopify Checkout Kit.
 - The words PayPal, Hotline and the `tel:` scheme never appear in code or String Catalogs.
-- German copy: formal "Sie", calm, no em or en dashes. All 11 languages via String Catalogs.
+- German copy: formal "Sie", calm, no em or en dashes. All 13 languages via String Catalogs.
 - No analytics, crash reporting or push registration before explicit consent.
 - Never log PII (use `KXLogger`, which redacts).
 - Complete, compiling code only: no TODOs, stubs or placeholders.
@@ -52,7 +52,7 @@ make fixtures        # re-record Storefront fixtures from the live store
 - Swift 6 language mode, strict concurrency, iOS 17 minimum. Guard newer APIs with `#available`.
 - Tests use Swift Testing; UI tests use XCTest.
 - Strings: `Text("feature.key", bundle: .module)` in packages, `Text("key")` in the app target.
-  Every key needs a translator comment and all 11 languages (`make check`).
+  Every key needs a translator comment and all 13 languages (`make check`).
 - Colors, fonts, spacing and motion only through the design-system tokens (`KXColor`,
   `.kxFont(_:)`, `KXSpacing`, `KXRadius`, `KXMotion`).
 - No dotted leaders (`Label ........ Wert`) anywhere: the owner finds them dated (2026-10-26).
