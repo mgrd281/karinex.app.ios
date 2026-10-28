@@ -491,7 +491,8 @@ struct CustomerAccountAPITests {
           "totalPrice": {"amount": "119.9", "currencyCode": "EUR"}, "subtotal": {"amount": "100.76", "currencyCode": "EUR"},
           "totalTax": {"amount": "19.14", "currencyCode": "EUR"}, "totalShipping": {"amount": "0.0", "currencyCode": "EUR"},
           "lineItems": {"nodes": [{"id": "gid://shopify/LineItem/1", "name": "Office 2024 Professional Plus",
-            "presentmentTitle": "Default Title", "variantId": "gid://shopify/ProductVariant/77", "productId": "gid://shopify/Product/55", "quantity": 1, "price": {"amount": "119.9", "currencyCode": "EUR"},
+            "presentmentTitle": "Default Title", "variantId": "gid://shopify/ProductVariant/77",
+            "productId": "gid://shopify/Product/55", "quantity": 1, "price": {"amount": "119.9", "currencyCode": "EUR"},
             "currentTotalPrice": {"amount": "119.9", "currencyCode": "EUR"}, "image": null}]},
           "fulfillments": {"nodes": [{"id": "gid://shopify/Fulfillment/3", "status": "SUCCESS", "latestShipmentStatus": null,
             "updatedAt": "2026-10-20T09:20:00Z"}]}}}}
