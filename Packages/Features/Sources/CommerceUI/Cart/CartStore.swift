@@ -80,7 +80,8 @@ public final class CartStore {
 
     /// Returns a valid Customer Account API access token while a customer is signed in, `nil`
     /// otherwise. The cart carries it while the customer is signed in and ``checkoutURL()``
-    /// refreshes it; `nil` (or no supplier) keeps every cart and checkout a guest one. The token is a secret and is never stored or logged here.
+    /// refreshes it; `nil` (or no supplier) keeps every cart and checkout a guest one. The
+    /// token is a secret and is never stored or logged here.
     public var customerAccessToken: (@MainActor () async -> String?)?
 
     /// Called when a checkout Checkout Kit may have preloaded no longer matches the cart,
