@@ -13,7 +13,8 @@ change.
 ### Changed
 
 - **SALE badge shape like About You** (owner request 28.10.2026): the "SALE" badge on the product
-  page is a small red rectangle with slightly rounded corners and bold text instead of a capsule.
+  page is a small red rectangle with slightly rounded corners and bold text instead of a capsule,
+  sized like About You's (13 pt semibold, 8 pt side padding, 3 pt corners, directly above the price).
 - **SALE like About You** (owner request 28.10.2026): on the product page a reduced price shows a
   red "SALE" badge (13 languages) above the red price instead of the percentage badge, and the
   former price is the line "Ursprünglich: 149,99 €" instead of a struck-through number, followed by

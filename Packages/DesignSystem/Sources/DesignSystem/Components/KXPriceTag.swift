@@ -77,7 +77,6 @@ public struct KXPriceTag: View {
         VStack(alignment: .leading, spacing: KXSpacing.xxs) {
             if showsSaleBadge {
                 saleBadge
-                    .padding(.bottom, KXSpacing.xxs)
             }
             ViewThatFits(in: .horizontal) {
                 HStack(alignment: .firstTextBaseline, spacing: KXSpacing.xs) {
@@ -135,14 +134,14 @@ public struct KXPriceTag: View {
     }
 
     /// The "SALE" badge of the product page as at About You: a small red rectangle with slightly
-    /// rounded corners and bold, untracked text (not the capsule of ``KXBadge``).
+    /// rounded corners (3 pt) and 13 pt semibold, untracked text, measured from About You (47 × 16 pt) (not the capsule of ``KXBadge``).
     private var saleBadge: some View {
         Text("kx.price.sale", bundle: .module)
-            .kxFont(.headline)
+            .kxFont(.footnote)
+            .fontWeight(.semibold)
             .foregroundStyle(KXColor.textOnUrgency)
             .padding(.horizontal, KXSpacing.xs)
-            .padding(.vertical, KXSpacing.xxs)
-            .background(KXColor.urgency, in: RoundedRectangle(cornerRadius: KXRadius.small / 2, style: .continuous))
+            .background(KXColor.urgency, in: RoundedRectangle(cornerRadius: 3, style: .continuous))
             .accessibilityHidden(true)
     }
 
