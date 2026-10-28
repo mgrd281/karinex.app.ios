@@ -21,11 +21,14 @@ import ShopifyKit
 ///   (they may already belong to a placed order); it forgets the cart and reports it.
 /// - After every change the ``checkoutPreloader`` is called with the fresh checkout URL,
 ///   debounced by ``preloadDelay``, so Checkout Kit can preload (CommerceUI does not import it).
-/// - While a customer is signed in, ``checkoutURL()`` puts their access token
-///   (``customerAccessToken``) on the cart right before checkout, so checkout opens signed in
-///   with their e-mail address, addresses and saved payment methods, and the order belongs to
-///   their account (Shopify's "Authenticate checkouts" for Checkout Kit). Such a cart is never
-///   preloaded, because its checkout URL expires. After a sign-out, ``signOutCustomer()``
+/// - While a customer is signed in, the cart carries their access token
+///   (``customerAccessToken``): from the launch refresh, from its creation and from the sign-in
+///   on (``associateCustomer()``), so Shopify prices the cart for them and automatic discounts
+///   of their customer segment (the loyalty level's permanent discount) show in the cart, not
+///   only at checkout. ``checkoutURL()`` puts a fresh token on it again right before checkout,
+///   so checkout opens signed in with their e-mail address, addresses and saved payment
+///   methods, and the order belongs to their account (Shopify's "Authenticate checkouts" for
+///   Checkout Kit). Such a cart is never preloaded, because its checkout URL expires. After a sign-out, ``signOutCustomer()``
 ///   moves the lines to a new cart without the token, so the next checkout on this device
 ///   never shows the previous customer's details.
 ///
@@ -76,8 +79,8 @@ public final class CartStore {
     public let preloadDelay: Duration
 
     /// Returns a valid Customer Account API access token while a customer is signed in, `nil`
-    /// otherwise. ``checkoutURL()`` puts it on the cart; `nil` (or no supplier) keeps every
-    /// checkout a guest checkout. The token is a secret and is never stored or logged here.
+    /// otherwise. The cart carries it while the customer is signed in and ``checkoutURL()``
+    /// refreshes it; `nil` (or no supplier) keeps every cart and checkout a guest one. The token is a secret and is never stored or logged here.
     public var customerAccessToken: (@MainActor () async -> String?)?
 
     /// Called when a checkout Checkout Kit may have preloaded no longer matches the cart,
@@ -152,6 +155,7 @@ public final class CartStore {
             }
             if let fresh = try await repository.cart(id: cartID) {
                 cart = fresh
+                await attachCustomer()
                 schedulePreload()
             } else {
                 logger.info("Stored cart is no longer available; it will be recreated with the next add")
@@ -272,6 +276,14 @@ public final class CartStore {
         }
     }
 
+    /// Puts the signed-in customer's access token on the cart, so Shopify prices it for them
+    /// (automatic discounts for their customer segment show in the cart). Call it after a
+    /// sign-in. Does nothing without a cart, without a signed-in customer or when the cart
+    /// already carries a token; a failure keeps the cart as it is, checkout tries again.
+    public func associateCustomer() async {
+        _ = await enqueue { [self] in await attachCustomer() }
+    }
+
     // MARK: Checkout
 
     /// A fresh checkout URL: waits for pending mutations and re-reads the cart.
@@ -357,8 +369,10 @@ public final class CartStore {
             return try await replaceSignedInCart(fresh).checkoutUrl
         }
         // Marked before the request: if it fails ambiguously, the token may be on the cart.
-        store.set(cartID.rawValue, forKey: Self.signedInCartIDKey)
-        invalidatePreloadedCheckout()
+        if !isSignedInCart(cartID) {
+            store.set(cartID.rawValue, forKey: Self.signedInCartIDKey)
+            invalidatePreloadedCheckout()
+        }
         do {
             let result = try await repository.updateBuyerIdentity(cartID: cartID, customerAccessToken: token)
             cart = result.cart
@@ -367,6 +381,26 @@ public final class CartStore {
         } catch {
             logger.notice("Signing the checkout in failed (\(Self.logDescription(error))); it opens as a guest checkout")
             return fresh.checkoutUrl
+        }
+    }
+
+    /// Puts the signed-in customer's token on the current cart unless it carries one already.
+    /// A refusal takes the mark off again, so the next refresh or checkout retries; after an
+    /// ambiguous failure the mark stays, because the token may be on the cart.
+    private func attachCustomer() async {
+        guard let cartID = cart?.id ?? storedCartID, !isSignedInCart(cartID) else { return }
+        guard let token = await customerAccessToken?() else { return }
+        store.set(cartID.rawValue, forKey: Self.signedInCartIDKey)
+        invalidatePreloadedCheckout()
+        do {
+            let result = try await repository.updateBuyerIdentity(cartID: cartID, customerAccessToken: token)
+            cart = result.cart
+            lastWarnings = result.warnings
+        } catch {
+            logger.notice("Signing the cart in failed (\(Self.logDescription(error))); it stays a guest cart for now")
+            if !Self.isAmbiguous(error) {
+                store.removeValue(forKey: Self.signedInCartIDKey)
+            }
         }
     }
 
@@ -412,6 +446,7 @@ public final class CartStore {
     ) async throws {
         guard let cartID = cart?.id ?? storedCartID else {
             try await apply(recreate())
+            await attachCustomer()
             return
         }
         do {
@@ -421,6 +456,7 @@ public final class CartStore {
             logger.info("Cart expired; recreating it for the requested change")
             forgetCart()
             try await apply(recreate())
+            await attachCustomer()
         }
     }
 

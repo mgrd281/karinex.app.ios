@@ -291,6 +291,10 @@ change.
 
 ### Fixed
 
+- **Loyalty discount in the cart** (owner report 28.10.2026): the cart now belongs to the
+  signed-in customer from its creation, the launch refresh and the sign-in on, not only from the
+  checkout. Shopify then prices it for the customer, so the permanent discount of the loyalty
+  level (for example 3 % for Silber) shows in the cart summary before checkout.
 - **Invite friends: copy confirmation.** The "Code kopieren" button switches to "Kopiert" with a
   check mark and a haptic tap for two seconds, like on the redeem code sheet. The code was copied
   before, but nothing showed it.

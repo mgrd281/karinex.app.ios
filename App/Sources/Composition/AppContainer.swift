@@ -213,9 +213,13 @@ final class AppContainer {
             licenseCache.removeAll()
             Task { await cartStore.signOutCustomer() }
         }
-        // Signed-in checkouts: the cart carries the customer's token right before checkout.
+        // Signed-in carts: the cart carries the customer's token, so Shopify prices it for them
+        // (loyalty level discount in the cart) and checkout opens signed in.
         cartStore.customerAccessToken = { [weak sessionStore] in
             await sessionStore?.checkoutAccessToken()
+        }
+        sessionStore.onSignedIn = { [cartStore] in
+            Task { await cartStore.associateCustomer() }
         }
         self.sessionStore = sessionStore
         settingsStore = AppSettingsStore(store: services.preferences)

@@ -677,6 +677,12 @@ feature imports another.
   `invalidate()`), so a preloaded guest checkout never appears. Checkout then opens with the
   customer's e-mail address, addresses and saved payment methods, and the order belongs to the
   account. A marked cart is not preloaded. A refused token opens a guest checkout.
+- Signed-in cart (owner report 28.10.2026: the loyalty level's 3 % did not show in the cart): the
+  token goes on the cart already when a signed-in customer's cart is created, at the launch
+  refresh and after a sign-in (`CustomerSessionStore.onSignedIn` → `associateCustomer()`), not
+  only at checkout. Shopify then prices the cart for the customer, so automatic discounts of their
+  customer segment (the permanent discount of the loyalty level) appear in the cart summary. A
+  refused token takes the mark off again; checkout still refreshes the token before it opens.
 - After a sign-out (`CustomerSessionStore.onSignedOut`) `signOutCustomer()` replaces a marked
   cart with a new cart holding the same lines and discount codes and drops Checkout Kit's cache;
   if that fails, the cart is forgotten. `checkoutURL()` does the same for a marked cart when

@@ -41,6 +41,8 @@ public final class CustomerSessionStore {
 
     /// Called once after every transition to signed out.
     @ObservationIgnored public var onSignedOut: (@MainActor () -> Void)?
+    /// Called after a login in this app succeeded, e.g. to put the customer on the cart.
+    @ObservationIgnored public var onSignedIn: (@MainActor () -> Void)?
 
     @ObservationIgnored private let session: CustomerAccountSession?
     @ObservationIgnored private let repository: (any CustomerAccountRepository)?
@@ -113,6 +115,7 @@ public final class CustomerSessionStore {
             let callback = try await authenticate(authorization.url, callbackScheme)
             try await session.completeSignIn(authorization, callbackURL: callback)
             status = .signedIn
+            onSignedIn?()
             await loadCustomer()
         } catch {
             status = await session.isSignedIn ? .signedIn : .signedOut

@@ -382,6 +382,53 @@ struct CartStoreTests {
         #expect(recorder.urls.isEmpty, "A signed-in cart's checkout URL expires, so it is not preloaded")
     }
 
+    @Test("A signed-in customer's new cart carries the token from its creation, so their discounts show in the cart")
+    func signedInCartFromCreation() async throws {
+        let recorder = PreloadRecorder()
+        let store = makeSignedInStore(token: "shcat_test", recorder: recorder)
+
+        await store.add(variantID: CartFixtures.windowsVariant)
+
+        let cartID = try #require(store.cart?.id)
+        #expect(await repository.customerAccessToken(of: cartID) == "shcat_test")
+        #expect(await repository.count(of: .create) == 1)
+        #expect(await repository.calls.last == .customerAccessToken("shcat_test"))
+        #expect(preferences.string(forKey: CartStore.signedInCartIDKey) == cartID.rawValue)
+        #expect(recorder.invalidations == 1)
+
+        await store.add(variantID: CartFixtures.officeVariant)
+        #expect(await repository.count(of: .customerAccessToken) == 1, "A cart that carries the token is not signed in again")
+    }
+
+    @Test("A guest cart is signed in by the launch refresh and after a sign-in, once")
+    func guestCartSignedInLater() async throws {
+        let store = makeSignedInStore(token: nil, recorder: PreloadRecorder())
+        await store.add(variantID: CartFixtures.windowsVariant)
+        let cartID = try #require(store.cart?.id)
+        #expect(await repository.count(of: .customerAccessToken) == 0)
+
+        store.customerAccessToken = { "shcat_test" }
+        await store.associateCustomer()
+        #expect(await repository.customerAccessToken(of: cartID) == "shcat_test")
+
+        await store.refresh()
+        await store.associateCustomer()
+        #expect(await repository.count(of: .customerAccessToken) == 1)
+    }
+
+    @Test("The launch refresh signs in a stored guest cart")
+    func refreshSignsInStoredCart() async throws {
+        let guest = makeSignedInStore(token: nil, recorder: PreloadRecorder())
+        await guest.add(variantID: CartFixtures.windowsVariant)
+        let cartID = try #require(guest.cart?.id)
+
+        let relaunched = makeSignedInStore(token: "shcat_test", recorder: PreloadRecorder())
+        await relaunched.refresh()
+
+        #expect(relaunched.cart?.id == cartID)
+        #expect(await repository.customerAccessToken(of: cartID) == "shcat_test")
+    }
+
     @Test("Without a signed-in customer the checkout stays a guest checkout")
     func guestCheckout() async throws {
         let recorder = PreloadRecorder()
@@ -397,12 +444,14 @@ struct CartStoreTests {
         #expect(recorder.invalidations == 0)
     }
 
-    @Test("A token Shopify refuses still opens the checkout, as a guest checkout")
+    @Test("A token Shopify refuses keeps a guest cart and still opens the checkout, as a guest checkout")
     func refusedToken() async throws {
         let store = makeSignedInStore(token: "shcat_expired", recorder: PreloadRecorder())
+        await repository.fail(.customerAccessToken, with: ShopifyError.userErrors([]))
+        await repository.fail(.customerAccessToken, with: ShopifyError.userErrors([]))
         await store.add(variantID: CartFixtures.windowsVariant)
         let cartID = try #require(store.cart?.id)
-        await repository.fail(.customerAccessToken, with: ShopifyError.userErrors([]))
+        #expect(preferences.string(forKey: CartStore.signedInCartIDKey) == nil, "A refusal takes the mark off, so checkout retries")
 
         let url = try await store.checkoutURL()
 
