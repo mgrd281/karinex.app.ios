@@ -2846,13 +2846,13 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pentru conținutul digital, dreptul dumneavoastră de retragere încetează odată ce livrarea începe cu acordul dumneavoastră expres (§ 356 alin. 5 BGB)."
+            "value" : "Pentru conținutul digital, dreptul dumneavoastră de retragere încetează odată ce livrarea începe cu acordul dumneavoastră expres."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Για το ψηφιακό περιεχόμενο, το δικαίωμα υπαναχώρησής σας λήγει μόλις ξεκινήσει η παράδοση με τη ρητή συγκατάθεσή σας (§ 356 παρ. 5 BGB)."
+            "value" : "Για το ψηφιακό περιεχόμενο, το δικαίωμα υπαναχώρησής σας λήγει μόλις ξεκινήσει η παράδοση με τη ρητή συγκατάθεσή σας."
           }
         }
       }
