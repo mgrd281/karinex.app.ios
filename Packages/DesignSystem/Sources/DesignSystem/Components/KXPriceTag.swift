@@ -76,7 +76,7 @@ public struct KXPriceTag: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: KXSpacing.xxs) {
             if showsSaleBadge {
-                KXBadge(String(localized: "kx.price.sale", bundle: .module), style: .urgency)
+                saleBadge
                     .padding(.bottom, KXSpacing.xxs)
             }
             ViewThatFits(in: .horizontal) {
@@ -132,6 +132,18 @@ public struct KXPriceTag: View {
             .kxFont(size == .regular ? .price : .subheadline)
             .foregroundStyle(compareAtPrice == nil ? KXColor.textPrimary : KXColor.urgencyText)
             .contentTransition(.numericText())
+    }
+
+    /// The "SALE" badge of the product page as at About You: a small red rectangle with slightly
+    /// rounded corners and bold, untracked text (not the capsule of ``KXBadge``).
+    private var saleBadge: some View {
+        Text("kx.price.sale", bundle: .module)
+            .kxFont(.headline)
+            .foregroundStyle(KXColor.textOnUrgency)
+            .padding(.horizontal, KXSpacing.xs)
+            .padding(.vertical, KXSpacing.xxs)
+            .background(KXColor.urgency, in: RoundedRectangle(cornerRadius: KXRadius.small / 2, style: .continuous))
+            .accessibilityHidden(true)
     }
 
     /// The red "SALE" badge above the price in the regular size, as at About You: a reduced
