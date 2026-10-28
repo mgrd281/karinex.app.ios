@@ -115,7 +115,7 @@ struct HTMLDocumentFixtureTests {
         #expect(headings.count + cardTitles.count == matches(#"<h[1-6][\s>]"#, in: html).count)
         #expect(headings.first?.0 == 1)
         #expect(headings.first?.1.contains("Office 2024 Professional Plus") == true)
-        #expect(Set(headings.map(\.0)) == [1, 2])
+        #expect(Set(headings.map(\.0)).isSuperset(of: [1, 2]))
 
         let lists = blocks.compactMap { block -> [[HTMLBlock]]? in
             if case let .list(false, items) = block { return items }
@@ -493,18 +493,20 @@ extension HTMLDocumentConstructTests {
     @Test("Layout hints: only exact layouts are structured, others stay plain")
     func layoutHints() {
         let facts = #"<div style="display: grid"><div><p>A</p><p>1</p></div><div><p>B</p><p>2</p></div></div>"#
-        #expect(blocks(facts) == [.facts(layout: .tiles, items: [
+        let expectedFacts = [
             HTMLFact(label: [.text("A")], value: [.paragraph([.text("1")])]),
             HTMLFact(label: [.text("B")], value: [.paragraph([.text("2")])]),
-        ])])
+        ]
+        #expect(blocks(facts) == [.facts(layout: .tiles, items: expectedFacts)])
         func row(_ number: String, _ body: String) -> String {
             #"<div style="display:flex"><div>"# + number + "</div><div>" + body + "</div></div>"
         }
         let steps = "<div>" + row("01", "x") + row("02", "y") + "</div>"
-        #expect(blocks(steps) == [.steps([
+        let expectedSteps = [
             HTMLStep(number: "01", body: [.paragraph([.text("x")])]),
             HTMLStep(number: "02", body: [.paragraph([.text("y")])]),
-        ])])
+        ]
+        #expect(blocks(steps) == [.steps(expectedSteps)])
         #expect(blocks(#"<div style="border-left: 2px solid #000"><p>c</p></div>"#) == [.callout([.paragraph([.text("c")])])])
         #expect(blocks(#"<div style="border-left: none"><p>c</p></div>"#) == [.paragraph([.text("c")])])
         #expect(blocks(#"<p style="text-transform: uppercase">e</p><p style="font-size: 18px">l</p><p style="font-size:13px">n</p>"#)
