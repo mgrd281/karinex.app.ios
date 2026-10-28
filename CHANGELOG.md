@@ -12,6 +12,8 @@ change.
 
 ### Changed
 
+- **Bell and heart closer together** (owner request 28.10.2026): in the Start header the bell and
+  the heart form one group with no gap between their tap areas.
 - **Freunde einladen, more modern** (owner request 28.10.2026: "better copy icon, modern
   design"): the code is a voucher with notched edges and a perforation; copying is one round
   white button with a clean two-square symbol instead of the two-line "Code kopieren" capsule,

@@ -21,10 +21,12 @@ struct HomeBrandBar: View {
             KXWordmark(size: .regular)
                 .accessibilityAddTraits(.isHeader)
             Spacer(minLength: 0)
-            if inbox != nil {
-                notificationsButton
+            HStack(spacing: 0) {
+                if inbox != nil {
+                    notificationsButton
+                }
+                wishlistButton
             }
-            wishlistButton
         }
         .padding(.leading, KXSpacing.gutter)
         .padding(.trailing, KXSpacing.xs)
