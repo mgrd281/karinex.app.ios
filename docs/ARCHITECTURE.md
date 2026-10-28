@@ -734,9 +734,9 @@ unusual markup only loses structure, never content.
 - `ProductFeature`: gallery with full-screen zoom, variant selector, price in the sale look
   (with the store's lowest price of 30 days for single-variant products), the linked products
   row (`ProductLinkedProductsRow`, from `Product.linkedProducts`), the payment marks below the
-  buy buttons, key facts from metafields, the section "Beschreibung" (`ProductDescriptionSection`:
-  a long description is shortened to 420 points with a fade and a "Mehr anzeigen" capsule whose
-  chevron turns when it opens), the collapsible rows "So läuft es ab" and "Aktivierung", the "Passend dazu" row (Shopify's `COMPLEMENTARY`
+  buy buttons, key facts from metafields, the collapsible rows "Beschreibung" (the full
+  description, ending with a "Weniger anzeigen" button that closes the row), "So läuft es ab"
+  and "Aktivierung", the "Passend dazu" row (Shopify's `COMPLEMENTARY`
   recommendations, loaded in parallel with the comparison row of `RELATED` recommendations),
   FAQ, the 14-day promise with its condition (the withdrawal notice for digital goods is shown in
   the cart only, owner decision 2026-10-28), and a
@@ -1227,8 +1227,8 @@ white, modern type. The interface is therefore black, white and neutral grey wit
 all text is SF Pro, buttons are capsules, panels are flat and product photos are square and edge
 to edge on a light grey tile (`.kxPhotoTile()`). The product screen follows the same pattern:
 photos first, then title, price and icon rows, collapsible details, and a bar with the price and
-one black "In den Warenkorb" button; "Jetzt kaufen" stays as a secondary button below the
-variants. The change lives almost entirely in `DesignTokens` and the `KX*` components, so the
+one black "In den Warenkorb" button, as at About You (owner decision 2026-10-28: no "Jetzt
+kaufen" button any more). The change lives almost entirely in `DesignTokens` and the `KX*` components, so the
 feature screens kept their structure. `DesignTokensTests` now fails when a token other than the
 status colors and the sale red gets a hue, so the direction cannot drift back by accident.
 

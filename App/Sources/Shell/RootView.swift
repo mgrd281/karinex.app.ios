@@ -26,7 +26,7 @@ import UIKit
 ///   search results). `.cart` switches to the Warenkorb tab.
 /// - Deep links (`karinex://`) and Universal Links (`karinex.de`) go through `DeepLinkParser`
 ///   and open the destination in the tab that owns it.
-/// - Checkout: "Jetzt kaufen" and "Zur Kasse" present Shopify checkout over the whole app; after
+/// - Checkout: "Zur Kasse" presents Shopify checkout over the whole app; after
 ///   "Weiter einkaufen" the Start tab is shown.
 /// - Launch: the market is resolved and the stored cart re-read; the cart is read again
 ///   whenever the app returns from the background. The one-time market confirmation sheet
@@ -195,8 +195,7 @@ struct RootView: View {
                 handle: handle,
                 catalog: container.catalogRepository,
                 cartStore: container.cartStore,
-                onRoute: { router.open($0, from: tab) },
-                onBuyNow: { isCheckoutPresented = true }
+                onRoute: { router.open($0, from: tab) }
             )
         case let .collection(handle, title):
             CollectionScreen(

@@ -357,112 +357,58 @@ struct ProductFactsSection: View {
     }
 }
 
-// MARK: - ProductDescriptionSection
-
-/// "Beschreibung": the product description from the store, open on the page. A long text shows
-/// its beginning, fading out, with "Mehr anzeigen" below; the chevron of the button turns when
-/// the text opens, and "Weniger anzeigen" shortens it again. Short texts are shown in full
-/// without the button.
-struct ProductDescriptionSection: View {
-    let description: HTMLDocument
-
-    /// The height of the shortened text.
-    static let collapsedHeight: CGFloat = 420
-
-    @State private var isExpanded = false
-    @State private var contentHeight: CGFloat = 0
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    private var isLong: Bool {
-        contentHeight > Self.collapsedHeight + 120
-    }
-
-    private var isCollapsed: Bool {
-        isLong && !isExpanded
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: KXSpacing.m) {
-            KXSectionHeader(String(localized: "product.description.title", bundle: .module))
-            RichTextView(document: description)
-                .fixedSize(horizontal: false, vertical: true)
-                .onGeometryChange(for: CGFloat.self) { proxy in
-                    proxy.size.height
-                } action: { height in
-                    contentHeight = height
-                }
-                .frame(height: isCollapsed ? Self.collapsedHeight : nil, alignment: .top)
-                .clipped()
-                .mask {
-                    LinearGradient(
-                        stops: [
-                            .init(color: .black, location: 0),
-                            .init(color: .black, location: isCollapsed ? 0.62 : 1),
-                            .init(color: .black.opacity(isCollapsed ? 0 : 1), location: 1),
-                        ],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                }
-                .accessibilityIdentifier("product.description")
-            if isLong {
-                toggle
-            }
-        }
-        .accessibilityIdentifier("product.description.section")
-    }
-
-    private var toggle: some View {
-        Button {
-            withAnimation(KXMotion.animation(.gentle, reduceMotion: reduceMotion)) {
-                isExpanded.toggle()
-            }
-        } label: {
-            HStack(spacing: KXSpacing.xs) {
-                Text(isExpanded ? "product.description.less" : "product.description.more", bundle: .module)
-                    .kxFont(.subheadline)
-                    .fontWeight(.semibold)
-                Image(systemName: "chevron.down")
-                    .font(.footnote.weight(.bold))
-                    .rotationEffect(.degrees(isExpanded ? 180 : 0))
-                    .accessibilityHidden(true)
-            }
-            .foregroundStyle(KXColor.textPrimary)
-            .padding(.horizontal, KXSpacing.l)
-            .frame(minHeight: KXSpacing.minimumTapTarget)
-            .overlay {
-                Capsule().strokeBorder(KXColor.textPrimary, lineWidth: KXBorder.regular)
-            }
-            .contentShape(Capsule())
-        }
-        .buttonStyle(.plain)
-        .frame(maxWidth: .infinity)
-        .accessibilityIdentifier("product.description.toggle")
-    }
-}
-
 // MARK: - ProductMoreInformationSection
 
-/// Collapsible rows in the style of fashion retail apps ("Produktdetails"): "So läuft es ab"
-/// (order, pay and receive the key by e-mail, or the shipping process for physical variants) and
-/// the activation instructions when the store provides them. The description has its own
-/// section above (``ProductDescriptionSection``).
+/// Collapsible rows in the style of fashion retail apps ("Produktdetails"): the full product
+/// description from the store, "So läuft es ab" (order, pay and receive the key by e-mail, or
+/// the shipping process for physical variants) and the activation instructions when the store
+/// provides them. A row opens and closes with a tap on its title; an opened description also
+/// ends with "Weniger anzeigen", so a long text can be closed without scrolling back up.
 struct ProductMoreInformationSection: View {
+    let description: HTMLDocument
     let fulfillment: ProductFulfillment
     let activation: HTMLDocument?
 
+    @State private var expandedIDs: Set<String> = []
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
-        KXAccordion(items: rows)
+        KXAccordion(items: rows, expandedIDs: $expandedIDs)
     }
 
     private var rows: [KXAccordionItem] {
-        var rows: [KXAccordionItem] = [
+        var rows: [KXAccordionItem] = []
+        if !description.isEmpty {
+            rows.append(
+                KXAccordionItem(title: String(localized: "product.description.title", bundle: .module), id: "description") {
+                    VStack(alignment: .leading, spacing: KXSpacing.l) {
+                        RichTextView(document: description)
+                            .accessibilityIdentifier("product.description")
+                        KXButton(
+                            String(localized: "product.description.less", bundle: .module),
+                            systemImage: "chevron.up",
+                            style: .secondary,
+                            size: .compact,
+                            isFullWidth: true
+                        ) {
+                            withAnimation(KXMotion.animation(.snappy, reduceMotion: reduceMotion)) {
+                                _ = expandedIDs.remove("description")
+                            }
+                        }
+                        .kxButtonCornerRadius(KXRadius.small)
+                        .accessibilityIdentifier("product.description.close")
+                    }
+                    .padding(.top, KXSpacing.xs)
+                }
+            )
+        }
+        rows.append(
             KXAccordionItem(title: String(localized: "product.process.title", bundle: .module), id: "process") {
                 KXStepTimeline(steps: fulfillment.steps.map { KXStepTimeline.Step(title: $0.title, detail: $0.detail) })
                     .padding(.top, KXSpacing.xs)
                     .accessibilityIdentifier("product.process")
-            },
-        ]
+            }
+        )
         if let activation {
             rows.append(
                 KXAccordionItem(title: String(localized: "product.activation.title", bundle: .module), id: "activation") {

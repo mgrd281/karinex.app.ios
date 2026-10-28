@@ -161,8 +161,7 @@ struct PreviewCartRepository: CartRepository {
             handle: ProductPreviewData.product.handle,
             catalog: PreviewCatalogRepository(),
             cartStore: ProductPreviewData.cartStore(),
-            onRoute: { _ in },
-            onBuyNow: {}
+            onRoute: { _ in }
         )
     }
     .environment(\.locale, Locale(identifier: "de_DE"))
@@ -174,8 +173,7 @@ struct PreviewCartRepository: CartRepository {
             handle: ProductPreviewData.product.handle,
             catalog: PreviewCatalogRepository(),
             cartStore: ProductPreviewData.cartStore(),
-            onRoute: { _ in },
-            onBuyNow: {}
+            onRoute: { _ in }
         )
     }
     .preferredColorScheme(.dark)
@@ -187,8 +185,7 @@ struct PreviewCartRepository: CartRepository {
             handle: ProductPreviewData.product.handle,
             catalog: PreviewCatalogRepository(),
             cartStore: ProductPreviewData.cartStore(),
-            onRoute: { _ in },
-            onBuyNow: {}
+            onRoute: { _ in }
         )
     }
     .dynamicTypeSize(.accessibility2)
@@ -197,9 +194,12 @@ struct PreviewCartRepository: CartRepository {
 #Preview("Sections") {
     ScrollView {
         VStack(alignment: .leading, spacing: KXSpacing.xl) {
-            ProductDescriptionSection(description: HTMLDocument(html: ProductPreviewData.product.descriptionHtml))
-            ProductMoreInformationSection(fulfillment: .digital, activation: nil)
-            ProductMoreInformationSection(fulfillment: .physical, activation: nil)
+            ProductMoreInformationSection(
+                description: HTMLDocument(html: ProductPreviewData.product.descriptionHtml),
+                fulfillment: .digital,
+                activation: nil
+            )
+            ProductMoreInformationSection(description: HTMLDocument(blocks: []), fulfillment: .physical, activation: nil)
             ProductPaymentMethods()
             ProductRefundSection()
         }

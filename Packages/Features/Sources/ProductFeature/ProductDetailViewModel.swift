@@ -225,15 +225,7 @@ final class ProductDetailViewModel {
     /// - Returns: Whether the variant was added. On failure ``actionError`` explains why.
     @discardableResult
     func addToCart() async -> Bool {
-        await add(confirming: true)
-    }
-
-    /// "Jetzt kaufen": adds one unit of the selected variant without the confirmation, because
-    /// the checkout opens right after.
-    ///
-    /// - Returns: Whether the variant was added; only then may the checkout open.
-    func buyNow() async -> Bool {
-        await add(confirming: false)
+        await add()
     }
 
     /// Hides the confirmation `id`, unless a newer one replaced it.
@@ -243,7 +235,7 @@ final class ProductDetailViewModel {
         }
     }
 
-    private func add(confirming: Bool) async -> Bool {
+    private func add() async -> Bool {
         guard let variant = selectedVariant, variant.availableForSale, !isAddingToCart else { return false }
         isAddingToCart = true
         actionError = nil
@@ -251,7 +243,7 @@ final class ProductDetailViewModel {
         isAddingToCart = false
         if added {
             successfulAddCount += 1
-            confirmation = confirming ? ProductCartConfirmation(id: successfulAddCount) : nil
+            confirmation = ProductCartConfirmation(id: successfulAddCount)
         } else {
             confirmation = nil
             actionError = cartStore.lastError ?? UserFacingError(kind: .unknown)

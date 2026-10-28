@@ -339,24 +339,11 @@ struct ProductCartTests {
         #expect(setup.store.itemCount == 0)
     }
 
-    @Test("Jetzt kaufen adds the variant without the confirmation, so the checkout can open")
-    func buyNow() async {
-        let setup = await setUp()
-
-        let added = await setup.model.buyNow()
-
-        #expect(added)
-        #expect(setup.model.confirmation == nil)
-        #expect(setup.model.successfulAddCount == 1)
-        #expect(await setup.cart.addedVariantIDs.count == 1)
-    }
-
     @Test("An unavailable variant is never added")
     func unavailable() async {
         let setup = await setUp(ProductFixtures.product(variants: [ProductFixtures.variant(1, availableForSale: false)]))
 
         #expect(await setup.model.addToCart() == false)
-        #expect(await setup.model.buyNow() == false)
         #expect(await setup.cart.addedVariantIDs.isEmpty)
         #expect(setup.model.actionError == nil)
     }
@@ -495,8 +482,8 @@ struct ProductStringTests {
         "product.process.email.detail", "product.process.shipping.title", "product.process.shipping.detail",
         "product.description.title", "product.activation.title", "product.comparison.title", "product.comparison.eyebrow",
         "product.faq.title", "product.refund.title", "product.refund.scope", "product.refund.unactivated",
-        "product.refund.statutory", "product.description.more", "product.description.less",
-        "product.cart.add", "product.cart.buy_now", "product.cart.added", "product.cart.show",
+        "product.refund.statutory", "product.description.less",
+        "product.cart.add", "product.cart.added", "product.cart.show",
         "product.gallery.position %lld %lld",
     ]
 
@@ -511,11 +498,10 @@ struct ProductStringTests {
         }
     }
 
-    @Test("The buttons read In den Warenkorb, Jetzt kaufen and Zum Warenkorb")
+    @Test("The buttons read In den Warenkorb and Zum Warenkorb")
     func buttons() throws {
         let german = try LocalizedStrings(language: "de", in: ProductFeatureResources.bundle)
         #expect(german("product.cart.add") == "In den Warenkorb")
-        #expect(german("product.cart.buy_now") == "Jetzt kaufen")
         #expect(german("product.cart.show") == "Zum Warenkorb")
         #expect(german("product.process.title") == "So läuft es ab")
     }

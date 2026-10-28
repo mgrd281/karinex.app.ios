@@ -13,9 +13,14 @@ change.
 ### Changed
 
 - **Product page polish** (owner request 28.10.2026, with a screenshot):
-  - The description is its own section "Beschreibung" on the page instead of a collapsed row. A
-    long text shows its beginning, fading out, with a round "Mehr anzeigen" button below; its
-    chevron turns when the text opens, "Weniger anzeigen" shortens it again. Texts in 13 languages.
+  - The description stays a row "Beschreibung" that opens with a tap (second round, owner
+    request: the earlier way of opening); an opened description ends with "Weniger anzeigen"
+    (chevron up), which closes it without scrolling back up. Texts in 13 languages.
+  - Purchase bar as at About You: price with tax note and the black "In den Warenkorb" button
+    with small rounded corners on a white bar, without the product photo. `KXButton` can be drawn
+    with rounded corners through `kxButtonCornerRadius(_:)`; the capsule stays the default.
+  - No "Jetzt kaufen" button any more (owner decision, as at About You); the checkout opens from
+    the cart.
   - Links in store texts are bold instead of underlined.
   - The withdrawal notice for digital content is no longer on the product page (it stays in the
     cart and in the store's legal texts; PROMPT.md updated).

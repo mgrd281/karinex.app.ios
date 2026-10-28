@@ -184,9 +184,11 @@ private struct KXButtonStyleBody: View {
 
     @Environment(\.isEnabled) private var isEnabled
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.kxButtonCornerRadius) private var cornerRadius
 
     var body: some View {
-        let shape = Capsule(style: .continuous)
+        let shape = cornerRadius.map { AnyShape(RoundedRectangle(cornerRadius: $0, style: .continuous)) }
+            ?? AnyShape(Capsule(style: .continuous))
         label
             .kxFont(.headline)
             .multilineTextAlignment(.center)
@@ -317,4 +319,26 @@ private struct KXButtonPreviewGallery: View {
         KXButtonPreviewGallery()
     }
     .dynamicTypeSize(.accessibility2)
+}
+
+// MARK: - Corner radius
+
+private struct KXButtonCornerRadiusKey: EnvironmentKey {
+    static let defaultValue: CGFloat? = nil
+}
+
+extension EnvironmentValues {
+    /// The corner radius of ``KXButton``s in this view, or `nil` for the standard capsule.
+    public var kxButtonCornerRadius: CGFloat? {
+        get { self[KXButtonCornerRadiusKey.self] }
+        set { self[KXButtonCornerRadiusKey.self] = newValue }
+    }
+}
+
+extension View {
+    /// Draws the ``KXButton``s in this view as rounded rectangles with `radius` instead of
+    /// capsules, e.g. the purchase bar of the product screen (as at About You).
+    public func kxButtonCornerRadius(_ radius: CGFloat) -> some View {
+        environment(\.kxButtonCornerRadius, radius)
+    }
 }

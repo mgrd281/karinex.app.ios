@@ -162,7 +162,7 @@ Laid out like the home screen of the About You app (owner request of 2026-10-25)
 - **Comparison** module: sibling products from the same collection (e.g., Office 2024 Home vs Standard vs Pro Plus) with thumbnails, key specs and price.
 - **FAQ accordion** from `karinex.faq` with chevron toggles.
 - Refund conditions block (exact policy logic from section 2). The digital-content notice (§ 356 Abs. 5 BGB) is shown in the cart only (owner decision 2026-10-28).
-- Sticky bottom bar: price + "In den Warenkorb" (haptic on success) + secondary "Jetzt kaufen" (adds and opens checkout). Share sheet, wishlist heart.
+- Sticky bottom bar as at About You: price with tax note + black "In den Warenkorb" (haptic on success). No "Jetzt kaufen" button (owner decision 2026-10-28). Share sheet, wishlist heart.
 
 ### 6.4 Suche (Search)
 - Predictive search as you type (products, collections, articles), recent searches, suggested queries ("Office 2024", "Windows 11 Pro"), empty state with category shortcuts.

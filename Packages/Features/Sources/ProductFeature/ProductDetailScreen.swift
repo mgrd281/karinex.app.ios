@@ -11,7 +11,7 @@ import SwiftUI
 /// From top to bottom: the photos edge to edge on the light grey photo tile with page dots and
 /// the wishlist heart (tap for the full-screen zoom viewer), the bold title, the price of the
 /// selected variant with the market's tax note, availability and delivery as icon rows, the
-/// variant pills when there is more than one variant, "Jetzt kaufen", the description, the key
+/// variant pills when there is more than one variant, the description, the key
 /// facts from the store's metafields (hidden when there are none), "So läuft es ab" and the
 /// activation instructions (when the store provides them) as collapsible rows, the money-back
 /// conditions and, for digital variants, the right of withdrawal notice, similar products and
@@ -28,8 +28,7 @@ import SwiftUI
 ///     handle: handle,
 ///     catalog: catalogRepository,
 ///     cartStore: cartStore,
-///     onRoute: { path.append($0) },
-///     onBuyNow: { isCheckoutPresented = true }
+///     onRoute: { path.append($0) }
 /// )
 /// ```
 public struct ProductDetailScreen: View {
@@ -38,8 +37,6 @@ public struct ProductDetailScreen: View {
 
     private let cartStore: CartStore
     private let onRoute: @MainActor (CommerceRoute) -> Void
-    private let onBuyNow: @MainActor () -> Void
-
     @Environment(\.accessibilityVoiceOverEnabled) private var isVoiceOverEnabled
     @Environment(SavedProductsStore.self) private var savedProducts: SavedProductsStore?
     @Environment(SaveCountStore.self) private var saveCounts: SaveCountStore?
@@ -49,22 +46,18 @@ public struct ProductDetailScreen: View {
     /// - Parameters:
     ///   - handle: The product handle, e.g. `office-2024-professional-plus-key`.
     ///   - catalog: Loads the product and the similar products.
-    ///   - cartStore: The app's cart; "In den Warenkorb" and "Jetzt kaufen" add to it.
+    ///   - cartStore: The app's cart; "In den Warenkorb" adds to it.
     ///   - onRoute: Opens another destination: a similar product (``CommerceRoute/product(handle:)``)
     ///     or the cart (``CommerceRoute/cart``, from the confirmation after adding).
-    ///   - onBuyNow: Called after "Jetzt kaufen" added the variant to the cart; the App opens the
-    ///     checkout.
     public init(
         handle: String,
         catalog: any CatalogRepository,
         cartStore: CartStore,
-        onRoute: @escaping @MainActor (CommerceRoute) -> Void,
-        onBuyNow: @escaping @MainActor () -> Void
+        onRoute: @escaping @MainActor (CommerceRoute) -> Void
     ) {
         _model = State(initialValue: ProductDetailViewModel(handle: handle, catalog: catalog, cartStore: cartStore))
         self.cartStore = cartStore
         self.onRoute = onRoute
-        self.onBuyNow = onBuyNow
     }
 
     public var body: some View {
@@ -84,7 +77,6 @@ public struct ProductDetailScreen: View {
                     saveCount: saveCounts?.displayCount(for: model.handle),
                     onToggleSaved: toggleSaved,
                     onRoute: onRoute,
-                    onBuyNow: buyNow,
                     onTitleVisibilityChange: { isTitleVisible = $0 }
                 )
             },
@@ -108,7 +100,6 @@ public struct ProductDetailScreen: View {
             if let variant = model.selectedVariant {
                 ProductPurchaseBar(
                     variant: variant,
-                    image: variant.image ?? model.product?.featuredImage,
                     isAdding: model.isAddingToCart,
                     onAddToCart: addToCart
                 )
@@ -185,13 +176,6 @@ public struct ProductDetailScreen: View {
         }
     }
 
-    private func buyNow() {
-        Task {
-            if await model.buyNow() {
-                onBuyNow()
-            }
-        }
-    }
 }
 
 // MARK: - ProductDetailBody
@@ -206,7 +190,6 @@ private struct ProductDetailBody: View {
     let saveCount: Int?
     let onToggleSaved: @MainActor () -> Void
     let onRoute: @MainActor (CommerceRoute) -> Void
-    let onBuyNow: @MainActor () -> Void
     let onTitleVisibilityChange: @MainActor (Bool) -> Void
 
     @State private var galleryIndex = 0
@@ -239,17 +222,6 @@ private struct ProductDetailBody: View {
                             onSelectVariant: { model.selectVariant($0) },
                             onTitleVisibilityChange: onTitleVisibilityChange
                         )
-                        if let variant = model.selectedVariant {
-                            KXButton(
-                                String(localized: "product.cart.buy_now", bundle: .module),
-                                style: .secondary,
-                                isFullWidth: true
-                            ) {
-                                onBuyNow()
-                            }
-                            .disabled(!variant.availableForSale || model.isAddingToCart)
-                            .accessibilityIdentifier("product.buyNow")
-                        }
                         ProductPaymentMethods()
                     }
                     .padding(.horizontal, KXSpacing.gutter)
@@ -259,10 +231,11 @@ private struct ProductDetailBody: View {
                     if !content.facts.isEmpty {
                         ProductFactsSection(facts: content.facts)
                     }
-                    if !content.description.isEmpty {
-                        ProductDescriptionSection(description: content.description)
-                    }
-                    ProductMoreInformationSection(fulfillment: model.fulfillment, activation: content.activation)
+                    ProductMoreInformationSection(
+                        description: content.description,
+                        fulfillment: model.fulfillment,
+                        activation: content.activation
+                    )
                     ProductRefundSection()
                 }
                 .padding(.horizontal, KXSpacing.gutter)
