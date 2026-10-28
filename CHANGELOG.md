@@ -12,6 +12,10 @@ change.
 
 ### Changed
 
+- **Payment methods on one line, new Rechnung and Vorkasse marks** (owner request 28.10.2026): in
+  the cart and on the product page all marks sit on one centered line and shrink together when
+  the screen is narrow. Rechnung and Vorkasse are no longer word cards but marks of their own in
+  the card format: a white document with a euro sign and a white bank on a dark graphite card.
 - **SALE badge shape like About You** (owner request 28.10.2026): the "SALE" badge on the product
   page is a small red rectangle with slightly rounded corners and bold text instead of a capsule,
   sized like About You's (13 pt semibold, 8 pt side padding, 3 pt corners, directly above the price).

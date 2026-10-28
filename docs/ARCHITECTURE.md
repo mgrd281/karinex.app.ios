@@ -820,11 +820,12 @@ by `AccountServices` on first launch) and add the customer's token when there is
   lists it, then Klarna, Rechnung and Vorkasse, which Shopify's settings do not cover (PROMPT.md
   section 2). `PaymentMethodsStore` (in `AppContainer`, injected into the environment by
   `RootView`) loads them once per launch and keeps the business facts on failure;
-  `PaymentMethodsRow` centers the title and the marks in rows that wrap (`KXFlowLayout`, a
-  `Layout` in DesignSystem whose row breaking `KXFlowLayoutTests` checks) and draws the PDF marks
-  of `PaymentMethods.xcassets` (sources and MIT license in `Tools/Brand/payment-icons`). Rechnung
-  and Vorkasse have no brand mark: a plain white card with an SF Symbol and the localized name
-  in capitals, light in dark mode too, like the PDF marks.
+  `PaymentMethodsRow` centers the title and the marks on one line (`PaymentMarksLine`, a
+  `Layout` that keeps the 38 by 24 shape and shrinks all marks together when the line would not
+  fit; owner request 28.10.2026) and draws the PDF marks of `PaymentMethods.xcassets` (sources and
+  MIT license in `Tools/Brand/payment-icons`). Rechnung and Vorkasse have the app's own marks in
+  the same set (`invoice.svg`: a white document with a euro sign, `prepayment.svg`: a white bank,
+  both on a dark graphite gradient card); only the neutral card is drawn in SwiftUI.
 - `CheckoutFeature`: see below.
 
 **Checkout.** `CheckoutCoordinator` is the state machine, free of Checkout Kit so it is testable:

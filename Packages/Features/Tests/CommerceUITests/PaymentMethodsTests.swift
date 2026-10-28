@@ -55,7 +55,7 @@ struct PaymentMethodsTests {
     @Test("Every acceptance mark is in the module's asset catalog; the others have a plain card", arguments: PaymentMethod.allCases)
     func assets(method: PaymentMethod) {
         guard let assetName = method.assetName else {
-            #expect([.card, .invoice, .prepayment].contains(method))
+            #expect(method == .card)
             #expect(method.plainCardSymbol != nil)
             return
         }
@@ -63,9 +63,19 @@ struct PaymentMethodsTests {
         #expect(UIImage(named: assetName, in: CommerceUIResources.bundle, with: nil) != nil, "\(assetName) is missing")
     }
 
-    @Test("Only Rechnung and Vorkasse show their name on the card")
-    func names() {
-        #expect(PaymentMethod.allCases.filter(\.showsNameOnPlainCard) == [.invoice, .prepayment])
+    @Test("Rechnung and Vorkasse have their own marks")
+    func ownMarks() {
+        #expect(PaymentMethod.invoice.assetName == "payment-invoice")
+        #expect(PaymentMethod.prepayment.assetName == "payment-prepayment")
+    }
+
+    @Test("All marks fit on one line: they keep their size when there is room and shrink together otherwise")
+    func oneLine() {
+        #expect(PaymentMarksLine.markWidth(available: 500, count: 9, maximum: 38, spacing: 6) == 38)
+        let narrow = PaymentMarksLine.markWidth(available: 353, count: 9, maximum: 38, spacing: 6)
+        #expect(abs(narrow * 9 + 6 * 8 - 353) < 0.001)
+        #expect(PaymentMarksLine.markWidth(available: nil, count: 9, maximum: 38, spacing: 6) == 38)
+        #expect(PaymentMarksLine.markWidth(available: 300, count: 0, maximum: 38, spacing: 6) == 0)
     }
 
     @Test("Brand names stay untranslated; the neutral card, Rechnung and Vorkasse have localized names")

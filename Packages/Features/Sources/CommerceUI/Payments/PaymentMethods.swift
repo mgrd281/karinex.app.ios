@@ -12,9 +12,10 @@ import SwiftUI
 /// own payment settings: Apple Pay and Google Pay when Shopify lists them as wallets, and the
 /// card brands Shopify reports as accepted. UnionPay (not part of the card brands of Storefront
 /// API 2026-10), Klarna, Rechnung and Vorkasse are not in Shopify's payment settings and always
-/// appear, as in the web shop. When Shopify reports nothing (previews, a failed request) the
-/// app shows Apple Pay, a neutral card symbol and those fixed methods, without naming a card
-/// brand.
+/// appear, as in the web shop. Rechnung and Vorkasse have no brand mark of their own; the app
+/// ships its own marks for them (a document with a euro sign, a bank), drawn like the others.
+/// When Shopify reports nothing (previews, a failed request) the app shows Apple Pay, a neutral
+/// card symbol and those fixed methods, without naming a card brand.
 public enum PaymentMethod: String, CaseIterable, Sendable, Hashable, Identifiable {
     /// Apple Pay.
     case applePay
@@ -38,10 +39,9 @@ public enum PaymentMethod: String, CaseIterable, Sendable, Hashable, Identifiabl
     case googlePay
     /// Klarna.
     case klarna
-    /// Purchase on invoice ("Rechnung"): no brand mark, the name on a plain card.
+    /// Purchase on invoice ("Rechnung"): the app's own mark, a document with a euro sign.
     case invoice
-    /// Payment in advance by bank transfer ("Vorkasse"): no brand mark, the name on a plain
-    /// card.
+    /// Payment in advance by bank transfer ("Vorkasse"): the app's own mark, a bank.
     case prepayment
 
     /// Stable identity, also used in accessibility identifiers (`payment.method.visa`).
@@ -105,27 +105,19 @@ public enum PaymentMethod: String, CaseIterable, Sendable, Hashable, Identifiabl
         case .unionPay: "payment-unionpay"
         case .googlePay: "payment-google-pay"
         case .klarna: "payment-klarna"
-        case .card, .invoice, .prepayment: nil
+        case .invoice: "payment-invoice"
+        case .prepayment: "payment-prepayment"
+        case .card: nil
         }
     }
 
-    /// The SF Symbol on the plain card of a method without a brand mark, `nil` for the others.
+    /// The SF Symbol on the plain card of a method without a mark (the neutral card), `nil` for
+    /// the others.
     var plainCardSymbol: String? {
-        switch self {
-        case .card: "creditcard"
-        case .invoice: "doc.text"
-        case .prepayment: "building.columns"
-        default: nil
-        }
+        self == .card ? "creditcard" : nil
     }
 
-    /// Whether the plain card also shows the method's name: Rechnung and Vorkasse, which no
-    /// symbol names on its own.
-    var showsNameOnPlainCard: Bool {
-        self == .invoice || self == .prepayment
-    }
-
-    /// The name VoiceOver reads, also the label of Rechnung and Vorkasse. Brand names are never
+    /// The name VoiceOver reads. Brand names are never
     /// translated; the neutral card, Rechnung and Vorkasse are.
     public var spokenName: String {
         switch self {
@@ -183,9 +175,10 @@ public final class PaymentMethodsStore {
 // MARK: - PaymentMethodsRow
 
 /// The acceptance marks of the store's payment methods (the real marks the web shop shows),
-/// centered below the title in rows that wrap like a paragraph (``KXFlowLayout``), as below the
-/// buy button of the web shop. The marks grow a little with Dynamic Type. VoiceOver reads the
-/// row as one element: the title and the names of the methods.
+/// centered below the title on one line (``PaymentMarksLine``, owner request 28.10.2026): the
+/// marks keep their 38 by 24 shape and shrink together when the line would be wider than the
+/// screen. They grow a little with Dynamic Type. VoiceOver reads the row as one element: the
+/// title and the names of the methods.
 ///
 /// ```swift
 /// PaymentMethodsRow(methods: paymentMethods?.methods ?? PaymentMethod.fallback)
@@ -207,9 +200,9 @@ public struct PaymentMethodsRow: View {
         self.title = title
     }
 
-    /// The height of one mark, capped so the marks stay a row of small cards.
-    private var markHeight: CGFloat {
-        min(scaledHeight, 40)
+    /// The widest a mark gets: 38 by 24 scaled with Dynamic Type, capped at a height of 40.
+    private var maximumMarkWidth: CGFloat {
+        min(scaledHeight, 40) * PaymentMarksLine.aspectRatio
     }
 
     public var body: some View {
@@ -219,9 +212,9 @@ public struct PaymentMethodsRow: View {
                 .kxFont(.eyebrow)
                 .foregroundStyle(KXColor.textSecondary)
                 .multilineTextAlignment(.center)
-            KXFlowLayout(alignment: .center, spacing: KXSpacing.xs, lineSpacing: KXSpacing.xs) {
+            PaymentMarksLine(maximumMarkWidth: maximumMarkWidth, spacing: KXSpacing.xxs + 2) {
                 ForEach(methods) { method in
-                    PaymentMark(method: method, height: markHeight)
+                    PaymentMark(method: method)
                 }
             }
         }
@@ -233,14 +226,54 @@ public struct PaymentMethodsRow: View {
     }
 }
 
+// MARK: - PaymentMarksLine
+
+/// Lays the payment marks out on one centered line. Every mark has the 38 by 24 shape of the
+/// acceptance marks; it is `maximumMarkWidth` wide unless the line would not fit, then all marks
+/// shrink by the same amount (``markWidth(available:count:maximum:spacing:)``).
+struct PaymentMarksLine: Layout {
+    /// Width divided by height of an acceptance mark.
+    static let aspectRatio: CGFloat = 38 / 24
+
+    let maximumMarkWidth: CGFloat
+    let spacing: CGFloat
+
+    /// The width of each mark for `count` marks in `available` points: the maximum, or less so
+    /// that all of them fit on one line. An unknown width keeps the maximum.
+    static func markWidth(available: CGFloat?, count: Int, maximum: CGFloat, spacing: CGFloat) -> CGFloat {
+        guard count > 0 else { return 0 }
+        guard let available, available.isFinite else { return maximum }
+        let fitting = (available - spacing * CGFloat(count - 1)) / CGFloat(count)
+        return max(0, min(maximum, fitting))
+    }
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache _: inout ()) -> CGSize {
+        let width = Self.markWidth(available: proposal.width, count: subviews.count, maximum: maximumMarkWidth, spacing: spacing)
+        return CGSize(width: lineWidth(markWidth: width, count: subviews.count), height: width / Self.aspectRatio)
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal _: ProposedViewSize, subviews: Subviews, cache _: inout ()) {
+        let width = Self.markWidth(available: bounds.width, count: subviews.count, maximum: maximumMarkWidth, spacing: spacing)
+        let size = ProposedViewSize(width: width, height: width / Self.aspectRatio)
+        var x = bounds.midX - lineWidth(markWidth: width, count: subviews.count) / 2
+        for subview in subviews {
+            subview.place(at: CGPoint(x: x, y: bounds.midY), anchor: .leading, proposal: size)
+            x += width + spacing
+        }
+    }
+
+    private func lineWidth(markWidth: CGFloat, count: Int) -> CGFloat {
+        markWidth * CGFloat(count) + spacing * CGFloat(max(count - 1, 0))
+    }
+}
+
 // MARK: - PaymentMark
 
-/// One acceptance mark on a 38 by 24 card. Methods without a brand mark get a plain white card
-/// in the same size with their symbol, Rechnung and Vorkasse also with their name in capitals,
-/// so the card grows wider. The plain cards stay white in dark mode, like the brand marks.
+/// One acceptance mark, filling the 38 by 24 size ``PaymentMarksLine`` gives it. The neutral
+/// card (a brand Shopify did not name) is a plain white card with a card symbol; it stays white
+/// in dark mode, like the brand marks.
 private struct PaymentMark: View {
     let method: PaymentMethod
-    let height: CGFloat
 
     var body: some View {
         Group {
@@ -249,7 +282,6 @@ private struct PaymentMark: View {
                     .resizable()
                     .interpolation(.high)
                     .scaledToFit()
-                    .frame(width: markWidth, height: height)
             } else {
                 plainCard
             }
@@ -257,36 +289,22 @@ private struct PaymentMark: View {
         .accessibilityIdentifier("payment.method.\(method.id)")
     }
 
-    /// The width of a brand mark.
-    private var markWidth: CGFloat {
-        height * 38 / 24
-    }
-
     private var plainCard: some View {
-        let shape = RoundedRectangle(cornerRadius: height / 8, style: .continuous)
-        return HStack(spacing: height / 6) {
-            if let symbol = method.plainCardSymbol {
-                Image(systemName: symbol)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: height / 2, height: height / 2)
+        let shape = RoundedRectangle(cornerRadius: 3, style: .continuous)
+        return shape
+            .fill(KXColor.background)
+            .overlay {
+                shape.strokeBorder(KXColor.divider, lineWidth: KXBorder.hairline)
             }
-            if method.showsNameOnPlainCard {
-                Text(method.spokenName)
-                    .kxFont(.eyebrow)
-                    .lineLimit(1)
-                    .fixedSize()
-                    // Grows with the card, which stops growing at a height of 40 points.
-                    .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
+            .overlay {
+                if let symbol = method.plainCardSymbol {
+                    Image(systemName: symbol)
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundStyle(KXColor.textSecondary)
+                        .padding(.vertical, 5)
+                }
             }
-        }
-        .foregroundStyle(KXColor.textSecondary)
-        .padding(.horizontal, method.showsNameOnPlainCard ? height / 3 : 0)
-        .frame(minWidth: markWidth, minHeight: height, maxHeight: height)
-        .background(KXColor.background, in: shape)
-        .overlay {
-            shape.strokeBorder(KXColor.divider, lineWidth: KXBorder.hairline)
-        }
-        .environment(\.colorScheme, .light)
+            .environment(\.colorScheme, .light)
     }
 }

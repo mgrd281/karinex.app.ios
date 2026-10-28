@@ -12,4 +12,5 @@ removed so every renderer uses the sRGB colours of the files. The app uses PDF c
 CairoSVG, vector data preserved). The brand marks themselves belong to their owners and are only
 used to show which payment methods the shop accepts. Only the methods of PROMPT.md section 2
 are included. `unionpay.svg` and `google_pay.svg` (added 2026-10-26) declare no Display P3
-colours and are unchanged. Rechnung and Vorkasse have no brand mark; the app draws them itself.
+colours and are unchanged. Rechnung and Vorkasse have no brand mark; `invoice.svg` and `prepayment.svg` are the app's own
+marks for them (drawn for KARINEX on 28.10.2026, not part of the MIT set), converted the same way.
