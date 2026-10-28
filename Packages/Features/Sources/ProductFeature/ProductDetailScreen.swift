@@ -175,7 +175,6 @@ public struct ProductDetailScreen: View {
             await model.addToCart()
         }
     }
-
 }
 
 // MARK: - ProductDetailBody

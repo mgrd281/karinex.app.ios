@@ -187,8 +187,7 @@ private struct KXButtonStyleBody: View {
     @Environment(\.kxButtonCornerRadius) private var cornerRadius
 
     var body: some View {
-        let shape = cornerRadius.map { AnyShape(RoundedRectangle(cornerRadius: $0, style: .continuous)) }
-            ?? AnyShape(Capsule(style: .continuous))
+        let shape = KXButtonShape(cornerRadius: cornerRadius)
         label
             .kxFont(.headline)
             .multilineTextAlignment(.center)
@@ -322,6 +321,26 @@ private struct KXButtonPreviewGallery: View {
 }
 
 // MARK: - Corner radius
+
+/// The button outline: a continuous capsule, or a rounded rectangle with `cornerRadius`.
+private struct KXButtonShape: InsettableShape {
+    let cornerRadius: CGFloat?
+    var insetAmount: CGFloat = 0
+
+    func path(in rect: CGRect) -> Path {
+        let inner = rect.insetBy(dx: insetAmount, dy: insetAmount)
+        if let cornerRadius {
+            return RoundedRectangle(cornerRadius: max(cornerRadius - insetAmount, 0), style: .continuous).path(in: inner)
+        }
+        return Capsule(style: .continuous).path(in: inner)
+    }
+
+    func inset(by amount: CGFloat) -> KXButtonShape {
+        var shape = self
+        shape.insetAmount += amount
+        return shape
+    }
+}
 
 private struct KXButtonCornerRadiusKey: EnvironmentKey {
     static let defaultValue: CGFloat? = nil
