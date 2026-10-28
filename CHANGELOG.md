@@ -291,6 +291,9 @@ change.
 
 ### Fixed
 
+- **Invite friends: copy confirmation.** The "Code kopieren" button switches to "Kopiert" with a
+  check mark and a haptic tap for two seconds, like on the redeem code sheet. The code was copied
+  before, but nothing showed it.
 - TestFlight builds no longer stop at "Your account has reached the maximum number of
   certificates": every run on a fresh runner created a new "Apple Development: Created via API"
   certificate. The `beta` lane now revokes those CI-made development certificates before

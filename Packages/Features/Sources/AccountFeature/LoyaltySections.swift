@@ -71,6 +71,9 @@ struct LoyaltyReferralSection: View {
     let isCreating: Bool
     let onCreate: () -> Void
 
+    /// Shows "Kopiert" for a moment after the code was copied.
+    @State private var didCopy = false
+
     var body: some View {
         if let referral = status.referral, referral.active {
             KXListGroup(Text("account.loyalty.referral.title", bundle: .module)) {
@@ -107,13 +110,22 @@ struct LoyaltyReferralSection: View {
                             .accessibilityIdentifier("loyalty.referral.share")
                         }
                         KXButton(
-                            String(localized: "account.loyalty.code.copy", bundle: .module),
-                            systemImage: "doc.on.doc",
+                            didCopy
+                                ? String(localized: "account.loyalty.code.copied", bundle: .module)
+                                : String(localized: "account.loyalty.code.copy", bundle: .module),
+                            systemImage: didCopy ? "checkmark" : "doc.on.doc",
                             style: .secondary,
                             isFullWidth: true
                         ) {
                             KXClipboard.copySensitive(code)
+                            didCopy = true
+                            Task {
+                                try? await Task.sleep(for: .seconds(2))
+                                didCopy = false
+                            }
                         }
+                        .sensoryFeedback(.success, trigger: didCopy) { _, copied in copied }
+                        .accessibilityIdentifier("loyalty.referral.copy")
                     } else {
                         KXButton(
                             String(localized: "account.loyalty.referral.create", bundle: .module),
