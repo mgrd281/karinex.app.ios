@@ -263,7 +263,7 @@ struct NotificationCard: View {
     private var photo: some View {
         if let url = message.imageURL {
             ProductImage(url: url, altText: nil)
-                .aspectRatio(contentMode: .fit)
+                .scaledToFit()
                 .frame(width: photoWidth, height: photoWidth * 1.15)
         } else {
             Image(systemName: NotificationText.tileSymbol(for: message))

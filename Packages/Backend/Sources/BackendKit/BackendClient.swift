@@ -278,7 +278,7 @@ public final class HTTPBackendClient: BackendClient {
     }
 
     public func notifications() async throws -> [InboxMessage] {
-        let page: InboxPage = try decode(send(.get, path: "/v1/app/notifications", authenticated: false, device: true))
+        let page: InboxPage = try await decode(send(.get, path: "/v1/app/notifications", authenticated: false, device: true))
         return page.items
     }
 

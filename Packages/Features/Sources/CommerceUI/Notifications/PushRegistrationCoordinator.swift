@@ -176,13 +176,11 @@ public final class PushRegistrationCoordinator {
 
     /// Debug builds get their tokens from the APNs sandbox; TestFlight and App Store builds
     /// from production.
-    private static var apnsEnvironment: String {
-        #if DEBUG
-            "sandbox"
-        #else
-            "production"
-        #endif
-    }
+    #if DEBUG
+    private static let apnsEnvironment = "sandbox"
+    #else
+    private static let apnsEnvironment = "production"
+    #endif
 
     private static func logName(_ error: any Error) -> String {
         (error as? BackendError)?.logDescription ?? String(describing: type(of: error))

@@ -230,25 +230,43 @@ final class AppContainer {
         self.inboxStore = inboxStore
         saveCountStore = SaveCountStore(http: services.httpClient, backendBaseURL: resolution.configuration.backendBaseURL)
         paymentMethodsStore = PaymentMethodsStore(catalog: catalogRepository)
-        let pushCoordinator = PushRegistrationCoordinator(
-            system: SystemRemoteNotifications(),
+        let liveActivities = LiveActivityController(consentStore: consentStore, backend: account.backend)
+        pushCoordinator = Self.makePushCoordinator(
             backend: account.backend,
             consentStore: consentStore,
-            languageCode: { Bundle.main.preferredLocalizations.first ?? "de" },
-            countryCode: { [marketStore] in marketStore.selection.country.rawValue }
+            marketStore: marketStore,
+            liveActivities: liveActivities,
+            inboxStore: inboxStore
         )
-        let liveActivities = LiveActivityController(consentStore: consentStore, backend: account.backend)
-        pushCoordinator.onLicenseDelivered = { [liveActivities] in
-            await liveActivities.markAllDelivered()
-        }
-        pushCoordinator.onNotification = { [inboxStore] in
-            await inboxStore.refresh()
-        }
-        self.pushCoordinator = pushCoordinator
         self.liveActivities = liveActivities
 
         let access = storefrontClient.isTokenless ? "tokenless" : "token"
         logger.info("App container ready: Storefront API \(resolution.configuration.storefrontAPIVersion), \(access)")
+    }
+
+    /// Push registration: a delivered key ends the Live Activity, every KARINEX push reloads
+    /// "Neuigkeiten".
+    private static func makePushCoordinator(
+        backend: any BackendClient,
+        consentStore: any ConsentStoring,
+        marketStore: MarketStore,
+        liveActivities: LiveActivityController,
+        inboxStore: InboxStore
+    ) -> PushRegistrationCoordinator {
+        let coordinator = PushRegistrationCoordinator(
+            system: SystemRemoteNotifications(),
+            backend: backend,
+            consentStore: consentStore,
+            languageCode: { Bundle.main.preferredLocalizations.first ?? "de" },
+            countryCode: { [marketStore] in marketStore.selection.country.rawValue }
+        )
+        coordinator.onLicenseDelivered = { [liveActivities] in
+            await liveActivities.markAllDelivered()
+        }
+        coordinator.onNotification = { [inboxStore] in
+            await inboxStore.refresh()
+        }
+        return coordinator
     }
 
     // MARK: - Lifecycle
