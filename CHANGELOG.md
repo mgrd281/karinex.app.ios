@@ -12,6 +12,12 @@ change.
 
 ### Added
 
+- **Invite friends, new design** (owner request 28.10.2026): the section is now a dark invitation
+  card. Both benefits stand side by side as large numbers (10 % for the friend, 5,00 € for the
+  customer with the points below), the code is a dashed ticket that copies on a tap, and "Code
+  teilen" is a white capsule. Below the card three short steps explain how it works. Texts in
+  the 11 languages.
+
 - **Invite friends** (owner request, like the referral box on karinex.de): the loyalty screen has a
   section "Freunde einladen". The customer creates a personal code once (`POST
   /v1/app/loyalty/referral`), shares it with the system share sheet (message plus the shop link that
