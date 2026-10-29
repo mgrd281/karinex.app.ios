@@ -12,14 +12,14 @@ that are shipped. Nothing is unlocked inside the app, so purchases go through th
 Shopify checkout (Shopify Checkout Kit), as guideline 3.1.3(e) and 3.1.5 allow for goods and
 services consumed outside the app. The app has no paid features and no In-App Purchase.
 
-Demo account (Shopify customer account login):
-  E-mail: <REVIEWER_EMAIL>
-  The login page sends a one-time code to this mailbox; the code is also available to you at
-  <REVIEWER_CODE_INSTRUCTIONS>.
+Demo account: none. Browsing, search, product pages, cart, checkout (as a guest), legal texts and
+support work without an account. The account area (orders, invoices, license vault) uses the
+store's own Shopify customer login, which sends a one-time code to the customer's e-mail address;
+there is no password. If you need to see the account area, please reply in Resolution Center and
+we will give you access to a demo mailbox right away.
 
-To test a purchase without being charged, use the discount code <REVIEWER_DISCOUNT_CODE>
-(100 percent) on the product <REVIEWER_TEST_PRODUCT>. The order then appears under
-Konto > Bestellungen, with its invoice and license key.
+Checkout: please place no real order. Opening the checkout and reaching the payment step shows
+the full purchase flow (guest checkout, Apple Pay, card, Klarna, invoice, bank transfer).
 
 Account deletion: Konto > Persönliche Daten > Konto und Daten löschen (guideline 5.1.1(v)).
 Support: WhatsApp, e-mail and live chat from Konto > Hilfe und Support, daily 08:00 to 23:00 German time.
@@ -28,8 +28,9 @@ Languages: German (primary), English, Polish, Dutch, Portuguese (Portugal), Swed
 Spanish, French, Italian, Finnish.
 ```
 
-The values in angle brackets come from the owner (see [OWNER_INPUTS.md](OWNER_INPUTS.md),
-"Reviewer account, test product, 100 % discount code").
+The owner decided on 2026-10-29 not to create a reviewer account, a test product or a 100 percent
+discount code (see [OWNER_INPUTS.md](OWNER_INPUTS.md)). The notes above say so. If App Review
+asks for a demo account (guideline 2.1), reply in Resolution Center and set one up then.
 
 ## Background for likely questions
 
@@ -45,8 +46,7 @@ The values in angle brackets come from the owner (see [OWNER_INPUTS.md](OWNER_IN
 
 ## Before each submission
 
-- [ ] Reviewer account works and the code instructions are current.
-- [ ] Test product is published and the 100 percent discount code is active and not expired.
+- [ ] Someone can answer App Review in Resolution Center the same day (the notes promise access to the account area on request).
 - [ ] `make check` passes (strings, copy rules, metadata).
 - [ ] [PRIVACY_NUTRITION_LABEL.md](PRIVACY_NUTRITION_LABEL.md) matches App Store Connect.
 - [ ] Screenshots follow [SCREENSHOTS.md](SCREENSHOTS.md).

@@ -24,4 +24,4 @@ store were filled in; everything else is still open. Secrets never go into git: 
 | Metafield definitions | **Open** | See [STORE_AUDIT.md](STORE_AUDIT.md), owner actions 2 and 3. For the linked products row also `custom.siblings` (list of products) and for the price note `karinex.lowest_price_30d`, each with Storefront access "Read" | Phase 1 |
 | Logo | Done | The store logo of www.karinex.de (`Tools/Brand/store-logo.png`), shown by `KXWordmark` | |
 | App icon | Done, replace if a dedicated icon arrives | `App/Resources/Assets.xcassets/AppIcon.appiconset`: the white store logo on black (1024 x 1024 PNG, no alpha) | Phase 1 |
-| Reviewer account, test product, 100 % discount code | **Open** | Needed for App Review | Phase 3 |
+| Reviewer account, test product, 100 % discount code | **Decided: none** (owner, 2026-10-29) | The reviewer shops as a guest; access to the account area is given on request in Resolution Center (see [APP_STORE_REVIEW_NOTES.md](APP_STORE_REVIEW_NOTES.md)). Apple may still ask for a demo account (guideline 2.1) | Phase 3 |
