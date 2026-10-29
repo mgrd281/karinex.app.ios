@@ -12,6 +12,14 @@ change.
 
 ### Changed
 
+- **Mandatory consent checkbox in the cart for digital content** (AGB § 10 Abs. 3a, 29.10.2026):
+  like the web shop, a cart with a product without shipping shows the checkbox "Ich stimme
+  ausdrücklich zu, dass mit der Ausführung des Vertrags vor Ablauf der Widerrufsfrist begonnen
+  wird ..." above "Zur Kasse" (same wording as the theme, 13 languages). Without it "Zur Kasse"
+  shows "Bitte bestätigen Sie die Erklärung, um zur Kasse zu gehen." and the checkout does not open.
+  Ticking it stores the cart attribute `widerruf_consent = Ja (<ISO time>)`, the attribute the web
+  shop writes and the order confirmation e-mail confirms. Before, app orders carried no consent,
+  so the right of withdrawal for app orders did not expire with delivery of the key.
 - **Payment methods on one line, new Rechnung and Vorkasse marks** (owner request 28.10.2026): in
   the cart and on the product page all marks sit on one centered line and shrink together when
   the screen is narrow. Rechnung and Vorkasse are no longer word cards but marks of their own in

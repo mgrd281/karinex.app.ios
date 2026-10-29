@@ -239,6 +239,47 @@ final class CartViewModel {
             .flatMap { $0.isEmpty ? nil : $0 }
     }
 
+    // MARK: Withdrawal consent
+
+    /// Whether the checkout bar shows the consent checkbox: the cart contains digital content.
+    var needsWithdrawalConsent: Bool {
+        cartStore.needsWithdrawalConsent
+    }
+
+    /// Whether the consent is ticked: stored on the cart, or on its way there.
+    var hasWithdrawalConsent: Bool {
+        pendingConsent ?? cartStore.hasWithdrawalConsent
+    }
+
+    /// Whether "Zur Kasse" shows the hint below the checkbox because it was tapped without
+    /// the consent.
+    private(set) var showsConsentHint = false
+    /// The consent the customer just ticked or unticked, until Shopify stored it.
+    private(set) var pendingConsent: Bool?
+
+    /// Ticks or unticks the consent and stores it on the cart, as the web shop does.
+    func toggleWithdrawalConsent() async {
+        let target = !hasWithdrawalConsent
+        pendingConsent = target
+        if target { showsConsentHint = false }
+        await cartStore.setWithdrawalConsent(target)
+        pendingConsent = nil
+    }
+
+    /// "Zur Kasse": opens the checkout only with the consent when the cart needs it, the same
+    /// rule as the web shop's cart (AGB § 10 Abs. 3a). Without it the hint appears instead.
+    ///
+    /// - Returns: Whether the checkout may open.
+    func requestCheckout() -> Bool {
+        guard needsWithdrawalConsent else { return true }
+        guard pendingConsent == nil, cartStore.hasWithdrawalConsent else {
+            showsConsentHint = true
+            return false
+        }
+        showsConsentHint = false
+        return true
+    }
+
     // MARK: Warnings and errors
 
     /// Shopify's warnings of the last change that are not about discount codes (those appear

@@ -85,6 +85,342 @@
         }
       }
     },
+    "cart.consent.off" : {
+      "comment" : "VoiceOver value of the consent checkbox in the basket when it is not ticked. Short, like iOS says for an unticked checkbox.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke valgt"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht ausgewählt"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μη επιλεγμένο"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not selected"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No seleccionado"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ei valittu"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non sélectionné"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non selezionato"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niet geselecteerd"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niezaznaczone"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não selecionado"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neselectat"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inte markerad"
+          }
+        }
+      }
+    },
+    "cart.consent.on" : {
+      "comment" : "VoiceOver value of the consent checkbox in the basket when it is ticked. Short, like iOS says for a ticked checkbox.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valgt"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausgewählt"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επιλεγμένο"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selected"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccionado"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valittu"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sélectionné"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selezionato"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geselecteerd"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaznaczone"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecionado"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selectat"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markerad"
+          }
+        }
+      }
+    },
+    "cart.consent.required" : {
+      "comment" : "Hint in red below the consent checkbox when the customer taps \"Zur Kasse\" without ticking it. Identical to the web shop's text (theme locale karinex.widerruf.required).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekræft venligst erklæringen for at gå til kassen."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte bestätigen Sie die Erklärung, um zur Kasse zu gehen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παρακαλούμε επιβεβαιώστε τη δήλωση για να προχωρήσετε στο ταμείο."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please confirm the declaration to proceed to checkout."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por favor, confirma la declaración para continuar con el pago."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vahvista suostumus siirtyäksesi kassalle."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Merci de confirmer la déclaration pour passer commande."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conferma la dichiarazione per procedere alla cassa."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bevestig de verklaring om af te rekenen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proszę potwierdzić oświadczenie, aby przejść do kasy."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirme a declaração para prosseguir para o pagamento."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vă rugăm să confirmați declarația pentru a continua la finalizarea comenzii."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekräfta samtycket för att gå till kassan."
+          }
+        }
+      }
+    },
+    "cart.consent.text" : {
+      "comment" : "Mandatory checkbox in the basket for digital content (license keys): consent to immediate delivery and acknowledgement that the right of withdrawal expires with delivery of the key (§ 356 Abs. 5 BGB). Must stay identical to the web shop's checkbox (theme locale karinex.widerruf.consent) and to AGB § 10 Abs. 3a; legal text, do not shorten.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeg giver udtrykkeligt samtykke til, at udførelsen af aftalen påbegyndes før udløbet af fortrydelsesfristen. Jeg er klar over, at min fortrydelsesret bortfalder, når udførelsen af aftalen er påbegyndt, dvs. ved levering af licensnøglen."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ich stimme ausdrücklich zu, dass mit der Ausführung des Vertrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein Widerrufsrecht mit Beginn der Vertragsausführung, also mit der Zustellung des Lizenzschlüssels, erlischt."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συναινώ ρητά στην έναρξη εκτέλεσης της σύμβασης πριν από τη λήξη της προθεσμίας υπαναχώρησης. Γνωρίζω ότι με την έναρξη εκτέλεσης της σύμβασης, δηλαδή με την παράδοση του κλειδιού άδειας, το δικαίωμα υπαναχώρησής μου παύει να ισχύει."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I expressly consent that performance of the contract begins before the withdrawal period expires. I acknowledge that my right of withdrawal expires once performance of the contract has begun, i.e. with delivery of the licence key."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doy mi consentimiento expreso para que se comience a ejecutar el contrato antes de que finalice el plazo de desistimiento. Soy consciente de que mi derecho de desistimiento se extingue en cuanto comienza la ejecución del contrato, es decir, con la entrega de la clave de licencia."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hyväksyn nimenomaisesti, että sopimuksen täytäntöönpano aloitetaan ennen peruutusajan päättymistä. Tiedän, että peruutusoikeuteni raukeaa sopimuksen täytäntöönpanon alkaessa eli kun lisenssiavain toimitetaan."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "J'accepte expressément que l'exécution du contrat commence avant la fin du délai de rétractation. Je sais que mon droit de rétractation s'éteint dès le début de l'exécution du contrat, c'est-à-dire dès la remise de la clé de licence."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acconsento espressamente a che l'esecuzione del contratto inizi prima della scadenza del termine di recesso. Sono consapevole che il mio diritto di recesso si estingue con l'inizio dell'esecuzione del contratto, cioè con la consegna della chiave di licenza."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ik ga er uitdrukkelijk mee akkoord dat met de uitvoering van de overeenkomst wordt begonnen vóór het verstrijken van de herroepingstermijn. Ik weet dat mijn herroepingsrecht vervalt zodra de uitvoering van de overeenkomst begint, dat wil zeggen met de levering van de licentiesleutel."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyraźnie wyrażam zgodę, aby wykonanie umowy rozpoczęło się przed upływem terminu odstąpienia. Przyjmuję do wiadomości, że moje prawo do odstąpienia od umowy wygasa z chwilą rozpoczęcia wykonywania umowy, czyli z chwilą dostarczenia klucza licencyjnego."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Concordo expressamente que a execução do contrato se inicie antes do fim do prazo de retratação. Estou ciente de que o meu direito de retratação se extingue com o início da execução do contrato, ou seja, com a entrega da chave de licença."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunt de acord în mod expres ca executarea contractului să înceapă înainte de expirarea termenului de retragere. Am luat la cunoștință că dreptul meu de retragere se stinge odată cu începerea executării contractului, adică odată cu livrarea cheii de licență."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jag samtycker uttryckligen till att avtalets genomförande påbörjas före utgången av ångerfristen. Jag är medveten om att min ångerrätt upphör när avtalets genomförande påbörjas, dvs. när licensnyckeln levereras."
+          }
+        }
+      }
+    },
     "cart.crosssell.title" : {
       "comment" : "Serif section title above a horizontal row of products that go well with the first product in the basket (Shopify's complementary recommendations). Max ~25 characters. Makes no claim about the products.",
       "extractionState" : "manual",

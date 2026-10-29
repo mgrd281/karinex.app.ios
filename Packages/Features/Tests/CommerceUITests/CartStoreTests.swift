@@ -48,6 +48,33 @@ struct CartStoreTests {
         #expect(store.cart?.lines.count == 2)
     }
 
+    // MARK: Withdrawal consent
+
+    @Test("A cart with digital content needs the consent; ticking it keeps the app attributes")
+    func withdrawalConsentIsStoredNextToAppAttributes() async throws {
+        let store = makeStore()
+        await store.add(variantID: CartFixtures.windowsVariant)
+        #expect(store.needsWithdrawalConsent)
+        #expect(!store.hasWithdrawalConsent)
+
+        let date = Date(timeIntervalSince1970: 1_793_275_200)
+        #expect(await store.setWithdrawalConsent(true, at: date))
+        #expect(store.hasWithdrawalConsent)
+        let attributes = try #require(store.cart?.attributes)
+        #expect(attributes.contains(AttributeInput(key: "app_platform", value: "ios")))
+        #expect(attributes.contains(AttributeInput(key: "widerruf_consent", value: "Ja (2026-10-29T12:00:00.000Z)")))
+
+        #expect(await store.setWithdrawalConsent(false))
+        #expect(!store.hasWithdrawalConsent)
+        #expect(store.cart?.attributes.contains { $0.key == "widerruf_consent" } == false)
+        #expect(store.cart?.attributes.contains(AttributeInput(key: "app_platform", value: "ios")) == true)
+    }
+
+    @Test("The consent value has the web shop's format")
+    func withdrawalConsentValueFormat() {
+        #expect(CartStore.withdrawalConsentValue(at: Date(timeIntervalSince1970: 0)) == "Ja (1970-01-01T00:00:00.000Z)")
+    }
+
     // MARK: Refresh and expiry
 
     @Test("Refresh loads the stored cart in a new session")

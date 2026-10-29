@@ -284,15 +284,21 @@ struct CartDigitalNotice: View {
 
 // MARK: - CartCheckoutBar
 
-/// The sticky bar at the bottom: the total from Shopify and "Zur Kasse".
+/// The sticky bar at the bottom: for digital content the mandatory consent to immediate
+/// delivery (the web shop's checkbox, AGB § 10 Abs. 3a), the total from Shopify and
+/// "Zur Kasse".
 struct CartCheckoutBar: View {
     let cart: Cart
+    let model: CartViewModel
     let onCheckout: @MainActor () -> Void
 
     @Environment(\.locale) private var locale
 
     var body: some View {
         VStack(alignment: .leading, spacing: KXSpacing.s) {
+            if model.needsWithdrawalConsent {
+                CartConsentCheckbox(model: model)
+            }
             HStack(alignment: .firstTextBaseline) {
                 Text("cart.summary.total", bundle: .module)
                     .kxFont(.subheadline)
@@ -326,5 +332,47 @@ struct CartCheckoutBar: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("cart.checkoutBar")
+    }
+}
+
+// MARK: - CartConsentCheckbox
+
+/// The mandatory checkbox for digital content: the customer agrees that delivery starts before
+/// the withdrawal period ends and confirms that the right of withdrawal expires with the
+/// delivery of the license key. Stored on the cart as `widerruf_consent`.
+struct CartConsentCheckbox: View {
+    let model: CartViewModel
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: KXSpacing.xxs) {
+            Button {
+                Task { await model.toggleWithdrawalConsent() }
+            } label: {
+                HStack(alignment: .top, spacing: KXSpacing.s) {
+                    Image(systemName: model.hasWithdrawalConsent ? "checkmark.square.fill" : "square")
+                        .kxFont(.title3)
+                        .foregroundStyle(model.showsConsentHint ? KXColor.urgency : KXColor.textPrimary)
+                        .accessibilityHidden(true)
+                    Text("cart.consent.text", bundle: .module)
+                        .kxFont(.footnote)
+                        .foregroundStyle(KXColor.textSecondary)
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .disabled(model.pendingConsent != nil)
+            .accessibilityAddTraits(.isToggle)
+            .accessibilityValue(Text(model.hasWithdrawalConsent ? "cart.consent.on" : "cart.consent.off", bundle: .module))
+            .accessibilityIdentifier("cart.consent")
+            if model.showsConsentHint {
+                Text("cart.consent.required", bundle: .module)
+                    .kxFont(.footnote)
+                    .foregroundStyle(KXColor.urgency)
+                    .accessibilityIdentifier("cart.consent.required")
+            }
+        }
     }
 }

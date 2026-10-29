@@ -100,7 +100,9 @@ public struct CartView: View {
 
     @ViewBuilder private var bottomBars: some View {
         if let cart = model.cart {
-            CartCheckoutBar(cart: cart, onCheckout: onCheckout)
+            CartCheckoutBar(cart: cart, model: model) {
+                if model.requestCheckout() { onCheckout() }
+            }
         }
     }
 }

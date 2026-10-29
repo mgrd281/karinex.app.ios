@@ -186,7 +186,7 @@ Every long-lived dependency is exposed as a protocol-typed property:
 | `contentRepository` | `any ContentRepository` | `StorefrontContentRepository` (articles, blogs) |
 | `searchRepository` | `any SearchRepository` | `StorefrontSearchRepository` |
 | `cartRepository` | `any CartRepository` | `StorefrontCartRepository` |
-| `cartStore` | `CartStore` | the shared cart, its ID in `preferences`, Checkout Kit preloading after every change |
+| `cartStore` | `CartStore` | the shared cart, its ID in `preferences`, Checkout Kit preloading after every change, the consent to immediate delivery of digital content as the cart attribute `widerruf_consent` (`Ja (<ISO time>)`, same format as the web shop; "Zur Kasse" opens the checkout only with it when a line has no shipping, AGB § 10 Abs. 3a) |
 | `marketStore` | `MarketStore` | market resolution, persistence and the buyer context |
 | `isMarketConfirmationEnabled` | `Bool` | `MarketConfirmationPolicy` (off under UI tests unless `-kx.market.confirm YES`) |
 

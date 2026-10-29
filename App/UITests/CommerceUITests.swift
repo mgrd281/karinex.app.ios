@@ -71,9 +71,21 @@ final class CommerceUITests: XCTestCase {
         )
         XCTAssertTrue(element("cart.total", in: app).exists, "The cart shows no total")
 
-        // "Zur Kasse" opens Shopify checkout in a sheet.
+        // Without the consent to immediate delivery "Zur Kasse" only shows the hint (AGB § 10 Abs. 3a).
         let checkout = app.buttons["cart.checkout"]
         XCTAssertTrue(checkout.waitForExistence(timeout: timeout), "\"Zur Kasse\" is missing")
+        let consent = app.buttons["cart.consent"]
+        XCTAssertTrue(consent.waitForExistence(timeout: timeout), "The consent checkbox is missing")
+        checkout.tap()
+        XCTAssertTrue(element("cart.consent.required", in: app).waitForExistence(timeout: timeout), "The consent hint did not appear")
+        XCTAssertFalse(app.webViews.firstMatch.exists, "The checkout opened without the consent")
+
+        // With the consent "Zur Kasse" opens Shopify checkout in a sheet.
+        consent.tap()
+        XCTAssertTrue(
+            waitUntil(consent, matches: "isEnabled == true", timeout: networkTimeout),
+            "The consent was not stored"
+        )
         checkout.tap()
         let webView = app.webViews.firstMatch
         XCTAssertTrue(webView.waitForExistence(timeout: networkTimeout), "The checkout sheet did not appear")

@@ -46,6 +46,10 @@ public final class CartStore {
     public static let versionAttributeKey = "app_version"
     /// The key the ID of a cart that carries a customer access token is stored under.
     public static let signedInCartIDKey = "cart.signedIn.v1"
+    /// The cart attribute carrying the customer's consent to immediate delivery of digital
+    /// content (§ 356 Abs. 5 BGB), the same attribute and format as the web shop's checkbox:
+    /// `Ja (<ISO 8601 time>)`. The order confirmation e-mail confirms it from there.
+    public static let withdrawalConsentKey = "widerruf_consent"
 
     // MARK: State
 
@@ -162,6 +166,43 @@ public final class CartStore {
                 logger.info("Stored cart is no longer available; it will be recreated with the next add")
                 forgetCart()
             }
+        }
+    }
+
+    // MARK: Withdrawal consent
+
+    /// Whether the cart contains digital content, i.e. a line without shipping. Only then the
+    /// right of withdrawal can expire with delivery, so only then the consent is needed.
+    public var needsWithdrawalConsent: Bool {
+        cart?.lines.contains { !$0.merchandise.requiresShipping } ?? false
+    }
+
+    /// Whether the cart carries the consent to immediate delivery.
+    public var hasWithdrawalConsent: Bool {
+        cart?.attributes.contains { $0.key == Self.withdrawalConsentKey && !$0.value.isEmpty } ?? false
+    }
+
+    /// The attribute value for consent given at `date`, as the web shop writes it.
+    public nonisolated static func withdrawalConsentValue(at date: Date) -> String {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        return "Ja (\(formatter.string(from: date)))"
+    }
+
+    /// Records (`given`) or withdraws the consent on the cart, keeping all other attributes.
+    ///
+    /// - Returns: Whether Shopify stored the change. On failure ``lastError`` explains why.
+    @discardableResult
+    public func setWithdrawalConsent(_ given: Bool, at date: Date = Date()) async -> Bool {
+        await serialized { [self] in
+            guard let cart else { return }
+            var attributes = cart.attributes.filter { $0.key != Self.withdrawalConsentKey }
+            if given {
+                attributes.append(AttributeInput(key: Self.withdrawalConsentKey, value: Self.withdrawalConsentValue(at: date)))
+            }
+            let result = try await repository.updateAttributes(cartID: cart.id, attributes: attributes)
+            apply(result)
         }
     }
 
