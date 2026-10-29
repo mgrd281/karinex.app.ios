@@ -74,7 +74,7 @@ final class CommerceUITests: XCTestCase {
         // Without the consent to immediate delivery "Zur Kasse" only shows the hint (AGB § 10 Abs. 3a).
         let checkout = app.buttons["cart.checkout"]
         XCTAssertTrue(checkout.waitForExistence(timeout: timeout), "\"Zur Kasse\" is missing")
-        let consent = app.buttons["cart.consent"]
+        let consent = element("cart.consent", in: app)
         XCTAssertTrue(consent.waitForExistence(timeout: timeout), "The consent checkbox is missing")
         checkout.tap()
         XCTAssertTrue(element("cart.consent.required", in: app).waitForExistence(timeout: timeout), "The consent hint did not appear")

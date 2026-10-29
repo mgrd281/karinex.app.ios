@@ -169,43 +169,6 @@ public final class CartStore {
         }
     }
 
-    // MARK: Withdrawal consent
-
-    /// Whether the cart contains digital content, i.e. a line without shipping. Only then the
-    /// right of withdrawal can expire with delivery, so only then the consent is needed.
-    public var needsWithdrawalConsent: Bool {
-        cart?.lines.contains { !$0.merchandise.requiresShipping } ?? false
-    }
-
-    /// Whether the cart carries the consent to immediate delivery.
-    public var hasWithdrawalConsent: Bool {
-        cart?.attributes.contains { $0.key == Self.withdrawalConsentKey && !$0.value.isEmpty } ?? false
-    }
-
-    /// The attribute value for consent given at `date`, as the web shop writes it.
-    public nonisolated static func withdrawalConsentValue(at date: Date) -> String {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        formatter.timeZone = TimeZone(identifier: "UTC")
-        return "Ja (\(formatter.string(from: date)))"
-    }
-
-    /// Records (`given`) or withdraws the consent on the cart, keeping all other attributes.
-    ///
-    /// - Returns: Whether Shopify stored the change. On failure ``lastError`` explains why.
-    @discardableResult
-    public func setWithdrawalConsent(_ given: Bool, at date: Date = Date()) async -> Bool {
-        await serialized { [self] in
-            guard let cart else { return }
-            var attributes = cart.attributes.filter { $0.key != Self.withdrawalConsentKey }
-            if given {
-                attributes.append(AttributeInput(key: Self.withdrawalConsentKey, value: Self.withdrawalConsentValue(at: date)))
-            }
-            let result = try await repository.updateAttributes(cartID: cart.id, attributes: attributes)
-            apply(result)
-        }
-    }
-
     // MARK: Mutations
 
     /// Adds `quantity` of the variant. Creates the cart on the first add, with the attributes
@@ -636,6 +599,46 @@ public final class CartStore {
             try? await Task.sleep(for: delay)
             guard !Task.isCancelled else { return }
             self?.checkoutPreloader?(url)
+        }
+    }
+}
+
+// MARK: - Withdrawal consent
+
+/// The consent to immediate delivery of digital content, kept on the cart (AGB § 10 Abs. 3a).
+extension CartStore {
+    /// Whether the cart contains digital content, i.e. a line without shipping. Only then the
+    /// right of withdrawal can expire with delivery, so only then the consent is needed.
+    public var needsWithdrawalConsent: Bool {
+        cart?.lines.contains { !$0.merchandise.requiresShipping } ?? false
+    }
+
+    /// Whether the cart carries the consent to immediate delivery.
+    public var hasWithdrawalConsent: Bool {
+        cart?.attributes.contains { $0.key == Self.withdrawalConsentKey && !$0.value.isEmpty } ?? false
+    }
+
+    /// The attribute value for consent given at `date`, as the web shop writes it.
+    public nonisolated static func withdrawalConsentValue(at date: Date) -> String {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        return "Ja (\(formatter.string(from: date)))"
+    }
+
+    /// Records (`given`) or withdraws the consent on the cart, keeping all other attributes.
+    ///
+    /// - Returns: Whether Shopify stored the change. On failure ``lastError`` explains why.
+    @discardableResult
+    public func setWithdrawalConsent(_ given: Bool, at date: Date = Date()) async -> Bool {
+        await serialized { [self] in
+            guard let cart else { return }
+            var attributes = cart.attributes.filter { $0.key != Self.withdrawalConsentKey }
+            if given {
+                attributes.append(AttributeInput(key: Self.withdrawalConsentKey, value: Self.withdrawalConsentValue(at: date)))
+            }
+            let result = try await repository.updateAttributes(cartID: cart.id, attributes: attributes)
+            apply(result)
         }
     }
 }
