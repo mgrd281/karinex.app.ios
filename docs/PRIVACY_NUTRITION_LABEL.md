@@ -22,7 +22,7 @@ KARINEX's service provider; the BFF reads it to check order ownership.
 | Contact Info | Email Address | Customer Account API `customer`; BFF token check | App Functionality |
 | Contact Info | Physical Address | Customer Account API addresses (view and edit) | App Functionality |
 | Purchases | Purchase History | Customer Account API orders; BFF delivery states, keys, invoices | App Functionality |
-| Identifiers | Device ID | The APNs device token, sent to the BFF only after the customer turned on notifications in the settings | App Functionality |
+| Identifiers | Device ID | The APNs device token and the random installation ID (`X-KX-Install`), sent to the BFF for the "Neuigkeiten" bell, "Benachrichtigen" (restock) and, only after the customer turned them on in the settings, push notifications; the BFF links them to the e-mail address when the customer is signed in and deletes them after 12 months without opening the app | App Functionality |
 
 Not collected: no contact number field exists in the app, in the address form or in the
 Customer Account queries.
