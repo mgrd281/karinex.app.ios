@@ -17,7 +17,7 @@ store were filled in; everything else is still open. Secrets never go into git: 
 | `{{BUNDLE_ID}}` | Done (registered) | `de.karinex.app` and `de.karinex.app.widgets` (the widget extension) exist as App IDs in the developer account | Phase 1 (TestFlight) |
 | `{{APPLE_TEAM_ID}}` | Provided | `3227J7CBXY`. Still to do by the owner: add it as the GitHub secret `KX_APPLE_TEAM_ID` (and in `Config/Secrets.xcconfig` for local device builds) | Phase 1 (device builds, TestFlight) |
 | App Store Connect API key | **Open** | CI secrets `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_CONTENT` (the text of the .p8 file, or its base64) | Phase 1 (TestFlight lane) |
-| Universal Links | **Open** | `apple-app-site-association` on `www.karinex.de` with the team ID and bundle ID | Phase 1 |
+| Universal Links | Done (24.11.2026) | `apple-app-site-association` on `karinex.de` and `www.karinex.de` lists `3227J7CBXY.de.karinex.app` (Shopify admin, custom app "KARINEX: rechnung", iOS Buy SDK) | Phase 1 |
 | Collection handles | Verified, differ from PROMPT.md | See [STORE_AUDIT.md](STORE_AUDIT.md): `microsoft-office`, `windows-server`, no `blitzangebote` | Phase 1 |
 | Impressum page handle | Assumed, **please confirm** | The app shows the page `rechtliche-hinweise` as Impressum and `widerrufsrecht` as Widerrufsbelehrung (refund policy as fallback) | Phase 2 |
 | Blog handle | Verified | `news` and `guides` | Phase 1 |

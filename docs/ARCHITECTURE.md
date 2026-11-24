@@ -664,9 +664,14 @@ destination on its root. `RootView` calls it from `.onOpenURL`.
 `applinks:www.karinex.de`. It is applied only when `KX_CODE_SIGN_ENTITLEMENTS` is set (in
 `Config/Secrets.xcconfig`, together with `KX_APPLE_TEAM_ID`), because the associated-domains
 capability needs a signing team; simulator and CI builds run without entitlements. The
-`apple-app-site-association` file on the store domain is an owner action
-([OWNER_INPUTS.md](OWNER_INPUTS.md)). The custom scheme `karinex://` (registered in `Info.plist`)
-works without either.
+`apple-app-site-association` file is served by Shopify (since 24.11.2026 for
+`3227J7CBXY.de.karinex.app`, set in the Shopify admin under the custom app's iOS Buy SDK) and
+covers every path except admin and checkout callbacks. Links come in through
+`AppRouter.handleIncomingLink(_:)` (`.onOpenURL`, `.onContinueUserActivity`, notifications): with a
+screen they open it; a store web link without one (Impressum, pages, policies) opens in an in-app
+`SFSafariViewController` sheet (`AppRouter.webPage`), because `openURL` could route the Universal
+Link straight back into the app. The custom scheme `karinex://` (registered in `Info.plist`) works
+without either.
 
 **Prices and state.** `PriceDisplay` formats `MoneyV2` with the user's locale and chooses the tax
 wording from the market (EU markets "inkl. MwSt.", others neutral, shipping wording for physical
