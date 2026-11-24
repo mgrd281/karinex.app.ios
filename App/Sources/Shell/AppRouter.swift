@@ -26,6 +26,8 @@ final class AppRouter {
     var selectedTab: AppTab
     /// The navigation path of every tab; tabs without an entry show their root screen.
     private(set) var paths: [AppTab: [CommerceRoute]] = [:]
+    /// A store web page the app has no screen for, shown in an in-app browser sheet.
+    var webPage: WebPage?
 
     /// Creates the router with `selectedTab` selected and every tab at its root.
     init(selectedTab: AppTab = .home) {
@@ -121,6 +123,18 @@ final class AppRouter {
         }
     }
 
+    /// Handles a link that reached the app (custom scheme, Universal Link or notification).
+    ///
+    /// Links with a screen open it (``openDeepLink(_:)-(URL)``). A web link on a store host
+    /// without a screen (for example Impressum, a page or a policy) is shown in an in-app browser
+    /// (``webPage``): since the store's Universal Links cover every path, such a link would
+    /// otherwise open the app and show nothing. Anything else is ignored.
+    func handleIncomingLink(_ url: URL) {
+        if openDeepLink(url) { return }
+        guard let page = WebPage(url) else { return }
+        webPage = page
+    }
+
     // MARK: Checkout
 
     /// After the success screen of a checkout ("Weiter einkaufen"): back to the Start tab, with
@@ -128,5 +142,22 @@ final class AppRouter {
     func finishCheckout() {
         paths[.cart] = []
         select(.home, popToRoot: true)
+    }
+}
+
+// MARK: - WebPage
+
+/// A web page of the store (http or https on one of ``DeepLinkParser/webHosts``) shown in an
+/// in-app browser.
+struct WebPage: Identifiable, Equatable, Sendable {
+    let url: URL
+    var id: URL { url }
+
+    /// `nil` unless `url` is an http(s) link on a store host.
+    init?(_ url: URL) {
+        guard let scheme = url.scheme?.lowercased(), scheme == "https" || scheme == "http",
+              let host = url.host?.lowercased(), DeepLinkParser.webHosts.contains(host)
+        else { return nil }
+        self.url = url
     }
 }

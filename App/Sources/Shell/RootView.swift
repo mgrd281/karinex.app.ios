@@ -9,6 +9,7 @@ import HomeFeature
 import LegalFeature
 import LicensesFeature
 import ProductFeature
+import SafariServices
 import SearchFeature
 import SettingsFeature
 import SupportFeature
@@ -23,7 +24,8 @@ import SwiftUI
 ///   the tab they came from and this view maps them to screens (product, collection, article,
 ///   search results). `.cart` switches to the Warenkorb tab.
 /// - Deep links (`karinex://`) and Universal Links (`karinex.de`) go through `DeepLinkParser`
-///   and open the destination in the tab that owns it.
+///   and open the destination in the tab that owns it. A store web link without a screen
+///   (Impressum, pages, policies) opens in an in-app browser instead of doing nothing.
 /// - Checkout: "Jetzt kaufen" and "Zur Kasse" present Shopify checkout over the whole app; after
 ///   "Weiter einkaufen" the Start tab is shown.
 /// - Launch: the market is resolved and the stored cart re-read; the cart is read again
@@ -75,17 +77,21 @@ struct RootView: View {
             MarketConfirmationSheet(store: container.marketStore)
         }
         .onOpenURL { url in
-            router.openDeepLink(url)
+            router.handleIncomingLink(url)
         }
         .onChange(of: container.pushCoordinator.pendingURL) { _, url in
             guard let url else { return }
             container.pushCoordinator.pendingURL = nil
-            router.openDeepLink(url)
+            router.handleIncomingLink(url)
         }
         .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { activity in
             if let url = activity.webpageURL {
-                router.openDeepLink(url)
+                router.handleIncomingLink(url)
             }
+        }
+        .sheet(item: $router.webPage) { page in
+            InAppBrowser(url: page.url)
+                .ignoresSafeArea()
         }
         .task {
             await start()
@@ -302,4 +308,18 @@ struct RootView: View {
     RootView()
         .environment(AppContainer.preview())
         .dynamicTypeSize(.accessibility2)
+}
+
+// MARK: - InAppBrowser
+
+/// `SFSafariViewController` for store web pages the app has no screen for. Opening the link with
+/// `openURL` instead could route the Universal Link straight back into the app.
+private struct InAppBrowser: UIViewControllerRepresentable {
+    let url: URL
+
+    func makeUIViewController(context: Context) -> SFSafariViewController {
+        SFSafariViewController(url: url)
+    }
+
+    func updateUIViewController(_ controller: SFSafariViewController, context: Context) {}
 }

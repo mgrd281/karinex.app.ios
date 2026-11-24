@@ -123,6 +123,28 @@ struct AppRouterTests {
         #expect(router.paths.isEmpty)
     }
 
+    @Test("Store web links without a screen open in the in-app browser, others are ignored")
+    func webFallback() throws {
+        let router = AppRouter()
+        let impressum = try #require(URL(string: "https://www.karinex.de/policies/legal-notice"))
+        let foreign = try #require(URL(string: "https://example.com/pages/x"))
+        let unknownScheme = try #require(URL(string: "karinex://unknown/x"))
+        let product = try #require(URL(string: "https://karinex.de/products/windows-11-home-key"))
+
+        router.handleIncomingLink(foreign)
+        router.handleIncomingLink(unknownScheme)
+        #expect(router.webPage == nil)
+
+        router.handleIncomingLink(impressum)
+        #expect(router.webPage?.url == impressum)
+        #expect(router.paths.isEmpty)
+
+        router.webPage = nil
+        router.handleIncomingLink(product)
+        #expect(router.webPage == nil)
+        #expect(router.selectedTab == .shop)
+    }
+
     @Test("After a completed checkout the Start tab is shown and the cart tab is at its root")
     func finishCheckout() {
         let router = AppRouter(selectedTab: .shop)

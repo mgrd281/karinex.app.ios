@@ -10,6 +10,12 @@ change.
 
 ## [Unreleased]
 
+### Added
+
+- Store web links the app has no screen for (Impressum, pages, policies) now open in an in-app
+  browser sheet instead of opening the app and showing nothing. Needed since the store's
+  Universal Links (active since 24.11.2026) cover every path.
+
 ### Fixed
 
 - The TestFlight export step no longer fails with `option '-authenticationKeyPath' may only be
